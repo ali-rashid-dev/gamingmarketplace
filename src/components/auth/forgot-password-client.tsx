@@ -9,6 +9,7 @@ import { AuthError } from "@/components/auth/AuthError";
 import { AuthSuccess } from "@/components/auth/AuthSuccess";
 import { AuthFooterLink } from "@/components/auth/AuthFooterLink";
 import { validateEmail } from "@/validations/auth-validation";
+import { requestPasswordReset } from "@/lib/auth-client";
 
 export default function ForgotPasswordClient() {
   const [email, setEmail] = useState("");
@@ -17,7 +18,7 @@ export default function ForgotPasswordClient() {
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     const next = validateEmail(email);
     setError(next);
@@ -25,10 +26,24 @@ export default function ForgotPasswordClient() {
     if (next) return;
 
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
+
+    try {
+      const res = await requestPasswordReset({
+        email,
+        redirectTo: "/reset-password",
+      });
+
+      if (res?.error) {
+        setFormError(res.error.message || "Failed to send reset instructions. Please try again.");
+        return;
+      }
+
       setSent(true);
-    }, 1200);
+    } catch {
+      setFormError("Failed to send reset instructions. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (

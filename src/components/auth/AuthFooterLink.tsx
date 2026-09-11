@@ -1,17 +1,12 @@
 import Link from "next/link";
 
-export function AuthFooterLink({
-  text,
-  linkText,
-  to,
-  href,
-}: {
+type AuthFooterLinkProps = {
   text?: string;
   linkText: string;
-  to?: string;
-  href?: string;
-}) {
-  const targetPath = to || href || "#";
+} & ({ to: string; href?: never } | { href: string; to?: never });
+
+export function AuthFooterLink({ text, linkText, ...destination }: AuthFooterLinkProps) {
+  const targetPath = ("to" in destination ? destination.to : destination.href)!;
 
   return (
     <p className="text-center text-sm text-muted-foreground">

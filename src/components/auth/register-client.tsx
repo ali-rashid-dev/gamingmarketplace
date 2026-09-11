@@ -13,7 +13,7 @@ import { AuthSuccess } from "@/components/auth/AuthSuccess";
 import { AuthFooterLink } from "@/components/auth/AuthFooterLink";
 import { PasswordRequirements } from "@/components/auth/PasswordRequirements";
 import { validateEmail, validatePassword, validateRequired } from "@/validations/auth-validation";
-import { signUp } from "@/lib/auth-client";
+import { signIn, signUp } from "@/lib/auth-client";
 
 export default function RegisterPageClient() {
   const [values, setValues] = useState({ name: "", email: "", password: "" });
@@ -60,11 +60,8 @@ export default function RegisterPageClient() {
         setCreated(true);
       }
     } catch {
-      // Fallback transition if auth backend endpoint is not active locally
-      setTimeout(() => {
-        setLoading(false);
-        setCreated(true);
-      }, 1300);
+      setFormError("Failed to create account. Please try again.");
+      setLoading(false);
     }
   }
 
@@ -132,9 +129,24 @@ export default function RegisterPageClient() {
 
           <GoogleAuthButton
             loading={googleLoading}
-            onClick={() => {
+            onClick={async () => {
               setGoogleLoading(true);
-              setTimeout(() => setGoogleLoading(false), 1400);
+              setFormError(null);
+
+              try {
+                const res = await signIn.social({
+                  provider: "google",
+                  callbackURL: "/dashboard",
+                });
+
+                if (res?.error) {
+                  setFormError(res.error.message || "Unable to continue with Google. Please try again.");
+                }
+              } catch {
+                setFormError("Unable to continue with Google. Please try again.");
+              } finally {
+                setGoogleLoading(false);
+              }
             }}
           />
 

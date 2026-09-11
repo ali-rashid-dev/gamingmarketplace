@@ -10,6 +10,7 @@ import { AuthSuccess } from "@/components/auth/AuthSuccess";
 import { AuthFooterLink } from "@/components/auth/AuthFooterLink";
 import { PasswordRequirements } from "@/components/auth/PasswordRequirements";
 import { MISMATCH_MESSAGE, REQUIRED_MESSAGE, validatePassword } from "@/validations/auth-validation";
+import { resetPassword } from "@/lib/auth-client";
 
 export default function ResetPasswordClient() {
   const [password, setPassword] = useState("");
@@ -19,7 +20,7 @@ export default function ResetPasswordClient() {
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     const next: { password?: string | undefined; confirm?: string | undefined } = {
       password: validatePassword(password),
@@ -32,10 +33,26 @@ export default function ResetPasswordClient() {
     if (next.password || next.confirm) return;
 
     setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
+
+    try {
+      const token = new URLSearchParams(window.location.search).get("token");
+      if (!token) {
+        setFormError("This reset link is invalid or has expired. Please request a new one.");
+        return;
+      }
+
+      const res = await resetPassword({ newPassword: password, token });
+      if (res?.error) {
+        setFormError(res.error.message || "Failed to reset your password. Please try again.");
+        return;
+      }
+
       setDone(true);
-    }, 1300);
+    } catch {
+      setFormError("Failed to reset your password. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (

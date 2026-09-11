@@ -53,10 +53,8 @@ export default function SignInPageClient() {
         router.push("/dashboard");
       }
     } catch {
-      setTimeout(() => {
-        setLoading(false);
-        router.push("/dashboard");
-      }, 1200);
+      setLoading(false);
+      setFormError("Unable to sign in. Please try again.");
     }
   }
 
@@ -110,12 +108,27 @@ export default function SignInPageClient() {
 
       <GoogleAuthButton
         loading={googleLoading}
-        onClick={() => {
+        onClick={async () => {
           setGoogleLoading(true);
-          setTimeout(() => {
-            setGoogleLoading(false);
+          setFormError(null);
+
+          try {
+            const res = await signIn.social({
+              provider: "google",
+              callbackURL: "/dashboard",
+            });
+
+            if (res?.error) {
+              setFormError(res.error.message || "Unable to continue with Google. Please try again.");
+              return;
+            }
+
             router.push("/dashboard");
-          }, 1400);
+          } catch {
+            setFormError("Unable to continue with Google. Please try again.");
+          } finally {
+            setGoogleLoading(false);
+          }
         }}
       />
 
