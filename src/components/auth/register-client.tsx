@@ -15,7 +15,7 @@ import { PasswordRequirements } from "@/components/auth/PasswordRequirements";
 import { validateEmail, validatePassword, validateRequired } from "@/validations/auth-validation";
 import { signIn, signUp } from "@/lib/auth-client";
 
-export default function RegisterPageClient() {
+export default function RegisterPageClient({ nextPath }: { nextPath: string }) {
   const [values, setValues] = useState({ name: "", email: "", password: "" });
   const [errors, setErrors] = useState<{
     name?: string | undefined;
@@ -50,7 +50,7 @@ export default function RegisterPageClient() {
         name: values.name,
         email: values.email,
         password: values.password,
-        callbackURL: "/dashboard",
+        callbackURL: nextPath,
       });
 
       if (res?.error) {
@@ -140,7 +140,7 @@ export default function RegisterPageClient() {
               try {
                 const res = await signIn.social({
                   provider: "google",
-                  callbackURL: "/dashboard",
+                  callbackURL: nextPath,
                 });
 
                 if (res?.error) {
@@ -155,7 +155,7 @@ export default function RegisterPageClient() {
           />
 
           <div className="mt-7">
-            <AuthFooterLink text="Already have an account?" linkText="Sign in" to="/sign-in" />
+            <AuthFooterLink text="Already have an account?" linkText="Sign in" to={nextPath === "/sell/apply" ? "/sign-in?next=%2Fsell%2Fapply" : "/sign-in"} />
           </div>
         </>
       )}

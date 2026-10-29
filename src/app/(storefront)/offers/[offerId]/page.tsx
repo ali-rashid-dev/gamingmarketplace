@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { headers } from "next/headers";
 import { BadgeCheck, Check, ChevronRight, ShieldCheck } from "lucide-react";
 import { getOfferById, getOfferImage, formatPrice } from "@/lib/storefront";
+import { auth } from "@/lib/auth";
 
 type Props = { params: Promise<{ offerId: string }> };
 
@@ -21,7 +23,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function OfferDetailPage({ params }: Props) {
   const { offerId } = await params;
-  const offer = await getOfferById(offerId);
+  const [offer, session] = await Promise.all([
+    getOfferById(offerId),
+    auth.api.getSession({ headers: await headers() }),
+  ]);
   const image = getOfferImage(offer.images);
 
   return (
@@ -94,12 +99,25 @@ export default async function OfferDetailPage({ params }: Props) {
             <p className="mt-1 font-display text-4xl font-semibold text-white">{formatPrice(offer.price, offer.currency)}</p>
             <p className="mt-2 text-xs text-slate-400">{offer.quantity} available</p>
             <div className="mt-5 grid gap-2">
-              <Link href="/sign-up" className="rounded-xl bg-cyan-300 px-4 py-3 text-center text-sm font-bold text-slate-950 transition hover:bg-cyan-200">
-                Create account to continue
-              </Link>
-              <Link href="/sign-in" className="rounded-xl border border-white/10 px-4 py-3 text-center text-sm font-semibold text-white hover:bg-white/[0.04]">
-                Already have an account? Sign in
-              </Link>
+              {session ? (
+                <>
+                  <p className="rounded-xl border border-cyan-300/20 bg-cyan-300/[0.06] px-4 py-3 text-center text-sm text-cyan-100">
+                    Signed in as {session.user.email}
+                  </p>
+                  <Link href="/dashboard" className="rounded-xl bg-cyan-300 px-4 py-3 text-center text-sm font-bold text-slate-950 transition hover:bg-cyan-200">
+                    Go to your account
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link href="/sign-up" className="rounded-xl bg-cyan-300 px-4 py-3 text-center text-sm font-bold text-slate-950 transition hover:bg-cyan-200">
+                    Create account to continue
+                  </Link>
+                  <Link href="/sign-in" className="rounded-xl border border-white/10 px-4 py-3 text-center text-sm font-semibold text-white hover:bg-white/[0.04]">
+                    Already have an account? Sign in
+                  </Link>
+                </>
+              )}
             </div>
             <div className="mt-5 space-y-3 border-t border-white/[0.07] pt-5 text-xs text-slate-400">
               <p className="flex items-center gap-2"><Check className="h-4 w-4 text-cyan-300" /> Secure checkout is coming to your account</p>

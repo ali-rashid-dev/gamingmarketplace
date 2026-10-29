@@ -15,7 +15,7 @@ import { AuthFooterLink } from "@/components/auth/AuthFooterLink";
 import { validateEmail, validateRequired } from "@/validations/auth-validation";
 import { signIn } from "@/lib/auth-client";
 
-export default function SignInPageClient() {
+export default function SignInPageClient({ nextPath }: { nextPath: string }) {
   const router = useRouter();
   const [values, setValues] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
@@ -50,7 +50,7 @@ export default function SignInPageClient() {
         setFormError(res.error.message || "Invalid credentials. Please try again.");
         setLoading(false);
       } else {
-        router.push("/dashboard");
+        router.push(nextPath);
       }
     } catch {
       setLoading(false);
@@ -115,7 +115,7 @@ export default function SignInPageClient() {
           try {
             const res = await signIn.social({
               provider: "google",
-              callbackURL: "/dashboard",
+              callbackURL: nextPath,
             });
 
             if (res?.error) {
@@ -123,7 +123,7 @@ export default function SignInPageClient() {
               return;
             }
 
-            router.push("/dashboard");
+            router.push(nextPath);
           } catch {
             setFormError("Unable to continue with Google. Please try again.");
           } finally {
@@ -133,7 +133,7 @@ export default function SignInPageClient() {
       />
 
       <div className="mt-7">
-        <AuthFooterLink text="Don't have an account?" linkText="Create one" to="/sign-up" />
+        <AuthFooterLink text="Don't have an account?" linkText="Create one" to={nextPath === "/sell/apply" ? "/sign-up?next=%2Fsell%2Fapply" : "/sign-up"} />
       </div>
     </AuthCard>
   );

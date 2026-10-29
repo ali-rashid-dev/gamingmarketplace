@@ -49,16 +49,18 @@ export async function getFeaturedGames() {
 export async function getOffers(
   sort: "popular" | "recent" = "recent",
   take = 8,
-  where: Prisma.ListingWhereInput = {}
+  where: Prisma.ListingWhereInput = {},
+  skip = 0
 ): Promise<StorefrontOffer[]> {
   return prisma.listing.findMany({
     where: { AND: [publicListingWhere, where] },
     include: publicListingInclude,
     orderBy:
       sort === "popular"
-        ? [{ orderItems: { _count: "desc" } }, { publishedAt: "desc" }]
-        : [{ publishedAt: "desc" }, { createdAt: "desc" }],
+        ? [{ orderItems: { _count: "desc" } }, { publishedAt: "desc" }, { id: "desc" }]
+        : [{ publishedAt: "desc" }, { createdAt: "desc" }, { id: "desc" }],
     take,
+    skip,
   });
 }
 

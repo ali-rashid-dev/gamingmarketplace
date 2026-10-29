@@ -7,6 +7,12 @@ export const metadata: Metadata = {
     "Create your GameTrade account to enter the vault and start trading game assets securely.",
 };
 
-export default function SignUpPage() {
-  return <RegisterPageClient />;
+export default async function SignUpPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ next?: string | string[] }>;
+}) {
+  const query = await searchParams;
+  const nextPath = query.next === "/sell/apply" ? query.next : "/dashboard";
+  return <RegisterPageClient nextPath={nextPath} />;
 }

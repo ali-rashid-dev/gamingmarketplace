@@ -67,7 +67,9 @@ export function OfferCard({
           </span>
           <span className="flex items-center gap-1 text-xs text-slate-400">
             <Star className="h-3 w-3 fill-amber-300 text-amber-300" />
-            {offer._count.reviews || "New"}
+            {offer._count.reviews
+              ? `${offer._count.reviews} ${offer._count.reviews === 1 ? "review" : "reviews"}`
+              : "New"}
             <ArrowUpRight className="ml-1 h-3.5 w-3.5 text-slate-500 transition group-hover:text-cyan-300" />
           </span>
         </div>

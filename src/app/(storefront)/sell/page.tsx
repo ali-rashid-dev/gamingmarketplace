@@ -21,7 +21,7 @@ export default function SellPage() {
             <Link href="/sign-up" className="inline-flex items-center gap-2 rounded-xl bg-cyan-300 px-5 py-3 text-sm font-bold text-slate-950 hover:bg-cyan-200">
               Create an account <ArrowRight className="h-4 w-4" />
             </Link>
-            <Link href="/help" className="rounded-xl border border-white/15 px-5 py-3 text-sm font-semibold text-white hover:bg-white/[0.04]">Read seller help</Link>
+            <Link href="/sell/apply" className="rounded-xl border border-white/15 px-5 py-3 text-sm font-semibold text-white hover:bg-white/[0.04]">Apply to sell</Link>
           </div>
         </div>
         <div className="grid gap-3">
@@ -30,6 +30,18 @@ export default function SellPage() {
           <SellBenefit icon={<TrendingUp className="h-5 w-5" />} title="Meet players where they are" body="Organized game and category pages help customers find the products they want." />
         </div>
       </div>
+      <section className="mt-10 rounded-2xl border border-white/[0.09] bg-[#111a2b] p-6">
+        <h2 className="font-display text-2xl font-semibold text-white">How to apply</h2>
+        <ol className="mt-4 grid gap-4 text-sm leading-6 text-slate-400 sm:grid-cols-3">
+          <li><span className="font-bold text-cyan-300">1.</span> Create an account or sign in to your existing GameTrade account.</li>
+          <li><span className="font-bold text-cyan-300">2.</span> Submit your shop name and a short description for review.</li>
+          <li><span className="font-bold text-cyan-300">3.</span> We’ll review your application and notify you of its status.</li>
+        </ol>
+        <div className="mt-5 flex flex-wrap gap-3">
+          <Link href="/sell/apply" className="rounded-xl bg-cyan-300 px-4 py-2.5 text-sm font-bold text-slate-950 hover:bg-cyan-200">Start seller application</Link>
+          <Link href="/sign-in?next=%2Fsell%2Fapply" className="rounded-xl border border-white/15 px-4 py-2.5 text-sm font-semibold text-white hover:bg-white/[0.04]">Already have an account? Sign in</Link>
+        </div>
+      </section>
       <p className="mt-12 border-t border-white/[0.08] pt-6 text-xs leading-5 text-slate-500">
         Seller onboarding and marketplace transaction features are being introduced in stages. Do not accept payment or deliver goods outside marketplace safeguards.
       </p>

@@ -17,6 +17,11 @@ export default function VerifyEmailPageClient() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const token = searchParams.get("token");
+  const callbackURL = searchParams.get("callbackURL");
+  const nextPath =
+    callbackURL === "/sell/apply" || searchParams.get("next") === "/sell/apply"
+      ? "/sell/apply"
+      : "/dashboard";
 
   const [status, setStatus] = useState<"loading" | "success" | "error" | "idle">(
     token ? "loading" : "idle"
@@ -79,7 +84,7 @@ export default function VerifyEmailPageClient() {
       try {
         const res = await sendVerificationEmail({
           email: resendEmail,
-          callbackURL: "/dashboard",
+          callbackURL: nextPath,
         });
 
         if (res?.error) {
@@ -116,8 +121,8 @@ export default function VerifyEmailPageClient() {
           title="Email Verified!"
           description="Your email address has been successfully verified. Welcome to GameTrade!"
         >
-          <PrimaryAuthButton onClick={() => router.push("/dashboard")}>
-            Go to Dashboard
+          <PrimaryAuthButton onClick={() => router.push(nextPath)}>
+            {nextPath === "/sell/apply" ? "Continue to seller application" : "Go to Dashboard"}
           </PrimaryAuthButton>
         </AuthSuccess>
       )}
@@ -153,7 +158,7 @@ export default function VerifyEmailPageClient() {
             </form>
 
             <div className="mt-6 text-center">
-              <AuthFooterLink linkText="Back to Sign In" to="/sign-in" />
+              <AuthFooterLink linkText="Back to Sign In" to={nextPath === "/sell/apply" ? "/sign-in?next=%2Fsell%2Fapply" : "/sign-in"} />
             </div>
           </div>
         </>
@@ -186,7 +191,7 @@ export default function VerifyEmailPageClient() {
           </form>
 
           <div className="mt-6">
-            <AuthFooterLink linkText="Back to Sign In" to="/sign-in" />
+            <AuthFooterLink linkText="Back to Sign In" to={nextPath === "/sell/apply" ? "/sign-in?next=%2Fsell%2Fapply" : "/sign-in"} />
           </div>
         </>
       )}
@@ -196,7 +201,7 @@ export default function VerifyEmailPageClient() {
           title="Verification Sent"
           description={`We've sent a new verification link to ${resendEmail}. Please check your inbox and click the link to verify your account.`}
         >
-          <AuthFooterLink linkText="Back to Sign In" to="/sign-in" />
+          <AuthFooterLink linkText="Back to Sign In" to={nextPath === "/sell/apply" ? "/sign-in?next=%2Fsell%2Fapply" : "/sign-in"} />
         </AuthSuccess>
       )}
     </AuthCard>

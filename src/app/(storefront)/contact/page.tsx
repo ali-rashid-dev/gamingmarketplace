@@ -17,7 +17,7 @@ export default function ContactPage() {
       </p>
       <div className="mt-9 grid gap-4 md:grid-cols-3">
         <ContactCard icon={<CircleHelp className="h-5 w-5" />} title="Browse help topics" body="Find quick answers about accounts, offers, and using the marketplace." href="/help" action="Visit help center" />
-        <ContactCard icon={<MessageCircle className="h-5 w-5" />} title="Account support" body="Sign in to get assistance with your account or, when available, an order." href="/sign-in" action="Sign in" />
+        <ContactCard icon={<MessageCircle className="h-5 w-5" />} title="Account support" body="Open your account dashboard for account-specific assistance." href="/dashboard" action="Go to my account" />
         <ContactCard icon={<ShieldQuestion className="h-5 w-5" />} title="Policy questions" body="Review buyer protection, refund information, privacy, and marketplace rules." href="/policies" action="Read policies" />
       </div>
       <p className="mt-8 text-xs leading-5 text-slate-500">
