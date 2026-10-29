@@ -25,12 +25,18 @@ enum SellerStatus {
   REJECTED
 }
 
-enum CategoryType {
-  ACCOUNTS
-  CURRENCY
-  ITEMS
-  BOOSTING
-  TOP_UPS
+enum GameStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum CategoryFieldType {
+  TEXT
+  NUMBER
+  BOOLEAN
+  SELECT
+  MULTI_SELECT
 }
 
 enum ListingStatus {
@@ -244,35 +250,58 @@ model SellerProfile {
 }
 
 model Game {
-  id          String     @id @default(cuid())
-  name        String     @unique
-  slug        String     @unique
-  description String?
-  isActive    Boolean    @default(true)
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-  categories  Category[]
-  listings    Listing[]
+  id             String     @id @default(cuid())
+  name           String     @unique
+  slug           String     @unique
+  description    String?
+  logoUrl        String?
+  coverImageUrl  String?
+  seoTitle       String?
+  seoDescription String?
+  status         GameStatus @default(DRAFT)
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  categories     Category[]
+  listings       Listing[]
 
-  @@index([isActive, name])
+  @@index([status, name])
 }
 
 model Category {
-  id          String       @id @default(cuid())
+  id          String          @id @default(cuid())
   gameId      String
   name        String
   slug        String
-  type        CategoryType
+  type        String
   description String?
-  isActive    Boolean      @default(true)
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  game        Game         @relation(fields: [gameId], references: [id], onDelete: Restrict)
+  platforms   String[]        @default([])
+  isActive    Boolean         @default(true)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  game        Game            @relation(fields: [gameId], references: [id], onDelete: Restrict)
   listings    Listing[]
+  fields      CategoryField[]
 
   @@unique([gameId, slug])
   @@unique([id, gameId])
   @@index([gameId, type, isActive])
+}
+
+model CategoryField {
+  id         String            @id @default(cuid())
+  categoryId String
+  key        String
+  label      String
+  type       CategoryFieldType @default(TEXT)
+  isRequired Boolean           @default(false)
+  options    Json              @default("[]")
+  sortOrder  Int               @default(0)
+  createdAt  DateTime          @default(now())
+  updatedAt  DateTime          @updatedAt
+  category   Category          @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@unique([categoryId, key])
+  @@index([categoryId, sortOrder])
 }
 
 model Listing {

@@ -29,7 +29,11 @@ export type GameMinAggregateOutputType = {
   name: string | null
   slug: string | null
   description: string | null
-  isActive: boolean | null
+  logoUrl: string | null
+  coverImageUrl: string | null
+  seoTitle: string | null
+  seoDescription: string | null
+  status: $Enums.GameStatus | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -39,7 +43,11 @@ export type GameMaxAggregateOutputType = {
   name: string | null
   slug: string | null
   description: string | null
-  isActive: boolean | null
+  logoUrl: string | null
+  coverImageUrl: string | null
+  seoTitle: string | null
+  seoDescription: string | null
+  status: $Enums.GameStatus | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -49,7 +57,11 @@ export type GameCountAggregateOutputType = {
   name: number
   slug: number
   description: number
-  isActive: number
+  logoUrl: number
+  coverImageUrl: number
+  seoTitle: number
+  seoDescription: number
+  status: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -61,7 +73,11 @@ export type GameMinAggregateInputType = {
   name?: true
   slug?: true
   description?: true
-  isActive?: true
+  logoUrl?: true
+  coverImageUrl?: true
+  seoTitle?: true
+  seoDescription?: true
+  status?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -71,7 +87,11 @@ export type GameMaxAggregateInputType = {
   name?: true
   slug?: true
   description?: true
-  isActive?: true
+  logoUrl?: true
+  coverImageUrl?: true
+  seoTitle?: true
+  seoDescription?: true
+  status?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -81,7 +101,11 @@ export type GameCountAggregateInputType = {
   name?: true
   slug?: true
   description?: true
-  isActive?: true
+  logoUrl?: true
+  coverImageUrl?: true
+  seoTitle?: true
+  seoDescription?: true
+  status?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -164,7 +188,11 @@ export type GameGroupByOutputType = {
   name: string
   slug: string
   description: string | null
-  isActive: boolean
+  logoUrl: string | null
+  coverImageUrl: string | null
+  seoTitle: string | null
+  seoDescription: string | null
+  status: $Enums.GameStatus
   createdAt: Date
   updatedAt: Date
   _count: GameCountAggregateOutputType | null
@@ -195,7 +223,11 @@ export type GameWhereInput = {
   name?: Prisma.StringFilter<"Game"> | string
   slug?: Prisma.StringFilter<"Game"> | string
   description?: Prisma.StringNullableFilter<"Game"> | string | null
-  isActive?: Prisma.BoolFilter<"Game"> | boolean
+  logoUrl?: Prisma.StringNullableFilter<"Game"> | string | null
+  coverImageUrl?: Prisma.StringNullableFilter<"Game"> | string | null
+  seoTitle?: Prisma.StringNullableFilter<"Game"> | string | null
+  seoDescription?: Prisma.StringNullableFilter<"Game"> | string | null
+  status?: Prisma.EnumGameStatusFilter<"Game"> | $Enums.GameStatus
   createdAt?: Prisma.DateTimeFilter<"Game"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Game"> | Date | string
   categories?: Prisma.CategoryListRelationFilter
@@ -207,7 +239,11 @@ export type GameOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
-  isActive?: Prisma.SortOrder
+  logoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  coverImageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  seoTitle?: Prisma.SortOrderInput | Prisma.SortOrder
+  seoDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   categories?: Prisma.CategoryOrderByRelationAggregateInput
@@ -222,7 +258,11 @@ export type GameWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.GameWhereInput[]
   NOT?: Prisma.GameWhereInput | Prisma.GameWhereInput[]
   description?: Prisma.StringNullableFilter<"Game"> | string | null
-  isActive?: Prisma.BoolFilter<"Game"> | boolean
+  logoUrl?: Prisma.StringNullableFilter<"Game"> | string | null
+  coverImageUrl?: Prisma.StringNullableFilter<"Game"> | string | null
+  seoTitle?: Prisma.StringNullableFilter<"Game"> | string | null
+  seoDescription?: Prisma.StringNullableFilter<"Game"> | string | null
+  status?: Prisma.EnumGameStatusFilter<"Game"> | $Enums.GameStatus
   createdAt?: Prisma.DateTimeFilter<"Game"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Game"> | Date | string
   categories?: Prisma.CategoryListRelationFilter
@@ -234,7 +274,11 @@ export type GameOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
-  isActive?: Prisma.SortOrder
+  logoUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  coverImageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  seoTitle?: Prisma.SortOrderInput | Prisma.SortOrder
+  seoDescription?: Prisma.SortOrderInput | Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.GameCountOrderByAggregateInput
@@ -250,7 +294,11 @@ export type GameScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"Game"> | string
   slug?: Prisma.StringWithAggregatesFilter<"Game"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"Game"> | string | null
-  isActive?: Prisma.BoolWithAggregatesFilter<"Game"> | boolean
+  logoUrl?: Prisma.StringNullableWithAggregatesFilter<"Game"> | string | null
+  coverImageUrl?: Prisma.StringNullableWithAggregatesFilter<"Game"> | string | null
+  seoTitle?: Prisma.StringNullableWithAggregatesFilter<"Game"> | string | null
+  seoDescription?: Prisma.StringNullableWithAggregatesFilter<"Game"> | string | null
+  status?: Prisma.EnumGameStatusWithAggregatesFilter<"Game"> | $Enums.GameStatus
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Game"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Game"> | Date | string
 }
@@ -260,7 +308,11 @@ export type GameCreateInput = {
   name: string
   slug: string
   description?: string | null
-  isActive?: boolean
+  logoUrl?: string | null
+  coverImageUrl?: string | null
+  seoTitle?: string | null
+  seoDescription?: string | null
+  status?: $Enums.GameStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   categories?: Prisma.CategoryCreateNestedManyWithoutGameInput
@@ -272,7 +324,11 @@ export type GameUncheckedCreateInput = {
   name: string
   slug: string
   description?: string | null
-  isActive?: boolean
+  logoUrl?: string | null
+  coverImageUrl?: string | null
+  seoTitle?: string | null
+  seoDescription?: string | null
+  status?: $Enums.GameStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutGameInput
@@ -284,7 +340,11 @@ export type GameUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  seoTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  seoDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumGameStatusFieldUpdateOperationsInput | $Enums.GameStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   categories?: Prisma.CategoryUpdateManyWithoutGameNestedInput
@@ -296,7 +356,11 @@ export type GameUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  seoTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  seoDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumGameStatusFieldUpdateOperationsInput | $Enums.GameStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutGameNestedInput
@@ -308,7 +372,11 @@ export type GameCreateManyInput = {
   name: string
   slug: string
   description?: string | null
-  isActive?: boolean
+  logoUrl?: string | null
+  coverImageUrl?: string | null
+  seoTitle?: string | null
+  seoDescription?: string | null
+  status?: $Enums.GameStatus
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -318,7 +386,11 @@ export type GameUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  seoTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  seoDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumGameStatusFieldUpdateOperationsInput | $Enums.GameStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -328,7 +400,11 @@ export type GameUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  seoTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  seoDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumGameStatusFieldUpdateOperationsInput | $Enums.GameStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -338,7 +414,11 @@ export type GameCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
+  logoUrl?: Prisma.SortOrder
+  coverImageUrl?: Prisma.SortOrder
+  seoTitle?: Prisma.SortOrder
+  seoDescription?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -348,7 +428,11 @@ export type GameMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
+  logoUrl?: Prisma.SortOrder
+  coverImageUrl?: Prisma.SortOrder
+  seoTitle?: Prisma.SortOrder
+  seoDescription?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -358,7 +442,11 @@ export type GameMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  isActive?: Prisma.SortOrder
+  logoUrl?: Prisma.SortOrder
+  coverImageUrl?: Prisma.SortOrder
+  seoTitle?: Prisma.SortOrder
+  seoDescription?: Prisma.SortOrder
+  status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -366,6 +454,10 @@ export type GameMinOrderByAggregateInput = {
 export type GameScalarRelationFilter = {
   is?: Prisma.GameWhereInput
   isNot?: Prisma.GameWhereInput
+}
+
+export type EnumGameStatusFieldUpdateOperationsInput = {
+  set?: $Enums.GameStatus
 }
 
 export type GameCreateNestedOneWithoutCategoriesInput = {
@@ -401,7 +493,11 @@ export type GameCreateWithoutCategoriesInput = {
   name: string
   slug: string
   description?: string | null
-  isActive?: boolean
+  logoUrl?: string | null
+  coverImageUrl?: string | null
+  seoTitle?: string | null
+  seoDescription?: string | null
+  status?: $Enums.GameStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   listings?: Prisma.ListingCreateNestedManyWithoutGameInput
@@ -412,7 +508,11 @@ export type GameUncheckedCreateWithoutCategoriesInput = {
   name: string
   slug: string
   description?: string | null
-  isActive?: boolean
+  logoUrl?: string | null
+  coverImageUrl?: string | null
+  seoTitle?: string | null
+  seoDescription?: string | null
+  status?: $Enums.GameStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   listings?: Prisma.ListingUncheckedCreateNestedManyWithoutGameInput
@@ -439,7 +539,11 @@ export type GameUpdateWithoutCategoriesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  seoTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  seoDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumGameStatusFieldUpdateOperationsInput | $Enums.GameStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   listings?: Prisma.ListingUpdateManyWithoutGameNestedInput
@@ -450,7 +554,11 @@ export type GameUncheckedUpdateWithoutCategoriesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  seoTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  seoDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumGameStatusFieldUpdateOperationsInput | $Enums.GameStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   listings?: Prisma.ListingUncheckedUpdateManyWithoutGameNestedInput
@@ -461,7 +569,11 @@ export type GameCreateWithoutListingsInput = {
   name: string
   slug: string
   description?: string | null
-  isActive?: boolean
+  logoUrl?: string | null
+  coverImageUrl?: string | null
+  seoTitle?: string | null
+  seoDescription?: string | null
+  status?: $Enums.GameStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   categories?: Prisma.CategoryCreateNestedManyWithoutGameInput
@@ -472,7 +584,11 @@ export type GameUncheckedCreateWithoutListingsInput = {
   name: string
   slug: string
   description?: string | null
-  isActive?: boolean
+  logoUrl?: string | null
+  coverImageUrl?: string | null
+  seoTitle?: string | null
+  seoDescription?: string | null
+  status?: $Enums.GameStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   categories?: Prisma.CategoryUncheckedCreateNestedManyWithoutGameInput
@@ -499,7 +615,11 @@ export type GameUpdateWithoutListingsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  seoTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  seoDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumGameStatusFieldUpdateOperationsInput | $Enums.GameStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   categories?: Prisma.CategoryUpdateManyWithoutGameNestedInput
@@ -510,7 +630,11 @@ export type GameUncheckedUpdateWithoutListingsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverImageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  seoTitle?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  seoDescription?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumGameStatusFieldUpdateOperationsInput | $Enums.GameStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   categories?: Prisma.CategoryUncheckedUpdateManyWithoutGameNestedInput
@@ -561,7 +685,11 @@ export type GameSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   name?: boolean
   slug?: boolean
   description?: boolean
-  isActive?: boolean
+  logoUrl?: boolean
+  coverImageUrl?: boolean
+  seoTitle?: boolean
+  seoDescription?: boolean
+  status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   categories?: boolean | Prisma.Game$categoriesArgs<ExtArgs>
@@ -574,7 +702,11 @@ export type GameSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   name?: boolean
   slug?: boolean
   description?: boolean
-  isActive?: boolean
+  logoUrl?: boolean
+  coverImageUrl?: boolean
+  seoTitle?: boolean
+  seoDescription?: boolean
+  status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["game"]>
@@ -584,7 +716,11 @@ export type GameSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   name?: boolean
   slug?: boolean
   description?: boolean
-  isActive?: boolean
+  logoUrl?: boolean
+  coverImageUrl?: boolean
+  seoTitle?: boolean
+  seoDescription?: boolean
+  status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["game"]>
@@ -594,12 +730,16 @@ export type GameSelectScalar = {
   name?: boolean
   slug?: boolean
   description?: boolean
-  isActive?: boolean
+  logoUrl?: boolean
+  coverImageUrl?: boolean
+  seoTitle?: boolean
+  seoDescription?: boolean
+  status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type GameOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "description" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["game"]>
+export type GameOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "description" | "logoUrl" | "coverImageUrl" | "seoTitle" | "seoDescription" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["game"]>
 export type GameInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   categories?: boolean | Prisma.Game$categoriesArgs<ExtArgs>
   listings?: boolean | Prisma.Game$listingsArgs<ExtArgs>
@@ -619,7 +759,11 @@ export type $GamePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     name: string
     slug: string
     description: string | null
-    isActive: boolean
+    logoUrl: string | null
+    coverImageUrl: string | null
+    seoTitle: string | null
+    seoDescription: string | null
+    status: $Enums.GameStatus
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["game"]>
@@ -1051,7 +1195,11 @@ export interface GameFieldRefs {
   readonly name: Prisma.FieldRef<"Game", 'String'>
   readonly slug: Prisma.FieldRef<"Game", 'String'>
   readonly description: Prisma.FieldRef<"Game", 'String'>
-  readonly isActive: Prisma.FieldRef<"Game", 'Boolean'>
+  readonly logoUrl: Prisma.FieldRef<"Game", 'String'>
+  readonly coverImageUrl: Prisma.FieldRef<"Game", 'String'>
+  readonly seoTitle: Prisma.FieldRef<"Game", 'String'>
+  readonly seoDescription: Prisma.FieldRef<"Game", 'String'>
+  readonly status: Prisma.FieldRef<"Game", 'GameStatus'>
   readonly createdAt: Prisma.FieldRef<"Game", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Game", 'DateTime'>
 }

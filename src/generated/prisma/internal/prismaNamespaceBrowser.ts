@@ -60,6 +60,7 @@ export const ModelName = {
   SellerProfile: 'SellerProfile',
   Game: 'Game',
   Category: 'Category',
+  CategoryField: 'CategoryField',
   Listing: 'Listing',
   ListingAttribute: 'ListingAttribute',
   Order: 'Order',
@@ -198,7 +199,11 @@ export const GameScalarFieldEnum = {
   name: 'name',
   slug: 'slug',
   description: 'description',
-  isActive: 'isActive',
+  logoUrl: 'logoUrl',
+  coverImageUrl: 'coverImageUrl',
+  seoTitle: 'seoTitle',
+  seoDescription: 'seoDescription',
+  status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -213,12 +218,29 @@ export const CategoryScalarFieldEnum = {
   slug: 'slug',
   type: 'type',
   description: 'description',
+  platforms: 'platforms',
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
+
+
+export const CategoryFieldScalarFieldEnum = {
+  id: 'id',
+  categoryId: 'categoryId',
+  key: 'key',
+  label: 'label',
+  type: 'type',
+  isRequired: 'isRequired',
+  options: 'options',
+  sortOrder: 'sortOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CategoryFieldScalarFieldEnum = (typeof CategoryFieldScalarFieldEnum)[keyof typeof CategoryFieldScalarFieldEnum]
 
 
 export const ListingScalarFieldEnum = {

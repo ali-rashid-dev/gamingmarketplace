@@ -30,15 +30,24 @@ export const SellerStatus = {
 export type SellerStatus = (typeof SellerStatus)[keyof typeof SellerStatus]
 
 
-export const CategoryType = {
-  ACCOUNTS: 'ACCOUNTS',
-  CURRENCY: 'CURRENCY',
-  ITEMS: 'ITEMS',
-  BOOSTING: 'BOOSTING',
-  TOP_UPS: 'TOP_UPS'
+export const GameStatus = {
+  DRAFT: 'DRAFT',
+  PUBLISHED: 'PUBLISHED',
+  ARCHIVED: 'ARCHIVED'
 } as const
 
-export type CategoryType = (typeof CategoryType)[keyof typeof CategoryType]
+export type GameStatus = (typeof GameStatus)[keyof typeof GameStatus]
+
+
+export const CategoryFieldType = {
+  TEXT: 'TEXT',
+  NUMBER: 'NUMBER',
+  BOOLEAN: 'BOOLEAN',
+  SELECT: 'SELECT',
+  MULTI_SELECT: 'MULTI_SELECT'
+} as const
+
+export type CategoryFieldType = (typeof CategoryFieldType)[keyof typeof CategoryFieldType]
 
 
 export const ListingStatus = {

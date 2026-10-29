@@ -29,7 +29,7 @@ export type CategoryMinAggregateOutputType = {
   gameId: string | null
   name: string | null
   slug: string | null
-  type: $Enums.CategoryType | null
+  type: string | null
   description: string | null
   isActive: boolean | null
   createdAt: Date | null
@@ -41,7 +41,7 @@ export type CategoryMaxAggregateOutputType = {
   gameId: string | null
   name: string | null
   slug: string | null
-  type: $Enums.CategoryType | null
+  type: string | null
   description: string | null
   isActive: boolean | null
   createdAt: Date | null
@@ -55,6 +55,7 @@ export type CategoryCountAggregateOutputType = {
   slug: number
   type: number
   description: number
+  platforms: number
   isActive: number
   createdAt: number
   updatedAt: number
@@ -93,6 +94,7 @@ export type CategoryCountAggregateInputType = {
   slug?: true
   type?: true
   description?: true
+  platforms?: true
   isActive?: true
   createdAt?: true
   updatedAt?: true
@@ -176,8 +178,9 @@ export type CategoryGroupByOutputType = {
   gameId: string
   name: string
   slug: string
-  type: $Enums.CategoryType
+  type: string
   description: string | null
+  platforms: string[]
   isActive: boolean
   createdAt: Date
   updatedAt: Date
@@ -209,13 +212,15 @@ export type CategoryWhereInput = {
   gameId?: Prisma.StringFilter<"Category"> | string
   name?: Prisma.StringFilter<"Category"> | string
   slug?: Prisma.StringFilter<"Category"> | string
-  type?: Prisma.EnumCategoryTypeFilter<"Category"> | $Enums.CategoryType
+  type?: Prisma.StringFilter<"Category"> | string
   description?: Prisma.StringNullableFilter<"Category"> | string | null
+  platforms?: Prisma.StringNullableListFilter<"Category">
   isActive?: Prisma.BoolFilter<"Category"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Category"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Category"> | Date | string
   game?: Prisma.XOR<Prisma.GameScalarRelationFilter, Prisma.GameWhereInput>
   listings?: Prisma.ListingListRelationFilter
+  fields?: Prisma.CategoryFieldListRelationFilter
 }
 
 export type CategoryOrderByWithRelationInput = {
@@ -225,11 +230,13 @@ export type CategoryOrderByWithRelationInput = {
   slug?: Prisma.SortOrder
   type?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  platforms?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   game?: Prisma.GameOrderByWithRelationInput
   listings?: Prisma.ListingOrderByRelationAggregateInput
+  fields?: Prisma.CategoryFieldOrderByRelationAggregateInput
 }
 
 export type CategoryWhereUniqueInput = Prisma.AtLeast<{
@@ -242,13 +249,15 @@ export type CategoryWhereUniqueInput = Prisma.AtLeast<{
   gameId?: Prisma.StringFilter<"Category"> | string
   name?: Prisma.StringFilter<"Category"> | string
   slug?: Prisma.StringFilter<"Category"> | string
-  type?: Prisma.EnumCategoryTypeFilter<"Category"> | $Enums.CategoryType
+  type?: Prisma.StringFilter<"Category"> | string
   description?: Prisma.StringNullableFilter<"Category"> | string | null
+  platforms?: Prisma.StringNullableListFilter<"Category">
   isActive?: Prisma.BoolFilter<"Category"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Category"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Category"> | Date | string
   game?: Prisma.XOR<Prisma.GameScalarRelationFilter, Prisma.GameWhereInput>
   listings?: Prisma.ListingListRelationFilter
+  fields?: Prisma.CategoryFieldListRelationFilter
 }, "id" | "gameId_slug" | "id_gameId">
 
 export type CategoryOrderByWithAggregationInput = {
@@ -258,6 +267,7 @@ export type CategoryOrderByWithAggregationInput = {
   slug?: Prisma.SortOrder
   type?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  platforms?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -274,8 +284,9 @@ export type CategoryScalarWhereWithAggregatesInput = {
   gameId?: Prisma.StringWithAggregatesFilter<"Category"> | string
   name?: Prisma.StringWithAggregatesFilter<"Category"> | string
   slug?: Prisma.StringWithAggregatesFilter<"Category"> | string
-  type?: Prisma.EnumCategoryTypeWithAggregatesFilter<"Category"> | $Enums.CategoryType
+  type?: Prisma.StringWithAggregatesFilter<"Category"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"Category"> | string | null
+  platforms?: Prisma.StringNullableListFilter<"Category">
   isActive?: Prisma.BoolWithAggregatesFilter<"Category"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Category"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Category"> | Date | string
@@ -285,13 +296,15 @@ export type CategoryCreateInput = {
   id?: string
   name: string
   slug: string
-  type: $Enums.CategoryType
+  type: string
   description?: string | null
+  platforms?: Prisma.CategoryCreateplatformsInput | string[]
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   game: Prisma.GameCreateNestedOneWithoutCategoriesInput
   listings?: Prisma.ListingCreateNestedManyWithoutCategoryInput
+  fields?: Prisma.CategoryFieldCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUncheckedCreateInput = {
@@ -299,25 +312,29 @@ export type CategoryUncheckedCreateInput = {
   gameId: string
   name: string
   slug: string
-  type: $Enums.CategoryType
+  type: string
   description?: string | null
+  platforms?: Prisma.CategoryCreateplatformsInput | string[]
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   listings?: Prisma.ListingUncheckedCreateNestedManyWithoutCategoryInput
+  fields?: Prisma.CategoryFieldUncheckedCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumCategoryTypeFieldUpdateOperationsInput | $Enums.CategoryType
+  type?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  platforms?: Prisma.CategoryUpdateplatformsInput | string[]
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   game?: Prisma.GameUpdateOneRequiredWithoutCategoriesNestedInput
   listings?: Prisma.ListingUpdateManyWithoutCategoryNestedInput
+  fields?: Prisma.CategoryFieldUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateInput = {
@@ -325,12 +342,14 @@ export type CategoryUncheckedUpdateInput = {
   gameId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumCategoryTypeFieldUpdateOperationsInput | $Enums.CategoryType
+  type?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  platforms?: Prisma.CategoryUpdateplatformsInput | string[]
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   listings?: Prisma.ListingUncheckedUpdateManyWithoutCategoryNestedInput
+  fields?: Prisma.CategoryFieldUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryCreateManyInput = {
@@ -338,8 +357,9 @@ export type CategoryCreateManyInput = {
   gameId: string
   name: string
   slug: string
-  type: $Enums.CategoryType
+  type: string
   description?: string | null
+  platforms?: Prisma.CategoryCreateplatformsInput | string[]
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -349,8 +369,9 @@ export type CategoryUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumCategoryTypeFieldUpdateOperationsInput | $Enums.CategoryType
+  type?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  platforms?: Prisma.CategoryUpdateplatformsInput | string[]
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -361,8 +382,9 @@ export type CategoryUncheckedUpdateManyInput = {
   gameId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumCategoryTypeFieldUpdateOperationsInput | $Enums.CategoryType
+  type?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  platforms?: Prisma.CategoryUpdateplatformsInput | string[]
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -376,6 +398,14 @@ export type CategoryListRelationFilter = {
 
 export type CategoryOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
+}
+
+export type StringNullableListFilter<$PrismaModel = never> = {
+  equals?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
+  has?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
+  hasEvery?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  hasSome?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
+  isEmpty?: boolean
 }
 
 export type CategoryGameIdSlugCompoundUniqueInput = {
@@ -395,6 +425,7 @@ export type CategoryCountOrderByAggregateInput = {
   slug?: Prisma.SortOrder
   type?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  platforms?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -471,8 +502,27 @@ export type CategoryUncheckedUpdateManyWithoutGameNestedInput = {
   deleteMany?: Prisma.CategoryScalarWhereInput | Prisma.CategoryScalarWhereInput[]
 }
 
-export type EnumCategoryTypeFieldUpdateOperationsInput = {
-  set?: $Enums.CategoryType
+export type CategoryCreateplatformsInput = {
+  set: string[]
+}
+
+export type CategoryUpdateplatformsInput = {
+  set?: string[]
+  push?: string | string[]
+}
+
+export type CategoryCreateNestedOneWithoutFieldsInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutFieldsInput, Prisma.CategoryUncheckedCreateWithoutFieldsInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutFieldsInput
+  connect?: Prisma.CategoryWhereUniqueInput
+}
+
+export type CategoryUpdateOneRequiredWithoutFieldsNestedInput = {
+  create?: Prisma.XOR<Prisma.CategoryCreateWithoutFieldsInput, Prisma.CategoryUncheckedCreateWithoutFieldsInput>
+  connectOrCreate?: Prisma.CategoryCreateOrConnectWithoutFieldsInput
+  upsert?: Prisma.CategoryUpsertWithoutFieldsInput
+  connect?: Prisma.CategoryWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CategoryUpdateToOneWithWhereWithoutFieldsInput, Prisma.CategoryUpdateWithoutFieldsInput>, Prisma.CategoryUncheckedUpdateWithoutFieldsInput>
 }
 
 export type CategoryCreateNestedOneWithoutListingsInput = {
@@ -493,24 +543,28 @@ export type CategoryCreateWithoutGameInput = {
   id?: string
   name: string
   slug: string
-  type: $Enums.CategoryType
+  type: string
   description?: string | null
+  platforms?: Prisma.CategoryCreateplatformsInput | string[]
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   listings?: Prisma.ListingCreateNestedManyWithoutCategoryInput
+  fields?: Prisma.CategoryFieldCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUncheckedCreateWithoutGameInput = {
   id?: string
   name: string
   slug: string
-  type: $Enums.CategoryType
+  type: string
   description?: string | null
+  platforms?: Prisma.CategoryCreateplatformsInput | string[]
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   listings?: Prisma.ListingUncheckedCreateNestedManyWithoutCategoryInput
+  fields?: Prisma.CategoryFieldUncheckedCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryCreateOrConnectWithoutGameInput = {
@@ -547,23 +601,98 @@ export type CategoryScalarWhereInput = {
   gameId?: Prisma.StringFilter<"Category"> | string
   name?: Prisma.StringFilter<"Category"> | string
   slug?: Prisma.StringFilter<"Category"> | string
-  type?: Prisma.EnumCategoryTypeFilter<"Category"> | $Enums.CategoryType
+  type?: Prisma.StringFilter<"Category"> | string
   description?: Prisma.StringNullableFilter<"Category"> | string | null
+  platforms?: Prisma.StringNullableListFilter<"Category">
   isActive?: Prisma.BoolFilter<"Category"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Category"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Category"> | Date | string
+}
+
+export type CategoryCreateWithoutFieldsInput = {
+  id?: string
+  name: string
+  slug: string
+  type: string
+  description?: string | null
+  platforms?: Prisma.CategoryCreateplatformsInput | string[]
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  game: Prisma.GameCreateNestedOneWithoutCategoriesInput
+  listings?: Prisma.ListingCreateNestedManyWithoutCategoryInput
+}
+
+export type CategoryUncheckedCreateWithoutFieldsInput = {
+  id?: string
+  gameId: string
+  name: string
+  slug: string
+  type: string
+  description?: string | null
+  platforms?: Prisma.CategoryCreateplatformsInput | string[]
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  listings?: Prisma.ListingUncheckedCreateNestedManyWithoutCategoryInput
+}
+
+export type CategoryCreateOrConnectWithoutFieldsInput = {
+  where: Prisma.CategoryWhereUniqueInput
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutFieldsInput, Prisma.CategoryUncheckedCreateWithoutFieldsInput>
+}
+
+export type CategoryUpsertWithoutFieldsInput = {
+  update: Prisma.XOR<Prisma.CategoryUpdateWithoutFieldsInput, Prisma.CategoryUncheckedUpdateWithoutFieldsInput>
+  create: Prisma.XOR<Prisma.CategoryCreateWithoutFieldsInput, Prisma.CategoryUncheckedCreateWithoutFieldsInput>
+  where?: Prisma.CategoryWhereInput
+}
+
+export type CategoryUpdateToOneWithWhereWithoutFieldsInput = {
+  where?: Prisma.CategoryWhereInput
+  data: Prisma.XOR<Prisma.CategoryUpdateWithoutFieldsInput, Prisma.CategoryUncheckedUpdateWithoutFieldsInput>
+}
+
+export type CategoryUpdateWithoutFieldsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  platforms?: Prisma.CategoryUpdateplatformsInput | string[]
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  game?: Prisma.GameUpdateOneRequiredWithoutCategoriesNestedInput
+  listings?: Prisma.ListingUpdateManyWithoutCategoryNestedInput
+}
+
+export type CategoryUncheckedUpdateWithoutFieldsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  gameId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  platforms?: Prisma.CategoryUpdateplatformsInput | string[]
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  listings?: Prisma.ListingUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryCreateWithoutListingsInput = {
   id?: string
   name: string
   slug: string
-  type: $Enums.CategoryType
+  type: string
   description?: string | null
+  platforms?: Prisma.CategoryCreateplatformsInput | string[]
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   game: Prisma.GameCreateNestedOneWithoutCategoriesInput
+  fields?: Prisma.CategoryFieldCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryUncheckedCreateWithoutListingsInput = {
@@ -571,11 +700,13 @@ export type CategoryUncheckedCreateWithoutListingsInput = {
   gameId: string
   name: string
   slug: string
-  type: $Enums.CategoryType
+  type: string
   description?: string | null
+  platforms?: Prisma.CategoryCreateplatformsInput | string[]
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
+  fields?: Prisma.CategoryFieldUncheckedCreateNestedManyWithoutCategoryInput
 }
 
 export type CategoryCreateOrConnectWithoutListingsInput = {
@@ -598,12 +729,14 @@ export type CategoryUpdateWithoutListingsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumCategoryTypeFieldUpdateOperationsInput | $Enums.CategoryType
+  type?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  platforms?: Prisma.CategoryUpdateplatformsInput | string[]
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   game?: Prisma.GameUpdateOneRequiredWithoutCategoriesNestedInput
+  fields?: Prisma.CategoryFieldUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateWithoutListingsInput = {
@@ -611,19 +744,22 @@ export type CategoryUncheckedUpdateWithoutListingsInput = {
   gameId?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumCategoryTypeFieldUpdateOperationsInput | $Enums.CategoryType
+  type?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  platforms?: Prisma.CategoryUpdateplatformsInput | string[]
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  fields?: Prisma.CategoryFieldUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryCreateManyGameInput = {
   id?: string
   name: string
   slug: string
-  type: $Enums.CategoryType
+  type: string
   description?: string | null
+  platforms?: Prisma.CategoryCreateplatformsInput | string[]
   isActive?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -633,32 +769,37 @@ export type CategoryUpdateWithoutGameInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumCategoryTypeFieldUpdateOperationsInput | $Enums.CategoryType
+  type?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  platforms?: Prisma.CategoryUpdateplatformsInput | string[]
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   listings?: Prisma.ListingUpdateManyWithoutCategoryNestedInput
+  fields?: Prisma.CategoryFieldUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateWithoutGameInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumCategoryTypeFieldUpdateOperationsInput | $Enums.CategoryType
+  type?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  platforms?: Prisma.CategoryUpdateplatformsInput | string[]
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   listings?: Prisma.ListingUncheckedUpdateManyWithoutCategoryNestedInput
+  fields?: Prisma.CategoryFieldUncheckedUpdateManyWithoutCategoryNestedInput
 }
 
 export type CategoryUncheckedUpdateManyWithoutGameInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumCategoryTypeFieldUpdateOperationsInput | $Enums.CategoryType
+  type?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  platforms?: Prisma.CategoryUpdateplatformsInput | string[]
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -671,10 +812,12 @@ export type CategoryUncheckedUpdateManyWithoutGameInput = {
 
 export type CategoryCountOutputType = {
   listings: number
+  fields: number
 }
 
 export type CategoryCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   listings?: boolean | CategoryCountOutputTypeCountListingsArgs
+  fields?: boolean | CategoryCountOutputTypeCountFieldsArgs
 }
 
 /**
@@ -694,6 +837,13 @@ export type CategoryCountOutputTypeCountListingsArgs<ExtArgs extends runtime.Typ
   where?: Prisma.ListingWhereInput
 }
 
+/**
+ * CategoryCountOutputType without action
+ */
+export type CategoryCountOutputTypeCountFieldsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CategoryFieldWhereInput
+}
+
 
 export type CategorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -702,11 +852,13 @@ export type CategorySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   slug?: boolean
   type?: boolean
   description?: boolean
+  platforms?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   game?: boolean | Prisma.GameDefaultArgs<ExtArgs>
   listings?: boolean | Prisma.Category$listingsArgs<ExtArgs>
+  fields?: boolean | Prisma.Category$fieldsArgs<ExtArgs>
   _count?: boolean | Prisma.CategoryCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["category"]>
 
@@ -717,6 +869,7 @@ export type CategorySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   slug?: boolean
   type?: boolean
   description?: boolean
+  platforms?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -730,6 +883,7 @@ export type CategorySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   slug?: boolean
   type?: boolean
   description?: boolean
+  platforms?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -743,15 +897,17 @@ export type CategorySelectScalar = {
   slug?: boolean
   type?: boolean
   description?: boolean
+  platforms?: boolean
   isActive?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type CategoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "gameId" | "name" | "slug" | "type" | "description" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["category"]>
+export type CategoryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "gameId" | "name" | "slug" | "type" | "description" | "platforms" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["category"]>
 export type CategoryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   game?: boolean | Prisma.GameDefaultArgs<ExtArgs>
   listings?: boolean | Prisma.Category$listingsArgs<ExtArgs>
+  fields?: boolean | Prisma.Category$fieldsArgs<ExtArgs>
   _count?: boolean | Prisma.CategoryCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CategoryIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -766,14 +922,16 @@ export type $CategoryPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   objects: {
     game: Prisma.$GamePayload<ExtArgs>
     listings: Prisma.$ListingPayload<ExtArgs>[]
+    fields: Prisma.$CategoryFieldPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     gameId: string
     name: string
     slug: string
-    type: $Enums.CategoryType
+    type: string
     description: string | null
+    platforms: string[]
     isActive: boolean
     createdAt: Date
     updatedAt: Date
@@ -1173,6 +1331,7 @@ export interface Prisma__CategoryClient<T, Null = never, ExtArgs extends runtime
   readonly [Symbol.toStringTag]: "PrismaPromise"
   game<T extends Prisma.GameDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.GameDefaultArgs<ExtArgs>>): Prisma.Prisma__GameClient<runtime.Types.Result.GetResult<Prisma.$GamePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   listings<T extends Prisma.Category$listingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$listingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ListingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  fields<T extends Prisma.Category$fieldsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Category$fieldsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CategoryFieldPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1206,8 +1365,9 @@ export interface CategoryFieldRefs {
   readonly gameId: Prisma.FieldRef<"Category", 'String'>
   readonly name: Prisma.FieldRef<"Category", 'String'>
   readonly slug: Prisma.FieldRef<"Category", 'String'>
-  readonly type: Prisma.FieldRef<"Category", 'CategoryType'>
+  readonly type: Prisma.FieldRef<"Category", 'String'>
   readonly description: Prisma.FieldRef<"Category", 'String'>
+  readonly platforms: Prisma.FieldRef<"Category", 'String[]'>
   readonly isActive: Prisma.FieldRef<"Category", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Category", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Category", 'DateTime'>
@@ -1633,6 +1793,30 @@ export type Category$listingsArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.ListingScalarFieldEnum | Prisma.ListingScalarFieldEnum[]
+}
+
+/**
+ * Category.fields
+ */
+export type Category$fieldsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CategoryField
+   */
+  select?: Prisma.CategoryFieldSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CategoryField
+   */
+  omit?: Prisma.CategoryFieldOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CategoryFieldInclude<ExtArgs> | null
+  where?: Prisma.CategoryFieldWhereInput
+  orderBy?: Prisma.CategoryFieldOrderByWithRelationInput | Prisma.CategoryFieldOrderByWithRelationInput[]
+  cursor?: Prisma.CategoryFieldWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CategoryFieldScalarFieldEnum | Prisma.CategoryFieldScalarFieldEnum[]
 }
 
 /**

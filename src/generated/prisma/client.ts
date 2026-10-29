@@ -87,6 +87,11 @@ export type Game = Prisma.GameModel
  */
 export type Category = Prisma.CategoryModel
 /**
+ * Model CategoryField
+ *
+ */
+export type CategoryField = Prisma.CategoryFieldModel
+/**
  * Model Listing
  *
  */

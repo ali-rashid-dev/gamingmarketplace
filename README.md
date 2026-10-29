@@ -18,6 +18,16 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
+## Admin game catalog
+
+Administrators can manage games and their product categories at `/admin/catalog`.
+Category types, supported platforms, and listing-field definitions are configured
+in the admin interface. Apply the catalog database migration with
+`pnpm exec prisma migrate dev` before using this feature.
+
+Game logo and cover uploads use UploadThing. Set `UPLOADTHING_TOKEN` in the
+server environment to enable uploads; image URLs can also be entered directly.
+
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ## Learn More
