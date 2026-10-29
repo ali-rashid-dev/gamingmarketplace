@@ -1,48 +1,26 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useTransition } from "react";
+import {
+  createCatalogCategory,
+  createCatalogGame,
+  setCatalogGameStatus,
+  updateCatalogCategory,
+  updateCatalogGame,
+  uploadCatalogImage,
+} from "./actions";
+import type {
+  CatalogCategory,
+  CatalogField,
+  CatalogGame,
+} from "./catalog-types";
+import type { CategoryFieldType, GameStatus } from "@/generated/prisma/enums";
 
-type FieldKind = "TEXT" | "NUMBER" | "BOOLEAN" | "SELECT" | "MULTI_SELECT";
-type GameStatus = "DRAFT" | "PUBLISHED" | "ARCHIVED";
-
-type CatalogField = {
-  id?: string;
-  key: string;
-  label: string;
-  type: FieldKind;
-  isRequired: boolean;
-  options: string[];
-  sortOrder: number;
-};
-
-type CatalogCategory = {
-  id: string;
-  gameId: string;
-  name: string;
-  slug: string;
-  type: string;
-  description: string | null;
-  platforms: string[];
-  isActive: boolean;
-  fields: CatalogField[];
-};
-
-type CatalogGame = {
-  id: string;
-  name: string;
-  slug: string;
-  description: string | null;
-  logoUrl: string | null;
-  coverImageUrl: string | null;
-  seoTitle: string | null;
-  seoDescription: string | null;
-  status: GameStatus;
-  listingCount: number;
-  categories: CatalogCategory[];
-};
-
+type FieldKind = CategoryFieldType;
 type GameForm = Omit<CatalogGame, "id" | "listingCount" | "categories">;
-type CategoryForm = Omit<CatalogCategory, "id" | "gameId">;
+type CategoryForm = Omit<CatalogCategory, "id" | "gameId" | "fields"> & {
+  fields: Omit<CatalogField, "id">[];
+};
 
 const emptyGame: GameForm = {
   name: "",
@@ -71,11 +49,6 @@ const labelClass = "block text-sm font-medium text-foreground";
 const buttonClass =
   "rounded-md border border-border px-3 py-2 text-sm font-medium transition hover:bg-accent disabled:cursor-not-allowed disabled:opacity-50";
 
-async function responseError(response: Response) {
-  const body = (await response.json().catch(() => null)) as { error?: string } | null;
-  return body?.error ?? `Request failed (${response.status})`;
-}
-
 function slugify(value: string) {
   return value
     .toLowerCase()
@@ -99,6 +72,7 @@ export default function CatalogClient({
   const [uploading, setUploading] = useState<"logoUrl" | "coverImageUrl" | null>(null);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
+  const [, runAction] = useTransition();
 
   const selectedGame = games.find((game) => game.id === selectedGameId) ?? null;
 
@@ -129,74 +103,64 @@ export default function CatalogClient({
     setNotice("");
   }
 
-  async function reloadGames() {
-    const response = await fetch("/api/admin/catalog/games");
-    if (!response.ok) throw new Error(await responseError(response));
-    const body = (await response.json()) as { games: CatalogGame[] };
-    setGames(body.games);
-  }
-
-  async function saveGame(event: React.FormEvent<HTMLFormElement>) {
+  function saveGame(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setSavingGame(true);
     setError("");
     setNotice("");
-    try {
-      const response = await fetch(
-        selectedGameId
-          ? `/api/admin/catalog/games/${selectedGameId}`
-          : "/api/admin/catalog/games",
-        {
-          method: selectedGameId ? "PATCH" : "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
+    runAction(async () => {
+      try {
+        const input = {
             ...gameForm,
             description: gameForm.description || null,
             logoUrl: gameForm.logoUrl || null,
             coverImageUrl: gameForm.coverImageUrl || null,
             seoTitle: gameForm.seoTitle || null,
             seoDescription: gameForm.seoDescription || null,
-          }),
+        };
+        if (selectedGameId) {
+          const result = await updateCatalogGame(selectedGameId, input);
+          if (!result.success) throw new Error(result.error);
+          setGames(result.data.games);
+        } else {
+          const result = await createCatalogGame(input);
+          if (!result.success) throw new Error(result.error);
+          setGames(result.data.games);
+          setSelectedGameId(result.data.gameId);
         }
-      );
-      if (!response.ok) throw new Error(await responseError(response));
-      const body = (await response.json()) as { game: { id: string } };
-      await reloadGames();
-      setSelectedGameId(body.game.id);
-      setNotice(selectedGameId ? "Game changes saved." : "Game created.");
-    } catch (caught) {
-      setError(caught instanceof Error ? caught.message : "Unable to save game.");
-    } finally {
-      setSavingGame(false);
-    }
+        setNotice(selectedGameId ? "Game changes saved." : "Game created.");
+      } catch (caught) {
+        setError(caught instanceof Error ? caught.message : "Unable to save game.");
+      } finally {
+        setSavingGame(false);
+      }
+    });
   }
 
-  async function changeStatus(status: GameStatus) {
+  function changeStatus(status: GameStatus) {
     if (!selectedGameId) return;
     setError("");
     setNotice("");
-    try {
-      const response = await fetch(`/api/admin/catalog/games/${selectedGameId}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status }),
-      });
-      if (!response.ok) throw new Error(await responseError(response));
-      setGameForm((current) => ({ ...current, status }));
-      await reloadGames();
-      setNotice(
-        status === "PUBLISHED"
-          ? "Game published."
-          : status === "ARCHIVED"
-            ? "Game archived."
-            : "Game moved to draft."
-      );
-    } catch (caught) {
-      setError(caught instanceof Error ? caught.message : "Unable to update game status.");
-    }
+    runAction(async () => {
+      try {
+        const result = await setCatalogGameStatus(selectedGameId, status);
+        if (!result.success) throw new Error(result.error);
+        setGameForm((current) => ({ ...current, status }));
+        setGames(result.data.games);
+        setNotice(
+          status === "PUBLISHED"
+            ? "Game published."
+            : status === "ARCHIVED"
+              ? "Game archived."
+              : "Game moved to draft."
+        );
+      } catch (caught) {
+        setError(caught instanceof Error ? caught.message : "Unable to update game status.");
+      }
+    });
   }
 
-  async function uploadImage(
+  function uploadImage(
     field: "logoUrl" | "coverImageUrl",
     file: File | undefined
   ) {
@@ -204,22 +168,18 @@ export default function CatalogClient({
     setUploading(field);
     setError("");
     setNotice("");
-    try {
-      const data = new FormData();
-      data.set("file", file);
-      const response = await fetch("/api/admin/catalog/upload", {
-        method: "POST",
-        body: data,
-      });
-      if (!response.ok) throw new Error(await responseError(response));
-      const result = (await response.json()) as { url: string };
-      setGameForm((current) => ({ ...current, [field]: result.url }));
-      setNotice(field === "logoUrl" ? "Logo uploaded." : "Cover image uploaded.");
-    } catch (caught) {
-      setError(caught instanceof Error ? caught.message : "Unable to upload image.");
-    } finally {
-      setUploading(null);
-    }
+    runAction(async () => {
+      try {
+        const result = await uploadCatalogImage(file);
+        if (!result.success) throw new Error(result.error);
+        setGameForm((current) => ({ ...current, [field]: result.data.url }));
+        setNotice(field === "logoUrl" ? "Logo uploaded." : "Cover image uploaded.");
+      } catch (caught) {
+        setError(caught instanceof Error ? caught.message : "Unable to upload image.");
+      } finally {
+        setUploading(null);
+      }
+    });
   }
 
   function startCategory(category?: CatalogCategory) {
@@ -248,21 +208,15 @@ export default function CatalogClient({
     setNotice("");
   }
 
-  async function saveCategory(event: React.FormEvent<HTMLFormElement>) {
+  function saveCategory(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!selectedGameId) return;
     setSavingCategory(true);
     setError("");
     setNotice("");
-    try {
-      const response = await fetch(
-        editingCategoryId
-          ? `/api/admin/catalog/categories/${editingCategoryId}`
-          : `/api/admin/catalog/games/${selectedGameId}/categories`,
-        {
-          method: editingCategoryId ? "PATCH" : "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
+    runAction(async () => {
+      try {
+        const input = {
             ...categoryForm,
             description: categoryForm.description || null,
             platforms: categoryForm.platforms.map((platform) => platform.trim()).filter(Boolean),
@@ -271,19 +225,21 @@ export default function CatalogClient({
               options: field.options.map((option) => option.trim()).filter(Boolean),
               sortOrder: index,
             })),
-          }),
-        }
-      );
-      if (!response.ok) throw new Error(await responseError(response));
-      await reloadGames();
-      setCategoryForm(emptyCategory);
-      setEditingCategoryId(null);
-      setNotice(editingCategoryId ? "Category changes saved." : "Category created.");
-    } catch (caught) {
-      setError(caught instanceof Error ? caught.message : "Unable to save category.");
-    } finally {
-      setSavingCategory(false);
-    }
+        };
+        const result = editingCategoryId
+          ? await updateCatalogCategory(editingCategoryId, input)
+          : await createCatalogCategory(selectedGameId, input);
+        if (!result.success) throw new Error(result.error);
+        setGames(result.data.games);
+        setCategoryForm(emptyCategory);
+        setEditingCategoryId(null);
+        setNotice(editingCategoryId ? "Category changes saved." : "Category created.");
+      } catch (caught) {
+        setError(caught instanceof Error ? caught.message : "Unable to save category.");
+      } finally {
+        setSavingCategory(false);
+      }
+    });
   }
 
   function updateField(index: number, patch: Partial<CatalogField>) {
