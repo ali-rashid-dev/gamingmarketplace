@@ -50,6 +50,7 @@ export default function RegisterPageClient() {
         name: values.name,
         email: values.email,
         password: values.password,
+        callbackURL: "/dashboard",
       });
 
       if (res?.error) {

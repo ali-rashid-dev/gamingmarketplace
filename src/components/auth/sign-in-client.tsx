@@ -12,7 +12,7 @@ import { GoogleAuthButton } from "@/components/auth/GoogleAuthButton";
 import { AuthDivider } from "@/components/auth/AuthDivider";
 import { AuthError } from "@/components/auth/AuthError";
 import { AuthFooterLink } from "@/components/auth/AuthFooterLink";
-import { validateEmail, validatePassword } from "@/validations/auth-validation";
+import { validateEmail, validateRequired } from "@/validations/auth-validation";
 import { signIn } from "@/lib/auth-client";
 
 export default function SignInPageClient() {
@@ -32,7 +32,7 @@ export default function SignInPageClient() {
     e.preventDefault();
     const next = {
       email: validateEmail(values.email),
-      password: validatePassword(values.password),
+      password: validateRequired(values.password, "Password"),
     };
     setErrors(next);
     setFormError(null);

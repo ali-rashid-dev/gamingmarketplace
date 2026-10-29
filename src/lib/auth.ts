@@ -6,6 +6,11 @@ import ForgotPasswordEmail from "@/components/emails/reset-password";
 import VerifyEmail from "@/components/emails/verify-email";
 
 const resend = new Resend(process.env.RESEND_API_KEY as string);
+const emailSender = process.env.RESEND_FROM_EMAIL;
+
+if (!emailSender) {
+    throw new Error("RESEND_FROM_EMAIL must be set to a sender address on a verified domain.");
+}
 
 export const auth = betterAuth({
     database: prismaAdapter(prisma, {
@@ -14,7 +19,7 @@ export const auth = betterAuth({
     emailVerification: {
         sendVerificationEmail: async ({ user, url, token }, request) => {
             void resend.emails.send({
-                from: "onboarding@resend.dev",
+                from: emailSender,
                 to: user.email,
                 subject: "Verify your email address",
                 react: VerifyEmail({
@@ -22,6 +27,12 @@ export const auth = betterAuth({
                     verificationUrl: url,
                     userEmail: user.email,
                 }),
+            }).then(({ error }) => {
+                if (error) {
+                    console.error("Failed to send verification email", error);
+                }
+            }).catch((error: unknown) => {
+                console.error("Failed to send verification email", error);
             });
         },
         sendOnSignUp: true,
@@ -30,8 +41,8 @@ export const auth = betterAuth({
     emailAndPassword: {
         enabled: true,
         sendResetPassword: async ({ user, url, token }, request) => {
-            await resend.emails.send({
-                from: "onboarding@resend.dev",
+            const { error } = await resend.emails.send({
+                from: emailSender,
                 to: user.email,
                 subject: 'Reset your password',
                 react: ForgotPasswordEmail({
@@ -40,6 +51,10 @@ export const auth = betterAuth({
                     userEmail: user.email,
                 })
             });
+            if (error) {
+                console.error("Failed to send password reset email", error);
+                throw error;
+            }
         }
 
     },

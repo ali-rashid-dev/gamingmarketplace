@@ -48,7 +48,7 @@ export const VerifyEmail = (props: VerifyEmailProps) => {
                 Welcome to GameTrade! To complete your registration and unlock full access to your vault, please verify your email address (<strong>{userEmail}</strong>).
               </Text>
               <Text className="m-0 mb-[24px] text-[16px] text-gray-700 leading-[24px]">
-                Click the button below to confirm your email. This link will expire in 24 hours.
+                Click the button below to confirm your email. This link will expire in 1 hour.
               </Text>
             </Section>
 
@@ -84,7 +84,7 @@ export const VerifyEmail = (props: VerifyEmailProps) => {
                 • If you didn&apos;t create a GameTrade account, you can safely ignore this email
               </Text>
               <Text className="m-0 mb-[8px] text-[14px] text-gray-600 leading-[20px]">
-                • This verification link will expire in 24 hours
+                • This verification link will expire in 1 hour
               </Text>
               <Text className="m-0 text-[14px] text-gray-600 leading-[20px]">
                 • Never share this link with anyone for security

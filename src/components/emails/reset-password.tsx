@@ -49,7 +49,7 @@ const ForgotPasswordEmail = (props: ForgotPasswordEmailProps) => {
               </Text>
               <Text className="m-0 mb-[24px] text-[16px] text-gray-700 leading-[24px]">
                 Click the button below to create a new password. This link will
-                expire in 24 hours for security reasons.
+                expire in 1 hour for security reasons.
               </Text>
             </Section>
 
@@ -87,7 +87,7 @@ const ForgotPasswordEmail = (props: ForgotPasswordEmailProps) => {
                 this email
               </Text>
               <Text className="m-0 mb-[8px] text-[14px] text-gray-600 leading-[20px]">
-                • This link will expire in 24 hours
+                • This link will expire in 1 hour
               </Text>
               <Text className="m-0 text-[14px] text-gray-600 leading-[20px]">
                 • For security, never share this link with anyone

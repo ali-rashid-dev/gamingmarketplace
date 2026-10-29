@@ -105,6 +105,10 @@ produces and the platform boots:
 
 ```ts
 // service.ts
+import { compute, rawPostgres } from '@prisma/composer';
+import { node } from '@prisma/composer/node';
+import { authContract } from './contract.ts';
+
 export default compute({
   name: 'auth',
   deps: { db: rawPostgres() },
@@ -113,6 +117,9 @@ export default compute({
 });
 
 // server.ts
+import service from './service.ts';
+import { serve } from '@prisma/composer/service-rpc';
+
 const { db } = service.load(); // { url }: you construct your own client
 const handler = serve(service, {
   rpc: { verify: async ({ token }) => ({ ok: token.length > 0 }) },
@@ -176,22 +183,25 @@ be reimplemented:
    the handler runs. Nothing in your code declares it. Consequences: don't
    build your own service-to-service auth, and don't `curl` a deployed
    `/rpc/<method>` to check it works. An unwired caller always gets `401`,
-   which looks like a broken deploy and isn't. Debug through a consumer, or
-   locally, where nothing is enforced. Keys are per binding (one leaking
-   can't impersonate another consumer), service-scoped (any valid key
-   reaches every method; split services to gate separately), rotated only by
-   removing the binding or destroying the stack and redeploying, and stored
-   in deploy-owned `COMPOSER_*` variables you never hand-edit.
+   which looks like a broken deploy and isn't. Bare local service runs and
+   tests do not enforce service keys, but `dev` provisions keys and rejects
+   direct probes with `401`. Debug through a consumer. Keys are per binding
+   (one leaking can't impersonate another consumer), service-scoped (any
+   valid key reaches every method; split services to gate separately),
+   rotated only by removing the binding or destroying the stack and
+   redeploying, and stored in deploy-owned `COMPOSER_*` variables you never
+   hand-edit.
 2. **Idempotency and retries.** Every generated-client call carries an
    `Idempotency-Key`; dropped calls retry with backoff, and `serve()` runs
-   one call per key, replaying the completed answer to late retries. Every
-   method is therefore safely retryable and no contract declares anything
-   about it (there is no "is this idempotent" flag; don't invent one). A
-   handler may take an optional third argument `(input, deps, ctx)` and read
-   `ctx.idempotencyKey` (`string | undefined`) if it needs exactly-once
-   beyond one instance's memory; most don't. Locally and in tests nothing is
-   provisioned, so `serve()` passes every call through: never supply a key
-   in test inputs.
+   one call per key, replaying the completed answer to late retries. Handlers
+   must be idempotent, or persist `ctx.idempotencyKey` in their own
+   transaction so a crash after a side effect but before completion does not
+   repeat that side effect. A handler may take an optional third argument
+   `(input, deps, ctx)` and read `ctx.idempotencyKey` (`string | undefined`).
+   No contract declares anything about retries (there is no "is this
+   idempotent" flag; don't invent one). Locally and in tests nothing is
+   provisioned, so `serve()` passes every call through: never supply a key in
+   test inputs.
 
 ## Builds are yours
 
@@ -263,9 +273,12 @@ database only, `prisma db update`. Never skip step 3 before a deploy. See
 
 Deploy compares the declared topology against recorded deploy state and
 applies only the difference. Re-deploying with nothing changed is a no-op;
-removing a node removes its deployed resource. The Prisma Cloud target
-requires exactly two environment variables: `PRISMA_SERVICE_TOKEN` and
-`PRISMA_WORKSPACE_ID`. There is no interactive login.
+removing a node removes its deployed resource. The standalone
+`@prisma/composer@0.17.0` CLI has no interactive login command and requires
+`PRISMA_SERVICE_TOKEN` and `PRISMA_WORKSPACE_ID`. In newer Prisma CLI hosts
+that provide `prisma auth login`, local `prisma deploy` can use the
+interactive session; CI and headless runs still require those environment
+variables. Composer control operations also require the environment variables.
 
 **Stages.** A stage is an environment name chosen on the command line at
 deploy time, never written in the topology. The identical graph deploys
@@ -464,9 +477,11 @@ today the blocks above plus your own Modules are the whole set, so verify a
 
 Name the gap instead of inventing an API:
 
-1. **No interactive auth in the `prisma-composer` CLI.** Its deploys
-   authenticate only via a static
-   `PRISMA_SERVICE_TOKEN`; there is no `login` flow.
+1. **Authentication depends on the CLI host and version.** The standalone
+   `@prisma/composer@0.17.0` CLI has no interactive login command and needs
+   `PRISMA_SERVICE_TOKEN` plus `PRISMA_WORKSPACE_ID`. A newer Prisma CLI host
+   may provide `prisma auth login` for interactive local deploys; CI and
+   headless runs still need the environment variables.
 2. **No in-memory contract bindings.** A dependency can't yet be wired to a
    co-located handler without HTTP; use `bootstrapService` with a loopback
    fake.
