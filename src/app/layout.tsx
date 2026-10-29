@@ -14,8 +14,9 @@ const zillaSlab = Zilla_Slab({
 });
 
 export const metadata: Metadata = {
-  title: "GameTrade — Secure Asset Vault",
-  description: "Secure gaming marketplace vault for buying, selling, and trading game assets.",
+  title: "GameTrade — Game Marketplace",
+  description:
+    "Discover game accounts, items, top-ups, and services from sellers on GameTrade.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

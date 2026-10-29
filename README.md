@@ -31,6 +31,18 @@ server environment to enable uploads; image URLs can also be entered directly.
 Application data mutations use authenticated Server Actions. The `/api/auth`
 route remains for Better Auth's required authentication protocol endpoints.
 
+## Public storefront
+
+The public storefront is server-rendered and available without an account:
+`/` is the homepage, `/games` lists published games, `/games/[gameSlug]` shows a
+game landing page, and `/games/[gameSlug]/[categorySlug]` lists offers.
+Individual offers are at `/offers/[offerId]`; approved seller shops are at
+`/shops/[shopSlug]`. Help, policy, contact, and seller information are available
+at `/help`, `/policies`, `/contact`, and `/sell`.
+
+Only active listings attached to published games, visible categories, and
+approved sellers are shown publicly.
+
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ## Learn More
