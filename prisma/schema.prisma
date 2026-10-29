@@ -5,23 +5,145 @@ datasource db {
   provider = "postgresql"
 }
 
-// Looking for the Better Auth generated models? Use `npx auth generate`.
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
 }
 
-model User {
-  id            String    @id
-  name          String
-  email         String    @unique
-  emailVerified Boolean
-  image         String?
-  createdAt     DateTime
-  updatedAt     DateTime
-  sessions      Session[]
-  accounts      Account[]
+enum UserRole {
+  USER
+  ADMIN
+}
 
+enum SellerStatus {
+  PENDING
+  APPROVED
+  SUSPENDED
+  REJECTED
+}
+
+enum CategoryType {
+  ACCOUNTS
+  CURRENCY
+  ITEMS
+  BOOSTING
+  TOP_UPS
+}
+
+enum ListingStatus {
+  DRAFT
+  ACTIVE
+  PAUSED
+  SOLD_OUT
+  REMOVED
+}
+
+enum OrderStatus {
+  AWAITING_PAYMENT
+  PAID
+  PROCESSING
+  COMPLETED
+  CANCELLED
+  REFUNDED
+  DISPUTED
+}
+
+enum OrderItemStatus {
+  PENDING
+  PROCESSING
+  DELIVERED
+  COMPLETED
+  CANCELLED
+  REFUNDED
+}
+
+enum PaymentStatus {
+  PENDING
+  AUTHORIZED
+  SUCCEEDED
+  FAILED
+  REFUNDED
+  PARTIALLY_REFUNDED
+}
+
+enum DeliveryStatus {
+  PENDING
+  IN_PROGRESS
+  DELIVERED
+  ACCEPTED
+  FAILED
+}
+
+enum DisputeStatus {
+  OPEN
+  UNDER_REVIEW
+  RESOLVED
+  BUYER_FAVOR
+  SELLER_FAVOR
+  CLOSED
+}
+
+enum WithdrawalStatus {
+  REQUESTED
+  APPROVED
+  PROCESSING
+  PAID
+  REJECTED
+  FAILED
+}
+
+enum LedgerEntryType {
+  CREDIT
+  DEBIT
+}
+
+enum LedgerSourceType {
+  ORDER
+  PAYMENT
+  WITHDRAWAL
+  REFUND
+  ADJUSTMENT
+}
+
+enum NotificationType {
+  ORDER_UPDATE
+  MESSAGE
+  PAYMENT_UPDATE
+  REVIEW
+  DISPUTE_UPDATE
+  SELLER_UPDATE
+  SYSTEM
+}
+
+enum NotificationChannel {
+  IN_APP
+  EMAIL
+}
+
+model User {
+  id                  String            @id
+  name                String
+  email               String            @unique
+  emailVerified       Boolean
+  image               String?
+  role                UserRole          @default(USER)
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+  sessions            Session[]
+  accounts            Account[]
+  profile             AccountProfile?
+  sellerProfile       SellerProfile?
+  orders              Order[]           @relation("OrderBuyer")
+  buyerConversations  Conversation[]    @relation("ConversationBuyer")
+  sellerConversations Conversation[]    @relation("ConversationSeller")
+  messages            Message[]
+  reviews             Review[]          @relation("ReviewBuyer")
+  openedDisputes      Dispute[]         @relation("DisputeOpener")
+  submittedEvidence   DisputeEvidence[]
+  notifications       Notification[]
+  auditLogs           AuditLog[]        @relation("AuditActor")
+
+  @@index([role])
   @@map("user")
 }
 
@@ -29,13 +151,15 @@ model Session {
   id        String   @id
   expiresAt DateTime
   token     String   @unique
-  createdAt DateTime
-  updatedAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   ipAddress String?
   userAgent String?
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  @@index([userId])
+  @@index([expiresAt])
   @@map("session")
 }
 
@@ -52,9 +176,11 @@ model Account {
   refreshTokenExpiresAt DateTime?
   scope                 String?
   password              String?
-  createdAt             DateTime
-  updatedAt             DateTime
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
 
+  @@unique([providerId, accountId])
+  @@index([userId])
   @@map("account")
 }
 
@@ -63,8 +189,360 @@ model Verification {
   identifier String
   value      String
   expiresAt  DateTime
-  createdAt  DateTime?
-  updatedAt  DateTime?
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
 
+  @@index([identifier])
+  @@index([expiresAt])
   @@map("verification")
+}
+
+model AccountProfile {
+  id                 String   @id @default(cuid())
+  userId             String   @unique
+  username           String   @unique
+  displayName        String?
+  bio                String?
+  locale             String   @default("en")
+  preferredCurrency  String   @default("USD") @db.Char(3)
+  emailNotifications Boolean  @default(true)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  user               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model SellerProfile {
+  id            String        @id @default(cuid())
+  userId        String        @unique
+  shopName      String
+  slug          String        @unique
+  description   String?
+  status        SellerStatus  @default(PENDING)
+  verifiedAt    DateTime?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  user          User          @relation(fields: [userId], references: [id], onDelete: Restrict)
+  listings      Listing[]
+  orderItems    OrderItem[]
+  reviews       Review[]
+  ledgerEntries LedgerEntry[]
+  withdrawals   Withdrawal[]
+
+  @@index([status, createdAt])
+}
+
+model Game {
+  id          String     @id @default(cuid())
+  name        String     @unique
+  slug        String     @unique
+  description String?
+  isActive    Boolean    @default(true)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  categories  Category[]
+  listings    Listing[]
+
+  @@index([isActive, name])
+}
+
+model Category {
+  id          String       @id @default(cuid())
+  gameId      String
+  name        String
+  slug        String
+  type        CategoryType
+  description String?
+  isActive    Boolean      @default(true)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  game        Game         @relation(fields: [gameId], references: [id], onDelete: Restrict)
+  listings    Listing[]
+
+  @@unique([gameId, slug])
+  @@unique([id, gameId])
+  @@index([gameId, type, isActive])
+}
+
+model Listing {
+  id          String             @id @default(cuid())
+  sellerId    String
+  gameId      String
+  categoryId  String
+  title       String
+  description String
+  price       Decimal            @db.Decimal(12, 2)
+  currency    String             @default("USD") @db.Char(3)
+  quantity    Int                @default(1)
+  status      ListingStatus      @default(DRAFT)
+  images      Json               @default("[]")
+  publishedAt DateTime?
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+  seller      SellerProfile      @relation(fields: [sellerId], references: [id], onDelete: Restrict)
+  game        Game               @relation(fields: [gameId], references: [id], onDelete: Restrict)
+  category    Category           @relation(fields: [categoryId, gameId], references: [id, gameId], onDelete: Restrict)
+  attributes  ListingAttribute[]
+  orderItems  OrderItem[]
+  reviews     Review[]
+
+  @@index([gameId, categoryId, status, publishedAt])
+  @@index([sellerId, status, createdAt])
+  @@index([status, price])
+}
+
+model ListingAttribute {
+  id        String   @id @default(cuid())
+  listingId String
+  key       String
+  label     String
+  value     Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  listing   Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
+
+  @@unique([listingId, key])
+  @@index([key])
+}
+
+model Order {
+  id           String        @id @default(cuid())
+  orderNumber  String        @unique
+  buyerId      String
+  status       OrderStatus   @default(AWAITING_PAYMENT)
+  subtotal     Decimal       @db.Decimal(12, 2)
+  fees         Decimal       @default(0) @db.Decimal(12, 2)
+  total        Decimal       @db.Decimal(12, 2)
+  currency     String        @default("USD") @db.Char(3)
+  placedAt     DateTime      @default(now())
+  completedAt  DateTime?
+  cancelledAt  DateTime?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  buyer        User          @relation("OrderBuyer", fields: [buyerId], references: [id], onDelete: Restrict)
+  items        OrderItem[]
+  payments     Payment[]
+  deliveries   Delivery[]
+  messages     Message[]
+  conversation Conversation?
+  disputes     Dispute[]
+
+  @@index([buyerId, status, createdAt])
+  @@index([status, createdAt])
+}
+
+model OrderItem {
+  id              String          @id @default(cuid())
+  orderId         String
+  listingId       String?
+  sellerId        String
+  listingTitle    String
+  listingSnapshot Json
+  unitPrice       Decimal         @db.Decimal(12, 2)
+  quantity        Int
+  totalPrice      Decimal         @db.Decimal(12, 2)
+  currency        String          @db.Char(3)
+  status          OrderItemStatus @default(PENDING)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  order           Order           @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  listing         Listing?        @relation(fields: [listingId], references: [id], onDelete: SetNull)
+  seller          SellerProfile   @relation(fields: [sellerId], references: [id], onDelete: Restrict)
+  deliveries      Delivery[]
+  disputes        Dispute[]
+  review          Review?
+
+  @@index([orderId])
+  @@index([sellerId, status, createdAt])
+  @@index([listingId])
+}
+
+model Payment {
+  id                String        @id @default(cuid())
+  orderId           String
+  provider          String
+  providerReference String?
+  status            PaymentStatus @default(PENDING)
+  amount            Decimal       @db.Decimal(12, 2)
+  currency          String        @db.Char(3)
+  metadata          Json?
+  paidAt            DateTime?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  order             Order         @relation(fields: [orderId], references: [id], onDelete: Restrict)
+
+  @@unique([provider, providerReference])
+  @@index([orderId, status])
+  @@index([status, createdAt])
+}
+
+model Delivery {
+  id           String         @id @default(cuid())
+  orderId      String
+  orderItemId  String?
+  status       DeliveryStatus @default(PENDING)
+  instructions String?
+  details      Json?
+  deliveredAt  DateTime?
+  acceptedAt   DateTime?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  order        Order          @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderItem    OrderItem?     @relation(fields: [orderItemId], references: [id], onDelete: SetNull)
+
+  @@index([orderId, status])
+  @@index([orderItemId])
+}
+
+model Conversation {
+  id        String    @id @default(cuid())
+  buyerId   String
+  sellerId  String
+  orderId   String?   @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  buyer     User      @relation("ConversationBuyer", fields: [buyerId], references: [id], onDelete: Cascade)
+  seller    User      @relation("ConversationSeller", fields: [sellerId], references: [id], onDelete: Cascade)
+  order     Order?    @relation(fields: [orderId], references: [id], onDelete: SetNull)
+  messages  Message[]
+
+  @@index([buyerId, updatedAt])
+  @@index([sellerId, updatedAt])
+}
+
+model Message {
+  id             String       @id @default(cuid())
+  conversationId String
+  senderId       String
+  orderId        String?
+  body           String
+  attachments    Json         @default("[]")
+  readAt         DateTime?
+  createdAt      DateTime     @default(now())
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  sender         User         @relation(fields: [senderId], references: [id], onDelete: Restrict)
+  order          Order?       @relation(fields: [orderId], references: [id], onDelete: SetNull)
+
+  @@index([conversationId, createdAt])
+  @@index([orderId, createdAt])
+  @@index([senderId, createdAt])
+}
+
+model Review {
+  id          String        @id @default(cuid())
+  orderItemId String        @unique
+  buyerId     String
+  sellerId    String
+  listingId   String?
+  rating      Int
+  comment     String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  orderItem   OrderItem     @relation(fields: [orderItemId], references: [id], onDelete: Restrict)
+  buyer       User          @relation("ReviewBuyer", fields: [buyerId], references: [id], onDelete: Restrict)
+  seller      SellerProfile @relation(fields: [sellerId], references: [id], onDelete: Restrict)
+  listing     Listing?      @relation(fields: [listingId], references: [id], onDelete: SetNull)
+
+  @@index([sellerId, createdAt])
+  @@index([listingId, createdAt])
+}
+
+model Dispute {
+  id          String            @id @default(cuid())
+  orderId     String
+  orderItemId String?
+  openedById  String
+  status      DisputeStatus     @default(OPEN)
+  reason      String
+  description String
+  resolution  String?
+  resolvedAt  DateTime?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  order       Order             @relation(fields: [orderId], references: [id], onDelete: Restrict)
+  orderItem   OrderItem?        @relation(fields: [orderItemId], references: [id], onDelete: SetNull)
+  openedBy    User              @relation("DisputeOpener", fields: [openedById], references: [id], onDelete: Restrict)
+  evidence    DisputeEvidence[]
+
+  @@index([orderId, status])
+  @@index([status, createdAt])
+  @@index([openedById, createdAt])
+}
+
+model DisputeEvidence {
+  id            String   @id @default(cuid())
+  disputeId     String
+  submittedById String
+  url           String
+  description   String?
+  createdAt     DateTime @default(now())
+  dispute       Dispute  @relation(fields: [disputeId], references: [id], onDelete: Cascade)
+  submittedBy   User     @relation(fields: [submittedById], references: [id], onDelete: Restrict)
+
+  @@index([disputeId, createdAt])
+}
+
+model LedgerEntry {
+  id          String           @id @default(cuid())
+  sellerId    String
+  type        LedgerEntryType
+  amount      Decimal          @db.Decimal(12, 2)
+  currency    String           @db.Char(3)
+  sourceType  LedgerSourceType
+  sourceId    String
+  description String?
+  createdAt   DateTime         @default(now())
+  seller      SellerProfile    @relation(fields: [sellerId], references: [id], onDelete: Restrict)
+
+  @@index([sellerId, createdAt])
+  @@index([sourceType, sourceId])
+}
+
+model Withdrawal {
+  id                String           @id @default(cuid())
+  sellerId          String
+  amount            Decimal          @db.Decimal(12, 2)
+  currency          String           @db.Char(3)
+  status            WithdrawalStatus @default(REQUESTED)
+  providerReference String?
+  requestedAt       DateTime         @default(now())
+  processedAt       DateTime?
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+  seller            SellerProfile    @relation(fields: [sellerId], references: [id], onDelete: Restrict)
+
+  @@index([sellerId, status, requestedAt])
+  @@index([status, requestedAt])
+}
+
+model Notification {
+  id        String              @id @default(cuid())
+  userId    String
+  type      NotificationType
+  channel   NotificationChannel @default(IN_APP)
+  title     String
+  body      String
+  data      Json?
+  readAt    DateTime?
+  sentAt    DateTime?
+  createdAt DateTime            @default(now())
+  user      User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, readAt, createdAt])
+  @@index([channel, sentAt])
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  actorId    String?
+  action     String
+  entityType String
+  entityId   String
+  metadata   Json?
+  ipAddress  String?
+  createdAt  DateTime @default(now())
+  actor      User?    @relation("AuditActor", fields: [actorId], references: [id], onDelete: SetNull)
+
+  @@index([actorId, createdAt])
+  @@index([entityType, entityId, createdAt])
+  @@index([action, createdAt])
 }
