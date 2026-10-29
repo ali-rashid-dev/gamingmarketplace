@@ -2,7 +2,7 @@
 CREATE SCHEMA IF NOT EXISTS "public";
 
 -- CreateEnum
-CREATE TYPE "UserRole" AS ENUM ('USER', 'ADMIN');
+CREATE TYPE "UserRole" AS ENUM ('BUYER', 'SELLER', 'SUPPORT', 'ADMIN', 'SUPER_ADMIN');
 
 -- CreateEnum
 CREATE TYPE "SellerStatus" AS ENUM ('PENDING', 'APPROVED', 'SUSPENDED', 'REJECTED');
@@ -50,7 +50,7 @@ CREATE TABLE "user" (
     "email" TEXT NOT NULL,
     "emailVerified" BOOLEAN NOT NULL,
     "image" TEXT,
-    "role" "UserRole" NOT NULL DEFAULT 'USER',
+    "role" "UserRole" NOT NULL DEFAULT 'BUYER',
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -100,6 +100,16 @@ CREATE TABLE "verification" (
     "updatedAt" TIMESTAMP(3),
 
     CONSTRAINT "verification_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "rateLimit" (
+    "id" TEXT NOT NULL,
+    "key" TEXT NOT NULL,
+    "count" INTEGER NOT NULL,
+    "lastRequest" BIGINT NOT NULL,
+
+    CONSTRAINT "rateLimit_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -398,6 +408,9 @@ CREATE TABLE "AuditLog" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "user_email_key" ON "user"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "rateLimit_key_key" ON "rateLimit"("key");
 
 -- CreateIndex
 CREATE INDEX "user_role_idx" ON "user"("role");

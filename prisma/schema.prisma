@@ -11,8 +11,11 @@ generator client {
 }
 
 enum UserRole {
-  USER
+  BUYER
+  SELLER
+  SUPPORT
   ADMIN
+  SUPER_ADMIN
 }
 
 enum SellerStatus {
@@ -126,7 +129,7 @@ model User {
   email               String            @unique
   emailVerified       Boolean
   image               String?
-  role                UserRole          @default(USER)
+  role                UserRole          @default(BUYER)
   createdAt           DateTime          @default(now())
   updatedAt           DateTime          @updatedAt
   sessions            Session[]
@@ -195,6 +198,15 @@ model Verification {
   @@index([identifier])
   @@index([expiresAt])
   @@map("verification")
+}
+
+model RateLimit {
+  id          String @id @default(cuid())
+  key         String @unique
+  count       Int
+  lastRequest BigInt
+
+  @@map("rateLimit")
 }
 
 model AccountProfile {

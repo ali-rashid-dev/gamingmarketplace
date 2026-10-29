@@ -8,18 +8,49 @@ import VerifyEmail from "@/components/emails/verify-email";
 const resend = new Resend(process.env.RESEND_API_KEY as string);
 const emailSender = process.env.RESEND_FROM_EMAIL;
 
-if (!emailSender) {
+function requireEmailSender(): string {
+  if (!emailSender) {
     throw new Error("RESEND_FROM_EMAIL must be set to a sender address on a verified domain.");
+  }
+
+  return emailSender;
 }
 
 export const auth = betterAuth({
     database: prismaAdapter(prisma, {
         provider: "postgresql",
     }),
+    user: {
+        additionalFields: {
+            role: {
+                type: "string",
+                required: false,
+                defaultValue: "BUYER",
+                input: false,
+            },
+        },
+        session: {
+            expiresIn: 60 * 60 * 24 * 7,
+            updateAge: 60 * 60 * 24,
+        },
+    },
+    rateLimit: {
+        enabled: true,
+        storage: "database",
+        window: 60,
+        max: 100,
+        customRules: {
+            "/sign-in/email": { window: 60, max: 5 },
+            "/sign-up/email": { window: 60, max: 5 },
+            "/request-password-reset": { window: 60, max: 3 },
+            "/send-verification-email": { window: 60, max: 3 },
+        },
+    },
     emailVerification: {
-        sendVerificationEmail: async ({ user, url, token }, request) => {
+        expiresIn: 60 * 60,
+        sendVerificationEmail: async ({ user, url }) => {
             void resend.emails.send({
-                from: emailSender,
+                from: requireEmailSender(),
                 to: user.email,
                 subject: "Verify your email address",
                 react: VerifyEmail({
@@ -40,9 +71,11 @@ export const auth = betterAuth({
     },
     emailAndPassword: {
         enabled: true,
-        sendResetPassword: async ({ user, url, token }, request) => {
+        requireEmailVerification: true,
+        resetPasswordTokenExpiresIn: 60 * 60,
+        sendResetPassword: async ({ user, url }) => {
             const { error } = await resend.emails.send({
-                from: emailSender,
+                from: requireEmailSender(),
                 to: user.email,
                 subject: 'Reset your password',
                 react: ForgotPasswordEmail({
