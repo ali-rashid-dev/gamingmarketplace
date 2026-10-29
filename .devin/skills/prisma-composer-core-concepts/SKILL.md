@@ -105,7 +105,7 @@ produces and the platform boots:
 
 ```ts
 // service.ts
-import { compute, rawPostgres } from '@prisma/composer';
+import { compute, rawPostgres } from '@prisma/composer-prisma-cloud';
 import { node } from '@prisma/composer/node';
 import { authContract } from './contract.ts';
 

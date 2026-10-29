@@ -18,8 +18,10 @@ import type { CategoryFieldType, GameStatus } from "@/generated/prisma/enums";
 
 type FieldKind = CategoryFieldType;
 type GameForm = Omit<CatalogGame, "id" | "listingCount" | "categories">;
+type FieldForm = Omit<CatalogField, "id"> & { optionsInput: string };
 type CategoryForm = Omit<CatalogCategory, "id" | "gameId" | "fields"> & {
-  fields: Omit<CatalogField, "id">[];
+  platformsInput: string;
+  fields: FieldForm[];
 };
 
 const emptyGame: GameForm = {
@@ -39,6 +41,7 @@ const emptyCategory: CategoryForm = {
   type: "",
   description: "",
   platforms: [],
+  platformsInput: "",
   isActive: true,
   fields: [],
 };
@@ -55,6 +58,11 @@ function slugify(value: string) {
     .trim()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
+}
+
+function fieldKeyFromLabel(value: string) {
+  const key = slugify(value).replace(/-/g, "_");
+  return key && /^[a-zA-Z]/.test(key) ? key : key ? `field_${key}` : "";
 }
 
 export default function CatalogClient({
@@ -192,6 +200,7 @@ export default function CatalogClient({
             type: category.type,
             description: category.description ?? "",
             platforms: category.platforms,
+            platformsInput: category.platforms.join(", "),
             isActive: category.isActive,
             fields: category.fields.map((field) => ({
               key: field.key,
@@ -199,6 +208,7 @@ export default function CatalogClient({
               type: field.type,
               isRequired: field.isRequired,
               options: field.options,
+              optionsInput: field.options.join(", "),
               sortOrder: field.sortOrder,
             })),
           }
@@ -217,14 +227,29 @@ export default function CatalogClient({
     runAction(async () => {
       try {
         const input = {
-            ...categoryForm,
-            description: categoryForm.description || null,
-            platforms: categoryForm.platforms.map((platform) => platform.trim()).filter(Boolean),
-            fields: categoryForm.fields.map((field, index) => ({
-              ...field,
-              options: field.options.map((option) => option.trim()).filter(Boolean),
-              sortOrder: index,
-            })),
+          name: categoryForm.name,
+          slug: categoryForm.slug,
+          type: categoryForm.type,
+          description: categoryForm.description || null,
+          platforms: categoryForm.platformsInput
+            .split(",")
+            .map((platform) => platform.trim())
+            .filter(Boolean),
+          isActive: categoryForm.isActive,
+          fields: categoryForm.fields.map((field, index) => ({
+            key: field.key,
+            label: field.label,
+            type: field.type,
+            isRequired: field.isRequired,
+            options:
+              field.type === "SELECT" || field.type === "MULTI_SELECT"
+                ? field.optionsInput
+                    .split(",")
+                    .map((option) => option.trim())
+                    .filter(Boolean)
+                : [],
+            sortOrder: index,
+          })),
         };
         const result = editingCategoryId
           ? await updateCatalogCategory(editingCategoryId, input)
@@ -242,7 +267,7 @@ export default function CatalogClient({
     });
   }
 
-  function updateField(index: number, patch: Partial<CatalogField>) {
+  function updateField(index: number, patch: Partial<FieldForm>) {
     setCategoryForm((current) => ({
       ...current,
       fields: current.fields.map((field, fieldIndex) =>
@@ -586,11 +611,11 @@ export default function CatalogClient({
                     Supported platforms
                     <input
                       className={inputClass}
-                      value={categoryForm.platforms.join(", ")}
+                      value={categoryForm.platformsInput}
                       onChange={(event) =>
                         setCategoryForm((current) => ({
                           ...current,
-                          platforms: event.target.value.split(","),
+                          platformsInput: event.target.value,
                         }))
                       }
                       placeholder="PC, PlayStation, Xbox"
@@ -651,6 +676,7 @@ export default function CatalogClient({
                               type: "TEXT",
                               isRequired: true,
                               options: [],
+                              optionsInput: "",
                               sortOrder: current.fields.length,
                             },
                           ],
@@ -674,7 +700,10 @@ export default function CatalogClient({
                               const label = event.target.value;
                               updateField(index, {
                                 label,
-                                ...(field.key ? {} : { key: slugify(label).replace(/-/g, "_") }),
+                                ...(field.key === "" ||
+                                field.key === fieldKeyFromLabel(field.label)
+                                  ? { key: fieldKeyFromLabel(label) }
+                                  : {}),
                               });
                             }}
                             placeholder="Account level"
@@ -744,11 +773,9 @@ export default function CatalogClient({
                             <input
                               required
                               className={inputClass}
-                              value={field.options.join(", ")}
+                              value={field.optionsInput}
                               onChange={(event) =>
-                                updateField(index, {
-                                  options: event.target.value.split(",").map((option) => option.trim()),
-                                })
+                                updateField(index, { optionsInput: event.target.value })
                               }
                               placeholder="Bronze, Silver, Gold"
                             />

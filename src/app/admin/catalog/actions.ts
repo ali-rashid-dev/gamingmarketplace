@@ -234,21 +234,36 @@ export async function updateCatalogCategory(
       const { fields, ...categoryData } = result.data;
       const updated = await transaction.category.update({
         where: { id: categoryId.data },
-        data: {
-          ...categoryData,
-          ...(fields === undefined
-            ? {}
-            : {
-                fields: {
-                  deleteMany: {},
-                  create: fields.map((field) => ({
-                    ...field,
-                    options: field.options,
-                  })),
-                },
-              }),
-        },
+        data: categoryData,
       });
+      if (fields !== undefined) {
+        await transaction.categoryField.deleteMany({
+          where: {
+            categoryId: updated.id,
+            ...(fields.length > 0
+              ? { key: { notIn: fields.map((field) => field.key) } }
+              : {}),
+          },
+        });
+
+        for (const { key, ...field } of fields) {
+          await transaction.categoryField.upsert({
+            where: {
+              categoryId_key: {
+                categoryId: updated.id,
+                key,
+              },
+            },
+            update: { ...field, options: field.options },
+            create: {
+              categoryId: updated.id,
+              key,
+              ...field,
+              options: field.options,
+            },
+          });
+        }
+      }
       await transaction.auditLog.create({
         data: {
           actorId: authorization.user.id,

@@ -29,10 +29,10 @@ export const auth = betterAuth({
                 input: false,
             },
         },
-        session: {
-            expiresIn: 60 * 60 * 24 * 7,
-            updateAge: 60 * 60 * 24,
-        },
+    },
+    session: {
+        expiresIn: 60 * 60 * 24 * 7,
+        updateAge: 60 * 60 * 24,
     },
     rateLimit: {
         enabled: true,
@@ -74,20 +74,25 @@ export const auth = betterAuth({
         requireEmailVerification: true,
         resetPasswordTokenExpiresIn: 60 * 60,
         sendResetPassword: async ({ user, url }) => {
-            const { error } = await resend.emails.send({
-                from: requireEmailSender(),
-                to: user.email,
-                subject: 'Reset your password',
-                react: ForgotPasswordEmail({
-                    username: user.name,
-                    resetUrl: url,
-                    userEmail: user.email,
-                })
-            });
-            if (error) {
-                console.error("Failed to send password reset email", error);
-                throw error;
-            }
+            void (async () => {
+                try {
+                    const { error } = await resend.emails.send({
+                        from: requireEmailSender(),
+                        to: user.email,
+                        subject: "Reset your password",
+                        react: ForgotPasswordEmail({
+                            username: user.name,
+                            resetUrl: url,
+                            userEmail: user.email,
+                        }),
+                    });
+                    if (error) {
+                        console.error("Failed to send password reset email", error);
+                    }
+                } catch (error: unknown) {
+                    console.error("Failed to send password reset email", error);
+                }
+            })();
         }
 
     },
