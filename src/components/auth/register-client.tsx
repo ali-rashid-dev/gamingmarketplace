@@ -70,9 +70,12 @@ export default function RegisterPageClient() {
       {created ? (
         <AuthSuccess
           title="Check Your Email"
-          description="We've sent instructions to your email address to verify your vault access."
+          description={`We've sent a verification link to ${values.email}. Please check your inbox and verify your email address to activate your vault access.`}
         >
-          <AuthFooterLink linkText="Back to Sign In" to="/sign-in" />
+          <div className="space-y-3">
+            <AuthFooterLink text="Didn't get an email?" linkText="Resend verification link" to={`/verify-email`} />
+            <AuthFooterLink linkText="Back to Sign In" to="/sign-in" />
+          </div>
         </AuthSuccess>
       ) : (
         <>

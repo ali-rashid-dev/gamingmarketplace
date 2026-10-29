@@ -3,6 +3,7 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import prisma from "@/lib/prisma";
 import { Resend } from "resend";
 import ForgotPasswordEmail from "@/components/emails/reset-password";
+import VerifyEmail from "@/components/emails/verify-email";
 
 const resend = new Resend(process.env.RESEND_API_KEY as string);
 
@@ -10,6 +11,22 @@ export const auth = betterAuth({
     database: prismaAdapter(prisma, {
         provider: "postgresql",
     }),
+    emailVerification: {
+        sendVerificationEmail: async ({ user, url, token }, request) => {
+            void resend.emails.send({
+                from: "onboarding@resend.dev",
+                to: user.email,
+                subject: "Verify your email address",
+                react: VerifyEmail({
+                    username: user.name,
+                    verificationUrl: url,
+                    userEmail: user.email,
+                }),
+            });
+        },
+        sendOnSignUp: true,
+        autoSignInAfterVerification: true,
+    },
     emailAndPassword: {
         enabled: true,
         sendResetPassword: async ({ user, url, token }, request) => {
