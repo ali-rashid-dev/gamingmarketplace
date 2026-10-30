@@ -41,7 +41,7 @@ function ReviewCard({ listing }: { listing: ReviewListing }) {
     });
   }
   return (
-    <article className="rounded-2xl border border-white/[0.09] bg-[#111a2b] p-5">
+    <article className="rounded-2xl border border-white/[0.09] bg-card p-5">
       <div className="flex flex-wrap justify-between gap-3">
         <div>
           <p className="text-xs text-cyan-300">{listing.game.name} · {listing.category.name} ({listing.category.type})</p>

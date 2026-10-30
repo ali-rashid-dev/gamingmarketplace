@@ -32,7 +32,7 @@ export default async function GameLandingPage({ params }: Props) {
         <span className="text-slate-300">{game.name}</span>
       </nav>
 
-      <section className="relative isolate overflow-hidden rounded-[1.75rem] border border-white/10 bg-[#111a2b] p-7 sm:p-10">
+      <section className="relative isolate overflow-hidden rounded-[1.75rem] border border-white/10 bg-card p-7 sm:p-10">
         {game.coverImageUrl ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img src={game.coverImageUrl} alt="" className="absolute inset-0 -z-10 h-full w-full object-cover opacity-25" />
@@ -58,7 +58,7 @@ export default async function GameLandingPage({ params }: Props) {
               <Link
                 key={category.id}
                 href={`/games/${game.slug}/${category.slug}`}
-                className="group rounded-2xl border border-white/[0.09] bg-[#111a2b] p-5 transition hover:border-cyan-300/30 hover:bg-[#141f34]"
+                className="group rounded-2xl border border-white/[0.09] bg-card p-5 transition hover:border-cyan-300/30 hover:bg-secondary"
               >
                 <span className="flex items-start justify-between gap-3">
                   <span className={`grid h-11 w-11 place-items-center rounded-xl ${index % 2 ? "bg-indigo-400/10 text-indigo-200" : "bg-cyan-300/10 text-cyan-200"}`}>

@@ -44,7 +44,7 @@ function ConversationCard({
     });
   }
   return (
-    <article className="rounded-2xl border border-white/[0.09] bg-[#111a2b] p-5">
+    <article className="rounded-2xl border border-white/[0.09] bg-card p-5">
       <div className="flex flex-wrap justify-between gap-2">
         <h2 className="font-semibold text-white">{conversation.buyerName}</h2>
         <p className="text-xs text-slate-500">{conversation.orderNumber ? `Order ${conversation.orderNumber}` : "Shop question"}</p>

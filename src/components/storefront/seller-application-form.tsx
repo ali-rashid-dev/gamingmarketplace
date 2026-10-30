@@ -49,7 +49,7 @@ export default function SellerApplicationForm({
   if (application && application.status !== SellerStatus.REJECTED) {
     const isApproved = application.status === SellerStatus.APPROVED;
     return (
-      <section className="mt-8 rounded-2xl border border-white/10 bg-[#111a2b] p-6">
+      <section className="mt-8 rounded-2xl border border-white/10 bg-card p-6">
         <h2 className="font-semibold text-white">
           {isApproved ? "Seller application approved" : "Application under review"}
         </h2>
@@ -67,14 +67,14 @@ export default function SellerApplicationForm({
 
   if (!canApply) {
     return (
-      <p className="mt-8 rounded-2xl border border-white/10 bg-[#111a2b] p-6 text-sm text-slate-300">
+      <p className="mt-8 rounded-2xl border border-white/10 bg-card p-6 text-sm text-slate-300">
         This account cannot submit a seller application. Visit your <Link href="/dashboard" className="text-cyan-200 hover:text-white">account dashboard</Link> for help.
       </p>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="mt-8 space-y-5 rounded-2xl border border-white/10 bg-[#111a2b] p-6">
+    <form onSubmit={handleSubmit} className="mt-8 space-y-5 rounded-2xl border border-white/10 bg-card p-6">
       <label className="block text-sm font-medium text-slate-200">
         Shop name
         <input

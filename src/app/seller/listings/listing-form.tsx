@@ -138,7 +138,7 @@ export function ListingForm({
       </div>
 
       {preview ? (
-        <section className="mt-7 overflow-hidden rounded-2xl border border-white/10 bg-[#111a2b]">
+        <section className="mt-7 overflow-hidden rounded-2xl border border-white/10 bg-card">
           {images[0] && (
             // eslint-disable-next-line @next/next/no-img-element
             <img src={images[0]} alt="" className="aspect-[2.4] w-full object-cover" />
@@ -175,7 +175,7 @@ export function ListingForm({
       ) : (
         <div className="mt-7 grid gap-6 lg:grid-cols-[minmax(0,1fr)_300px]">
           <div className="space-y-5">
-            <section className="rounded-2xl border border-white/[0.09] bg-[#111a2b] p-5 sm:p-6">
+            <section className="rounded-2xl border border-white/[0.09] bg-card p-5 sm:p-6">
               <h2 className="font-semibold text-white">Product type</h2>
               <p className="mt-1 text-xs text-slate-400">Choose the game and its configured category, such as accounts, currency, items, top-ups, or services.</p>
               <div className="mt-4 grid gap-4 sm:grid-cols-2">
@@ -204,7 +204,7 @@ export function ListingForm({
               {category?.description && <p className="mt-3 text-xs text-slate-500">{category.description}</p>}
             </section>
 
-            <section className="rounded-2xl border border-white/[0.09] bg-[#111a2b] p-5 sm:p-6">
+            <section className="rounded-2xl border border-white/[0.09] bg-card p-5 sm:p-6">
               <h2 className="font-semibold text-white">Listing details</h2>
               <div className="mt-4 space-y-4">
                 <label className={labelClass}>Title
@@ -260,7 +260,7 @@ export function ListingForm({
             </section>
 
             {category?.fields.length ? (
-              <section className="rounded-2xl border border-white/[0.09] bg-[#111a2b] p-5 sm:p-6">
+              <section className="rounded-2xl border border-white/[0.09] bg-card p-5 sm:p-6">
                 <h2 className="font-semibold text-white">Category details</h2>
                 <div className="mt-4 grid gap-4 sm:grid-cols-2">
                   {category.fields.map((field) => {
@@ -317,7 +317,7 @@ export function ListingForm({
           </div>
 
           <aside className="space-y-5">
-            <section className="rounded-2xl border border-white/[0.09] bg-[#111a2b] p-5">
+            <section className="rounded-2xl border border-white/[0.09] bg-card p-5">
               <h2 className="font-semibold text-white">Images</h2>
               <p className="mt-1 text-xs leading-5 text-slate-400">Up to 5 JPEG, PNG, WebP, or AVIF images. Maximum 8 MB each.</p>
               <label className="mt-4 flex cursor-pointer justify-center rounded-lg border border-dashed border-white/20 px-3 py-4 text-center text-xs font-semibold text-cyan-100 hover:border-cyan-300/40">
@@ -356,7 +356,7 @@ export function ListingForm({
         </div>
       )}
       {!preview && listing?.revisions.length ? (
-        <details className="mt-6 rounded-xl border border-white/[0.09] bg-[#111a2b] p-4">
+        <details className="mt-6 rounded-xl border border-white/[0.09] bg-card p-4">
           <summary className="cursor-pointer text-sm font-semibold text-slate-200">Revision history ({listing.revisions.length} latest)</summary>
           <ol className="mt-3 space-y-2">
             {listing.revisions.map((revision) => (

@@ -61,7 +61,7 @@ function ListingRow({
   }
 
   return (
-    <article className="rounded-2xl border border-white/[0.09] bg-[#111a2b] p-5">
+    <article className="rounded-2xl border border-white/[0.09] bg-card p-5">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="min-w-0">
           <label className="mb-2 flex items-center gap-2 text-xs text-slate-400">
@@ -172,7 +172,7 @@ export function SellerListings({ listings }: { listings: Listing[] }) {
   }
   return (
     <div className="mt-8">
-      <section className="mb-4 rounded-2xl border border-white/[0.09] bg-[#111a2b] p-4">
+      <section className="mb-4 rounded-2xl border border-white/[0.09] bg-card p-4">
         <div className="flex flex-wrap items-end gap-3">
           <label className="flex items-center gap-2 text-xs text-slate-300">
             <input

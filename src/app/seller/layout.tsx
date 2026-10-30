@@ -21,18 +21,18 @@ export default async function SellerLayout({
   await requirePageRoles([UserRole.SELLER]);
   return (
     <>
-      <header className="border-b border-white/[0.08] bg-[#0b1020]">
+      <header className="border-b border-border bg-background">
         <div className="mx-auto max-w-7xl px-5 py-4 sm:px-8">
           <div className="flex items-center justify-between">
-            <Link href="/seller" className="font-semibold text-white">GameTrade Seller Studio</Link>
-            <Link href="/seller/settings" className="text-sm text-slate-300 hover:text-cyan-200">Settings</Link>
+            <Link href="/seller" className="font-display font-semibold text-foreground">GameTrade Seller Studio</Link>
+            <Link href="/seller/settings" className="text-sm text-muted-foreground transition hover:text-gold">Settings</Link>
           </div>
           <nav aria-label="Seller dashboard" className="mt-4 flex gap-2 overflow-x-auto pb-1">
             {navigation.map(([label, href]) => (
               <Link
                 key={href}
                 href={href}
-                className="shrink-0 rounded-lg border border-white/[0.08] px-3 py-2 text-xs font-medium text-slate-300 transition hover:border-cyan-300/30 hover:text-cyan-100"
+                className="shrink-0 rounded-lg border border-border px-3 py-2 text-xs font-medium text-muted-foreground transition hover:border-gold/40 hover:text-gold"
               >
                 {label}
               </Link>

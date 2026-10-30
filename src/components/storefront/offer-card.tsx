@@ -24,7 +24,7 @@ export function OfferCard({
   return (
     <Link
       href={`/offers/${offer.id}`}
-      className="group overflow-hidden rounded-2xl border border-white/[0.09] bg-[#111a2b] transition duration-300 hover:-translate-y-1 hover:border-cyan-300/30 hover:shadow-xl hover:shadow-blue-950/40"
+      className="group overflow-hidden rounded-2xl border border-white/[0.09] bg-card transition duration-300 hover:-translate-y-1 hover:border-cyan-300/30 hover:shadow-xl hover:shadow-blue-950/40"
     >
       <div className={`relative aspect-[1.55] overflow-hidden bg-gradient-to-br ${gameGradients[index % gameGradients.length]}`}>
         {image ? (

@@ -23,7 +23,7 @@ export function GameCard({ game, index = 0 }: { game: GameCardData; index?: numb
   return (
     <Link
       href={`/games/${game.slug}`}
-      className="group relative flex min-h-64 flex-col justify-end overflow-hidden rounded-2xl border border-white/10 bg-[#111a2b] p-5 transition hover:-translate-y-1 hover:border-cyan-300/30"
+      className="group relative flex min-h-64 flex-col justify-end overflow-hidden rounded-2xl border border-white/10 bg-card p-5 transition hover:-translate-y-1 hover:border-cyan-300/30"
     >
       {game.coverImageUrl ? (
         // eslint-disable-next-line @next/next/no-img-element

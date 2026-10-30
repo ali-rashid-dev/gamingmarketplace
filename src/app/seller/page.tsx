@@ -11,7 +11,7 @@ function Metric({
   detail?: string;
 }) {
   return (
-    <article className="rounded-2xl border border-white/[0.09] bg-[#111a2b] p-5">
+    <article className="rounded-2xl border border-white/[0.09] bg-card p-5">
       <p className="text-xs font-medium text-slate-400">{label}</p>
       <p className="mt-2 font-display text-3xl font-semibold text-white">{value}</p>
       {detail && <p className="mt-1 text-xs text-slate-500">{detail}</p>}
@@ -56,7 +56,7 @@ export default async function SellerDashboardPage() {
       </section>
 
       <section className="mt-8 grid gap-5 lg:grid-cols-[1.1fr_0.9fr]">
-        <div className="rounded-2xl border border-white/[0.09] bg-[#111a2b] p-5">
+        <div className="rounded-2xl border border-white/[0.09] bg-card p-5">
           <div className="flex items-center justify-between gap-3">
             <h2 className="font-semibold text-white">Recent sales</h2>
             <Link href="/seller/orders" className="text-xs font-semibold text-cyan-200 hover:text-white">View orders</Link>
@@ -77,7 +77,7 @@ export default async function SellerDashboardPage() {
             <p className="mt-4 rounded-xl border border-dashed border-white/10 p-5 text-sm text-slate-400">Completed sales will appear here.</p>
           )}
         </div>
-        <div className="rounded-2xl border border-white/[0.09] bg-[#111a2b] p-5">
+        <div className="rounded-2xl border border-white/[0.09] bg-card p-5">
           <h2 className="font-semibold text-white">Balances</h2>
           {metrics.balances.length ? (
             <div className="mt-4 space-y-3">

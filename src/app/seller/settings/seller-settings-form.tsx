@@ -40,7 +40,7 @@ export function SellerSettingsForm({
   const inputClass = "mt-1 w-full rounded-lg border border-white/10 bg-slate-950/40 px-3 py-2.5 text-sm text-white";
   return (
     <div className="mt-7 space-y-5">
-      <section className="rounded-2xl border border-white/[0.09] bg-[#111a2b] p-5 sm:p-6">
+      <section className="rounded-2xl border border-white/[0.09] bg-card p-5 sm:p-6">
         <h2 className="font-semibold text-white">Shop availability</h2>
         <p className="mt-1 text-xs leading-5 text-slate-400">When unavailable, your shop and active offers are hidden from buyers. You can still update listings and orders.</p>
         <label className="mt-4 flex items-center gap-3 text-sm text-slate-200">
@@ -52,7 +52,7 @@ export function SellerSettingsForm({
       <form onSubmit={(event) => {
         event.preventDefault();
         run(() => updateSellerAccountSettings({ emailNotifications, preferredCurrency, ...(username ? { username } : {}) }), "Settings saved");
-      }} className="rounded-2xl border border-white/[0.09] bg-[#111a2b] p-5 sm:p-6">
+      }} className="rounded-2xl border border-white/[0.09] bg-card p-5 sm:p-6">
         <h2 className="font-semibold text-white">Account preferences</h2>
         <label className="mt-4 block text-xs font-medium text-slate-300">Username
           <input minLength={3} maxLength={24} pattern="[a-zA-Z0-9_]+" value={username} onChange={(event) => setUsername(event.target.value)} className={inputClass} />

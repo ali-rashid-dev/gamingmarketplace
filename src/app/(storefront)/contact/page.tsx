@@ -41,7 +41,7 @@ function ContactCard({
   action: string;
 }) {
   return (
-    <article className="flex flex-col rounded-2xl border border-white/[0.09] bg-[#111a2b] p-6">
+    <article className="flex flex-col rounded-2xl border border-white/[0.09] bg-card p-6">
       <span className="grid h-10 w-10 place-items-center rounded-xl bg-cyan-300/10 text-cyan-200">{icon}</span>
       <h2 className="mt-4 font-display text-xl font-semibold text-white">{title}</h2>
       <p className="mt-2 flex-1 text-sm leading-6 text-slate-400">{body}</p>

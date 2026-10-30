@@ -40,7 +40,7 @@ export function SellerProfileForm({
   }
   const inputClass = "mt-1 w-full rounded-lg border border-white/10 bg-slate-950/40 px-3 py-2.5 text-sm text-white";
   return (
-    <form onSubmit={submit} className="mt-7 space-y-5 rounded-2xl border border-white/[0.09] bg-[#111a2b] p-5 sm:p-6">
+    <form onSubmit={submit} className="mt-7 space-y-5 rounded-2xl border border-white/[0.09] bg-card p-5 sm:p-6">
       <label className="block text-xs font-medium text-slate-300">Shop name<input required minLength={3} maxLength={80} value={shopName} onChange={(event) => setShopName(event.target.value)} className={inputClass} /></label>
       <label className="block text-xs font-medium text-slate-300">Shop description<textarea maxLength={1000} rows={5} value={description} onChange={(event) => setDescription(event.target.value)} className={inputClass} /></label>
       <label className="block text-xs font-medium text-slate-300">Account display name<input maxLength={80} value={displayName} onChange={(event) => setDisplayName(event.target.value)} className={inputClass} /></label>

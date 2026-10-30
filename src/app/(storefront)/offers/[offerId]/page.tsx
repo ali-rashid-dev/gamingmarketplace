@@ -69,7 +69,7 @@ export default async function OfferDetailPage({ params }: Props) {
           </div>
 
           {offer.attributes.length > 0 && (
-            <section className="mt-8 rounded-2xl border border-white/[0.09] bg-[#111a2b] p-5 sm:p-6">
+            <section className="mt-8 rounded-2xl border border-white/[0.09] bg-card p-5 sm:p-6">
               <h2 className="font-display text-xl font-semibold text-white">Offer details</h2>
               <dl className="mt-4 grid gap-3 sm:grid-cols-2">
                 {offer.attributes.map((attribute) => (
@@ -100,7 +100,7 @@ export default async function OfferDetailPage({ params }: Props) {
         </section>
 
         <aside className="space-y-4">
-          <div className="sticky top-40 rounded-2xl border border-white/10 bg-[#111a2b] p-5 sm:p-6">
+          <div className="sticky top-40 rounded-2xl border border-white/10 bg-card p-5 sm:p-6">
             <p className="text-xs uppercase tracking-wide text-slate-500">Offer price</p>
             <p className="mt-1 font-display text-4xl font-semibold text-white">{formatPrice(offer.price, offer.currency)}</p>
             <p className="mt-2 text-xs text-slate-400">{offer.quantity} available</p>
@@ -131,7 +131,7 @@ export default async function OfferDetailPage({ params }: Props) {
             </div>
           </div>
 
-          <Link href={`/shops/${offer.seller.slug}`} className="block rounded-2xl border border-white/[0.09] bg-[#111a2b] p-5 transition hover:border-cyan-300/25">
+          <Link href={`/shops/${offer.seller.slug}`} className="block rounded-2xl border border-white/[0.09] bg-card p-5 transition hover:border-cyan-300/25">
             <span className="flex items-center justify-between gap-3">
               <span>
                 <span className="block text-[10px] font-bold uppercase tracking-[0.15em] text-slate-500">Sold by</span>

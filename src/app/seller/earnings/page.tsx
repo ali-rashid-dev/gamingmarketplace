@@ -10,7 +10,7 @@ export default async function SellerEarningsPage() {
 
       <section className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {overview.metrics.balances.length ? overview.metrics.balances.map((balance) => (
-          <article key={balance.currency} className="rounded-2xl border border-white/[0.09] bg-[#111a2b] p-5">
+          <article key={balance.currency} className="rounded-2xl border border-white/[0.09] bg-card p-5">
             <p className="text-xs text-cyan-200">{balance.currency}</p>
             <p className="mt-3 text-xs text-slate-400">Available balance<span className="mt-1 block text-2xl font-semibold text-white">{balance.available}</span></p>
             <p className="mt-3 text-xs text-slate-400">Pending payout<span className="mt-1 block text-lg font-semibold text-white">{balance.pendingPayout}</span></p>
@@ -25,7 +25,7 @@ export default async function SellerEarningsPage() {
         <div>
           <h2 className="font-semibold text-white">Completed sales</h2>
           {history.sales.length ? (
-            <ul className="mt-3 divide-y divide-white/[0.07] rounded-2xl border border-white/[0.09] bg-[#111a2b] px-4">
+            <ul className="mt-3 divide-y divide-white/[0.07] rounded-2xl border border-white/[0.09] bg-card px-4">
               {history.sales.map((sale) => (
                 <li key={sale.id} className="flex flex-wrap justify-between gap-2 py-3 text-sm">
                   <span><span className="block text-slate-200">{sale.listingTitle}</span><span className="text-xs text-slate-500">Order {sale.order.orderNumber} · {sale.updatedAt.toLocaleDateString()}</span></span>
@@ -38,7 +38,7 @@ export default async function SellerEarningsPage() {
         <div>
           <h2 className="font-semibold text-white">Payout history</h2>
           {history.withdrawals.length ? (
-            <ul className="mt-3 divide-y divide-white/[0.07] rounded-2xl border border-white/[0.09] bg-[#111a2b] px-4">
+            <ul className="mt-3 divide-y divide-white/[0.07] rounded-2xl border border-white/[0.09] bg-card px-4">
               {history.withdrawals.map((withdrawal) => (
                 <li key={withdrawal.id} className="flex flex-wrap justify-between gap-2 py-3 text-sm">
                   <span><span className="block text-slate-200">{withdrawal.status.toLowerCase()}</span><span className="text-xs text-slate-500">{withdrawal.requestedAt.toLocaleDateString()}</span></span>
@@ -55,7 +55,7 @@ export default async function SellerEarningsPage() {
       <section className="mt-8">
         <h2 className="font-semibold text-white">Ledger history</h2>
         {history.ledger.length ? (
-          <div className="mt-3 overflow-x-auto rounded-2xl border border-white/[0.09] bg-[#111a2b]">
+          <div className="mt-3 overflow-x-auto rounded-2xl border border-white/[0.09] bg-card">
             <table className="w-full min-w-[640px] text-left text-xs">
               <thead className="border-b border-white/[0.07] text-slate-500"><tr><th className="p-4">Date</th><th className="p-4">Type</th><th className="p-4">Source</th><th className="p-4">Description</th><th className="p-4 text-right">Amount</th></tr></thead>
               <tbody className="divide-y divide-white/[0.05]">

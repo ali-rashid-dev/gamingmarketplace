@@ -82,7 +82,7 @@ export default async function HomePage() {
 
           <div className="relative mx-auto w-full max-w-xl">
             <div className="absolute -inset-8 rounded-[2rem] bg-blue-500/10 blur-3xl" />
-            <div className="relative overflow-hidden rounded-[1.75rem] border border-white/15 bg-[#111a2d] p-3 shadow-2xl shadow-black/50">
+            <div className="relative overflow-hidden rounded-[1.75rem] border border-white/15 bg-popover p-3 shadow-2xl shadow-black/50">
               <div className="relative flex aspect-[1.15] flex-col justify-between overflow-hidden rounded-[1.25rem] bg-gradient-to-br from-indigo-500/30 via-slate-900 to-cyan-900/40 p-6 sm:p-8">
                 {heroImage ? (
                   // eslint-disable-next-line @next/next/no-img-element
@@ -117,7 +117,7 @@ export default async function HomePage() {
                 </div>
               </div>
             </div>
-            <div className="absolute -bottom-5 -left-5 hidden items-center gap-3 rounded-xl border border-white/10 bg-[#111a2d] p-3 shadow-xl sm:flex">
+            <div className="absolute -bottom-5 -left-5 hidden items-center gap-3 rounded-xl border border-white/10 bg-popover p-3 shadow-xl sm:flex">
               <span className="grid h-10 w-10 place-items-center rounded-lg bg-cyan-300/10 text-cyan-200"><ShieldCheck className="h-5 w-5" /></span>
               <span><strong className="block text-xs text-white">Trade with confidence</strong><small className="text-[10px] text-slate-400">Support when you need it</small></span>
             </div>
@@ -167,7 +167,7 @@ export default async function HomePage() {
                 <Link
                   key={category.id}
                   href={`/games/${category.game.slug}/${category.slug}`}
-                  className="group flex items-center gap-4 rounded-2xl border border-white/[0.09] bg-[#111a2b] p-4 transition hover:border-cyan-300/30 hover:bg-[#141f34]"
+                  className="group flex items-center gap-4 rounded-2xl border border-white/[0.09] bg-card p-4 transition hover:border-cyan-300/30 hover:bg-secondary"
                 >
                   <span className={`grid h-12 w-12 shrink-0 place-items-center rounded-xl ${index % 2 ? "bg-indigo-400/10 text-indigo-200" : "bg-cyan-300/10 text-cyan-200"}`}>
                     {index % 2 ? <PackageCheck className="h-5 w-5" /> : <Zap className="h-5 w-5" />}
@@ -185,7 +185,7 @@ export default async function HomePage() {
           )}
         </section>
 
-        <section className="overflow-hidden rounded-[1.75rem] border border-cyan-200/10 bg-gradient-to-br from-[#11243a] via-[#111a2d] to-[#10172a] p-7 sm:p-10">
+        <section className="overflow-hidden rounded-[1.75rem] border border-cyan-200/10 bg-gradient-to-br from-patina/20 via-card to-background p-7 sm:p-10">
           <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
             <div>
               <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-cyan-300">Built for better trades</p>
@@ -239,7 +239,7 @@ function TrustCard({ icon, title, body }: { icon: React.ReactNode; title: string
 
 function StepCard({ number, title, body }: { number: string; title: string; body: string }) {
   return (
-    <div className="rounded-2xl border border-white/[0.08] bg-[#111a2b] p-6">
+    <div className="rounded-2xl border border-white/[0.08] bg-card p-6">
       <span className="font-display text-3xl font-bold text-cyan-300/70">{number}</span>
       <h3 className="mt-4 text-lg font-semibold text-white">{title}</h3>
       <p className="mt-2 text-sm leading-6 text-slate-400">{body}</p>

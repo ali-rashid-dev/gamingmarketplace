@@ -37,7 +37,7 @@ export default function HelpPage() {
 
       <div className="mt-9 grid gap-4 sm:grid-cols-2">
         {helpTopics.map((topic) => (
-          <article key={topic.title} className="rounded-2xl border border-white/[0.09] bg-[#111a2b] p-6">
+          <article key={topic.title} className="rounded-2xl border border-white/[0.09] bg-card p-6">
             <span className="grid h-10 w-10 place-items-center rounded-xl bg-cyan-300/10 text-cyan-200"><CircleHelp className="h-5 w-5" /></span>
             <h2 className="mt-4 font-display text-xl font-semibold text-white">{topic.title}</h2>
             <p className="mt-2 text-sm leading-6 text-slate-400">{topic.body}</p>

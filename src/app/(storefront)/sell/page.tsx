@@ -30,7 +30,7 @@ export default function SellPage() {
           <SellBenefit icon={<TrendingUp className="h-5 w-5" />} title="Meet players where they are" body="Organized game and category pages help customers find the products they want." />
         </div>
       </div>
-      <section className="mt-10 rounded-2xl border border-white/[0.09] bg-[#111a2b] p-6">
+      <section className="mt-10 rounded-2xl border border-white/[0.09] bg-card p-6">
         <h2 className="font-display text-2xl font-semibold text-white">How to apply</h2>
         <ol className="mt-4 grid gap-4 text-sm leading-6 text-slate-400 sm:grid-cols-3">
           <li><span className="font-bold text-cyan-300">1.</span> Create an account or sign in to your existing GameTrade account.</li>
@@ -51,7 +51,7 @@ export default function SellPage() {
 
 function SellBenefit({ icon, title, body }: { icon: React.ReactNode; title: string; body: string }) {
   return (
-    <article className="rounded-2xl border border-white/[0.09] bg-[#111a2b] p-5">
+    <article className="rounded-2xl border border-white/[0.09] bg-card p-5">
       <span className="grid h-10 w-10 place-items-center rounded-xl bg-cyan-300/10 text-cyan-200">{icon}</span>
       <h2 className="mt-3 font-semibold text-white">{title}</h2>
       <p className="mt-1 text-sm leading-6 text-slate-400">{body}</p>

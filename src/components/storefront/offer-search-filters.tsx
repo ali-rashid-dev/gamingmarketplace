@@ -92,7 +92,7 @@ export function OfferSearchFiltersForm({
     <form
       action={action}
       method="get"
-      className="mb-8 rounded-2xl border border-white/[0.09] bg-[#111a2b] p-4 sm:p-5"
+      className="mb-8 rounded-2xl border border-white/[0.09] bg-card p-4 sm:p-5"
     >
       {fixedGameId && <input type="hidden" name="gameId" value={fixedGameId} />}
       {fixedCategoryId && <input type="hidden" name="categoryId" value={fixedCategoryId} />}

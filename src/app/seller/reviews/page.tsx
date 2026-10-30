@@ -12,7 +12,7 @@ export default async function SellerReviewsPage() {
       {reviews.length ? (
         <div className="mt-7 space-y-3">
           {reviews.map((review) => (
-            <article key={review.id} className="rounded-2xl border border-white/[0.09] bg-[#111a2b] p-5">
+            <article key={review.id} className="rounded-2xl border border-white/[0.09] bg-card p-5">
               <div className="flex flex-wrap justify-between gap-3">
                 <p className="font-semibold text-white">{review.rating}/5 · {review.buyer.name}</p>
                 <time className="text-xs text-slate-500">{review.createdAt.toLocaleDateString()}</time>

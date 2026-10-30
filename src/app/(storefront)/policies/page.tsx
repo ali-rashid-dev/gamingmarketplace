@@ -54,7 +54,7 @@ export default function PoliciesPage() {
       </p>
       <div className="mt-9 space-y-4">
         {sections.map((section) => (
-          <section key={section.id} id={section.id} className="scroll-mt-36 rounded-2xl border border-white/[0.09] bg-[#111a2b] p-6 sm:p-8">
+          <section key={section.id} id={section.id} className="scroll-mt-36 rounded-2xl border border-white/[0.09] bg-card p-6 sm:p-8">
             <h2 className="font-display text-2xl font-semibold text-white">{section.title}</h2>
             <div className="mt-4 space-y-3">
               {section.text.map((paragraph) => <p key={paragraph} className="text-sm leading-7 text-slate-400">{paragraph}</p>)}

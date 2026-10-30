@@ -38,7 +38,7 @@ function OrderRow({ order }: { order: Order }) {
     });
   }
   return (
-    <article className="rounded-2xl border border-white/[0.09] bg-[#111a2b] p-5">
+    <article className="rounded-2xl border border-white/[0.09] bg-card p-5">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="text-xs text-cyan-300">Order {order.orderNumber} · {new Date(order.placedAt).toLocaleString()}</p>

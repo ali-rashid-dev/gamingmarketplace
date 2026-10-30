@@ -7,10 +7,10 @@ export async function StorefrontHeader() {
   const session = await auth.api.getSession({ headers: await headers() });
 
   return (
-    <header className="sticky top-0 z-40 border-b border-white/10 bg-[#0b1020]/90 backdrop-blur-xl">
+    <header className="sticky top-0 z-40 border-b border-white/10 bg-background/90 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-4 px-5 py-3.5 sm:px-8">
         <Link href="/" className="flex shrink-0 items-center gap-2.5" aria-label="GameTrade home">
-          <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-cyan-300 to-blue-500 text-[#07101f] shadow-lg shadow-blue-500/20">
+          <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-cyan-300 to-blue-500 text-primary-foreground shadow-lg shadow-blue-500/20">
             <span className="font-display text-xl font-bold">G</span>
           </span>
           <span className="font-display text-xl font-bold tracking-tight text-white">
@@ -47,7 +47,7 @@ export async function StorefrontHeader() {
               </span>
               <span className="hidden sm:inline">{session?.user.name ?? "Account"}</span>
             </summary>
-            <div className="absolute right-0 top-full mt-2 w-48 rounded-xl border border-white/10 bg-[#111a2d] p-1.5 shadow-2xl">
+            <div className="absolute right-0 top-full mt-2 w-48 rounded-xl border border-white/10 bg-popover p-1.5 shadow-2xl">
               {session ? (
                 <>
                   <Link href="/dashboard" className="block rounded-lg px-3 py-2 text-slate-200 hover:bg-white/5">
