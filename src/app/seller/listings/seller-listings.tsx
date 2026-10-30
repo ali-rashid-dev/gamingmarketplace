@@ -142,6 +142,10 @@ export function SellerListings({ listings }: { listings: Listing[] }) {
   function applyBulk() {
     setError("");
     setNotice("");
+    if (operation === "set-stock" && (!stock.trim() || !Number.isInteger(Number(stock)))) {
+      setError("Enter a whole-number stock quantity.");
+      return;
+    }
     startTransition(async () => {
       try {
         const result = await bulkUpdateSellerListings(

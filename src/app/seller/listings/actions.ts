@@ -639,6 +639,16 @@ export async function bulkUpdateSellerListings(
       if (stockQuantity === undefined) {
         return { success: false, error: "Enter a valid stock quantity" };
       }
+      if (
+        listing.status !== ListingStatus.ACTIVE &&
+        listing.status !== ListingStatus.PAUSED &&
+        listing.status !== ListingStatus.SOLD_OUT
+      ) {
+        return {
+          success: false,
+          error: "Stock can only be updated for active, paused, or sold listings",
+        };
+      }
       quantityValue = stockQuantity;
       if (quantityValue === 0) status = ListingStatus.SOLD_OUT;
       else if (listing.status === ListingStatus.SOLD_OUT) status = ListingStatus.PENDING_REVIEW;
@@ -674,7 +684,7 @@ export async function bulkUpdateSellerListings(
         authorization.userId
       );
     }
-  });
+  }, { timeout: 30_000 });
   revalidatePath("/seller/listings");
   return { success: true, data: { updated: listings.length } };
 }
