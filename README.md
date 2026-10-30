@@ -79,6 +79,28 @@ handover is not currently supported.
 Apply the seller listing database migration with
 `pnpm exec prisma migrate dev` before using seller listings or moderation.
 
+## Seller dashboard
+
+Approved sellers use `/seller` for shop metrics and recent sales, with sections
+for listings, orders, messages, reviews, earnings, shop profile, verification,
+and settings. Seller queries and mutations are scoped to the authenticated
+seller; sellers cannot access another shop's listings, orders, or conversations.
+Bulk listing actions support pausing, reactivating, and stock updates. Sellers
+can mark eligible orders as processing or delivered; disputed orders are held
+from fulfillment actions.
+
+The seller availability setting hides that seller's offers and shop from the
+public storefront without changing listing status. Conversion tracking is not
+available until reliable listing-view data exists. Verification is displayed
+from the existing seller approval state; no document upload or KYC workflow is
+implemented. Earnings and payout history are read-only because payout setup
+and withdrawal requests are not implemented. Secure credential handover is
+also unsupported; sellers should not send passwords or recovery codes in
+listing descriptions or messages.
+
+Apply the `20261030233000_seller_availability` migration along with the seller
+listing and search migrations before enabling the seller dashboard.
+
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ## Learn More

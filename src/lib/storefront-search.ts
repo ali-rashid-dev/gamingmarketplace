@@ -153,6 +153,7 @@ export async function searchOffers(
     Prisma.sql`g."status" = 'PUBLISHED'`,
     Prisma.sql`c."isActive" = TRUE`,
     Prisma.sql`s."status" = 'APPROVED'`,
+    Prisma.sql`s."isAvailable" = TRUE`,
   ];
 
   if (filters.q) {
@@ -243,7 +244,7 @@ export async function getOfferSearchOptions() {
     OR: [{ expiresAt: null }, { expiresAt: { gt: new Date() } }],
     game: { status: GameStatus.PUBLISHED },
     category: { isActive: true },
-    seller: { status: SellerStatus.APPROVED },
+    seller: { status: SellerStatus.APPROVED, isAvailable: true },
   } satisfies Prisma.ListingWhereInput;
   const [games, regions, listingPlatforms] = await Promise.all([
     prisma.game.findMany({
@@ -316,7 +317,7 @@ export async function getOfferSearchSuggestions(queryInput: string) {
         INNER JOIN "SellerProfile" s ON s."id" = l."sellerId"
         WHERE l."status" = 'ACTIVE' AND l."publishedAt" IS NOT NULL
           AND l."quantity" > 0 AND (l."expiresAt" IS NULL OR l."expiresAt" > CURRENT_TIMESTAMP)
-          AND g."status" = 'PUBLISHED' AND c."isActive" = TRUE AND s."status" = 'APPROVED'
+          AND g."status" = 'PUBLISHED' AND c."isActive" = TRUE AND s."status" = 'APPROVED' AND s."isAvailable" = TRUE
           AND (position(lower(${query}) in lower(l."title")) > 0 OR l."searchVector" @@ websearch_to_tsquery('simple', ${query}))
         UNION ALL
         SELECT g."name" AS candidate
@@ -328,7 +329,7 @@ export async function getOfferSearchSuggestions(queryInput: string) {
             INNER JOIN "SellerProfile" s ON s."id" = l."sellerId"
             WHERE l."gameId" = g."id" AND l."status" = 'ACTIVE' AND l."publishedAt" IS NOT NULL
               AND l."quantity" > 0 AND (l."expiresAt" IS NULL OR l."expiresAt" > CURRENT_TIMESTAMP)
-              AND c."isActive" = TRUE AND s."status" = 'APPROVED'
+              AND c."isActive" = TRUE AND s."status" = 'APPROVED' AND s."isAvailable" = TRUE
           )
         UNION ALL
         SELECT c."name" AS candidate
@@ -341,7 +342,7 @@ export async function getOfferSearchSuggestions(queryInput: string) {
             WHERE l."categoryId" = c."id" AND l."gameId" = c."gameId"
               AND l."status" = 'ACTIVE' AND l."publishedAt" IS NOT NULL
               AND l."quantity" > 0 AND (l."expiresAt" IS NULL OR l."expiresAt" > CURRENT_TIMESTAMP)
-              AND s."status" = 'APPROVED'
+              AND s."status" = 'APPROVED' AND s."isAvailable" = TRUE
           )
       ) candidates
       WHERE candidate <> ''

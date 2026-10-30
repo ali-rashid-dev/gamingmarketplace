@@ -560,3 +560,108 @@ export async function deleteSellerListing(
   revalidatePath(`/offers/${removed.id}`);
   return { success: true, data: { deleted: true } };
 }
+
+export async function bulkUpdateSellerListings(
+  listingIdsInput: unknown,
+  operationInput: unknown,
+  quantityInput?: unknown
+): Promise<ActionResult<{ updated: number }>> {
+  const authorization = await requireSeller();
+  if (!authorization.success) return { success: false, error: authorization.error };
+  const listingIds = z.array(listingIdSchema).min(1).max(100).safeParse(listingIdsInput);
+  const operation = z.enum(["pause", "reactivate", "set-stock"]).safeParse(operationInput);
+  if (!listingIds.success || !operation.success) {
+    return { success: false, error: "Select up to 100 listings and choose a valid operation" };
+  }
+  if (new Set(listingIds.data).size !== listingIds.data.length) {
+    return { success: false, error: "Selected listing ids must be unique" };
+  }
+  const quantity =
+    operation.data === "set-stock"
+      ? z.number().int().min(0).max(100_000).safeParse(quantityInput)
+      : undefined;
+  if (quantity && !quantity.success) {
+    return { success: false, error: "Enter a valid stock quantity" };
+  }
+  const stockQuantity = quantity?.success ? quantity.data : undefined;
+
+  const listings = await prisma.listing.findMany({
+    where: {
+      id: { in: listingIds.data },
+      sellerId: authorization.sellerId,
+      status: { notIn: [ListingStatus.REMOVED, ListingStatus.PENDING_REVIEW] },
+    },
+    include: { attributes: true },
+  });
+  if (listings.length !== listingIds.data.length) {
+    return { success: false, error: "One or more selected listings are unavailable" };
+  }
+
+  const updates: {
+    listing: (typeof listings)[number];
+    status: ListingStatus;
+    quantity: number;
+  }[] = [];
+  for (const listing of listings) {
+    let status = listing.status;
+    let quantityValue = listing.quantity;
+    if (operation.data === "pause") {
+      if (listing.status !== ListingStatus.ACTIVE) {
+        return { success: false, error: "Bulk pause only supports active listings" };
+      }
+      status = ListingStatus.PAUSED;
+    } else if (operation.data === "reactivate") {
+      if (
+        listing.status !== ListingStatus.PAUSED ||
+        listing.quantity < 1 ||
+        (listing.expiresAt !== null && listing.expiresAt <= new Date())
+      ) {
+        return {
+          success: false,
+          error: "Bulk reactivate requires every listing to be paused, in stock, and unexpired",
+        };
+      }
+      status = ListingStatus.ACTIVE;
+    } else {
+      if (stockQuantity === undefined) {
+        return { success: false, error: "Enter a valid stock quantity" };
+      }
+      quantityValue = stockQuantity;
+      if (quantityValue === 0) status = ListingStatus.SOLD_OUT;
+      else if (listing.status === ListingStatus.SOLD_OUT) status = ListingStatus.PENDING_REVIEW;
+    }
+    updates.push({ listing, status, quantity: quantityValue });
+  }
+
+  await prisma.$transaction(async (transaction) => {
+    for (const { listing, status, quantity: quantityValue } of updates) {
+      const saved = await transaction.listing.update({
+        where: { id: listing.id },
+        data: {
+          status,
+          quantity: quantityValue,
+          ...(operation.data === "set-stock" && listing.status === ListingStatus.SOLD_OUT && quantityValue > 0
+            ? { reviewNote: "Stock restored; resubmitted for moderation" }
+            : {}),
+        },
+      });
+      await recordRevision(
+        transaction,
+        {
+          ...saved,
+          images: Array.isArray(saved.images)
+            ? saved.images.filter((image): image is string => typeof image === "string")
+            : [],
+          attributes: listing.attributes.map((attribute) => ({
+            key: attribute.key,
+            label: attribute.label,
+            value: revisionAttributeValue(attribute.value),
+          })),
+        },
+        authorization.userId
+      );
+    }
+  });
+  revalidatePath("/seller/listings");
+  return { success: true, data: { updated: listings.length } };
+}

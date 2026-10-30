@@ -243,6 +243,7 @@ model SellerProfile {
   slug          String        @unique
   description   String?
   status        SellerStatus  @default(PENDING)
+  isAvailable   Boolean       @default(true)
   verifiedAt    DateTime?
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt

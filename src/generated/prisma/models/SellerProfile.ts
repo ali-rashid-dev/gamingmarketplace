@@ -31,6 +31,7 @@ export type SellerProfileMinAggregateOutputType = {
   slug: string | null
   description: string | null
   status: $Enums.SellerStatus | null
+  isAvailable: boolean | null
   verifiedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -43,6 +44,7 @@ export type SellerProfileMaxAggregateOutputType = {
   slug: string | null
   description: string | null
   status: $Enums.SellerStatus | null
+  isAvailable: boolean | null
   verifiedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -55,6 +57,7 @@ export type SellerProfileCountAggregateOutputType = {
   slug: number
   description: number
   status: number
+  isAvailable: number
   verifiedAt: number
   createdAt: number
   updatedAt: number
@@ -69,6 +72,7 @@ export type SellerProfileMinAggregateInputType = {
   slug?: true
   description?: true
   status?: true
+  isAvailable?: true
   verifiedAt?: true
   createdAt?: true
   updatedAt?: true
@@ -81,6 +85,7 @@ export type SellerProfileMaxAggregateInputType = {
   slug?: true
   description?: true
   status?: true
+  isAvailable?: true
   verifiedAt?: true
   createdAt?: true
   updatedAt?: true
@@ -93,6 +98,7 @@ export type SellerProfileCountAggregateInputType = {
   slug?: true
   description?: true
   status?: true
+  isAvailable?: true
   verifiedAt?: true
   createdAt?: true
   updatedAt?: true
@@ -178,6 +184,7 @@ export type SellerProfileGroupByOutputType = {
   slug: string
   description: string | null
   status: $Enums.SellerStatus
+  isAvailable: boolean
   verifiedAt: Date | null
   createdAt: Date
   updatedAt: Date
@@ -211,6 +218,7 @@ export type SellerProfileWhereInput = {
   slug?: Prisma.StringFilter<"SellerProfile"> | string
   description?: Prisma.StringNullableFilter<"SellerProfile"> | string | null
   status?: Prisma.EnumSellerStatusFilter<"SellerProfile"> | $Enums.SellerStatus
+  isAvailable?: Prisma.BoolFilter<"SellerProfile"> | boolean
   verifiedAt?: Prisma.DateTimeNullableFilter<"SellerProfile"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"SellerProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SellerProfile"> | Date | string
@@ -229,6 +237,7 @@ export type SellerProfileOrderByWithRelationInput = {
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
+  isAvailable?: Prisma.SortOrder
   verifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -250,6 +259,7 @@ export type SellerProfileWhereUniqueInput = Prisma.AtLeast<{
   shopName?: Prisma.StringFilter<"SellerProfile"> | string
   description?: Prisma.StringNullableFilter<"SellerProfile"> | string | null
   status?: Prisma.EnumSellerStatusFilter<"SellerProfile"> | $Enums.SellerStatus
+  isAvailable?: Prisma.BoolFilter<"SellerProfile"> | boolean
   verifiedAt?: Prisma.DateTimeNullableFilter<"SellerProfile"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"SellerProfile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"SellerProfile"> | Date | string
@@ -268,6 +278,7 @@ export type SellerProfileOrderByWithAggregationInput = {
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
+  isAvailable?: Prisma.SortOrder
   verifiedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -286,6 +297,7 @@ export type SellerProfileScalarWhereWithAggregatesInput = {
   slug?: Prisma.StringWithAggregatesFilter<"SellerProfile"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"SellerProfile"> | string | null
   status?: Prisma.EnumSellerStatusWithAggregatesFilter<"SellerProfile"> | $Enums.SellerStatus
+  isAvailable?: Prisma.BoolWithAggregatesFilter<"SellerProfile"> | boolean
   verifiedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"SellerProfile"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"SellerProfile"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"SellerProfile"> | Date | string
@@ -297,6 +309,7 @@ export type SellerProfileCreateInput = {
   slug: string
   description?: string | null
   status?: $Enums.SellerStatus
+  isAvailable?: boolean
   verifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -315,6 +328,7 @@ export type SellerProfileUncheckedCreateInput = {
   slug: string
   description?: string | null
   status?: $Enums.SellerStatus
+  isAvailable?: boolean
   verifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -331,6 +345,7 @@ export type SellerProfileUpdateInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus
+  isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -349,6 +364,7 @@ export type SellerProfileUncheckedUpdateInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus
+  isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -366,6 +382,7 @@ export type SellerProfileCreateManyInput = {
   slug: string
   description?: string | null
   status?: $Enums.SellerStatus
+  isAvailable?: boolean
   verifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -377,6 +394,7 @@ export type SellerProfileUpdateManyMutationInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus
+  isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -389,6 +407,7 @@ export type SellerProfileUncheckedUpdateManyInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus
+  isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -406,6 +425,7 @@ export type SellerProfileCountOrderByAggregateInput = {
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  isAvailable?: Prisma.SortOrder
   verifiedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -418,6 +438,7 @@ export type SellerProfileMaxOrderByAggregateInput = {
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  isAvailable?: Prisma.SortOrder
   verifiedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -430,6 +451,7 @@ export type SellerProfileMinOrderByAggregateInput = {
   slug?: Prisma.SortOrder
   description?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  isAvailable?: Prisma.SortOrder
   verifiedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -552,6 +574,7 @@ export type SellerProfileCreateWithoutUserInput = {
   slug: string
   description?: string | null
   status?: $Enums.SellerStatus
+  isAvailable?: boolean
   verifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -568,6 +591,7 @@ export type SellerProfileUncheckedCreateWithoutUserInput = {
   slug: string
   description?: string | null
   status?: $Enums.SellerStatus
+  isAvailable?: boolean
   verifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -600,6 +624,7 @@ export type SellerProfileUpdateWithoutUserInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus
+  isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -616,6 +641,7 @@ export type SellerProfileUncheckedUpdateWithoutUserInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus
+  isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -632,6 +658,7 @@ export type SellerProfileCreateWithoutListingsInput = {
   slug: string
   description?: string | null
   status?: $Enums.SellerStatus
+  isAvailable?: boolean
   verifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -649,6 +676,7 @@ export type SellerProfileUncheckedCreateWithoutListingsInput = {
   slug: string
   description?: string | null
   status?: $Enums.SellerStatus
+  isAvailable?: boolean
   verifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -680,6 +708,7 @@ export type SellerProfileUpdateWithoutListingsInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus
+  isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -697,6 +726,7 @@ export type SellerProfileUncheckedUpdateWithoutListingsInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus
+  isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -712,6 +742,7 @@ export type SellerProfileCreateWithoutOrderItemsInput = {
   slug: string
   description?: string | null
   status?: $Enums.SellerStatus
+  isAvailable?: boolean
   verifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -729,6 +760,7 @@ export type SellerProfileUncheckedCreateWithoutOrderItemsInput = {
   slug: string
   description?: string | null
   status?: $Enums.SellerStatus
+  isAvailable?: boolean
   verifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -760,6 +792,7 @@ export type SellerProfileUpdateWithoutOrderItemsInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus
+  isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -777,6 +810,7 @@ export type SellerProfileUncheckedUpdateWithoutOrderItemsInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus
+  isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -792,6 +826,7 @@ export type SellerProfileCreateWithoutReviewsInput = {
   slug: string
   description?: string | null
   status?: $Enums.SellerStatus
+  isAvailable?: boolean
   verifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -809,6 +844,7 @@ export type SellerProfileUncheckedCreateWithoutReviewsInput = {
   slug: string
   description?: string | null
   status?: $Enums.SellerStatus
+  isAvailable?: boolean
   verifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -840,6 +876,7 @@ export type SellerProfileUpdateWithoutReviewsInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus
+  isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -857,6 +894,7 @@ export type SellerProfileUncheckedUpdateWithoutReviewsInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus
+  isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -872,6 +910,7 @@ export type SellerProfileCreateWithoutLedgerEntriesInput = {
   slug: string
   description?: string | null
   status?: $Enums.SellerStatus
+  isAvailable?: boolean
   verifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -889,6 +928,7 @@ export type SellerProfileUncheckedCreateWithoutLedgerEntriesInput = {
   slug: string
   description?: string | null
   status?: $Enums.SellerStatus
+  isAvailable?: boolean
   verifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -920,6 +960,7 @@ export type SellerProfileUpdateWithoutLedgerEntriesInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus
+  isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -937,6 +978,7 @@ export type SellerProfileUncheckedUpdateWithoutLedgerEntriesInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus
+  isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -952,6 +994,7 @@ export type SellerProfileCreateWithoutWithdrawalsInput = {
   slug: string
   description?: string | null
   status?: $Enums.SellerStatus
+  isAvailable?: boolean
   verifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -969,6 +1012,7 @@ export type SellerProfileUncheckedCreateWithoutWithdrawalsInput = {
   slug: string
   description?: string | null
   status?: $Enums.SellerStatus
+  isAvailable?: boolean
   verifiedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1000,6 +1044,7 @@ export type SellerProfileUpdateWithoutWithdrawalsInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus
+  isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1017,6 +1062,7 @@ export type SellerProfileUncheckedUpdateWithoutWithdrawalsInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus
+  isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
   verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1100,6 +1146,7 @@ export type SellerProfileSelect<ExtArgs extends runtime.Types.Extensions.Interna
   slug?: boolean
   description?: boolean
   status?: boolean
+  isAvailable?: boolean
   verifiedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1119,6 +1166,7 @@ export type SellerProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Types
   slug?: boolean
   description?: boolean
   status?: boolean
+  isAvailable?: boolean
   verifiedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1132,6 +1180,7 @@ export type SellerProfileSelectUpdateManyAndReturn<ExtArgs extends runtime.Types
   slug?: boolean
   description?: boolean
   status?: boolean
+  isAvailable?: boolean
   verifiedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1145,12 +1194,13 @@ export type SellerProfileSelectScalar = {
   slug?: boolean
   description?: boolean
   status?: boolean
+  isAvailable?: boolean
   verifiedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type SellerProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "shopName" | "slug" | "description" | "status" | "verifiedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["sellerProfile"]>
+export type SellerProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "shopName" | "slug" | "description" | "status" | "isAvailable" | "verifiedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["sellerProfile"]>
 export type SellerProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   listings?: boolean | Prisma.SellerProfile$listingsArgs<ExtArgs>
@@ -1184,6 +1234,7 @@ export type $SellerProfilePayload<ExtArgs extends runtime.Types.Extensions.Inter
     slug: string
     description: string | null
     status: $Enums.SellerStatus
+    isAvailable: boolean
     verifiedAt: Date | null
     createdAt: Date
     updatedAt: Date
@@ -1622,6 +1673,7 @@ export interface SellerProfileFieldRefs {
   readonly slug: Prisma.FieldRef<"SellerProfile", 'String'>
   readonly description: Prisma.FieldRef<"SellerProfile", 'String'>
   readonly status: Prisma.FieldRef<"SellerProfile", 'SellerStatus'>
+  readonly isAvailable: Prisma.FieldRef<"SellerProfile", 'Boolean'>
   readonly verifiedAt: Prisma.FieldRef<"SellerProfile", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"SellerProfile", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"SellerProfile", 'DateTime'>

@@ -2497,6 +2497,7 @@ export const SellerProfileScalarFieldEnum = {
   slug: 'slug',
   description: 'description',
   status: 'status',
+  isAvailable: 'isAvailable',
   verifiedAt: 'verifiedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

@@ -11,7 +11,7 @@ function publicListingWhere(): Prisma.ListingWhereInput {
     OR: [{ expiresAt: null }, { expiresAt: { gt: new Date() } }],
     game: { status: GameStatus.PUBLISHED },
     category: { isActive: true },
-    seller: { status: SellerStatus.APPROVED },
+    seller: { status: SellerStatus.APPROVED, isAvailable: true },
   };
 }
 
@@ -174,7 +174,7 @@ export async function getOfferById(id: string) {
 
 export async function getSellerBySlug(slug: string) {
   const seller = await prisma.sellerProfile.findFirst({
-    where: { slug, status: SellerStatus.APPROVED },
+    where: { slug, status: SellerStatus.APPROVED, isAvailable: true },
     select: {
       id: true,
       shopName: true,

@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useState, useTransition } from "react";
-import { deleteSellerListing, setSellerListingStatus, updateSellerListingAvailability } from "./actions";
+import { useRouter } from "next/navigation";
+import { bulkUpdateSellerListings, deleteSellerListing, setSellerListingStatus, updateSellerListingAvailability } from "./actions";
 
 type Listing = {
   id: string;
@@ -27,7 +28,15 @@ const statusNames: Record<string, string> = {
   SOLD_OUT: "Sold",
 };
 
-function ListingRow({ listing }: { listing: Listing }) {
+function ListingRow({
+  listing,
+  selected,
+  onSelect,
+}: {
+  listing: Listing;
+  selected: boolean;
+  onSelect: (checked: boolean) => void;
+}) {
   const [price, setPrice] = useState(listing.price);
   const [quantity, setQuantity] = useState(String(listing.quantity));
   const [error, setError] = useState("");
@@ -55,6 +64,10 @@ function ListingRow({ listing }: { listing: Listing }) {
     <article className="rounded-2xl border border-white/[0.09] bg-[#111a2b] p-5">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="min-w-0">
+          <label className="mb-2 flex items-center gap-2 text-xs text-slate-400">
+            <input type="checkbox" checked={selected} onChange={(event) => onSelect(event.target.checked)} className="accent-cyan-300" />
+            Select for bulk update
+          </label>
           <p className="text-xs text-cyan-300">{listing.game.name} · {listing.category.name}</p>
           <h2 className="mt-1 font-semibold text-white">{listing.title}</h2>
           <p className="mt-2 text-xs text-slate-400">
@@ -119,6 +132,32 @@ function ListingRow({ listing }: { listing: Listing }) {
 }
 
 export function SellerListings({ listings }: { listings: Listing[] }) {
+  const router = useRouter();
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+  const [operation, setOperation] = useState<"pause" | "reactivate" | "set-stock">("pause");
+  const [stock, setStock] = useState("1");
+  const [error, setError] = useState("");
+  const [notice, setNotice] = useState("");
+  const [busy, startTransition] = useTransition();
+  function applyBulk() {
+    setError("");
+    setNotice("");
+    startTransition(async () => {
+      try {
+        const result = await bulkUpdateSellerListings(
+          selectedIds,
+          operation,
+          operation === "set-stock" ? Number(stock) : undefined
+        );
+        if (!result.success) throw new Error(result.error);
+        setNotice(`Updated ${result.data.updated} listings.`);
+        setSelectedIds([]);
+        router.refresh();
+      } catch (caught) {
+        setError(caught instanceof Error ? caught.message : "Unable to update selected listings");
+      }
+    });
+  }
   if (listings.length === 0) {
     return (
       <div className="mt-8 rounded-2xl border border-dashed border-white/15 px-6 py-14 text-center">
@@ -127,5 +166,57 @@ export function SellerListings({ listings }: { listings: Listing[] }) {
       </div>
     );
   }
-  return <div className="mt-8 space-y-4">{listings.map((listing) => <ListingRow key={listing.id} listing={listing} />)}</div>;
+  return (
+    <div className="mt-8">
+      <section className="mb-4 rounded-2xl border border-white/[0.09] bg-[#111a2b] p-4">
+        <div className="flex flex-wrap items-end gap-3">
+          <label className="flex items-center gap-2 text-xs text-slate-300">
+            <input
+              type="checkbox"
+              checked={listings.length > 0 && selectedIds.length === Math.min(listings.length, 100)}
+              onChange={(event) => setSelectedIds(event.target.checked ? listings.slice(0, 100).map((listing) => listing.id) : [])}
+              className="accent-cyan-300"
+            />
+            Select up to 100 ({Math.min(listings.length, 100)})
+          </label>
+          <label className="text-xs text-slate-400">
+            Bulk action
+            <select value={operation} onChange={(event) => setOperation(event.target.value as typeof operation)} className="ml-2 rounded-lg border border-white/10 bg-slate-950/40 px-3 py-2 text-sm text-white">
+              <option value="pause">Pause active</option>
+              <option value="reactivate">Reactivate paused</option>
+              <option value="set-stock">Set stock quantity</option>
+            </select>
+          </label>
+          {operation === "set-stock" && (
+            <label className="text-xs text-slate-400">
+              Quantity
+              <input type="number" min="0" max="100000" step="1" value={stock} onChange={(event) => setStock(event.target.value)} className="ml-2 w-24 rounded-lg border border-white/10 bg-slate-950/40 px-3 py-2 text-sm text-white" />
+            </label>
+          )}
+          <button type="button" disabled={busy || selectedIds.length === 0} onClick={applyBulk} className="rounded-lg bg-cyan-300 px-4 py-2 text-xs font-bold text-slate-950 disabled:opacity-50">
+            Apply to {selectedIds.length} selected
+          </button>
+        </div>
+        <p className="mt-2 text-[11px] text-slate-500">Bulk actions can update up to 100 listings at a time.</p>
+        {error && <p role="alert" className="mt-3 text-xs text-rose-300">{error}</p>}
+        {notice && <p role="status" className="mt-3 text-xs text-emerald-200">{notice}</p>}
+      </section>
+      <div className="space-y-4">
+        {listings.map((listing) => (
+          <ListingRow
+            key={listing.id}
+            listing={listing}
+            selected={selectedIds.includes(listing.id)}
+            onSelect={(checked) => setSelectedIds((current) =>
+              checked
+                ? current.length < 100
+                  ? Array.from(new Set([...current, listing.id]))
+                  : current
+                : current.filter((id) => id !== listing.id)
+            )}
+          />
+        ))}
+      </div>
+    </div>
+  );
 }

@@ -1,0 +1,2 @@
+ALTER TABLE "SellerProfile"
+ADD COLUMN "isAvailable" BOOLEAN NOT NULL DEFAULT TRUE;

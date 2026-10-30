@@ -64,6 +64,7 @@ export async function getSellerListings() {
   const listings = await prisma.listing.findMany({
     where: { sellerId, status: { not: "REMOVED" } },
     orderBy: [{ updatedAt: "desc" }, { id: "desc" }],
+    take: 200,
     select: {
       id: true,
       title: true,
