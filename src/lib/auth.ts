@@ -2,6 +2,7 @@ import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import prisma from "@/lib/prisma";
 import { Resend } from "resend";
+import { after } from "next/server";
 import ForgotPasswordEmail from "@/components/emails/reset-password";
 import VerifyEmail from "@/components/emails/verify-email";
 
@@ -74,7 +75,7 @@ export const auth = betterAuth({
         requireEmailVerification: true,
         resetPasswordTokenExpiresIn: 60 * 60,
         sendResetPassword: async ({ user, url }) => {
-            void (async () => {
+            after(async () => {
                 try {
                     const { error } = await resend.emails.send({
                         from: requireEmailSender(),
@@ -92,7 +93,7 @@ export const auth = betterAuth({
                 } catch (error: unknown) {
                     console.error("Failed to send password reset email", error);
                 }
-            })();
+            });
         }
 
     },

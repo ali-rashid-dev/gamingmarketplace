@@ -17,6 +17,7 @@ type ReviewListing = {
   expiresAt: Date | null;
   images: string[];
   createdAt: Date;
+  updatedAt: Date;
   game: { name: string };
   category: { name: string; type: string };
   seller: { shopName: string };
@@ -31,7 +32,7 @@ function ReviewCard({ listing }: { listing: ReviewListing }) {
     setError("");
     startTransition(async () => {
       try {
-        const result = await reviewListing(listing.id, decision, note);
+        const result = await reviewListing(listing.id, decision, note, listing.updatedAt);
         if (!result.success) throw new Error(result.error);
         window.location.reload();
       } catch (caught) {

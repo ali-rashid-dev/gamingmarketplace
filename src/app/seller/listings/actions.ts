@@ -18,6 +18,8 @@ import { z } from "zod";
 
 const imageTypes = new Set(["image/jpeg", "image/png", "image/webp", "image/avif"]);
 const maxImageSize = 8 * 1024 * 1024;
+const credentialValuePattern =
+  /(?:password|passcode|recovery\s+code|backup\s+code|login\s+credentials?)\s*[:=]\s*\S+/i;
 const credentialFieldPattern =
   /password|passcode|credential|recovery|backup.?code|secret|2fa|two.?factor|auth.?code/i;
 const listingIdSchema = z.string().trim().min(1).max(128);
@@ -40,7 +42,17 @@ const listingInputSchema = z
         z
           .string()
           .url()
-          .refine((value) => new URL(value).protocol === "https:", "Images must use HTTPS")
+          .refine((value) => {
+            const url = new URL(value);
+            return (
+              url.protocol === "https:" &&
+              !url.port &&
+              (url.hostname === "ufs.sh" ||
+                url.hostname.endsWith(".ufs.sh") ||
+                url.hostname === "utfs.io" ||
+                url.hostname.endsWith(".utfs.io"))
+            );
+          }, "Images must be hosted on UploadThing over HTTPS")
       )
       .max(5),
     attributes: z.record(z.string(), z.unknown()),
@@ -49,9 +61,7 @@ const listingInputSchema = z
   .strict()
   .superRefine((input, context) => {
     if (
-      /(?:password|passcode|recovery\s+code|backup\s+code|login\s+credentials?)\s*[:=]\s*\S+/i.test(
-        input.description
-      )
+      credentialValuePattern.test(input.description)
     ) {
       context.addIssue({
         code: "custom",
@@ -135,7 +145,10 @@ function validateAttributes(
       : [];
     switch (field.type) {
       case CategoryFieldType.TEXT:
-        valid = typeof value === "string" && value.trim().length <= 500;
+        valid =
+          typeof value === "string" &&
+          value.trim().length <= 500 &&
+          !credentialValuePattern.test(value);
         normalizedValue = typeof value === "string" ? value.trim() : "";
         break;
       case CategoryFieldType.NUMBER:

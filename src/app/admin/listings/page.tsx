@@ -1,7 +1,10 @@
+import { UserRole } from "@/generated/prisma/enums";
+import { requirePageRoles } from "@/lib/authorization";
 import prisma from "@/lib/prisma";
 import { ListingReviewQueue } from "./listing-review-queue";
 
 export default async function AdminListingReviewPage() {
+  await requirePageRoles([UserRole.ADMIN, UserRole.SUPER_ADMIN]);
   const listings = await prisma.listing.findMany({
     where: { status: "PENDING_REVIEW" },
     orderBy: [{ createdAt: "asc" }, { id: "asc" }],
@@ -29,6 +32,7 @@ export default async function AdminListingReviewPage() {
       ? listing.images.filter((image): image is string => typeof image === "string")
       : [],
     createdAt: listing.createdAt,
+    updatedAt: listing.updatedAt,
     game: listing.game,
     category: listing.category,
     seller: listing.seller,
