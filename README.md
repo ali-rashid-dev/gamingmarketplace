@@ -44,6 +44,21 @@ Only active listings attached to published games, visible categories, and
 approved sellers are shown publicly. Offers with an expiration date are hidden
 once that date passes.
 
+## Offer search
+
+The `/offers` page searches listing titles and descriptions with PostgreSQL
+full-text search, and includes game and category names in matching. Search,
+catalog, price, platform, region, minimum seller rating, verification,
+instant-delivery, availability, and sort filters are URL-backed and combine
+with one another. Category pages accept the same filters while keeping their
+game and category selection pinned. Results are paginated and exclude
+unpublished, expired, sold-out, and otherwise unavailable listings.
+Price bounds and price sorting require an explicit currency and compare only
+listings in that currency; prices are not converted.
+
+The full-text index and generated listing search vector are created by the
+`20261030230000_storefront_full_text_search` migration.
+
 ## Seller listings
 
 Approved sellers manage drafts and offers at `/seller/listings`. The listing

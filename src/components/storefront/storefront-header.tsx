@@ -18,13 +18,13 @@ export async function StorefrontHeader() {
           </span>
         </Link>
 
-        <form action="/games" className="order-3 w-full md:order-2 md:mx-auto md:max-w-xl md:flex-1">
+        <form action="/offers" className="order-3 w-full md:order-2 md:mx-auto md:max-w-xl md:flex-1">
           <label className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.04] px-4 focus-within:border-cyan-300/50">
             <Search aria-hidden="true" className="h-4 w-4 shrink-0 text-slate-400" />
             <input
               type="search"
               name="q"
-              placeholder="Search games, items, accounts..."
+              placeholder="Search games, categories, offers..."
               className="h-11 w-full bg-transparent text-sm text-white outline-none placeholder:text-slate-500"
             />
             <kbd className="hidden rounded border border-white/10 px-1.5 py-0.5 text-[10px] text-slate-500 lg:inline">

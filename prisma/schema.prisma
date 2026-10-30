@@ -329,6 +329,7 @@ model Listing {
   reviewNote       String?
   status           ListingStatus      @default(DRAFT)
   images           Json               @default("[]")
+  searchVector     Unsupported("tsvector")?
   publishedAt      DateTime?
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @updatedAt
@@ -513,6 +514,7 @@ model Review {
   listing     Listing?      @relation(fields: [listingId], references: [id], onDelete: SetNull)
 
   @@index([sellerId, createdAt])
+  @@index([sellerId, rating])
   @@index([listingId, createdAt])
 }
 

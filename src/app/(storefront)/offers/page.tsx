@@ -1,51 +1,95 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { OfferCard } from "@/components/storefront/offer-card";
+import { OfferSearchFiltersForm } from "@/components/storefront/offer-search-filters";
 import { OfferPagination } from "@/components/storefront/offer-pagination";
 import { SectionHeading } from "@/components/storefront/section-heading";
-import { getOffers } from "@/lib/storefront";
+import {
+  buildOfferSearchHref,
+  getOfferSearchOptions,
+  parseOfferSearchFilters,
+  searchOffers,
+  type SearchParams,
+} from "@/lib/storefront-search";
 
 export const metadata: Metadata = {
   title: "Game Offers | GameTrade",
   description: "Browse active game accounts, items, top-ups, and services.",
 };
 
-type Props = { searchParams: Promise<{ sort?: string | string[]; page?: string | string[] }> };
+type Props = { searchParams: Promise<SearchParams> };
 
 export default async function OffersPage({ searchParams }: Props) {
   const query = await searchParams;
-  const sort = query.sort === "popular" ? "popular" : "recent";
+  const filters = parseOfferSearchFilters(query);
   const parsedPage = typeof query.page === "string" ? Number(query.page) : 1;
-  const page = Number.isSafeInteger(parsedPage) && parsedPage > 0 ? parsedPage : 1;
+  const page = Number.isSafeInteger(parsedPage) && parsedPage > 0
+    ? Math.min(parsedPage, 100_000)
+    : 1;
   const pageSize = 48;
-  const results = await getOffers(sort, pageSize + 1, {}, (page - 1) * pageSize);
+  const [results, options] = await Promise.all([
+    searchOffers(filters, pageSize + 1, (page - 1) * pageSize),
+    getOfferSearchOptions(),
+  ]);
   const hasMore = results.length > pageSize;
   const offers = results.slice(0, pageSize);
+  const paginationHref = buildOfferSearchHref("/offers", filters);
+  const needsCurrency =
+    filters.minPrice !== undefined ||
+    filters.maxPrice !== undefined ||
+    filters.sort === "price_asc" ||
+    filters.sort === "price_desc";
+  const hasFilters =
+    filters.q ||
+    filters.gameId ||
+    filters.categoryId ||
+    filters.minPrice !== undefined ||
+    filters.maxPrice !== undefined ||
+    filters.currency ||
+    filters.platform ||
+    filters.region ||
+    filters.minRating !== undefined ||
+    filters.verified ||
+    filters.instant ||
+    filters.minQuantity > 1;
 
   return (
     <main className="mx-auto min-h-[65vh] max-w-7xl px-5 py-12 sm:px-8 sm:py-16">
       <SectionHeading
-        eyebrow={sort === "popular" ? "Community favorites" : "Fresh listings"}
-        title={sort === "popular" ? "Popular offers" : "All offers"}
-        description="Compare active marketplace listings from approved sellers."
+        eyebrow={filters.q ? "Search results" : "Marketplace"}
+        title={filters.q ? `Offers matching “${filters.q}”` : "Find your next offer"}
+        description="Search and filter live listings from approved sellers."
       />
-      <div className="mb-6 flex gap-2">
-        <Link href={`/offers?sort=popular${page > 1 ? `&page=${page}` : ""}`} className={`rounded-full border px-3 py-1.5 text-xs font-semibold ${sort === "popular" ? "border-cyan-300/40 bg-cyan-300/10 text-cyan-100" : "border-white/10 text-slate-400 hover:text-white"}`}>Popular</Link>
-        <Link href={`/offers?sort=recent${page > 1 ? `&page=${page}` : ""}`} className={`rounded-full border px-3 py-1.5 text-xs font-semibold ${sort === "recent" ? "border-cyan-300/40 bg-cyan-300/10 text-cyan-100" : "border-white/10 text-slate-400 hover:text-white"}`}>Recently listed</Link>
-      </div>
+      <OfferSearchFiltersForm options={options} filters={filters} params={query} />
+      {offers.length > 0 && (
+        <p className="mb-4 text-xs text-slate-500">
+          Showing {offers.length} offer{offers.length === 1 ? "" : "s"} · sorted by {filters.sort.replace("_", " ")}
+        </p>
+      )}
       {offers.length ? (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {offers.map((offer, index) => <OfferCard key={offer.id} offer={offer} index={index} />)}
         </div>
       ) : (
         <div className="rounded-2xl border border-dashed border-white/15 px-6 py-16 text-center">
-          <h2 className="font-display text-2xl font-semibold text-white">No active offers yet</h2>
-          <p className="mt-2 text-sm text-slate-400">Check back as sellers add listings to the catalog.</p>
+          <h2 className="font-display text-2xl font-semibold text-white">
+            {needsCurrency && !filters.currency
+              ? "Choose a currency for price filters"
+              : hasFilters
+                ? "No offers match these filters"
+                : "No active offers yet"}
+          </h2>
+          <p className="mt-2 text-sm text-slate-400">
+            {needsCurrency && !filters.currency
+              ? "Select a currency before setting a price range or sorting by price."
+              : hasFilters
+                ? "Try a different search or remove some filters to see more available offers."
+                : "Check back as sellers add listings to the catalog."}
+          </p>
         </div>
       )}
       {offers.length > 0 && (
         <OfferPagination
-          href={`/offers?sort=${sort}`}
+          href={paginationHref}
           page={page}
           hasMore={hasMore}
         />
