@@ -446,6 +446,7 @@ export async function getBuyerSupportTickets(userId: string) {
       updatedAt: true,
       order: { select: { orderNumber: true } },
       messages: {
+        where: { isInternal: false },
         orderBy: [{ createdAt: "asc" }, { id: "asc" }],
         take: 100,
         select: { id: true, senderId: true, body: true, createdAt: true },

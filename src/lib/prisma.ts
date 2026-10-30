@@ -10,7 +10,10 @@ const globalForPrisma = global as unknown as {
 };
 
 const hasCurrentSchema =
-  globalForPrisma.prisma && "wishlistItem" in globalForPrisma.prisma;
+  globalForPrisma.prisma &&
+  "wishlistItem" in globalForPrisma.prisma &&
+  "supportAgentProfile" in globalForPrisma.prisma &&
+  "supportReport" in globalForPrisma.prisma;
 const prisma = hasCurrentSchema
   ? globalForPrisma.prisma
   : new PrismaClient({ adapter });

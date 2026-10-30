@@ -79,6 +79,8 @@ export const ModelName = {
   WishlistItem: 'WishlistItem',
   SupportTicket: 'SupportTicket',
   SupportTicketMessage: 'SupportTicketMessage',
+  SupportAgentProfile: 'SupportAgentProfile',
+  SupportReport: 'SupportReport',
   AuditLog: 'AuditLog'
 } as const
 
@@ -501,11 +503,14 @@ export type WishlistItemScalarFieldEnum = (typeof WishlistItemScalarFieldEnum)[k
 export const SupportTicketScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
+  assignedToId: 'assignedToId',
   orderId: 'orderId',
   subject: 'subject',
   status: 'status',
+  priority: 'priority',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  resolvedAt: 'resolvedAt'
 } as const
 
 export type SupportTicketScalarFieldEnum = (typeof SupportTicketScalarFieldEnum)[keyof typeof SupportTicketScalarFieldEnum]
@@ -516,10 +521,38 @@ export const SupportTicketMessageScalarFieldEnum = {
   ticketId: 'ticketId',
   senderId: 'senderId',
   body: 'body',
+  isInternal: 'isInternal',
   createdAt: 'createdAt'
 } as const
 
 export type SupportTicketMessageScalarFieldEnum = (typeof SupportTicketMessageScalarFieldEnum)[keyof typeof SupportTicketMessageScalarFieldEnum]
+
+
+export const SupportAgentProfileScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  isAvailable: 'isAvailable',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SupportAgentProfileScalarFieldEnum = (typeof SupportAgentProfileScalarFieldEnum)[keyof typeof SupportAgentProfileScalarFieldEnum]
+
+
+export const SupportReportScalarFieldEnum = {
+  id: 'id',
+  submittedById: 'submittedById',
+  reportedUserId: 'reportedUserId',
+  assignedToId: 'assignedToId',
+  orderId: 'orderId',
+  category: 'category',
+  status: 'status',
+  details: 'details',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type SupportReportScalarFieldEnum = (typeof SupportReportScalarFieldEnum)[keyof typeof SupportReportScalarFieldEnum]
 
 
 export const AuditLogScalarFieldEnum = {

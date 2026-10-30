@@ -222,7 +222,12 @@ export type UserWhereInput = {
   listingRevisions?: Prisma.ListingRevisionListRelationFilter
   wishlistItems?: Prisma.WishlistItemListRelationFilter
   supportTickets?: Prisma.SupportTicketListRelationFilter
+  assignedSupportTickets?: Prisma.SupportTicketListRelationFilter
   supportMessages?: Prisma.SupportTicketMessageListRelationFilter
+  supportAgentProfile?: Prisma.XOR<Prisma.SupportAgentProfileNullableScalarRelationFilter, Prisma.SupportAgentProfileWhereInput> | null
+  submittedSupportReports?: Prisma.SupportReportListRelationFilter
+  reportedBySupportReports?: Prisma.SupportReportListRelationFilter
+  assignedSupportReports?: Prisma.SupportReportListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -250,7 +255,12 @@ export type UserOrderByWithRelationInput = {
   listingRevisions?: Prisma.ListingRevisionOrderByRelationAggregateInput
   wishlistItems?: Prisma.WishlistItemOrderByRelationAggregateInput
   supportTickets?: Prisma.SupportTicketOrderByRelationAggregateInput
+  assignedSupportTickets?: Prisma.SupportTicketOrderByRelationAggregateInput
   supportMessages?: Prisma.SupportTicketMessageOrderByRelationAggregateInput
+  supportAgentProfile?: Prisma.SupportAgentProfileOrderByWithRelationInput
+  submittedSupportReports?: Prisma.SupportReportOrderByRelationAggregateInput
+  reportedBySupportReports?: Prisma.SupportReportOrderByRelationAggregateInput
+  assignedSupportReports?: Prisma.SupportReportOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -281,7 +291,12 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   listingRevisions?: Prisma.ListingRevisionListRelationFilter
   wishlistItems?: Prisma.WishlistItemListRelationFilter
   supportTickets?: Prisma.SupportTicketListRelationFilter
+  assignedSupportTickets?: Prisma.SupportTicketListRelationFilter
   supportMessages?: Prisma.SupportTicketMessageListRelationFilter
+  supportAgentProfile?: Prisma.XOR<Prisma.SupportAgentProfileNullableScalarRelationFilter, Prisma.SupportAgentProfileWhereInput> | null
+  submittedSupportReports?: Prisma.SupportReportListRelationFilter
+  reportedBySupportReports?: Prisma.SupportReportListRelationFilter
+  assignedSupportReports?: Prisma.SupportReportListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -337,7 +352,12 @@ export type UserCreateInput = {
   listingRevisions?: Prisma.ListingRevisionCreateNestedManyWithoutChangedByInput
   wishlistItems?: Prisma.WishlistItemCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketCreateNestedManyWithoutAssignedToInput
   supportMessages?: Prisma.SupportTicketMessageCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -365,7 +385,12 @@ export type UserUncheckedCreateInput = {
   listingRevisions?: Prisma.ListingRevisionUncheckedCreateNestedManyWithoutChangedByInput
   wishlistItems?: Prisma.WishlistItemUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutAssignedToInput
   supportMessages?: Prisma.SupportTicketMessageUncheckedCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
 }
 
 export type UserUpdateInput = {
@@ -393,7 +418,12 @@ export type UserUpdateInput = {
   listingRevisions?: Prisma.ListingRevisionUpdateManyWithoutChangedByNestedInput
   wishlistItems?: Prisma.WishlistItemUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUpdateManyWithoutAssignedToNestedInput
   supportMessages?: Prisma.SupportTicketMessageUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -421,7 +451,12 @@ export type UserUncheckedUpdateInput = {
   listingRevisions?: Prisma.ListingRevisionUncheckedUpdateManyWithoutChangedByNestedInput
   wishlistItems?: Prisma.WishlistItemUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutAssignedToNestedInput
   supportMessages?: Prisma.SupportTicketMessageUncheckedUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -722,12 +757,28 @@ export type UserCreateNestedOneWithoutSupportTicketsInput = {
   connect?: Prisma.UserWhereUniqueInput
 }
 
+export type UserCreateNestedOneWithoutAssignedSupportTicketsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAssignedSupportTicketsInput, Prisma.UserUncheckedCreateWithoutAssignedSupportTicketsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAssignedSupportTicketsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
 export type UserUpdateOneRequiredWithoutSupportTicketsNestedInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutSupportTicketsInput, Prisma.UserUncheckedCreateWithoutSupportTicketsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutSupportTicketsInput
   upsert?: Prisma.UserUpsertWithoutSupportTicketsInput
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSupportTicketsInput, Prisma.UserUpdateWithoutSupportTicketsInput>, Prisma.UserUncheckedUpdateWithoutSupportTicketsInput>
+}
+
+export type UserUpdateOneWithoutAssignedSupportTicketsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAssignedSupportTicketsInput, Prisma.UserUncheckedCreateWithoutAssignedSupportTicketsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAssignedSupportTicketsInput
+  upsert?: Prisma.UserUpsertWithoutAssignedSupportTicketsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAssignedSupportTicketsInput, Prisma.UserUpdateWithoutAssignedSupportTicketsInput>, Prisma.UserUncheckedUpdateWithoutAssignedSupportTicketsInput>
 }
 
 export type UserCreateNestedOneWithoutSupportMessagesInput = {
@@ -742,6 +793,66 @@ export type UserUpdateOneRequiredWithoutSupportMessagesNestedInput = {
   upsert?: Prisma.UserUpsertWithoutSupportMessagesInput
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSupportMessagesInput, Prisma.UserUpdateWithoutSupportMessagesInput>, Prisma.UserUncheckedUpdateWithoutSupportMessagesInput>
+}
+
+export type UserCreateNestedOneWithoutSupportAgentProfileInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSupportAgentProfileInput, Prisma.UserUncheckedCreateWithoutSupportAgentProfileInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSupportAgentProfileInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutSupportAgentProfileNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSupportAgentProfileInput, Prisma.UserUncheckedCreateWithoutSupportAgentProfileInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSupportAgentProfileInput
+  upsert?: Prisma.UserUpsertWithoutSupportAgentProfileInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSupportAgentProfileInput, Prisma.UserUpdateWithoutSupportAgentProfileInput>, Prisma.UserUncheckedUpdateWithoutSupportAgentProfileInput>
+}
+
+export type UserCreateNestedOneWithoutSubmittedSupportReportsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSubmittedSupportReportsInput, Prisma.UserUncheckedCreateWithoutSubmittedSupportReportsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSubmittedSupportReportsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutReportedBySupportReportsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReportedBySupportReportsInput, Prisma.UserUncheckedCreateWithoutReportedBySupportReportsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReportedBySupportReportsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutAssignedSupportReportsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAssignedSupportReportsInput, Prisma.UserUncheckedCreateWithoutAssignedSupportReportsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAssignedSupportReportsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutSubmittedSupportReportsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutSubmittedSupportReportsInput, Prisma.UserUncheckedCreateWithoutSubmittedSupportReportsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutSubmittedSupportReportsInput
+  upsert?: Prisma.UserUpsertWithoutSubmittedSupportReportsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSubmittedSupportReportsInput, Prisma.UserUpdateWithoutSubmittedSupportReportsInput>, Prisma.UserUncheckedUpdateWithoutSubmittedSupportReportsInput>
+}
+
+export type UserUpdateOneWithoutReportedBySupportReportsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReportedBySupportReportsInput, Prisma.UserUncheckedCreateWithoutReportedBySupportReportsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReportedBySupportReportsInput
+  upsert?: Prisma.UserUpsertWithoutReportedBySupportReportsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReportedBySupportReportsInput, Prisma.UserUpdateWithoutReportedBySupportReportsInput>, Prisma.UserUncheckedUpdateWithoutReportedBySupportReportsInput>
+}
+
+export type UserUpdateOneWithoutAssignedSupportReportsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAssignedSupportReportsInput, Prisma.UserUncheckedCreateWithoutAssignedSupportReportsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAssignedSupportReportsInput
+  upsert?: Prisma.UserUpsertWithoutAssignedSupportReportsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAssignedSupportReportsInput, Prisma.UserUpdateWithoutAssignedSupportReportsInput>, Prisma.UserUncheckedUpdateWithoutAssignedSupportReportsInput>
 }
 
 export type UserCreateNestedOneWithoutAuditLogsInput = {
@@ -784,7 +895,12 @@ export type UserCreateWithoutSessionsInput = {
   listingRevisions?: Prisma.ListingRevisionCreateNestedManyWithoutChangedByInput
   wishlistItems?: Prisma.WishlistItemCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketCreateNestedManyWithoutAssignedToInput
   supportMessages?: Prisma.SupportTicketMessageCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -811,7 +927,12 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   listingRevisions?: Prisma.ListingRevisionUncheckedCreateNestedManyWithoutChangedByInput
   wishlistItems?: Prisma.WishlistItemUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutAssignedToInput
   supportMessages?: Prisma.SupportTicketMessageUncheckedCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -854,7 +975,12 @@ export type UserUpdateWithoutSessionsInput = {
   listingRevisions?: Prisma.ListingRevisionUpdateManyWithoutChangedByNestedInput
   wishlistItems?: Prisma.WishlistItemUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUpdateManyWithoutAssignedToNestedInput
   supportMessages?: Prisma.SupportTicketMessageUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -881,7 +1007,12 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   listingRevisions?: Prisma.ListingRevisionUncheckedUpdateManyWithoutChangedByNestedInput
   wishlistItems?: Prisma.WishlistItemUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutAssignedToNestedInput
   supportMessages?: Prisma.SupportTicketMessageUncheckedUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
 }
 
 export type UserCreateWithoutAccountsInput = {
@@ -908,7 +1039,12 @@ export type UserCreateWithoutAccountsInput = {
   listingRevisions?: Prisma.ListingRevisionCreateNestedManyWithoutChangedByInput
   wishlistItems?: Prisma.WishlistItemCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketCreateNestedManyWithoutAssignedToInput
   supportMessages?: Prisma.SupportTicketMessageCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
 }
 
 export type UserUncheckedCreateWithoutAccountsInput = {
@@ -935,7 +1071,12 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   listingRevisions?: Prisma.ListingRevisionUncheckedCreateNestedManyWithoutChangedByInput
   wishlistItems?: Prisma.WishlistItemUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutAssignedToInput
   supportMessages?: Prisma.SupportTicketMessageUncheckedCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
 }
 
 export type UserCreateOrConnectWithoutAccountsInput = {
@@ -978,7 +1119,12 @@ export type UserUpdateWithoutAccountsInput = {
   listingRevisions?: Prisma.ListingRevisionUpdateManyWithoutChangedByNestedInput
   wishlistItems?: Prisma.WishlistItemUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUpdateManyWithoutAssignedToNestedInput
   supportMessages?: Prisma.SupportTicketMessageUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -1005,7 +1151,12 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   listingRevisions?: Prisma.ListingRevisionUncheckedUpdateManyWithoutChangedByNestedInput
   wishlistItems?: Prisma.WishlistItemUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutAssignedToNestedInput
   supportMessages?: Prisma.SupportTicketMessageUncheckedUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
 }
 
 export type UserCreateWithoutProfileInput = {
@@ -1032,7 +1183,12 @@ export type UserCreateWithoutProfileInput = {
   listingRevisions?: Prisma.ListingRevisionCreateNestedManyWithoutChangedByInput
   wishlistItems?: Prisma.WishlistItemCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketCreateNestedManyWithoutAssignedToInput
   supportMessages?: Prisma.SupportTicketMessageCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
 }
 
 export type UserUncheckedCreateWithoutProfileInput = {
@@ -1059,7 +1215,12 @@ export type UserUncheckedCreateWithoutProfileInput = {
   listingRevisions?: Prisma.ListingRevisionUncheckedCreateNestedManyWithoutChangedByInput
   wishlistItems?: Prisma.WishlistItemUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutAssignedToInput
   supportMessages?: Prisma.SupportTicketMessageUncheckedCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
 }
 
 export type UserCreateOrConnectWithoutProfileInput = {
@@ -1102,7 +1263,12 @@ export type UserUpdateWithoutProfileInput = {
   listingRevisions?: Prisma.ListingRevisionUpdateManyWithoutChangedByNestedInput
   wishlistItems?: Prisma.WishlistItemUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUpdateManyWithoutAssignedToNestedInput
   supportMessages?: Prisma.SupportTicketMessageUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProfileInput = {
@@ -1129,7 +1295,12 @@ export type UserUncheckedUpdateWithoutProfileInput = {
   listingRevisions?: Prisma.ListingRevisionUncheckedUpdateManyWithoutChangedByNestedInput
   wishlistItems?: Prisma.WishlistItemUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutAssignedToNestedInput
   supportMessages?: Prisma.SupportTicketMessageUncheckedUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
 }
 
 export type UserCreateWithoutSellerProfileInput = {
@@ -1156,7 +1327,12 @@ export type UserCreateWithoutSellerProfileInput = {
   listingRevisions?: Prisma.ListingRevisionCreateNestedManyWithoutChangedByInput
   wishlistItems?: Prisma.WishlistItemCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketCreateNestedManyWithoutAssignedToInput
   supportMessages?: Prisma.SupportTicketMessageCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
 }
 
 export type UserUncheckedCreateWithoutSellerProfileInput = {
@@ -1183,7 +1359,12 @@ export type UserUncheckedCreateWithoutSellerProfileInput = {
   listingRevisions?: Prisma.ListingRevisionUncheckedCreateNestedManyWithoutChangedByInput
   wishlistItems?: Prisma.WishlistItemUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutAssignedToInput
   supportMessages?: Prisma.SupportTicketMessageUncheckedCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
 }
 
 export type UserCreateOrConnectWithoutSellerProfileInput = {
@@ -1226,7 +1407,12 @@ export type UserUpdateWithoutSellerProfileInput = {
   listingRevisions?: Prisma.ListingRevisionUpdateManyWithoutChangedByNestedInput
   wishlistItems?: Prisma.WishlistItemUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUpdateManyWithoutAssignedToNestedInput
   supportMessages?: Prisma.SupportTicketMessageUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSellerProfileInput = {
@@ -1253,7 +1439,12 @@ export type UserUncheckedUpdateWithoutSellerProfileInput = {
   listingRevisions?: Prisma.ListingRevisionUncheckedUpdateManyWithoutChangedByNestedInput
   wishlistItems?: Prisma.WishlistItemUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutAssignedToNestedInput
   supportMessages?: Prisma.SupportTicketMessageUncheckedUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
 }
 
 export type UserCreateWithoutListingRevisionsInput = {
@@ -1280,7 +1471,12 @@ export type UserCreateWithoutListingRevisionsInput = {
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
   wishlistItems?: Prisma.WishlistItemCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketCreateNestedManyWithoutAssignedToInput
   supportMessages?: Prisma.SupportTicketMessageCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
 }
 
 export type UserUncheckedCreateWithoutListingRevisionsInput = {
@@ -1307,7 +1503,12 @@ export type UserUncheckedCreateWithoutListingRevisionsInput = {
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
   wishlistItems?: Prisma.WishlistItemUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutAssignedToInput
   supportMessages?: Prisma.SupportTicketMessageUncheckedCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
 }
 
 export type UserCreateOrConnectWithoutListingRevisionsInput = {
@@ -1350,7 +1551,12 @@ export type UserUpdateWithoutListingRevisionsInput = {
   auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
   wishlistItems?: Prisma.WishlistItemUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUpdateManyWithoutAssignedToNestedInput
   supportMessages?: Prisma.SupportTicketMessageUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
 }
 
 export type UserUncheckedUpdateWithoutListingRevisionsInput = {
@@ -1377,7 +1583,12 @@ export type UserUncheckedUpdateWithoutListingRevisionsInput = {
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
   wishlistItems?: Prisma.WishlistItemUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutAssignedToNestedInput
   supportMessages?: Prisma.SupportTicketMessageUncheckedUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
 }
 
 export type UserCreateWithoutOrdersInput = {
@@ -1404,7 +1615,12 @@ export type UserCreateWithoutOrdersInput = {
   listingRevisions?: Prisma.ListingRevisionCreateNestedManyWithoutChangedByInput
   wishlistItems?: Prisma.WishlistItemCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketCreateNestedManyWithoutAssignedToInput
   supportMessages?: Prisma.SupportTicketMessageCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
 }
 
 export type UserUncheckedCreateWithoutOrdersInput = {
@@ -1431,7 +1647,12 @@ export type UserUncheckedCreateWithoutOrdersInput = {
   listingRevisions?: Prisma.ListingRevisionUncheckedCreateNestedManyWithoutChangedByInput
   wishlistItems?: Prisma.WishlistItemUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutAssignedToInput
   supportMessages?: Prisma.SupportTicketMessageUncheckedCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
 }
 
 export type UserCreateOrConnectWithoutOrdersInput = {
@@ -1474,7 +1695,12 @@ export type UserUpdateWithoutOrdersInput = {
   listingRevisions?: Prisma.ListingRevisionUpdateManyWithoutChangedByNestedInput
   wishlistItems?: Prisma.WishlistItemUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUpdateManyWithoutAssignedToNestedInput
   supportMessages?: Prisma.SupportTicketMessageUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOrdersInput = {
@@ -1501,7 +1727,12 @@ export type UserUncheckedUpdateWithoutOrdersInput = {
   listingRevisions?: Prisma.ListingRevisionUncheckedUpdateManyWithoutChangedByNestedInput
   wishlistItems?: Prisma.WishlistItemUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutAssignedToNestedInput
   supportMessages?: Prisma.SupportTicketMessageUncheckedUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
 }
 
 export type UserCreateWithoutBuyerConversationsInput = {
@@ -1528,7 +1759,12 @@ export type UserCreateWithoutBuyerConversationsInput = {
   listingRevisions?: Prisma.ListingRevisionCreateNestedManyWithoutChangedByInput
   wishlistItems?: Prisma.WishlistItemCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketCreateNestedManyWithoutAssignedToInput
   supportMessages?: Prisma.SupportTicketMessageCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
 }
 
 export type UserUncheckedCreateWithoutBuyerConversationsInput = {
@@ -1555,7 +1791,12 @@ export type UserUncheckedCreateWithoutBuyerConversationsInput = {
   listingRevisions?: Prisma.ListingRevisionUncheckedCreateNestedManyWithoutChangedByInput
   wishlistItems?: Prisma.WishlistItemUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutAssignedToInput
   supportMessages?: Prisma.SupportTicketMessageUncheckedCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
 }
 
 export type UserCreateOrConnectWithoutBuyerConversationsInput = {
@@ -1587,7 +1828,12 @@ export type UserCreateWithoutSellerConversationsInput = {
   listingRevisions?: Prisma.ListingRevisionCreateNestedManyWithoutChangedByInput
   wishlistItems?: Prisma.WishlistItemCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketCreateNestedManyWithoutAssignedToInput
   supportMessages?: Prisma.SupportTicketMessageCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
 }
 
 export type UserUncheckedCreateWithoutSellerConversationsInput = {
@@ -1614,7 +1860,12 @@ export type UserUncheckedCreateWithoutSellerConversationsInput = {
   listingRevisions?: Prisma.ListingRevisionUncheckedCreateNestedManyWithoutChangedByInput
   wishlistItems?: Prisma.WishlistItemUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutAssignedToInput
   supportMessages?: Prisma.SupportTicketMessageUncheckedCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
 }
 
 export type UserCreateOrConnectWithoutSellerConversationsInput = {
@@ -1657,7 +1908,12 @@ export type UserUpdateWithoutBuyerConversationsInput = {
   listingRevisions?: Prisma.ListingRevisionUpdateManyWithoutChangedByNestedInput
   wishlistItems?: Prisma.WishlistItemUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUpdateManyWithoutAssignedToNestedInput
   supportMessages?: Prisma.SupportTicketMessageUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
 }
 
 export type UserUncheckedUpdateWithoutBuyerConversationsInput = {
@@ -1684,7 +1940,12 @@ export type UserUncheckedUpdateWithoutBuyerConversationsInput = {
   listingRevisions?: Prisma.ListingRevisionUncheckedUpdateManyWithoutChangedByNestedInput
   wishlistItems?: Prisma.WishlistItemUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutAssignedToNestedInput
   supportMessages?: Prisma.SupportTicketMessageUncheckedUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
 }
 
 export type UserUpsertWithoutSellerConversationsInput = {
@@ -1722,7 +1983,12 @@ export type UserUpdateWithoutSellerConversationsInput = {
   listingRevisions?: Prisma.ListingRevisionUpdateManyWithoutChangedByNestedInput
   wishlistItems?: Prisma.WishlistItemUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUpdateManyWithoutAssignedToNestedInput
   supportMessages?: Prisma.SupportTicketMessageUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSellerConversationsInput = {
@@ -1749,7 +2015,12 @@ export type UserUncheckedUpdateWithoutSellerConversationsInput = {
   listingRevisions?: Prisma.ListingRevisionUncheckedUpdateManyWithoutChangedByNestedInput
   wishlistItems?: Prisma.WishlistItemUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutAssignedToNestedInput
   supportMessages?: Prisma.SupportTicketMessageUncheckedUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
 }
 
 export type UserCreateWithoutMessagesInput = {
@@ -1776,7 +2047,12 @@ export type UserCreateWithoutMessagesInput = {
   listingRevisions?: Prisma.ListingRevisionCreateNestedManyWithoutChangedByInput
   wishlistItems?: Prisma.WishlistItemCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketCreateNestedManyWithoutAssignedToInput
   supportMessages?: Prisma.SupportTicketMessageCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
 }
 
 export type UserUncheckedCreateWithoutMessagesInput = {
@@ -1803,7 +2079,12 @@ export type UserUncheckedCreateWithoutMessagesInput = {
   listingRevisions?: Prisma.ListingRevisionUncheckedCreateNestedManyWithoutChangedByInput
   wishlistItems?: Prisma.WishlistItemUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutAssignedToInput
   supportMessages?: Prisma.SupportTicketMessageUncheckedCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
 }
 
 export type UserCreateOrConnectWithoutMessagesInput = {
@@ -1846,7 +2127,12 @@ export type UserUpdateWithoutMessagesInput = {
   listingRevisions?: Prisma.ListingRevisionUpdateManyWithoutChangedByNestedInput
   wishlistItems?: Prisma.WishlistItemUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUpdateManyWithoutAssignedToNestedInput
   supportMessages?: Prisma.SupportTicketMessageUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
 }
 
 export type UserUncheckedUpdateWithoutMessagesInput = {
@@ -1873,7 +2159,12 @@ export type UserUncheckedUpdateWithoutMessagesInput = {
   listingRevisions?: Prisma.ListingRevisionUncheckedUpdateManyWithoutChangedByNestedInput
   wishlistItems?: Prisma.WishlistItemUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutAssignedToNestedInput
   supportMessages?: Prisma.SupportTicketMessageUncheckedUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
 }
 
 export type UserCreateWithoutReviewsInput = {
@@ -1900,7 +2191,12 @@ export type UserCreateWithoutReviewsInput = {
   listingRevisions?: Prisma.ListingRevisionCreateNestedManyWithoutChangedByInput
   wishlistItems?: Prisma.WishlistItemCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketCreateNestedManyWithoutAssignedToInput
   supportMessages?: Prisma.SupportTicketMessageCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
 }
 
 export type UserUncheckedCreateWithoutReviewsInput = {
@@ -1927,7 +2223,12 @@ export type UserUncheckedCreateWithoutReviewsInput = {
   listingRevisions?: Prisma.ListingRevisionUncheckedCreateNestedManyWithoutChangedByInput
   wishlistItems?: Prisma.WishlistItemUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutAssignedToInput
   supportMessages?: Prisma.SupportTicketMessageUncheckedCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
 }
 
 export type UserCreateOrConnectWithoutReviewsInput = {
@@ -1970,7 +2271,12 @@ export type UserUpdateWithoutReviewsInput = {
   listingRevisions?: Prisma.ListingRevisionUpdateManyWithoutChangedByNestedInput
   wishlistItems?: Prisma.WishlistItemUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUpdateManyWithoutAssignedToNestedInput
   supportMessages?: Prisma.SupportTicketMessageUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReviewsInput = {
@@ -1997,7 +2303,12 @@ export type UserUncheckedUpdateWithoutReviewsInput = {
   listingRevisions?: Prisma.ListingRevisionUncheckedUpdateManyWithoutChangedByNestedInput
   wishlistItems?: Prisma.WishlistItemUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutAssignedToNestedInput
   supportMessages?: Prisma.SupportTicketMessageUncheckedUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
 }
 
 export type UserCreateWithoutOpenedDisputesInput = {
@@ -2024,7 +2335,12 @@ export type UserCreateWithoutOpenedDisputesInput = {
   listingRevisions?: Prisma.ListingRevisionCreateNestedManyWithoutChangedByInput
   wishlistItems?: Prisma.WishlistItemCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketCreateNestedManyWithoutAssignedToInput
   supportMessages?: Prisma.SupportTicketMessageCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
 }
 
 export type UserUncheckedCreateWithoutOpenedDisputesInput = {
@@ -2051,7 +2367,12 @@ export type UserUncheckedCreateWithoutOpenedDisputesInput = {
   listingRevisions?: Prisma.ListingRevisionUncheckedCreateNestedManyWithoutChangedByInput
   wishlistItems?: Prisma.WishlistItemUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutAssignedToInput
   supportMessages?: Prisma.SupportTicketMessageUncheckedCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
 }
 
 export type UserCreateOrConnectWithoutOpenedDisputesInput = {
@@ -2094,7 +2415,12 @@ export type UserUpdateWithoutOpenedDisputesInput = {
   listingRevisions?: Prisma.ListingRevisionUpdateManyWithoutChangedByNestedInput
   wishlistItems?: Prisma.WishlistItemUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUpdateManyWithoutAssignedToNestedInput
   supportMessages?: Prisma.SupportTicketMessageUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOpenedDisputesInput = {
@@ -2121,7 +2447,12 @@ export type UserUncheckedUpdateWithoutOpenedDisputesInput = {
   listingRevisions?: Prisma.ListingRevisionUncheckedUpdateManyWithoutChangedByNestedInput
   wishlistItems?: Prisma.WishlistItemUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutAssignedToNestedInput
   supportMessages?: Prisma.SupportTicketMessageUncheckedUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
 }
 
 export type UserCreateWithoutSubmittedEvidenceInput = {
@@ -2148,7 +2479,12 @@ export type UserCreateWithoutSubmittedEvidenceInput = {
   listingRevisions?: Prisma.ListingRevisionCreateNestedManyWithoutChangedByInput
   wishlistItems?: Prisma.WishlistItemCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketCreateNestedManyWithoutAssignedToInput
   supportMessages?: Prisma.SupportTicketMessageCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
 }
 
 export type UserUncheckedCreateWithoutSubmittedEvidenceInput = {
@@ -2175,7 +2511,12 @@ export type UserUncheckedCreateWithoutSubmittedEvidenceInput = {
   listingRevisions?: Prisma.ListingRevisionUncheckedCreateNestedManyWithoutChangedByInput
   wishlistItems?: Prisma.WishlistItemUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutAssignedToInput
   supportMessages?: Prisma.SupportTicketMessageUncheckedCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
 }
 
 export type UserCreateOrConnectWithoutSubmittedEvidenceInput = {
@@ -2218,7 +2559,12 @@ export type UserUpdateWithoutSubmittedEvidenceInput = {
   listingRevisions?: Prisma.ListingRevisionUpdateManyWithoutChangedByNestedInput
   wishlistItems?: Prisma.WishlistItemUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUpdateManyWithoutAssignedToNestedInput
   supportMessages?: Prisma.SupportTicketMessageUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSubmittedEvidenceInput = {
@@ -2245,7 +2591,12 @@ export type UserUncheckedUpdateWithoutSubmittedEvidenceInput = {
   listingRevisions?: Prisma.ListingRevisionUncheckedUpdateManyWithoutChangedByNestedInput
   wishlistItems?: Prisma.WishlistItemUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutAssignedToNestedInput
   supportMessages?: Prisma.SupportTicketMessageUncheckedUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
 }
 
 export type UserCreateWithoutNotificationsInput = {
@@ -2272,7 +2623,12 @@ export type UserCreateWithoutNotificationsInput = {
   listingRevisions?: Prisma.ListingRevisionCreateNestedManyWithoutChangedByInput
   wishlistItems?: Prisma.WishlistItemCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketCreateNestedManyWithoutAssignedToInput
   supportMessages?: Prisma.SupportTicketMessageCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
 }
 
 export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -2299,7 +2655,12 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   listingRevisions?: Prisma.ListingRevisionUncheckedCreateNestedManyWithoutChangedByInput
   wishlistItems?: Prisma.WishlistItemUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutAssignedToInput
   supportMessages?: Prisma.SupportTicketMessageUncheckedCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
 }
 
 export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -2342,7 +2703,12 @@ export type UserUpdateWithoutNotificationsInput = {
   listingRevisions?: Prisma.ListingRevisionUpdateManyWithoutChangedByNestedInput
   wishlistItems?: Prisma.WishlistItemUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUpdateManyWithoutAssignedToNestedInput
   supportMessages?: Prisma.SupportTicketMessageUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
 }
 
 export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -2369,7 +2735,12 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   listingRevisions?: Prisma.ListingRevisionUncheckedUpdateManyWithoutChangedByNestedInput
   wishlistItems?: Prisma.WishlistItemUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutAssignedToNestedInput
   supportMessages?: Prisma.SupportTicketMessageUncheckedUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
 }
 
 export type UserCreateWithoutWishlistItemsInput = {
@@ -2396,7 +2767,12 @@ export type UserCreateWithoutWishlistItemsInput = {
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
   listingRevisions?: Prisma.ListingRevisionCreateNestedManyWithoutChangedByInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketCreateNestedManyWithoutAssignedToInput
   supportMessages?: Prisma.SupportTicketMessageCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
 }
 
 export type UserUncheckedCreateWithoutWishlistItemsInput = {
@@ -2423,7 +2799,12 @@ export type UserUncheckedCreateWithoutWishlistItemsInput = {
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
   listingRevisions?: Prisma.ListingRevisionUncheckedCreateNestedManyWithoutChangedByInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutAssignedToInput
   supportMessages?: Prisma.SupportTicketMessageUncheckedCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
 }
 
 export type UserCreateOrConnectWithoutWishlistItemsInput = {
@@ -2466,7 +2847,12 @@ export type UserUpdateWithoutWishlistItemsInput = {
   auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
   listingRevisions?: Prisma.ListingRevisionUpdateManyWithoutChangedByNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUpdateManyWithoutAssignedToNestedInput
   supportMessages?: Prisma.SupportTicketMessageUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
 }
 
 export type UserUncheckedUpdateWithoutWishlistItemsInput = {
@@ -2493,7 +2879,12 @@ export type UserUncheckedUpdateWithoutWishlistItemsInput = {
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
   listingRevisions?: Prisma.ListingRevisionUncheckedUpdateManyWithoutChangedByNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutAssignedToNestedInput
   supportMessages?: Prisma.SupportTicketMessageUncheckedUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
 }
 
 export type UserCreateWithoutSupportTicketsInput = {
@@ -2520,7 +2911,12 @@ export type UserCreateWithoutSupportTicketsInput = {
   auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
   listingRevisions?: Prisma.ListingRevisionCreateNestedManyWithoutChangedByInput
   wishlistItems?: Prisma.WishlistItemCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketCreateNestedManyWithoutAssignedToInput
   supportMessages?: Prisma.SupportTicketMessageCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
 }
 
 export type UserUncheckedCreateWithoutSupportTicketsInput = {
@@ -2547,12 +2943,86 @@ export type UserUncheckedCreateWithoutSupportTicketsInput = {
   auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
   listingRevisions?: Prisma.ListingRevisionUncheckedCreateNestedManyWithoutChangedByInput
   wishlistItems?: Prisma.WishlistItemUncheckedCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutAssignedToInput
   supportMessages?: Prisma.SupportTicketMessageUncheckedCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
 }
 
 export type UserCreateOrConnectWithoutSupportTicketsInput = {
   where: Prisma.UserWhereUniqueInput
   create: Prisma.XOR<Prisma.UserCreateWithoutSupportTicketsInput, Prisma.UserUncheckedCreateWithoutSupportTicketsInput>
+}
+
+export type UserCreateWithoutAssignedSupportTicketsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified: boolean
+  image?: string | null
+  role?: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  profile?: Prisma.AccountProfileCreateNestedOneWithoutUserInput
+  sellerProfile?: Prisma.SellerProfileCreateNestedOneWithoutUserInput
+  orders?: Prisma.OrderCreateNestedManyWithoutBuyerInput
+  buyerConversations?: Prisma.ConversationCreateNestedManyWithoutBuyerInput
+  sellerConversations?: Prisma.ConversationCreateNestedManyWithoutSellerInput
+  messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutBuyerInput
+  openedDisputes?: Prisma.DisputeCreateNestedManyWithoutOpenedByInput
+  submittedEvidence?: Prisma.DisputeEvidenceCreateNestedManyWithoutSubmittedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  listingRevisions?: Prisma.ListingRevisionCreateNestedManyWithoutChangedByInput
+  wishlistItems?: Prisma.WishlistItemCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  supportMessages?: Prisma.SupportTicketMessageCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
+}
+
+export type UserUncheckedCreateWithoutAssignedSupportTicketsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified: boolean
+  image?: string | null
+  role?: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  profile?: Prisma.AccountProfileUncheckedCreateNestedOneWithoutUserInput
+  sellerProfile?: Prisma.SellerProfileUncheckedCreateNestedOneWithoutUserInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutBuyerInput
+  buyerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutBuyerInput
+  sellerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutSellerInput
+  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBuyerInput
+  openedDisputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutOpenedByInput
+  submittedEvidence?: Prisma.DisputeEvidenceUncheckedCreateNestedManyWithoutSubmittedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  listingRevisions?: Prisma.ListingRevisionUncheckedCreateNestedManyWithoutChangedByInput
+  wishlistItems?: Prisma.WishlistItemUncheckedCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  supportMessages?: Prisma.SupportTicketMessageUncheckedCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
+}
+
+export type UserCreateOrConnectWithoutAssignedSupportTicketsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAssignedSupportTicketsInput, Prisma.UserUncheckedCreateWithoutAssignedSupportTicketsInput>
 }
 
 export type UserUpsertWithoutSupportTicketsInput = {
@@ -2590,7 +3060,12 @@ export type UserUpdateWithoutSupportTicketsInput = {
   auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
   listingRevisions?: Prisma.ListingRevisionUpdateManyWithoutChangedByNestedInput
   wishlistItems?: Prisma.WishlistItemUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUpdateManyWithoutAssignedToNestedInput
   supportMessages?: Prisma.SupportTicketMessageUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSupportTicketsInput = {
@@ -2617,7 +3092,87 @@ export type UserUncheckedUpdateWithoutSupportTicketsInput = {
   auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
   listingRevisions?: Prisma.ListingRevisionUncheckedUpdateManyWithoutChangedByNestedInput
   wishlistItems?: Prisma.WishlistItemUncheckedUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutAssignedToNestedInput
   supportMessages?: Prisma.SupportTicketMessageUncheckedUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
+}
+
+export type UserUpsertWithoutAssignedSupportTicketsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAssignedSupportTicketsInput, Prisma.UserUncheckedUpdateWithoutAssignedSupportTicketsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAssignedSupportTicketsInput, Prisma.UserUncheckedCreateWithoutAssignedSupportTicketsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAssignedSupportTicketsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAssignedSupportTicketsInput, Prisma.UserUncheckedUpdateWithoutAssignedSupportTicketsInput>
+}
+
+export type UserUpdateWithoutAssignedSupportTicketsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  profile?: Prisma.AccountProfileUpdateOneWithoutUserNestedInput
+  sellerProfile?: Prisma.SellerProfileUpdateOneWithoutUserNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutBuyerNestedInput
+  buyerConversations?: Prisma.ConversationUpdateManyWithoutBuyerNestedInput
+  sellerConversations?: Prisma.ConversationUpdateManyWithoutSellerNestedInput
+  messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutBuyerNestedInput
+  openedDisputes?: Prisma.DisputeUpdateManyWithoutOpenedByNestedInput
+  submittedEvidence?: Prisma.DisputeEvidenceUpdateManyWithoutSubmittedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  listingRevisions?: Prisma.ListingRevisionUpdateManyWithoutChangedByNestedInput
+  wishlistItems?: Prisma.WishlistItemUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  supportMessages?: Prisma.SupportTicketMessageUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAssignedSupportTicketsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  profile?: Prisma.AccountProfileUncheckedUpdateOneWithoutUserNestedInput
+  sellerProfile?: Prisma.SellerProfileUncheckedUpdateOneWithoutUserNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutBuyerNestedInput
+  buyerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutBuyerNestedInput
+  sellerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutSellerNestedInput
+  messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBuyerNestedInput
+  openedDisputes?: Prisma.DisputeUncheckedUpdateManyWithoutOpenedByNestedInput
+  submittedEvidence?: Prisma.DisputeEvidenceUncheckedUpdateManyWithoutSubmittedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  listingRevisions?: Prisma.ListingRevisionUncheckedUpdateManyWithoutChangedByNestedInput
+  wishlistItems?: Prisma.WishlistItemUncheckedUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  supportMessages?: Prisma.SupportTicketMessageUncheckedUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
 }
 
 export type UserCreateWithoutSupportMessagesInput = {
@@ -2645,6 +3200,11 @@ export type UserCreateWithoutSupportMessagesInput = {
   listingRevisions?: Prisma.ListingRevisionCreateNestedManyWithoutChangedByInput
   wishlistItems?: Prisma.WishlistItemCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketCreateNestedManyWithoutAssignedToInput
+  supportAgentProfile?: Prisma.SupportAgentProfileCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
 }
 
 export type UserUncheckedCreateWithoutSupportMessagesInput = {
@@ -2672,6 +3232,11 @@ export type UserUncheckedCreateWithoutSupportMessagesInput = {
   listingRevisions?: Prisma.ListingRevisionUncheckedCreateNestedManyWithoutChangedByInput
   wishlistItems?: Prisma.WishlistItemUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutAssignedToInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
 }
 
 export type UserCreateOrConnectWithoutSupportMessagesInput = {
@@ -2715,6 +3280,11 @@ export type UserUpdateWithoutSupportMessagesInput = {
   listingRevisions?: Prisma.ListingRevisionUpdateManyWithoutChangedByNestedInput
   wishlistItems?: Prisma.WishlistItemUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUpdateManyWithoutAssignedToNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSupportMessagesInput = {
@@ -2742,6 +3312,587 @@ export type UserUncheckedUpdateWithoutSupportMessagesInput = {
   listingRevisions?: Prisma.ListingRevisionUncheckedUpdateManyWithoutChangedByNestedInput
   wishlistItems?: Prisma.WishlistItemUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutAssignedToNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
+}
+
+export type UserCreateWithoutSupportAgentProfileInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified: boolean
+  image?: string | null
+  role?: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  profile?: Prisma.AccountProfileCreateNestedOneWithoutUserInput
+  sellerProfile?: Prisma.SellerProfileCreateNestedOneWithoutUserInput
+  orders?: Prisma.OrderCreateNestedManyWithoutBuyerInput
+  buyerConversations?: Prisma.ConversationCreateNestedManyWithoutBuyerInput
+  sellerConversations?: Prisma.ConversationCreateNestedManyWithoutSellerInput
+  messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutBuyerInput
+  openedDisputes?: Prisma.DisputeCreateNestedManyWithoutOpenedByInput
+  submittedEvidence?: Prisma.DisputeEvidenceCreateNestedManyWithoutSubmittedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  listingRevisions?: Prisma.ListingRevisionCreateNestedManyWithoutChangedByInput
+  wishlistItems?: Prisma.WishlistItemCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketCreateNestedManyWithoutAssignedToInput
+  supportMessages?: Prisma.SupportTicketMessageCreateNestedManyWithoutSenderInput
+  submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
+}
+
+export type UserUncheckedCreateWithoutSupportAgentProfileInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified: boolean
+  image?: string | null
+  role?: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  profile?: Prisma.AccountProfileUncheckedCreateNestedOneWithoutUserInput
+  sellerProfile?: Prisma.SellerProfileUncheckedCreateNestedOneWithoutUserInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutBuyerInput
+  buyerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutBuyerInput
+  sellerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutSellerInput
+  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBuyerInput
+  openedDisputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutOpenedByInput
+  submittedEvidence?: Prisma.DisputeEvidenceUncheckedCreateNestedManyWithoutSubmittedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  listingRevisions?: Prisma.ListingRevisionUncheckedCreateNestedManyWithoutChangedByInput
+  wishlistItems?: Prisma.WishlistItemUncheckedCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutAssignedToInput
+  supportMessages?: Prisma.SupportTicketMessageUncheckedCreateNestedManyWithoutSenderInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
+}
+
+export type UserCreateOrConnectWithoutSupportAgentProfileInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutSupportAgentProfileInput, Prisma.UserUncheckedCreateWithoutSupportAgentProfileInput>
+}
+
+export type UserUpsertWithoutSupportAgentProfileInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutSupportAgentProfileInput, Prisma.UserUncheckedUpdateWithoutSupportAgentProfileInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutSupportAgentProfileInput, Prisma.UserUncheckedCreateWithoutSupportAgentProfileInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutSupportAgentProfileInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutSupportAgentProfileInput, Prisma.UserUncheckedUpdateWithoutSupportAgentProfileInput>
+}
+
+export type UserUpdateWithoutSupportAgentProfileInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  profile?: Prisma.AccountProfileUpdateOneWithoutUserNestedInput
+  sellerProfile?: Prisma.SellerProfileUpdateOneWithoutUserNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutBuyerNestedInput
+  buyerConversations?: Prisma.ConversationUpdateManyWithoutBuyerNestedInput
+  sellerConversations?: Prisma.ConversationUpdateManyWithoutSellerNestedInput
+  messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutBuyerNestedInput
+  openedDisputes?: Prisma.DisputeUpdateManyWithoutOpenedByNestedInput
+  submittedEvidence?: Prisma.DisputeEvidenceUpdateManyWithoutSubmittedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  listingRevisions?: Prisma.ListingRevisionUpdateManyWithoutChangedByNestedInput
+  wishlistItems?: Prisma.WishlistItemUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUpdateManyWithoutAssignedToNestedInput
+  supportMessages?: Prisma.SupportTicketMessageUpdateManyWithoutSenderNestedInput
+  submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
+}
+
+export type UserUncheckedUpdateWithoutSupportAgentProfileInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  profile?: Prisma.AccountProfileUncheckedUpdateOneWithoutUserNestedInput
+  sellerProfile?: Prisma.SellerProfileUncheckedUpdateOneWithoutUserNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutBuyerNestedInput
+  buyerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutBuyerNestedInput
+  sellerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutSellerNestedInput
+  messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBuyerNestedInput
+  openedDisputes?: Prisma.DisputeUncheckedUpdateManyWithoutOpenedByNestedInput
+  submittedEvidence?: Prisma.DisputeEvidenceUncheckedUpdateManyWithoutSubmittedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  listingRevisions?: Prisma.ListingRevisionUncheckedUpdateManyWithoutChangedByNestedInput
+  wishlistItems?: Prisma.WishlistItemUncheckedUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutAssignedToNestedInput
+  supportMessages?: Prisma.SupportTicketMessageUncheckedUpdateManyWithoutSenderNestedInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
+}
+
+export type UserCreateWithoutSubmittedSupportReportsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified: boolean
+  image?: string | null
+  role?: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  profile?: Prisma.AccountProfileCreateNestedOneWithoutUserInput
+  sellerProfile?: Prisma.SellerProfileCreateNestedOneWithoutUserInput
+  orders?: Prisma.OrderCreateNestedManyWithoutBuyerInput
+  buyerConversations?: Prisma.ConversationCreateNestedManyWithoutBuyerInput
+  sellerConversations?: Prisma.ConversationCreateNestedManyWithoutSellerInput
+  messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutBuyerInput
+  openedDisputes?: Prisma.DisputeCreateNestedManyWithoutOpenedByInput
+  submittedEvidence?: Prisma.DisputeEvidenceCreateNestedManyWithoutSubmittedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  listingRevisions?: Prisma.ListingRevisionCreateNestedManyWithoutChangedByInput
+  wishlistItems?: Prisma.WishlistItemCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketCreateNestedManyWithoutAssignedToInput
+  supportMessages?: Prisma.SupportTicketMessageCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileCreateNestedOneWithoutUserInput
+  reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
+}
+
+export type UserUncheckedCreateWithoutSubmittedSupportReportsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified: boolean
+  image?: string | null
+  role?: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  profile?: Prisma.AccountProfileUncheckedCreateNestedOneWithoutUserInput
+  sellerProfile?: Prisma.SellerProfileUncheckedCreateNestedOneWithoutUserInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutBuyerInput
+  buyerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutBuyerInput
+  sellerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutSellerInput
+  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBuyerInput
+  openedDisputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutOpenedByInput
+  submittedEvidence?: Prisma.DisputeEvidenceUncheckedCreateNestedManyWithoutSubmittedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  listingRevisions?: Prisma.ListingRevisionUncheckedCreateNestedManyWithoutChangedByInput
+  wishlistItems?: Prisma.WishlistItemUncheckedCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutAssignedToInput
+  supportMessages?: Prisma.SupportTicketMessageUncheckedCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedCreateNestedOneWithoutUserInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
+}
+
+export type UserCreateOrConnectWithoutSubmittedSupportReportsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutSubmittedSupportReportsInput, Prisma.UserUncheckedCreateWithoutSubmittedSupportReportsInput>
+}
+
+export type UserCreateWithoutReportedBySupportReportsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified: boolean
+  image?: string | null
+  role?: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  profile?: Prisma.AccountProfileCreateNestedOneWithoutUserInput
+  sellerProfile?: Prisma.SellerProfileCreateNestedOneWithoutUserInput
+  orders?: Prisma.OrderCreateNestedManyWithoutBuyerInput
+  buyerConversations?: Prisma.ConversationCreateNestedManyWithoutBuyerInput
+  sellerConversations?: Prisma.ConversationCreateNestedManyWithoutSellerInput
+  messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutBuyerInput
+  openedDisputes?: Prisma.DisputeCreateNestedManyWithoutOpenedByInput
+  submittedEvidence?: Prisma.DisputeEvidenceCreateNestedManyWithoutSubmittedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  listingRevisions?: Prisma.ListingRevisionCreateNestedManyWithoutChangedByInput
+  wishlistItems?: Prisma.WishlistItemCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketCreateNestedManyWithoutAssignedToInput
+  supportMessages?: Prisma.SupportTicketMessageCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
+  assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
+}
+
+export type UserUncheckedCreateWithoutReportedBySupportReportsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified: boolean
+  image?: string | null
+  role?: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  profile?: Prisma.AccountProfileUncheckedCreateNestedOneWithoutUserInput
+  sellerProfile?: Prisma.SellerProfileUncheckedCreateNestedOneWithoutUserInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutBuyerInput
+  buyerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutBuyerInput
+  sellerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutSellerInput
+  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBuyerInput
+  openedDisputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutOpenedByInput
+  submittedEvidence?: Prisma.DisputeEvidenceUncheckedCreateNestedManyWithoutSubmittedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  listingRevisions?: Prisma.ListingRevisionUncheckedCreateNestedManyWithoutChangedByInput
+  wishlistItems?: Prisma.WishlistItemUncheckedCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutAssignedToInput
+  supportMessages?: Prisma.SupportTicketMessageUncheckedCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
+}
+
+export type UserCreateOrConnectWithoutReportedBySupportReportsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutReportedBySupportReportsInput, Prisma.UserUncheckedCreateWithoutReportedBySupportReportsInput>
+}
+
+export type UserCreateWithoutAssignedSupportReportsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified: boolean
+  image?: string | null
+  role?: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  profile?: Prisma.AccountProfileCreateNestedOneWithoutUserInput
+  sellerProfile?: Prisma.SellerProfileCreateNestedOneWithoutUserInput
+  orders?: Prisma.OrderCreateNestedManyWithoutBuyerInput
+  buyerConversations?: Prisma.ConversationCreateNestedManyWithoutBuyerInput
+  sellerConversations?: Prisma.ConversationCreateNestedManyWithoutSellerInput
+  messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutBuyerInput
+  openedDisputes?: Prisma.DisputeCreateNestedManyWithoutOpenedByInput
+  submittedEvidence?: Prisma.DisputeEvidenceCreateNestedManyWithoutSubmittedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  listingRevisions?: Prisma.ListingRevisionCreateNestedManyWithoutChangedByInput
+  wishlistItems?: Prisma.WishlistItemCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketCreateNestedManyWithoutAssignedToInput
+  supportMessages?: Prisma.SupportTicketMessageCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
+}
+
+export type UserUncheckedCreateWithoutAssignedSupportReportsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified: boolean
+  image?: string | null
+  role?: $Enums.UserRole
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  profile?: Prisma.AccountProfileUncheckedCreateNestedOneWithoutUserInput
+  sellerProfile?: Prisma.SellerProfileUncheckedCreateNestedOneWithoutUserInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutBuyerInput
+  buyerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutBuyerInput
+  sellerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutSellerInput
+  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBuyerInput
+  openedDisputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutOpenedByInput
+  submittedEvidence?: Prisma.DisputeEvidenceUncheckedCreateNestedManyWithoutSubmittedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  listingRevisions?: Prisma.ListingRevisionUncheckedCreateNestedManyWithoutChangedByInput
+  wishlistItems?: Prisma.WishlistItemUncheckedCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutAssignedToInput
+  supportMessages?: Prisma.SupportTicketMessageUncheckedCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
+}
+
+export type UserCreateOrConnectWithoutAssignedSupportReportsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAssignedSupportReportsInput, Prisma.UserUncheckedCreateWithoutAssignedSupportReportsInput>
+}
+
+export type UserUpsertWithoutSubmittedSupportReportsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutSubmittedSupportReportsInput, Prisma.UserUncheckedUpdateWithoutSubmittedSupportReportsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutSubmittedSupportReportsInput, Prisma.UserUncheckedCreateWithoutSubmittedSupportReportsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutSubmittedSupportReportsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutSubmittedSupportReportsInput, Prisma.UserUncheckedUpdateWithoutSubmittedSupportReportsInput>
+}
+
+export type UserUpdateWithoutSubmittedSupportReportsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  profile?: Prisma.AccountProfileUpdateOneWithoutUserNestedInput
+  sellerProfile?: Prisma.SellerProfileUpdateOneWithoutUserNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutBuyerNestedInput
+  buyerConversations?: Prisma.ConversationUpdateManyWithoutBuyerNestedInput
+  sellerConversations?: Prisma.ConversationUpdateManyWithoutSellerNestedInput
+  messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutBuyerNestedInput
+  openedDisputes?: Prisma.DisputeUpdateManyWithoutOpenedByNestedInput
+  submittedEvidence?: Prisma.DisputeEvidenceUpdateManyWithoutSubmittedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  listingRevisions?: Prisma.ListingRevisionUpdateManyWithoutChangedByNestedInput
+  wishlistItems?: Prisma.WishlistItemUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUpdateManyWithoutAssignedToNestedInput
+  supportMessages?: Prisma.SupportTicketMessageUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUpdateOneWithoutUserNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
+}
+
+export type UserUncheckedUpdateWithoutSubmittedSupportReportsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  profile?: Prisma.AccountProfileUncheckedUpdateOneWithoutUserNestedInput
+  sellerProfile?: Prisma.SellerProfileUncheckedUpdateOneWithoutUserNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutBuyerNestedInput
+  buyerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutBuyerNestedInput
+  sellerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutSellerNestedInput
+  messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBuyerNestedInput
+  openedDisputes?: Prisma.DisputeUncheckedUpdateManyWithoutOpenedByNestedInput
+  submittedEvidence?: Prisma.DisputeEvidenceUncheckedUpdateManyWithoutSubmittedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  listingRevisions?: Prisma.ListingRevisionUncheckedUpdateManyWithoutChangedByNestedInput
+  wishlistItems?: Prisma.WishlistItemUncheckedUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutAssignedToNestedInput
+  supportMessages?: Prisma.SupportTicketMessageUncheckedUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedUpdateOneWithoutUserNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
+}
+
+export type UserUpsertWithoutReportedBySupportReportsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutReportedBySupportReportsInput, Prisma.UserUncheckedUpdateWithoutReportedBySupportReportsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutReportedBySupportReportsInput, Prisma.UserUncheckedCreateWithoutReportedBySupportReportsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutReportedBySupportReportsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutReportedBySupportReportsInput, Prisma.UserUncheckedUpdateWithoutReportedBySupportReportsInput>
+}
+
+export type UserUpdateWithoutReportedBySupportReportsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  profile?: Prisma.AccountProfileUpdateOneWithoutUserNestedInput
+  sellerProfile?: Prisma.SellerProfileUpdateOneWithoutUserNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutBuyerNestedInput
+  buyerConversations?: Prisma.ConversationUpdateManyWithoutBuyerNestedInput
+  sellerConversations?: Prisma.ConversationUpdateManyWithoutSellerNestedInput
+  messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutBuyerNestedInput
+  openedDisputes?: Prisma.DisputeUpdateManyWithoutOpenedByNestedInput
+  submittedEvidence?: Prisma.DisputeEvidenceUpdateManyWithoutSubmittedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  listingRevisions?: Prisma.ListingRevisionUpdateManyWithoutChangedByNestedInput
+  wishlistItems?: Prisma.WishlistItemUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUpdateManyWithoutAssignedToNestedInput
+  supportMessages?: Prisma.SupportTicketMessageUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
+  assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
+}
+
+export type UserUncheckedUpdateWithoutReportedBySupportReportsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  profile?: Prisma.AccountProfileUncheckedUpdateOneWithoutUserNestedInput
+  sellerProfile?: Prisma.SellerProfileUncheckedUpdateOneWithoutUserNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutBuyerNestedInput
+  buyerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutBuyerNestedInput
+  sellerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutSellerNestedInput
+  messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBuyerNestedInput
+  openedDisputes?: Prisma.DisputeUncheckedUpdateManyWithoutOpenedByNestedInput
+  submittedEvidence?: Prisma.DisputeEvidenceUncheckedUpdateManyWithoutSubmittedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  listingRevisions?: Prisma.ListingRevisionUncheckedUpdateManyWithoutChangedByNestedInput
+  wishlistItems?: Prisma.WishlistItemUncheckedUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutAssignedToNestedInput
+  supportMessages?: Prisma.SupportTicketMessageUncheckedUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
+}
+
+export type UserUpsertWithoutAssignedSupportReportsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAssignedSupportReportsInput, Prisma.UserUncheckedUpdateWithoutAssignedSupportReportsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAssignedSupportReportsInput, Prisma.UserUncheckedCreateWithoutAssignedSupportReportsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAssignedSupportReportsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAssignedSupportReportsInput, Prisma.UserUncheckedUpdateWithoutAssignedSupportReportsInput>
+}
+
+export type UserUpdateWithoutAssignedSupportReportsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  profile?: Prisma.AccountProfileUpdateOneWithoutUserNestedInput
+  sellerProfile?: Prisma.SellerProfileUpdateOneWithoutUserNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutBuyerNestedInput
+  buyerConversations?: Prisma.ConversationUpdateManyWithoutBuyerNestedInput
+  sellerConversations?: Prisma.ConversationUpdateManyWithoutSellerNestedInput
+  messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutBuyerNestedInput
+  openedDisputes?: Prisma.DisputeUpdateManyWithoutOpenedByNestedInput
+  submittedEvidence?: Prisma.DisputeEvidenceUpdateManyWithoutSubmittedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  listingRevisions?: Prisma.ListingRevisionUpdateManyWithoutChangedByNestedInput
+  wishlistItems?: Prisma.WishlistItemUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUpdateManyWithoutAssignedToNestedInput
+  supportMessages?: Prisma.SupportTicketMessageUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAssignedSupportReportsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  profile?: Prisma.AccountProfileUncheckedUpdateOneWithoutUserNestedInput
+  sellerProfile?: Prisma.SellerProfileUncheckedUpdateOneWithoutUserNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutBuyerNestedInput
+  buyerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutBuyerNestedInput
+  sellerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutSellerNestedInput
+  messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBuyerNestedInput
+  openedDisputes?: Prisma.DisputeUncheckedUpdateManyWithoutOpenedByNestedInput
+  submittedEvidence?: Prisma.DisputeEvidenceUncheckedUpdateManyWithoutSubmittedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  listingRevisions?: Prisma.ListingRevisionUncheckedUpdateManyWithoutChangedByNestedInput
+  wishlistItems?: Prisma.WishlistItemUncheckedUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutAssignedToNestedInput
+  supportMessages?: Prisma.SupportTicketMessageUncheckedUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
 }
 
 export type UserCreateWithoutAuditLogsInput = {
@@ -2768,7 +3919,12 @@ export type UserCreateWithoutAuditLogsInput = {
   listingRevisions?: Prisma.ListingRevisionCreateNestedManyWithoutChangedByInput
   wishlistItems?: Prisma.WishlistItemCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketCreateNestedManyWithoutAssignedToInput
   supportMessages?: Prisma.SupportTicketMessageCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
 }
 
 export type UserUncheckedCreateWithoutAuditLogsInput = {
@@ -2795,7 +3951,12 @@ export type UserUncheckedCreateWithoutAuditLogsInput = {
   listingRevisions?: Prisma.ListingRevisionUncheckedCreateNestedManyWithoutChangedByInput
   wishlistItems?: Prisma.WishlistItemUncheckedCreateNestedManyWithoutUserInput
   supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutAssignedToInput
   supportMessages?: Prisma.SupportTicketMessageUncheckedCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedCreateNestedOneWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
 }
 
 export type UserCreateOrConnectWithoutAuditLogsInput = {
@@ -2838,7 +3999,12 @@ export type UserUpdateWithoutAuditLogsInput = {
   listingRevisions?: Prisma.ListingRevisionUpdateManyWithoutChangedByNestedInput
   wishlistItems?: Prisma.WishlistItemUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUpdateManyWithoutAssignedToNestedInput
   supportMessages?: Prisma.SupportTicketMessageUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAuditLogsInput = {
@@ -2865,7 +4031,12 @@ export type UserUncheckedUpdateWithoutAuditLogsInput = {
   listingRevisions?: Prisma.ListingRevisionUncheckedUpdateManyWithoutChangedByNestedInput
   wishlistItems?: Prisma.WishlistItemUncheckedUpdateManyWithoutUserNestedInput
   supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutAssignedToNestedInput
   supportMessages?: Prisma.SupportTicketMessageUncheckedUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedUpdateOneWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
 }
 
 
@@ -2888,7 +4059,11 @@ export type UserCountOutputType = {
   listingRevisions: number
   wishlistItems: number
   supportTickets: number
+  assignedSupportTickets: number
   supportMessages: number
+  submittedSupportReports: number
+  reportedBySupportReports: number
+  assignedSupportReports: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -2906,7 +4081,11 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   listingRevisions?: boolean | UserCountOutputTypeCountListingRevisionsArgs
   wishlistItems?: boolean | UserCountOutputTypeCountWishlistItemsArgs
   supportTickets?: boolean | UserCountOutputTypeCountSupportTicketsArgs
+  assignedSupportTickets?: boolean | UserCountOutputTypeCountAssignedSupportTicketsArgs
   supportMessages?: boolean | UserCountOutputTypeCountSupportMessagesArgs
+  submittedSupportReports?: boolean | UserCountOutputTypeCountSubmittedSupportReportsArgs
+  reportedBySupportReports?: boolean | UserCountOutputTypeCountReportedBySupportReportsArgs
+  assignedSupportReports?: boolean | UserCountOutputTypeCountAssignedSupportReportsArgs
 }
 
 /**
@@ -3020,8 +4199,36 @@ export type UserCountOutputTypeCountSupportTicketsArgs<ExtArgs extends runtime.T
 /**
  * UserCountOutputType without action
  */
+export type UserCountOutputTypeCountAssignedSupportTicketsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SupportTicketWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
 export type UserCountOutputTypeCountSupportMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.SupportTicketMessageWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountSubmittedSupportReportsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SupportReportWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountReportedBySupportReportsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SupportReportWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAssignedSupportReportsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SupportReportWhereInput
 }
 
 
@@ -3050,7 +4257,12 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   listingRevisions?: boolean | Prisma.User$listingRevisionsArgs<ExtArgs>
   wishlistItems?: boolean | Prisma.User$wishlistItemsArgs<ExtArgs>
   supportTickets?: boolean | Prisma.User$supportTicketsArgs<ExtArgs>
+  assignedSupportTickets?: boolean | Prisma.User$assignedSupportTicketsArgs<ExtArgs>
   supportMessages?: boolean | Prisma.User$supportMessagesArgs<ExtArgs>
+  supportAgentProfile?: boolean | Prisma.User$supportAgentProfileArgs<ExtArgs>
+  submittedSupportReports?: boolean | Prisma.User$submittedSupportReportsArgs<ExtArgs>
+  reportedBySupportReports?: boolean | Prisma.User$reportedBySupportReportsArgs<ExtArgs>
+  assignedSupportReports?: boolean | Prisma.User$assignedSupportReportsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -3105,7 +4317,12 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   listingRevisions?: boolean | Prisma.User$listingRevisionsArgs<ExtArgs>
   wishlistItems?: boolean | Prisma.User$wishlistItemsArgs<ExtArgs>
   supportTickets?: boolean | Prisma.User$supportTicketsArgs<ExtArgs>
+  assignedSupportTickets?: boolean | Prisma.User$assignedSupportTicketsArgs<ExtArgs>
   supportMessages?: boolean | Prisma.User$supportMessagesArgs<ExtArgs>
+  supportAgentProfile?: boolean | Prisma.User$supportAgentProfileArgs<ExtArgs>
+  submittedSupportReports?: boolean | Prisma.User$submittedSupportReportsArgs<ExtArgs>
+  reportedBySupportReports?: boolean | Prisma.User$reportedBySupportReportsArgs<ExtArgs>
+  assignedSupportReports?: boolean | Prisma.User$assignedSupportReportsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -3130,7 +4347,12 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     listingRevisions: Prisma.$ListingRevisionPayload<ExtArgs>[]
     wishlistItems: Prisma.$WishlistItemPayload<ExtArgs>[]
     supportTickets: Prisma.$SupportTicketPayload<ExtArgs>[]
+    assignedSupportTickets: Prisma.$SupportTicketPayload<ExtArgs>[]
     supportMessages: Prisma.$SupportTicketMessagePayload<ExtArgs>[]
+    supportAgentProfile: Prisma.$SupportAgentProfilePayload<ExtArgs> | null
+    submittedSupportReports: Prisma.$SupportReportPayload<ExtArgs>[]
+    reportedBySupportReports: Prisma.$SupportReportPayload<ExtArgs>[]
+    assignedSupportReports: Prisma.$SupportReportPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -3551,7 +4773,12 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   listingRevisions<T extends Prisma.User$listingRevisionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$listingRevisionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ListingRevisionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   wishlistItems<T extends Prisma.User$wishlistItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$wishlistItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WishlistItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   supportTickets<T extends Prisma.User$supportTicketsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$supportTicketsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SupportTicketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  assignedSupportTickets<T extends Prisma.User$assignedSupportTicketsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$assignedSupportTicketsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SupportTicketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   supportMessages<T extends Prisma.User$supportMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$supportMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SupportTicketMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  supportAgentProfile<T extends Prisma.User$supportAgentProfileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$supportAgentProfileArgs<ExtArgs>>): Prisma.Prisma__SupportAgentProfileClient<runtime.Types.Result.GetResult<Prisma.$SupportAgentProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  submittedSupportReports<T extends Prisma.User$submittedSupportReportsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$submittedSupportReportsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SupportReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  reportedBySupportReports<T extends Prisma.User$reportedBySupportReportsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$reportedBySupportReportsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SupportReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  assignedSupportReports<T extends Prisma.User$assignedSupportReportsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$assignedSupportReportsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SupportReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4356,6 +5583,30 @@ export type User$supportTicketsArgs<ExtArgs extends runtime.Types.Extensions.Int
 }
 
 /**
+ * User.assignedSupportTickets
+ */
+export type User$assignedSupportTicketsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SupportTicket
+   */
+  select?: Prisma.SupportTicketSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SupportTicket
+   */
+  omit?: Prisma.SupportTicketOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SupportTicketInclude<ExtArgs> | null
+  where?: Prisma.SupportTicketWhereInput
+  orderBy?: Prisma.SupportTicketOrderByWithRelationInput | Prisma.SupportTicketOrderByWithRelationInput[]
+  cursor?: Prisma.SupportTicketWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SupportTicketScalarFieldEnum | Prisma.SupportTicketScalarFieldEnum[]
+}
+
+/**
  * User.supportMessages
  */
 export type User$supportMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -4377,6 +5628,97 @@ export type User$supportMessagesArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.SupportTicketMessageScalarFieldEnum | Prisma.SupportTicketMessageScalarFieldEnum[]
+}
+
+/**
+ * User.supportAgentProfile
+ */
+export type User$supportAgentProfileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SupportAgentProfile
+   */
+  select?: Prisma.SupportAgentProfileSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SupportAgentProfile
+   */
+  omit?: Prisma.SupportAgentProfileOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SupportAgentProfileInclude<ExtArgs> | null
+  where?: Prisma.SupportAgentProfileWhereInput
+}
+
+/**
+ * User.submittedSupportReports
+ */
+export type User$submittedSupportReportsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SupportReport
+   */
+  select?: Prisma.SupportReportSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SupportReport
+   */
+  omit?: Prisma.SupportReportOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SupportReportInclude<ExtArgs> | null
+  where?: Prisma.SupportReportWhereInput
+  orderBy?: Prisma.SupportReportOrderByWithRelationInput | Prisma.SupportReportOrderByWithRelationInput[]
+  cursor?: Prisma.SupportReportWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SupportReportScalarFieldEnum | Prisma.SupportReportScalarFieldEnum[]
+}
+
+/**
+ * User.reportedBySupportReports
+ */
+export type User$reportedBySupportReportsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SupportReport
+   */
+  select?: Prisma.SupportReportSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SupportReport
+   */
+  omit?: Prisma.SupportReportOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SupportReportInclude<ExtArgs> | null
+  where?: Prisma.SupportReportWhereInput
+  orderBy?: Prisma.SupportReportOrderByWithRelationInput | Prisma.SupportReportOrderByWithRelationInput[]
+  cursor?: Prisma.SupportReportWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SupportReportScalarFieldEnum | Prisma.SupportReportScalarFieldEnum[]
+}
+
+/**
+ * User.assignedSupportReports
+ */
+export type User$assignedSupportReportsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SupportReport
+   */
+  select?: Prisma.SupportReportSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SupportReport
+   */
+  omit?: Prisma.SupportReportOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SupportReportInclude<ExtArgs> | null
+  where?: Prisma.SupportReportWhereInput
+  orderBy?: Prisma.SupportReportOrderByWithRelationInput | Prisma.SupportReportOrderByWithRelationInput[]
+  cursor?: Prisma.SupportReportWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SupportReportScalarFieldEnum | Prisma.SupportReportScalarFieldEnum[]
 }
 
 /**

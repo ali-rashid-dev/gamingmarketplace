@@ -142,32 +142,59 @@ enum SupportTicketStatus {
   CLOSED
 }
 
+enum SupportTicketPriority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
+
+enum SupportReportCategory {
+  ABUSE
+  SCAM
+  HARASSMENT
+  SUSPICIOUS_ACTIVITY
+  OTHER
+}
+
+enum SupportReportStatus {
+  OPEN
+  INVESTIGATING
+  RESOLVED
+  DISMISSED
+}
+
 model User {
-  id                  String                 @id
-  name                String
-  email               String                 @unique
-  emailVerified       Boolean
-  image               String?
-  role                UserRole               @default(BUYER)
-  createdAt           DateTime               @default(now())
-  updatedAt           DateTime               @updatedAt
-  sessions            Session[]
-  accounts            Account[]
-  profile             AccountProfile?
-  sellerProfile       SellerProfile?
-  orders              Order[]                @relation("OrderBuyer")
-  buyerConversations  Conversation[]         @relation("ConversationBuyer")
-  sellerConversations Conversation[]         @relation("ConversationSeller")
-  messages            Message[]
-  reviews             Review[]               @relation("ReviewBuyer")
-  openedDisputes      Dispute[]              @relation("DisputeOpener")
-  submittedEvidence   DisputeEvidence[]
-  notifications       Notification[]
-  auditLogs           AuditLog[]             @relation("AuditActor")
-  listingRevisions    ListingRevision[]
-  wishlistItems       WishlistItem[]
-  supportTickets      SupportTicket[]        @relation("SupportTicketOpener")
-  supportMessages     SupportTicketMessage[] @relation("SupportMessageSender")
+  id                       String                 @id
+  name                     String
+  email                    String                 @unique
+  emailVerified            Boolean
+  image                    String?
+  role                     UserRole               @default(BUYER)
+  createdAt                DateTime               @default(now())
+  updatedAt                DateTime               @updatedAt
+  sessions                 Session[]
+  accounts                 Account[]
+  profile                  AccountProfile?
+  sellerProfile            SellerProfile?
+  orders                   Order[]                @relation("OrderBuyer")
+  buyerConversations       Conversation[]         @relation("ConversationBuyer")
+  sellerConversations      Conversation[]         @relation("ConversationSeller")
+  messages                 Message[]
+  reviews                  Review[]               @relation("ReviewBuyer")
+  openedDisputes           Dispute[]              @relation("DisputeOpener")
+  submittedEvidence        DisputeEvidence[]
+  notifications            Notification[]
+  auditLogs                AuditLog[]             @relation("AuditActor")
+  listingRevisions         ListingRevision[]
+  wishlistItems            WishlistItem[]
+  supportTickets           SupportTicket[]        @relation("SupportTicketOpener")
+  assignedSupportTickets   SupportTicket[]        @relation("SupportTicketAssignee")
+  supportMessages          SupportTicketMessage[] @relation("SupportMessageSender")
+  supportAgentProfile      SupportAgentProfile?
+  submittedSupportReports  SupportReport[]        @relation("SupportReportSubmitter")
+  reportedBySupportReports SupportReport[]        @relation("SupportReportSubject")
+  assignedSupportReports   SupportReport[]        @relation("SupportReportAssignee")
 
   @@index([role])
   @@map("user")
@@ -410,6 +437,7 @@ model Order {
   conversation   Conversation?
   disputes       Dispute[]
   supportTickets SupportTicket[]
+  supportReports SupportReport[]
 
   @@index([buyerId, status, createdAt])
   @@index([status, createdAt])
@@ -632,32 +660,69 @@ model WishlistItem {
 }
 
 model SupportTicket {
-  id        String                 @id @default(cuid())
-  userId    String
-  orderId   String?
-  subject   String
-  status    SupportTicketStatus    @default(OPEN)
-  createdAt DateTime               @default(now())
-  updatedAt DateTime               @updatedAt
-  user      User                   @relation("SupportTicketOpener", fields: [userId], references: [id], onDelete: Cascade)
-  order     Order?                 @relation(fields: [orderId], references: [id], onDelete: SetNull)
-  messages  SupportTicketMessage[]
+  id           String                 @id @default(cuid())
+  userId       String
+  assignedToId String?
+  orderId      String?
+  subject      String
+  status       SupportTicketStatus    @default(OPEN)
+  priority     SupportTicketPriority  @default(NORMAL)
+  createdAt    DateTime               @default(now())
+  updatedAt    DateTime               @updatedAt
+  resolvedAt   DateTime?
+  user         User                   @relation("SupportTicketOpener", fields: [userId], references: [id], onDelete: Cascade)
+  assignedTo   User?                  @relation("SupportTicketAssignee", fields: [assignedToId], references: [id], onDelete: SetNull)
+  order        Order?                 @relation(fields: [orderId], references: [id], onDelete: SetNull)
+  messages     SupportTicketMessage[]
 
   @@index([userId, status, updatedAt])
   @@index([orderId])
+  @@index([assignedToId, status, updatedAt])
+  @@index([status, priority, updatedAt])
 }
 
 model SupportTicketMessage {
-  id        String        @id @default(cuid())
-  ticketId  String
-  senderId  String
-  body      String
-  createdAt DateTime      @default(now())
-  ticket    SupportTicket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
-  sender    User          @relation("SupportMessageSender", fields: [senderId], references: [id], onDelete: Restrict)
+  id         String        @id @default(cuid())
+  ticketId   String
+  senderId   String
+  body       String
+  isInternal Boolean       @default(false)
+  createdAt  DateTime      @default(now())
+  ticket     SupportTicket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  sender     User          @relation("SupportMessageSender", fields: [senderId], references: [id], onDelete: Restrict)
 
   @@index([ticketId, createdAt])
   @@index([senderId, createdAt])
+}
+
+model SupportAgentProfile {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  isAvailable Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model SupportReport {
+  id             String                @id @default(cuid())
+  submittedById  String
+  reportedUserId String?
+  assignedToId   String?
+  orderId        String?
+  category       SupportReportCategory
+  status         SupportReportStatus   @default(OPEN)
+  details        String
+  createdAt      DateTime              @default(now())
+  updatedAt      DateTime              @updatedAt
+  submittedBy    User                  @relation("SupportReportSubmitter", fields: [submittedById], references: [id], onDelete: Restrict)
+  reportedUser   User?                 @relation("SupportReportSubject", fields: [reportedUserId], references: [id], onDelete: SetNull)
+  assignedTo     User?                 @relation("SupportReportAssignee", fields: [assignedToId], references: [id], onDelete: SetNull)
+  order          Order?                @relation(fields: [orderId], references: [id], onDelete: SetNull)
+
+  @@index([status, createdAt])
+  @@index([reportedUserId, createdAt])
+  @@index([assignedToId, status, updatedAt])
 }
 
 model AuditLog {

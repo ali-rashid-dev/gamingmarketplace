@@ -190,3 +190,34 @@ export const SupportTicketStatus = {
 } as const
 
 export type SupportTicketStatus = (typeof SupportTicketStatus)[keyof typeof SupportTicketStatus]
+
+
+export const SupportTicketPriority = {
+  LOW: 'LOW',
+  NORMAL: 'NORMAL',
+  HIGH: 'HIGH',
+  URGENT: 'URGENT'
+} as const
+
+export type SupportTicketPriority = (typeof SupportTicketPriority)[keyof typeof SupportTicketPriority]
+
+
+export const SupportReportCategory = {
+  ABUSE: 'ABUSE',
+  SCAM: 'SCAM',
+  HARASSMENT: 'HARASSMENT',
+  SUSPICIOUS_ACTIVITY: 'SUSPICIOUS_ACTIVITY',
+  OTHER: 'OTHER'
+} as const
+
+export type SupportReportCategory = (typeof SupportReportCategory)[keyof typeof SupportReportCategory]
+
+
+export const SupportReportStatus = {
+  OPEN: 'OPEN',
+  INVESTIGATING: 'INVESTIGATING',
+  RESOLVED: 'RESOLVED',
+  DISMISSED: 'DISMISSED'
+} as const
+
+export type SupportReportStatus = (typeof SupportReportStatus)[keyof typeof SupportReportStatus]

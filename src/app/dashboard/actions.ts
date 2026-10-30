@@ -570,7 +570,11 @@ export async function createSupportAgentReply(
     });
     await transaction.supportTicket.update({
       where: { id: ticket.id },
-      data: { updatedAt: new Date(), status: SupportTicketStatus.IN_PROGRESS },
+      data: {
+        updatedAt: new Date(),
+        status: SupportTicketStatus.IN_PROGRESS,
+        resolvedAt: null,
+      },
     });
     await transaction.notification.create({
       data: {
@@ -600,7 +604,13 @@ export async function updateSupportTicketStatus(
   }
   const updated = await prisma.supportTicket.updateMany({
     where: { id: ticketId.data },
-    data: { status: status.data },
+    data: {
+      status: status.data,
+      resolvedAt: status.data === SupportTicketStatus.RESOLVED ||
+        status.data === SupportTicketStatus.CLOSED
+        ? new Date()
+        : null,
+    },
   });
   if (!updated.count) return { success: false, error: "Support ticket not found" };
   revalidatePath("/support/console");
