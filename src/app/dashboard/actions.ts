@@ -143,32 +143,67 @@ export async function startBuyerConversation(
   if (listing.seller.userId === user.id) {
     return { success: false, error: "You cannot message yourself about your own offer" };
   }
-  const conversation = await prisma.$transaction(async (transaction) => {
-    const existing = await transaction.conversation.findFirst({
-      where: {
-        buyerId: user.id,
-        sellerId: listing.seller.userId,
-        orderId: null,
-      },
-      select: { id: true },
-    });
-    const target = existing ?? await transaction.conversation.create({
-      data: { buyerId: user.id, sellerId: listing.seller.userId },
-      select: { id: true },
-    });
+  const pair = {
+    buyerId: user.id,
+    sellerId: listing.seller.userId,
+    orderId: null,
+  };
+  const messageBody = `Regarding ${listing.title} (${listing.id}):\n\n${body.data}`;
+  const appendMessage = async (
+    transaction: Prisma.TransactionClient,
+    conversationId: string
+  ) => {
     await transaction.message.create({
       data: {
-        conversationId: target.id,
+        conversationId,
         senderId: user.id,
-        body: `Regarding ${listing.title} (${listing.id}):\n\n${body.data}`,
+        body: messageBody,
       },
     });
     await transaction.conversation.update({
-      where: { id: target.id },
+      where: { id: conversationId },
       data: { updatedAt: new Date() },
     });
-    return target;
-  });
+  };
+  let conversationCreationFailed = false;
+  let conversation: { id: string };
+  try {
+    conversation = await prisma.$transaction(async (transaction) => {
+      const existing = await transaction.conversation.findFirst({
+        where: pair,
+        select: { id: true },
+      });
+      let target = existing;
+      if (!target) {
+        conversationCreationFailed = true;
+        target = await transaction.conversation.create({
+          data: { buyerId: pair.buyerId, sellerId: pair.sellerId },
+          select: { id: true },
+        });
+        conversationCreationFailed = false;
+      }
+      await appendMessage(transaction, target.id);
+      return target;
+    });
+  } catch (error) {
+    if (
+      !conversationCreationFailed ||
+      !(error instanceof Prisma.PrismaClientKnownRequestError) ||
+      error.code !== "P2002"
+    ) {
+      throw error;
+    }
+    const existing = await prisma.$transaction(async (transaction) => {
+      const target = await transaction.conversation.findFirst({
+        where: pair,
+        select: { id: true },
+      });
+      if (target) await appendMessage(transaction, target.id);
+      return target;
+    });
+    if (!existing) throw error;
+    conversation = existing;
+  }
   revalidatePath("/dashboard/messages");
   return { success: true, data: { conversationId: conversation.id } };
 }

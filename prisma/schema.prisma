@@ -490,6 +490,7 @@ model Conversation {
   order     Order?    @relation(fields: [orderId], references: [id], onDelete: SetNull)
   messages  Message[]
 
+  // The orderless buyer-seller unique index is partial and is managed by migration SQL.
   @@index([buyerId, updatedAt])
   @@index([sellerId, updatedAt])
 }

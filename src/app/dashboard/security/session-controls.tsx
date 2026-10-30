@@ -1,8 +1,12 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState, useTransition } from "react";
+import { useState, useSyncExternalStore, useTransition } from "react";
 import { revokeBuyerOtherSessions } from "../actions";
+
+const subscribeToHydration = () => () => {};
+const getHydrationSnapshot = () => true;
+const getServerHydrationSnapshot = () => false;
 
 type SessionInfo = {
   id: string;
@@ -16,6 +20,11 @@ type SessionInfo = {
 
 export function SessionControls({ sessions }: { sessions: SessionInfo[] }) {
   const router = useRouter();
+  const hydrated = useSyncExternalStore(
+    subscribeToHydration,
+    getHydrationSnapshot,
+    getServerHydrationSnapshot
+  );
   const [error, setError] = useState("");
   const [saved, setSaved] = useState(false);
   const [busy, startTransition] = useTransition();
@@ -55,8 +64,12 @@ export function SessionControls({ sessions }: { sessions: SessionInfo[] }) {
               <p className="text-sm font-medium">{session.current ? "This device" : "Signed-in device"}{session.current && <span className="ml-2 text-xs text-patina">Current</span>}</p>
               <p className="mt-1 break-words text-xs text-muted-foreground">{session.userAgent || "Device information unavailable"}{session.ipAddress ? ` · ${session.ipAddress}` : ""}</p>
               <p className="mt-1 text-[11px] text-muted-foreground">
-                Last active {session.updatedAt.toLocaleString("en-US", { timeZone: "UTC" })} · Expires{" "}
-                {session.expiresAt.toLocaleDateString("en-US", { timeZone: "UTC" })}
+                Last active {hydrated
+                  ? session.updatedAt.toLocaleString()
+                  : `${session.updatedAt.toISOString().replace("T", " ").slice(0, 19)} UTC`} · Expires{" "}
+                {hydrated
+                  ? session.expiresAt.toLocaleDateString()
+                  : `${session.expiresAt.toISOString().slice(0, 10)} UTC`}
               </p>
             </li>
           ))}

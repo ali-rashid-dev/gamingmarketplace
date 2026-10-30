@@ -50,23 +50,26 @@ export default async function BuyerOrdersPage({ searchParams }: Props) {
       </form>
 
       <nav aria-label="Filter orders" className="mt-4 flex gap-2 overflow-x-auto pb-2">
-        {filters.map((filter) => (
-          <Link
-            key={filter.value}
-            href={`/dashboard/orders?${new URLSearchParams({
+        {filters.map((filter) => {
+          const query = new URLSearchParams({
               ...(filter.value === "ALL" ? {} : { status: filter.value }),
               ...(params.q ? { q: params.q } : {}),
-            }).toString()}`}
-            aria-current={selected === filter.value ? "page" : undefined}
-            className={`shrink-0 rounded-full border px-3 py-1.5 text-xs font-medium ${
-              selected === filter.value
-                ? "border-gold/50 bg-gold/10 text-gold"
-                : "border-border text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            {filter.label}
-          </Link>
-        ))}
+          });
+          return (
+            <Link
+              key={filter.value}
+              href={query.size ? `/dashboard/orders?${query.toString()}` : "/dashboard/orders"}
+              aria-current={selected === filter.value ? "page" : undefined}
+              className={`shrink-0 rounded-full border px-3 py-1.5 text-xs font-medium ${
+                selected === filter.value
+                  ? "border-gold/50 bg-gold/10 text-gold"
+                  : "border-border text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {filter.label}
+            </Link>
+          );
+        })}
       </nav>
 
       {orders.length ? (
