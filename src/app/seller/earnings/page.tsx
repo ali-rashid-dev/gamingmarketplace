@@ -3,10 +3,10 @@ import { getSellerEarnings, getSellerOverview } from "../dashboard-data";
 export default async function SellerEarningsPage() {
   const [history, overview] = await Promise.all([getSellerEarnings(), getSellerOverview()]);
   return (
-    <main className="mx-auto max-w-7xl px-5 py-9 sm:px-8">
-      <p className="text-xs font-bold uppercase tracking-[0.18em] text-cyan-300">Finance</p>
-      <h1 className="mt-2 font-display text-3xl font-semibold text-white">Earnings and payouts</h1>
-      <p className="mt-2 text-sm text-slate-400">Ledger balances and completed sales history for your seller account.</p>
+    <main className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
+      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">Finance</p>
+      <h1 className="mt-2 font-display text-2xl font-semibold text-foreground sm:text-3xl">Earnings and payouts</h1>
+      <p className="mt-2 text-sm text-muted-foreground">Ledger balances and completed sales history for your seller account.</p>
 
       <section className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {overview.metrics.balances.length ? overview.metrics.balances.map((balance) => (
@@ -21,8 +21,8 @@ export default async function SellerEarningsPage() {
         )}
       </section>
 
-      <section className="mt-8 grid gap-6 lg:grid-cols-2">
-        <div>
+      <section className="mt-8 grid min-w-0 gap-6 xl:grid-cols-2">
+        <div id="withdrawals" className="scroll-mt-20 min-w-0">
           <h2 className="font-semibold text-white">Completed sales</h2>
           {history.sales.length ? (
             <ul className="mt-3 divide-y divide-white/[0.07] rounded-2xl border border-white/[0.09] bg-card px-4">
@@ -52,7 +52,7 @@ export default async function SellerEarningsPage() {
           </p>
         </div>
       </section>
-      <section className="mt-8">
+      <section id="transactions" className="mt-8 scroll-mt-20">
         <h2 className="font-semibold text-white">Ledger history</h2>
         {history.ledger.length ? (
           <div className="mt-3 overflow-x-auto rounded-2xl border border-white/[0.09] bg-card">

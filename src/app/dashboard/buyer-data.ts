@@ -10,18 +10,7 @@ import prisma from "@/lib/prisma";
 const activeOrderStatuses = [OrderStatus.PAID, OrderStatus.PROCESSING];
 
 export async function getBuyerOverview(userId: string) {
-  const [
-    totalOrders,
-    activeOrders,
-    completedOrders,
-    openDisputes,
-    pendingReviews,
-    unreadMessages,
-    wishlistCount,
-    recentOrders,
-    recentConversations,
-    spending,
-  ] = await Promise.all([
+  const [totalOrders, activeOrders, completedOrders] = await Promise.all([
     prisma.order.count({ where: { buyerId: userId } }),
     prisma.order.count({
       where: { buyerId: userId, status: { in: activeOrderStatuses } },
@@ -29,27 +18,32 @@ export async function getBuyerOverview(userId: string) {
     prisma.order.count({
       where: { buyerId: userId, status: OrderStatus.COMPLETED },
     }),
-    prisma.dispute.count({
-      where: {
-        order: { buyerId: userId },
-        status: { in: [DisputeStatus.OPEN, DisputeStatus.UNDER_REVIEW] },
-      },
-    }),
-    prisma.orderItem.count({
-      where: {
-        status: OrderItemStatus.COMPLETED,
-        review: null,
-        order: { buyerId: userId },
-      },
-    }),
-    prisma.message.count({
-      where: {
-        senderId: { not: userId },
-        readAt: null,
-        conversation: { buyerId: userId },
-      },
-    }),
-    prisma.wishlistItem.count({ where: { userId } }),
+  ]);
+  const [openDisputes, pendingReviews, unreadMessages, wishlistCount] =
+    await Promise.all([
+      prisma.dispute.count({
+        where: {
+          order: { buyerId: userId },
+          status: { in: [DisputeStatus.OPEN, DisputeStatus.UNDER_REVIEW] },
+        },
+      }),
+      prisma.orderItem.count({
+        where: {
+          status: OrderItemStatus.COMPLETED,
+          review: null,
+          order: { buyerId: userId },
+        },
+      }),
+      prisma.message.count({
+        where: {
+          senderId: { not: userId },
+          readAt: null,
+          conversation: { buyerId: userId },
+        },
+      }),
+      prisma.wishlistItem.count({ where: { userId } }),
+    ]);
+  const [recentOrders, recentConversations, spending] = await Promise.all([
     prisma.order.findMany({
       where: { buyerId: userId },
       orderBy: [{ placedAt: "desc" }, { id: "desc" }],
