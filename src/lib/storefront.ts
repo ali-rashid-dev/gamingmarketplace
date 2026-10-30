@@ -3,7 +3,7 @@ import type { Prisma } from "@/generated/prisma/client";
 import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
 
-function publicListingWhere(): Prisma.ListingWhereInput {
+export function publicListingWhere(): Prisma.ListingWhereInput {
   return {
     status: ListingStatus.ACTIVE,
     publishedAt: { not: null },

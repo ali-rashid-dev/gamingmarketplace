@@ -9,11 +9,11 @@ const globalForPrisma = global as unknown as {
   prisma: PrismaClient;
 };
 
-const prisma =
-  globalForPrisma.prisma ||
-  new PrismaClient({
-    adapter,
-  });
+const hasCurrentSchema =
+  globalForPrisma.prisma && "wishlistItem" in globalForPrisma.prisma;
+const prisma = hasCurrentSchema
+  ? globalForPrisma.prisma
+  : new PrismaClient({ adapter });
 
 if (process.env.NODE_ENV !== "production") {
   globalForPrisma.prisma = prisma;

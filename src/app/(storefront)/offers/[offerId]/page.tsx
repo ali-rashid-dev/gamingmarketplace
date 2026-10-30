@@ -4,6 +4,8 @@ import { headers } from "next/headers";
 import { BadgeCheck, Check, ChevronRight, ShieldCheck } from "lucide-react";
 import { getOfferById, getOfferImage, formatPrice } from "@/lib/storefront";
 import { auth } from "@/lib/auth";
+import { WishlistButton } from "@/app/dashboard/wishlist/wishlist-button";
+import { ContactSellerButton } from "@/components/storefront/contact-seller-button";
 
 type Props = { params: Promise<{ offerId: string }> };
 
@@ -110,9 +112,11 @@ export default async function OfferDetailPage({ params }: Props) {
                   <p className="rounded-xl border border-cyan-300/20 bg-cyan-300/[0.06] px-4 py-3 text-center text-sm text-cyan-100">
                     Signed in as {session.user.email}
                   </p>
-                  <Link href="/dashboard" className="rounded-xl bg-cyan-300 px-4 py-3 text-center text-sm font-bold text-slate-950 transition hover:bg-cyan-200">
+                  <Link href="/dashboard" className="rounded-xl bg-primary px-4 py-3 text-center text-sm font-bold text-primary-foreground transition hover:bg-primary/90">
                     Go to your account
                   </Link>
+                  <WishlistButton listingId={offer.id} />
+                  <ContactSellerButton listingId={offer.id} signedIn />
                 </>
               ) : (
                 <>
@@ -122,6 +126,7 @@ export default async function OfferDetailPage({ params }: Props) {
                   <Link href="/sign-in" className="rounded-xl border border-white/10 px-4 py-3 text-center text-sm font-semibold text-white hover:bg-white/[0.04]">
                     Already have an account? Sign in
                   </Link>
+                  <ContactSellerButton listingId={offer.id} signedIn={false} />
                 </>
               )}
             </div>
