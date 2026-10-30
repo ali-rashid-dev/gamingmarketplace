@@ -78,6 +78,11 @@ export type Listing = Prisma.ListingModel
  */
 export type ListingAttribute = Prisma.ListingAttributeModel
 /**
+ * Model ListingRevision
+ *
+ */
+export type ListingRevision = Prisma.ListingRevisionModel
+/**
  * Model Order
  *
  */

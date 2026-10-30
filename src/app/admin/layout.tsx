@@ -13,12 +13,20 @@ export default async function AdminLayout({
           <Link href="/admin/catalog" className="font-semibold text-primary">
             GameTrade Admin
           </Link>
-          <Link
-            href="/admin/catalog"
-            className="rounded-md px-3 py-2 text-sm text-foreground hover:bg-accent"
-          >
-            Game catalog
-          </Link>
+          <div className="flex items-center gap-2">
+            <Link
+              href="/admin/catalog"
+              className="rounded-md px-3 py-2 text-sm text-foreground hover:bg-accent"
+            >
+              Game catalog
+            </Link>
+            <Link
+              href="/admin/listings"
+              className="rounded-md px-3 py-2 text-sm text-foreground hover:bg-accent"
+            >
+              Listing review
+            </Link>
+          </div>
         </nav>
       </header>
       {children}

@@ -60,6 +60,12 @@ export default async function OfferDetailPage({ params }: Props) {
             <p className="text-xs font-bold uppercase tracking-[0.16em] text-cyan-300">{offer.game.name} / {offer.category.name}</p>
             <h1 className="mt-3 font-display text-3xl font-semibold leading-tight text-white sm:text-4xl">{offer.title}</h1>
             <p className="mt-5 whitespace-pre-line text-sm leading-7 text-slate-300">{offer.description}</p>
+            <dl className="mt-5 grid gap-3 text-xs text-slate-400 sm:grid-cols-2">
+              <div><dt className="text-slate-500">Platform</dt><dd className="mt-1 text-slate-200">{offer.platform || "Not specified"}</dd></div>
+              <div><dt className="text-slate-500">Region</dt><dd className="mt-1 text-slate-200">{offer.region || "Not specified"}</dd></div>
+              <div><dt className="text-slate-500">Delivery</dt><dd className="mt-1 text-slate-200">{offer.deliveryType === "INSTANT" ? "Instant" : "Manual"}{offer.deliveryEstimate ? ` · ${offer.deliveryEstimate}` : ""}</dd></div>
+              {offer.expiresAt && <div><dt className="text-slate-500">Offer expires</dt><dd className="mt-1 text-slate-200">{offer.expiresAt.toLocaleDateString()}</dd></div>}
+            </dl>
           </div>
 
           {offer.attributes.length > 0 && (

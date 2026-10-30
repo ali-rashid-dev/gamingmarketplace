@@ -52,6 +52,7 @@ export type CategoryFieldType = (typeof CategoryFieldType)[keyof typeof Category
 
 export const ListingStatus = {
   DRAFT: 'DRAFT',
+  PENDING_REVIEW: 'PENDING_REVIEW',
   ACTIVE: 'ACTIVE',
   PAUSED: 'PAUSED',
   SOLD_OUT: 'SOLD_OUT',
@@ -59,6 +60,14 @@ export const ListingStatus = {
 } as const
 
 export type ListingStatus = (typeof ListingStatus)[keyof typeof ListingStatus]
+
+
+export const DeliveryType = {
+  INSTANT: 'INSTANT',
+  MANUAL: 'MANUAL'
+} as const
+
+export type DeliveryType = (typeof DeliveryType)[keyof typeof DeliveryType]
 
 
 export const OrderStatus = {

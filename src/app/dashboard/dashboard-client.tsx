@@ -1,6 +1,7 @@
 "use client";
 
 import { signOut } from "@/lib/auth-client";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 interface DashboardClientProps {
@@ -22,6 +23,14 @@ export default function DashboardClient({
       <p>Welcome, {name || "User"}!</p>
       <p>Email: {email}</p>
       <p>Account role: {role}</p>
+      {role === "SELLER" && (
+        <Link
+          href="/seller/listings"
+          className="w-full rounded-md bg-cyan-300 px-4 py-2 text-center font-medium text-slate-950 hover:bg-cyan-200"
+        >
+          Manage seller listings
+        </Link>
+      )}
       <button
         onClick={() =>
           signOut({

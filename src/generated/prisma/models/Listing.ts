@@ -46,6 +46,12 @@ export type ListingMinAggregateOutputType = {
   price: runtime.Decimal | null
   currency: string | null
   quantity: number | null
+  platform: string | null
+  region: string | null
+  deliveryType: $Enums.DeliveryType | null
+  deliveryEstimate: string | null
+  expiresAt: Date | null
+  reviewNote: string | null
   status: $Enums.ListingStatus | null
   publishedAt: Date | null
   createdAt: Date | null
@@ -62,6 +68,12 @@ export type ListingMaxAggregateOutputType = {
   price: runtime.Decimal | null
   currency: string | null
   quantity: number | null
+  platform: string | null
+  region: string | null
+  deliveryType: $Enums.DeliveryType | null
+  deliveryEstimate: string | null
+  expiresAt: Date | null
+  reviewNote: string | null
   status: $Enums.ListingStatus | null
   publishedAt: Date | null
   createdAt: Date | null
@@ -78,6 +90,12 @@ export type ListingCountAggregateOutputType = {
   price: number
   currency: number
   quantity: number
+  platform: number
+  region: number
+  deliveryType: number
+  deliveryEstimate: number
+  expiresAt: number
+  reviewNote: number
   status: number
   images: number
   publishedAt: number
@@ -107,6 +125,12 @@ export type ListingMinAggregateInputType = {
   price?: true
   currency?: true
   quantity?: true
+  platform?: true
+  region?: true
+  deliveryType?: true
+  deliveryEstimate?: true
+  expiresAt?: true
+  reviewNote?: true
   status?: true
   publishedAt?: true
   createdAt?: true
@@ -123,6 +147,12 @@ export type ListingMaxAggregateInputType = {
   price?: true
   currency?: true
   quantity?: true
+  platform?: true
+  region?: true
+  deliveryType?: true
+  deliveryEstimate?: true
+  expiresAt?: true
+  reviewNote?: true
   status?: true
   publishedAt?: true
   createdAt?: true
@@ -139,6 +169,12 @@ export type ListingCountAggregateInputType = {
   price?: true
   currency?: true
   quantity?: true
+  platform?: true
+  region?: true
+  deliveryType?: true
+  deliveryEstimate?: true
+  expiresAt?: true
+  reviewNote?: true
   status?: true
   images?: true
   publishedAt?: true
@@ -243,6 +279,12 @@ export type ListingGroupByOutputType = {
   price: runtime.Decimal
   currency: string
   quantity: number
+  platform: string | null
+  region: string | null
+  deliveryType: $Enums.DeliveryType
+  deliveryEstimate: string | null
+  expiresAt: Date | null
+  reviewNote: string | null
   status: $Enums.ListingStatus
   images: runtime.JsonValue
   publishedAt: Date | null
@@ -283,6 +325,12 @@ export type ListingWhereInput = {
   price?: Prisma.DecimalFilter<"Listing"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFilter<"Listing"> | string
   quantity?: Prisma.IntFilter<"Listing"> | number
+  platform?: Prisma.StringNullableFilter<"Listing"> | string | null
+  region?: Prisma.StringNullableFilter<"Listing"> | string | null
+  deliveryType?: Prisma.EnumDeliveryTypeFilter<"Listing"> | $Enums.DeliveryType
+  deliveryEstimate?: Prisma.StringNullableFilter<"Listing"> | string | null
+  expiresAt?: Prisma.DateTimeNullableFilter<"Listing"> | Date | string | null
+  reviewNote?: Prisma.StringNullableFilter<"Listing"> | string | null
   status?: Prisma.EnumListingStatusFilter<"Listing"> | $Enums.ListingStatus
   images?: Prisma.JsonFilter<"Listing">
   publishedAt?: Prisma.DateTimeNullableFilter<"Listing"> | Date | string | null
@@ -292,6 +340,7 @@ export type ListingWhereInput = {
   game?: Prisma.XOR<Prisma.GameScalarRelationFilter, Prisma.GameWhereInput>
   category?: Prisma.XOR<Prisma.CategoryScalarRelationFilter, Prisma.CategoryWhereInput>
   attributes?: Prisma.ListingAttributeListRelationFilter
+  revisions?: Prisma.ListingRevisionListRelationFilter
   orderItems?: Prisma.OrderItemListRelationFilter
   reviews?: Prisma.ReviewListRelationFilter
 }
@@ -306,6 +355,12 @@ export type ListingOrderByWithRelationInput = {
   price?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
+  platform?: Prisma.SortOrderInput | Prisma.SortOrder
+  region?: Prisma.SortOrderInput | Prisma.SortOrder
+  deliveryType?: Prisma.SortOrder
+  deliveryEstimate?: Prisma.SortOrderInput | Prisma.SortOrder
+  expiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  reviewNote?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   images?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -315,6 +370,7 @@ export type ListingOrderByWithRelationInput = {
   game?: Prisma.GameOrderByWithRelationInput
   category?: Prisma.CategoryOrderByWithRelationInput
   attributes?: Prisma.ListingAttributeOrderByRelationAggregateInput
+  revisions?: Prisma.ListingRevisionOrderByRelationAggregateInput
   orderItems?: Prisma.OrderItemOrderByRelationAggregateInput
   reviews?: Prisma.ReviewOrderByRelationAggregateInput
 }
@@ -332,6 +388,12 @@ export type ListingWhereUniqueInput = Prisma.AtLeast<{
   price?: Prisma.DecimalFilter<"Listing"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFilter<"Listing"> | string
   quantity?: Prisma.IntFilter<"Listing"> | number
+  platform?: Prisma.StringNullableFilter<"Listing"> | string | null
+  region?: Prisma.StringNullableFilter<"Listing"> | string | null
+  deliveryType?: Prisma.EnumDeliveryTypeFilter<"Listing"> | $Enums.DeliveryType
+  deliveryEstimate?: Prisma.StringNullableFilter<"Listing"> | string | null
+  expiresAt?: Prisma.DateTimeNullableFilter<"Listing"> | Date | string | null
+  reviewNote?: Prisma.StringNullableFilter<"Listing"> | string | null
   status?: Prisma.EnumListingStatusFilter<"Listing"> | $Enums.ListingStatus
   images?: Prisma.JsonFilter<"Listing">
   publishedAt?: Prisma.DateTimeNullableFilter<"Listing"> | Date | string | null
@@ -341,6 +403,7 @@ export type ListingWhereUniqueInput = Prisma.AtLeast<{
   game?: Prisma.XOR<Prisma.GameScalarRelationFilter, Prisma.GameWhereInput>
   category?: Prisma.XOR<Prisma.CategoryScalarRelationFilter, Prisma.CategoryWhereInput>
   attributes?: Prisma.ListingAttributeListRelationFilter
+  revisions?: Prisma.ListingRevisionListRelationFilter
   orderItems?: Prisma.OrderItemListRelationFilter
   reviews?: Prisma.ReviewListRelationFilter
 }, "id">
@@ -355,6 +418,12 @@ export type ListingOrderByWithAggregationInput = {
   price?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
+  platform?: Prisma.SortOrderInput | Prisma.SortOrder
+  region?: Prisma.SortOrderInput | Prisma.SortOrder
+  deliveryType?: Prisma.SortOrder
+  deliveryEstimate?: Prisma.SortOrderInput | Prisma.SortOrder
+  expiresAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  reviewNote?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   images?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -380,6 +449,12 @@ export type ListingScalarWhereWithAggregatesInput = {
   price?: Prisma.DecimalWithAggregatesFilter<"Listing"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringWithAggregatesFilter<"Listing"> | string
   quantity?: Prisma.IntWithAggregatesFilter<"Listing"> | number
+  platform?: Prisma.StringNullableWithAggregatesFilter<"Listing"> | string | null
+  region?: Prisma.StringNullableWithAggregatesFilter<"Listing"> | string | null
+  deliveryType?: Prisma.EnumDeliveryTypeWithAggregatesFilter<"Listing"> | $Enums.DeliveryType
+  deliveryEstimate?: Prisma.StringNullableWithAggregatesFilter<"Listing"> | string | null
+  expiresAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Listing"> | Date | string | null
+  reviewNote?: Prisma.StringNullableWithAggregatesFilter<"Listing"> | string | null
   status?: Prisma.EnumListingStatusWithAggregatesFilter<"Listing"> | $Enums.ListingStatus
   images?: Prisma.JsonWithAggregatesFilter<"Listing">
   publishedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Listing"> | Date | string | null
@@ -394,6 +469,12 @@ export type ListingCreateInput = {
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   quantity?: number
+  platform?: string | null
+  region?: string | null
+  deliveryType?: $Enums.DeliveryType
+  deliveryEstimate?: string | null
+  expiresAt?: Date | string | null
+  reviewNote?: string | null
   status?: $Enums.ListingStatus
   images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   publishedAt?: Date | string | null
@@ -403,6 +484,7 @@ export type ListingCreateInput = {
   game: Prisma.GameCreateNestedOneWithoutListingsInput
   category: Prisma.CategoryCreateNestedOneWithoutListingsInput
   attributes?: Prisma.ListingAttributeCreateNestedManyWithoutListingInput
+  revisions?: Prisma.ListingRevisionCreateNestedManyWithoutListingInput
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutListingInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutListingInput
 }
@@ -417,12 +499,19 @@ export type ListingUncheckedCreateInput = {
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   quantity?: number
+  platform?: string | null
+  region?: string | null
+  deliveryType?: $Enums.DeliveryType
+  deliveryEstimate?: string | null
+  expiresAt?: Date | string | null
+  reviewNote?: string | null
   status?: $Enums.ListingStatus
   images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   publishedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   attributes?: Prisma.ListingAttributeUncheckedCreateNestedManyWithoutListingInput
+  revisions?: Prisma.ListingRevisionUncheckedCreateNestedManyWithoutListingInput
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutListingInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutListingInput
 }
@@ -434,6 +523,12 @@ export type ListingUpdateInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
+  deliveryEstimate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
   images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -443,6 +538,7 @@ export type ListingUpdateInput = {
   game?: Prisma.GameUpdateOneRequiredWithoutListingsNestedInput
   category?: Prisma.CategoryUpdateOneRequiredWithoutListingsNestedInput
   attributes?: Prisma.ListingAttributeUpdateManyWithoutListingNestedInput
+  revisions?: Prisma.ListingRevisionUpdateManyWithoutListingNestedInput
   orderItems?: Prisma.OrderItemUpdateManyWithoutListingNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutListingNestedInput
 }
@@ -457,12 +553,19 @@ export type ListingUncheckedUpdateInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
+  deliveryEstimate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
   images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attributes?: Prisma.ListingAttributeUncheckedUpdateManyWithoutListingNestedInput
+  revisions?: Prisma.ListingRevisionUncheckedUpdateManyWithoutListingNestedInput
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutListingNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutListingNestedInput
 }
@@ -477,6 +580,12 @@ export type ListingCreateManyInput = {
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   quantity?: number
+  platform?: string | null
+  region?: string | null
+  deliveryType?: $Enums.DeliveryType
+  deliveryEstimate?: string | null
+  expiresAt?: Date | string | null
+  reviewNote?: string | null
   status?: $Enums.ListingStatus
   images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   publishedAt?: Date | string | null
@@ -491,6 +600,12 @@ export type ListingUpdateManyMutationInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
+  deliveryEstimate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
   images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -508,6 +623,12 @@ export type ListingUncheckedUpdateManyInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
+  deliveryEstimate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
   images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -535,6 +656,12 @@ export type ListingCountOrderByAggregateInput = {
   price?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
+  platform?: Prisma.SortOrder
+  region?: Prisma.SortOrder
+  deliveryType?: Prisma.SortOrder
+  deliveryEstimate?: Prisma.SortOrder
+  expiresAt?: Prisma.SortOrder
+  reviewNote?: Prisma.SortOrder
   status?: Prisma.SortOrder
   images?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrder
@@ -557,6 +684,12 @@ export type ListingMaxOrderByAggregateInput = {
   price?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
+  platform?: Prisma.SortOrder
+  region?: Prisma.SortOrder
+  deliveryType?: Prisma.SortOrder
+  deliveryEstimate?: Prisma.SortOrder
+  expiresAt?: Prisma.SortOrder
+  reviewNote?: Prisma.SortOrder
   status?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -573,6 +706,12 @@ export type ListingMinOrderByAggregateInput = {
   price?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   quantity?: Prisma.SortOrder
+  platform?: Prisma.SortOrder
+  region?: Prisma.SortOrder
+  deliveryType?: Prisma.SortOrder
+  deliveryEstimate?: Prisma.SortOrder
+  expiresAt?: Prisma.SortOrder
+  reviewNote?: Prisma.SortOrder
   status?: Prisma.SortOrder
   publishedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -728,6 +867,10 @@ export type DecimalFieldUpdateOperationsInput = {
   divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
 }
 
+export type EnumDeliveryTypeFieldUpdateOperationsInput = {
+  set?: $Enums.DeliveryType
+}
+
 export type EnumListingStatusFieldUpdateOperationsInput = {
   set?: $Enums.ListingStatus
 }
@@ -744,6 +887,20 @@ export type ListingUpdateOneRequiredWithoutAttributesNestedInput = {
   upsert?: Prisma.ListingUpsertWithoutAttributesInput
   connect?: Prisma.ListingWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.ListingUpdateToOneWithWhereWithoutAttributesInput, Prisma.ListingUpdateWithoutAttributesInput>, Prisma.ListingUncheckedUpdateWithoutAttributesInput>
+}
+
+export type ListingCreateNestedOneWithoutRevisionsInput = {
+  create?: Prisma.XOR<Prisma.ListingCreateWithoutRevisionsInput, Prisma.ListingUncheckedCreateWithoutRevisionsInput>
+  connectOrCreate?: Prisma.ListingCreateOrConnectWithoutRevisionsInput
+  connect?: Prisma.ListingWhereUniqueInput
+}
+
+export type ListingUpdateOneRequiredWithoutRevisionsNestedInput = {
+  create?: Prisma.XOR<Prisma.ListingCreateWithoutRevisionsInput, Prisma.ListingUncheckedCreateWithoutRevisionsInput>
+  connectOrCreate?: Prisma.ListingCreateOrConnectWithoutRevisionsInput
+  upsert?: Prisma.ListingUpsertWithoutRevisionsInput
+  connect?: Prisma.ListingWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ListingUpdateToOneWithWhereWithoutRevisionsInput, Prisma.ListingUpdateWithoutRevisionsInput>, Prisma.ListingUncheckedUpdateWithoutRevisionsInput>
 }
 
 export type ListingCreateNestedOneWithoutOrderItemsInput = {
@@ -785,6 +942,12 @@ export type ListingCreateWithoutSellerInput = {
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   quantity?: number
+  platform?: string | null
+  region?: string | null
+  deliveryType?: $Enums.DeliveryType
+  deliveryEstimate?: string | null
+  expiresAt?: Date | string | null
+  reviewNote?: string | null
   status?: $Enums.ListingStatus
   images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   publishedAt?: Date | string | null
@@ -793,6 +956,7 @@ export type ListingCreateWithoutSellerInput = {
   game: Prisma.GameCreateNestedOneWithoutListingsInput
   category: Prisma.CategoryCreateNestedOneWithoutListingsInput
   attributes?: Prisma.ListingAttributeCreateNestedManyWithoutListingInput
+  revisions?: Prisma.ListingRevisionCreateNestedManyWithoutListingInput
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutListingInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutListingInput
 }
@@ -806,12 +970,19 @@ export type ListingUncheckedCreateWithoutSellerInput = {
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   quantity?: number
+  platform?: string | null
+  region?: string | null
+  deliveryType?: $Enums.DeliveryType
+  deliveryEstimate?: string | null
+  expiresAt?: Date | string | null
+  reviewNote?: string | null
   status?: $Enums.ListingStatus
   images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   publishedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   attributes?: Prisma.ListingAttributeUncheckedCreateNestedManyWithoutListingInput
+  revisions?: Prisma.ListingRevisionUncheckedCreateNestedManyWithoutListingInput
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutListingInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutListingInput
 }
@@ -855,6 +1026,12 @@ export type ListingScalarWhereInput = {
   price?: Prisma.DecimalFilter<"Listing"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFilter<"Listing"> | string
   quantity?: Prisma.IntFilter<"Listing"> | number
+  platform?: Prisma.StringNullableFilter<"Listing"> | string | null
+  region?: Prisma.StringNullableFilter<"Listing"> | string | null
+  deliveryType?: Prisma.EnumDeliveryTypeFilter<"Listing"> | $Enums.DeliveryType
+  deliveryEstimate?: Prisma.StringNullableFilter<"Listing"> | string | null
+  expiresAt?: Prisma.DateTimeNullableFilter<"Listing"> | Date | string | null
+  reviewNote?: Prisma.StringNullableFilter<"Listing"> | string | null
   status?: Prisma.EnumListingStatusFilter<"Listing"> | $Enums.ListingStatus
   images?: Prisma.JsonFilter<"Listing">
   publishedAt?: Prisma.DateTimeNullableFilter<"Listing"> | Date | string | null
@@ -869,6 +1046,12 @@ export type ListingCreateWithoutGameInput = {
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   quantity?: number
+  platform?: string | null
+  region?: string | null
+  deliveryType?: $Enums.DeliveryType
+  deliveryEstimate?: string | null
+  expiresAt?: Date | string | null
+  reviewNote?: string | null
   status?: $Enums.ListingStatus
   images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   publishedAt?: Date | string | null
@@ -877,6 +1060,7 @@ export type ListingCreateWithoutGameInput = {
   seller: Prisma.SellerProfileCreateNestedOneWithoutListingsInput
   category: Prisma.CategoryCreateNestedOneWithoutListingsInput
   attributes?: Prisma.ListingAttributeCreateNestedManyWithoutListingInput
+  revisions?: Prisma.ListingRevisionCreateNestedManyWithoutListingInput
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutListingInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutListingInput
 }
@@ -890,12 +1074,19 @@ export type ListingUncheckedCreateWithoutGameInput = {
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   quantity?: number
+  platform?: string | null
+  region?: string | null
+  deliveryType?: $Enums.DeliveryType
+  deliveryEstimate?: string | null
+  expiresAt?: Date | string | null
+  reviewNote?: string | null
   status?: $Enums.ListingStatus
   images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   publishedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   attributes?: Prisma.ListingAttributeUncheckedCreateNestedManyWithoutListingInput
+  revisions?: Prisma.ListingRevisionUncheckedCreateNestedManyWithoutListingInput
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutListingInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutListingInput
 }
@@ -933,6 +1124,12 @@ export type ListingCreateWithoutCategoryInput = {
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   quantity?: number
+  platform?: string | null
+  region?: string | null
+  deliveryType?: $Enums.DeliveryType
+  deliveryEstimate?: string | null
+  expiresAt?: Date | string | null
+  reviewNote?: string | null
   status?: $Enums.ListingStatus
   images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   publishedAt?: Date | string | null
@@ -941,6 +1138,7 @@ export type ListingCreateWithoutCategoryInput = {
   seller: Prisma.SellerProfileCreateNestedOneWithoutListingsInput
   game: Prisma.GameCreateNestedOneWithoutListingsInput
   attributes?: Prisma.ListingAttributeCreateNestedManyWithoutListingInput
+  revisions?: Prisma.ListingRevisionCreateNestedManyWithoutListingInput
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutListingInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutListingInput
 }
@@ -953,12 +1151,19 @@ export type ListingUncheckedCreateWithoutCategoryInput = {
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   quantity?: number
+  platform?: string | null
+  region?: string | null
+  deliveryType?: $Enums.DeliveryType
+  deliveryEstimate?: string | null
+  expiresAt?: Date | string | null
+  reviewNote?: string | null
   status?: $Enums.ListingStatus
   images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   publishedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   attributes?: Prisma.ListingAttributeUncheckedCreateNestedManyWithoutListingInput
+  revisions?: Prisma.ListingRevisionUncheckedCreateNestedManyWithoutListingInput
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutListingInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutListingInput
 }
@@ -996,6 +1201,12 @@ export type ListingCreateWithoutAttributesInput = {
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   quantity?: number
+  platform?: string | null
+  region?: string | null
+  deliveryType?: $Enums.DeliveryType
+  deliveryEstimate?: string | null
+  expiresAt?: Date | string | null
+  reviewNote?: string | null
   status?: $Enums.ListingStatus
   images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   publishedAt?: Date | string | null
@@ -1004,6 +1215,7 @@ export type ListingCreateWithoutAttributesInput = {
   seller: Prisma.SellerProfileCreateNestedOneWithoutListingsInput
   game: Prisma.GameCreateNestedOneWithoutListingsInput
   category: Prisma.CategoryCreateNestedOneWithoutListingsInput
+  revisions?: Prisma.ListingRevisionCreateNestedManyWithoutListingInput
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutListingInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutListingInput
 }
@@ -1018,11 +1230,18 @@ export type ListingUncheckedCreateWithoutAttributesInput = {
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   quantity?: number
+  platform?: string | null
+  region?: string | null
+  deliveryType?: $Enums.DeliveryType
+  deliveryEstimate?: string | null
+  expiresAt?: Date | string | null
+  reviewNote?: string | null
   status?: $Enums.ListingStatus
   images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   publishedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  revisions?: Prisma.ListingRevisionUncheckedCreateNestedManyWithoutListingInput
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutListingInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutListingInput
 }
@@ -1050,6 +1269,12 @@ export type ListingUpdateWithoutAttributesInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
+  deliveryEstimate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
   images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1058,6 +1283,7 @@ export type ListingUpdateWithoutAttributesInput = {
   seller?: Prisma.SellerProfileUpdateOneRequiredWithoutListingsNestedInput
   game?: Prisma.GameUpdateOneRequiredWithoutListingsNestedInput
   category?: Prisma.CategoryUpdateOneRequiredWithoutListingsNestedInput
+  revisions?: Prisma.ListingRevisionUpdateManyWithoutListingNestedInput
   orderItems?: Prisma.OrderItemUpdateManyWithoutListingNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutListingNestedInput
 }
@@ -1072,11 +1298,138 @@ export type ListingUncheckedUpdateWithoutAttributesInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
+  deliveryEstimate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
   images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  revisions?: Prisma.ListingRevisionUncheckedUpdateManyWithoutListingNestedInput
+  orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutListingNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutListingNestedInput
+}
+
+export type ListingCreateWithoutRevisionsInput = {
+  id?: string
+  title: string
+  description: string
+  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  quantity?: number
+  platform?: string | null
+  region?: string | null
+  deliveryType?: $Enums.DeliveryType
+  deliveryEstimate?: string | null
+  expiresAt?: Date | string | null
+  reviewNote?: string | null
+  status?: $Enums.ListingStatus
+  images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  publishedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  seller: Prisma.SellerProfileCreateNestedOneWithoutListingsInput
+  game: Prisma.GameCreateNestedOneWithoutListingsInput
+  category: Prisma.CategoryCreateNestedOneWithoutListingsInput
+  attributes?: Prisma.ListingAttributeCreateNestedManyWithoutListingInput
+  orderItems?: Prisma.OrderItemCreateNestedManyWithoutListingInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutListingInput
+}
+
+export type ListingUncheckedCreateWithoutRevisionsInput = {
+  id?: string
+  sellerId: string
+  gameId: string
+  categoryId: string
+  title: string
+  description: string
+  price: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: string
+  quantity?: number
+  platform?: string | null
+  region?: string | null
+  deliveryType?: $Enums.DeliveryType
+  deliveryEstimate?: string | null
+  expiresAt?: Date | string | null
+  reviewNote?: string | null
+  status?: $Enums.ListingStatus
+  images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  publishedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  attributes?: Prisma.ListingAttributeUncheckedCreateNestedManyWithoutListingInput
+  orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutListingInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutListingInput
+}
+
+export type ListingCreateOrConnectWithoutRevisionsInput = {
+  where: Prisma.ListingWhereUniqueInput
+  create: Prisma.XOR<Prisma.ListingCreateWithoutRevisionsInput, Prisma.ListingUncheckedCreateWithoutRevisionsInput>
+}
+
+export type ListingUpsertWithoutRevisionsInput = {
+  update: Prisma.XOR<Prisma.ListingUpdateWithoutRevisionsInput, Prisma.ListingUncheckedUpdateWithoutRevisionsInput>
+  create: Prisma.XOR<Prisma.ListingCreateWithoutRevisionsInput, Prisma.ListingUncheckedCreateWithoutRevisionsInput>
+  where?: Prisma.ListingWhereInput
+}
+
+export type ListingUpdateToOneWithWhereWithoutRevisionsInput = {
+  where?: Prisma.ListingWhereInput
+  data: Prisma.XOR<Prisma.ListingUpdateWithoutRevisionsInput, Prisma.ListingUncheckedUpdateWithoutRevisionsInput>
+}
+
+export type ListingUpdateWithoutRevisionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
+  deliveryEstimate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  seller?: Prisma.SellerProfileUpdateOneRequiredWithoutListingsNestedInput
+  game?: Prisma.GameUpdateOneRequiredWithoutListingsNestedInput
+  category?: Prisma.CategoryUpdateOneRequiredWithoutListingsNestedInput
+  attributes?: Prisma.ListingAttributeUpdateManyWithoutListingNestedInput
+  orderItems?: Prisma.OrderItemUpdateManyWithoutListingNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutListingNestedInput
+}
+
+export type ListingUncheckedUpdateWithoutRevisionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  sellerId?: Prisma.StringFieldUpdateOperationsInput | string
+  gameId?: Prisma.StringFieldUpdateOperationsInput | string
+  categoryId?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
+  deliveryEstimate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
+  images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  attributes?: Prisma.ListingAttributeUncheckedUpdateManyWithoutListingNestedInput
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutListingNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutListingNestedInput
 }
@@ -1088,6 +1441,12 @@ export type ListingCreateWithoutOrderItemsInput = {
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   quantity?: number
+  platform?: string | null
+  region?: string | null
+  deliveryType?: $Enums.DeliveryType
+  deliveryEstimate?: string | null
+  expiresAt?: Date | string | null
+  reviewNote?: string | null
   status?: $Enums.ListingStatus
   images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   publishedAt?: Date | string | null
@@ -1097,6 +1456,7 @@ export type ListingCreateWithoutOrderItemsInput = {
   game: Prisma.GameCreateNestedOneWithoutListingsInput
   category: Prisma.CategoryCreateNestedOneWithoutListingsInput
   attributes?: Prisma.ListingAttributeCreateNestedManyWithoutListingInput
+  revisions?: Prisma.ListingRevisionCreateNestedManyWithoutListingInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutListingInput
 }
 
@@ -1110,12 +1470,19 @@ export type ListingUncheckedCreateWithoutOrderItemsInput = {
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   quantity?: number
+  platform?: string | null
+  region?: string | null
+  deliveryType?: $Enums.DeliveryType
+  deliveryEstimate?: string | null
+  expiresAt?: Date | string | null
+  reviewNote?: string | null
   status?: $Enums.ListingStatus
   images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   publishedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   attributes?: Prisma.ListingAttributeUncheckedCreateNestedManyWithoutListingInput
+  revisions?: Prisma.ListingRevisionUncheckedCreateNestedManyWithoutListingInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutListingInput
 }
 
@@ -1142,6 +1509,12 @@ export type ListingUpdateWithoutOrderItemsInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
+  deliveryEstimate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
   images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1151,6 +1524,7 @@ export type ListingUpdateWithoutOrderItemsInput = {
   game?: Prisma.GameUpdateOneRequiredWithoutListingsNestedInput
   category?: Prisma.CategoryUpdateOneRequiredWithoutListingsNestedInput
   attributes?: Prisma.ListingAttributeUpdateManyWithoutListingNestedInput
+  revisions?: Prisma.ListingRevisionUpdateManyWithoutListingNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutListingNestedInput
 }
 
@@ -1164,12 +1538,19 @@ export type ListingUncheckedUpdateWithoutOrderItemsInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
+  deliveryEstimate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
   images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attributes?: Prisma.ListingAttributeUncheckedUpdateManyWithoutListingNestedInput
+  revisions?: Prisma.ListingRevisionUncheckedUpdateManyWithoutListingNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutListingNestedInput
 }
 
@@ -1180,6 +1561,12 @@ export type ListingCreateWithoutReviewsInput = {
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   quantity?: number
+  platform?: string | null
+  region?: string | null
+  deliveryType?: $Enums.DeliveryType
+  deliveryEstimate?: string | null
+  expiresAt?: Date | string | null
+  reviewNote?: string | null
   status?: $Enums.ListingStatus
   images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   publishedAt?: Date | string | null
@@ -1189,6 +1576,7 @@ export type ListingCreateWithoutReviewsInput = {
   game: Prisma.GameCreateNestedOneWithoutListingsInput
   category: Prisma.CategoryCreateNestedOneWithoutListingsInput
   attributes?: Prisma.ListingAttributeCreateNestedManyWithoutListingInput
+  revisions?: Prisma.ListingRevisionCreateNestedManyWithoutListingInput
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutListingInput
 }
 
@@ -1202,12 +1590,19 @@ export type ListingUncheckedCreateWithoutReviewsInput = {
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   quantity?: number
+  platform?: string | null
+  region?: string | null
+  deliveryType?: $Enums.DeliveryType
+  deliveryEstimate?: string | null
+  expiresAt?: Date | string | null
+  reviewNote?: string | null
   status?: $Enums.ListingStatus
   images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   publishedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   attributes?: Prisma.ListingAttributeUncheckedCreateNestedManyWithoutListingInput
+  revisions?: Prisma.ListingRevisionUncheckedCreateNestedManyWithoutListingInput
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutListingInput
 }
 
@@ -1234,6 +1629,12 @@ export type ListingUpdateWithoutReviewsInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
+  deliveryEstimate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
   images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1243,6 +1644,7 @@ export type ListingUpdateWithoutReviewsInput = {
   game?: Prisma.GameUpdateOneRequiredWithoutListingsNestedInput
   category?: Prisma.CategoryUpdateOneRequiredWithoutListingsNestedInput
   attributes?: Prisma.ListingAttributeUpdateManyWithoutListingNestedInput
+  revisions?: Prisma.ListingRevisionUpdateManyWithoutListingNestedInput
   orderItems?: Prisma.OrderItemUpdateManyWithoutListingNestedInput
 }
 
@@ -1256,12 +1658,19 @@ export type ListingUncheckedUpdateWithoutReviewsInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
+  deliveryEstimate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
   images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attributes?: Prisma.ListingAttributeUncheckedUpdateManyWithoutListingNestedInput
+  revisions?: Prisma.ListingRevisionUncheckedUpdateManyWithoutListingNestedInput
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutListingNestedInput
 }
 
@@ -1274,6 +1683,12 @@ export type ListingCreateManySellerInput = {
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   quantity?: number
+  platform?: string | null
+  region?: string | null
+  deliveryType?: $Enums.DeliveryType
+  deliveryEstimate?: string | null
+  expiresAt?: Date | string | null
+  reviewNote?: string | null
   status?: $Enums.ListingStatus
   images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   publishedAt?: Date | string | null
@@ -1288,6 +1703,12 @@ export type ListingUpdateWithoutSellerInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
+  deliveryEstimate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
   images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1296,6 +1717,7 @@ export type ListingUpdateWithoutSellerInput = {
   game?: Prisma.GameUpdateOneRequiredWithoutListingsNestedInput
   category?: Prisma.CategoryUpdateOneRequiredWithoutListingsNestedInput
   attributes?: Prisma.ListingAttributeUpdateManyWithoutListingNestedInput
+  revisions?: Prisma.ListingRevisionUpdateManyWithoutListingNestedInput
   orderItems?: Prisma.OrderItemUpdateManyWithoutListingNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutListingNestedInput
 }
@@ -1309,12 +1731,19 @@ export type ListingUncheckedUpdateWithoutSellerInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
+  deliveryEstimate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
   images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attributes?: Prisma.ListingAttributeUncheckedUpdateManyWithoutListingNestedInput
+  revisions?: Prisma.ListingRevisionUncheckedUpdateManyWithoutListingNestedInput
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutListingNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutListingNestedInput
 }
@@ -1328,6 +1757,12 @@ export type ListingUncheckedUpdateManyWithoutSellerInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
+  deliveryEstimate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
   images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1344,6 +1779,12 @@ export type ListingCreateManyGameInput = {
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   quantity?: number
+  platform?: string | null
+  region?: string | null
+  deliveryType?: $Enums.DeliveryType
+  deliveryEstimate?: string | null
+  expiresAt?: Date | string | null
+  reviewNote?: string | null
   status?: $Enums.ListingStatus
   images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   publishedAt?: Date | string | null
@@ -1358,6 +1799,12 @@ export type ListingUpdateWithoutGameInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
+  deliveryEstimate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
   images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1366,6 +1813,7 @@ export type ListingUpdateWithoutGameInput = {
   seller?: Prisma.SellerProfileUpdateOneRequiredWithoutListingsNestedInput
   category?: Prisma.CategoryUpdateOneRequiredWithoutListingsNestedInput
   attributes?: Prisma.ListingAttributeUpdateManyWithoutListingNestedInput
+  revisions?: Prisma.ListingRevisionUpdateManyWithoutListingNestedInput
   orderItems?: Prisma.OrderItemUpdateManyWithoutListingNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutListingNestedInput
 }
@@ -1379,12 +1827,19 @@ export type ListingUncheckedUpdateWithoutGameInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
+  deliveryEstimate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
   images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attributes?: Prisma.ListingAttributeUncheckedUpdateManyWithoutListingNestedInput
+  revisions?: Prisma.ListingRevisionUncheckedUpdateManyWithoutListingNestedInput
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutListingNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutListingNestedInput
 }
@@ -1398,6 +1853,12 @@ export type ListingUncheckedUpdateManyWithoutGameInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
+  deliveryEstimate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
   images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1413,6 +1874,12 @@ export type ListingCreateManyCategoryInput = {
   price: runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: string
   quantity?: number
+  platform?: string | null
+  region?: string | null
+  deliveryType?: $Enums.DeliveryType
+  deliveryEstimate?: string | null
+  expiresAt?: Date | string | null
+  reviewNote?: string | null
   status?: $Enums.ListingStatus
   images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   publishedAt?: Date | string | null
@@ -1427,6 +1894,12 @@ export type ListingUpdateWithoutCategoryInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
+  deliveryEstimate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
   images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1435,6 +1908,7 @@ export type ListingUpdateWithoutCategoryInput = {
   seller?: Prisma.SellerProfileUpdateOneRequiredWithoutListingsNestedInput
   game?: Prisma.GameUpdateOneRequiredWithoutListingsNestedInput
   attributes?: Prisma.ListingAttributeUpdateManyWithoutListingNestedInput
+  revisions?: Prisma.ListingRevisionUpdateManyWithoutListingNestedInput
   orderItems?: Prisma.OrderItemUpdateManyWithoutListingNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutListingNestedInput
 }
@@ -1447,12 +1921,19 @@ export type ListingUncheckedUpdateWithoutCategoryInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
+  deliveryEstimate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
   images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attributes?: Prisma.ListingAttributeUncheckedUpdateManyWithoutListingNestedInput
+  revisions?: Prisma.ListingRevisionUncheckedUpdateManyWithoutListingNestedInput
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutListingNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutListingNestedInput
 }
@@ -1465,6 +1946,12 @@ export type ListingUncheckedUpdateManyWithoutCategoryInput = {
   price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   quantity?: Prisma.IntFieldUpdateOperationsInput | number
+  platform?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  region?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  deliveryType?: Prisma.EnumDeliveryTypeFieldUpdateOperationsInput | $Enums.DeliveryType
+  deliveryEstimate?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  expiresAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  reviewNote?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumListingStatusFieldUpdateOperationsInput | $Enums.ListingStatus
   images?: Prisma.JsonNullValueInput | runtime.InputJsonValue
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -1479,12 +1966,14 @@ export type ListingUncheckedUpdateManyWithoutCategoryInput = {
 
 export type ListingCountOutputType = {
   attributes: number
+  revisions: number
   orderItems: number
   reviews: number
 }
 
 export type ListingCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   attributes?: boolean | ListingCountOutputTypeCountAttributesArgs
+  revisions?: boolean | ListingCountOutputTypeCountRevisionsArgs
   orderItems?: boolean | ListingCountOutputTypeCountOrderItemsArgs
   reviews?: boolean | ListingCountOutputTypeCountReviewsArgs
 }
@@ -1504,6 +1993,13 @@ export type ListingCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Exte
  */
 export type ListingCountOutputTypeCountAttributesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.ListingAttributeWhereInput
+}
+
+/**
+ * ListingCountOutputType without action
+ */
+export type ListingCountOutputTypeCountRevisionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ListingRevisionWhereInput
 }
 
 /**
@@ -1531,6 +2027,12 @@ export type ListingSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   price?: boolean
   currency?: boolean
   quantity?: boolean
+  platform?: boolean
+  region?: boolean
+  deliveryType?: boolean
+  deliveryEstimate?: boolean
+  expiresAt?: boolean
+  reviewNote?: boolean
   status?: boolean
   images?: boolean
   publishedAt?: boolean
@@ -1540,6 +2042,7 @@ export type ListingSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   game?: boolean | Prisma.GameDefaultArgs<ExtArgs>
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   attributes?: boolean | Prisma.Listing$attributesArgs<ExtArgs>
+  revisions?: boolean | Prisma.Listing$revisionsArgs<ExtArgs>
   orderItems?: boolean | Prisma.Listing$orderItemsArgs<ExtArgs>
   reviews?: boolean | Prisma.Listing$reviewsArgs<ExtArgs>
   _count?: boolean | Prisma.ListingCountOutputTypeDefaultArgs<ExtArgs>
@@ -1555,6 +2058,12 @@ export type ListingSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   price?: boolean
   currency?: boolean
   quantity?: boolean
+  platform?: boolean
+  region?: boolean
+  deliveryType?: boolean
+  deliveryEstimate?: boolean
+  expiresAt?: boolean
+  reviewNote?: boolean
   status?: boolean
   images?: boolean
   publishedAt?: boolean
@@ -1575,6 +2084,12 @@ export type ListingSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   price?: boolean
   currency?: boolean
   quantity?: boolean
+  platform?: boolean
+  region?: boolean
+  deliveryType?: boolean
+  deliveryEstimate?: boolean
+  expiresAt?: boolean
+  reviewNote?: boolean
   status?: boolean
   images?: boolean
   publishedAt?: boolean
@@ -1595,6 +2110,12 @@ export type ListingSelectScalar = {
   price?: boolean
   currency?: boolean
   quantity?: boolean
+  platform?: boolean
+  region?: boolean
+  deliveryType?: boolean
+  deliveryEstimate?: boolean
+  expiresAt?: boolean
+  reviewNote?: boolean
   status?: boolean
   images?: boolean
   publishedAt?: boolean
@@ -1602,12 +2123,13 @@ export type ListingSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ListingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sellerId" | "gameId" | "categoryId" | "title" | "description" | "price" | "currency" | "quantity" | "status" | "images" | "publishedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["listing"]>
+export type ListingOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sellerId" | "gameId" | "categoryId" | "title" | "description" | "price" | "currency" | "quantity" | "platform" | "region" | "deliveryType" | "deliveryEstimate" | "expiresAt" | "reviewNote" | "status" | "images" | "publishedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["listing"]>
 export type ListingInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   seller?: boolean | Prisma.SellerProfileDefaultArgs<ExtArgs>
   game?: boolean | Prisma.GameDefaultArgs<ExtArgs>
   category?: boolean | Prisma.CategoryDefaultArgs<ExtArgs>
   attributes?: boolean | Prisma.Listing$attributesArgs<ExtArgs>
+  revisions?: boolean | Prisma.Listing$revisionsArgs<ExtArgs>
   orderItems?: boolean | Prisma.Listing$orderItemsArgs<ExtArgs>
   reviews?: boolean | Prisma.Listing$reviewsArgs<ExtArgs>
   _count?: boolean | Prisma.ListingCountOutputTypeDefaultArgs<ExtArgs>
@@ -1630,6 +2152,7 @@ export type $ListingPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     game: Prisma.$GamePayload<ExtArgs>
     category: Prisma.$CategoryPayload<ExtArgs>
     attributes: Prisma.$ListingAttributePayload<ExtArgs>[]
+    revisions: Prisma.$ListingRevisionPayload<ExtArgs>[]
     orderItems: Prisma.$OrderItemPayload<ExtArgs>[]
     reviews: Prisma.$ReviewPayload<ExtArgs>[]
   }
@@ -1643,6 +2166,12 @@ export type $ListingPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     price: runtime.Decimal
     currency: string
     quantity: number
+    platform: string | null
+    region: string | null
+    deliveryType: $Enums.DeliveryType
+    deliveryEstimate: string | null
+    expiresAt: Date | null
+    reviewNote: string | null
     status: $Enums.ListingStatus
     images: runtime.JsonValue
     publishedAt: Date | null
@@ -2046,6 +2575,7 @@ export interface Prisma__ListingClient<T, Null = never, ExtArgs extends runtime.
   game<T extends Prisma.GameDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.GameDefaultArgs<ExtArgs>>): Prisma.Prisma__GameClient<runtime.Types.Result.GetResult<Prisma.$GamePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   category<T extends Prisma.CategoryDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CategoryDefaultArgs<ExtArgs>>): Prisma.Prisma__CategoryClient<runtime.Types.Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   attributes<T extends Prisma.Listing$attributesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Listing$attributesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ListingAttributePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  revisions<T extends Prisma.Listing$revisionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Listing$revisionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ListingRevisionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   orderItems<T extends Prisma.Listing$orderItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Listing$orderItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   reviews<T extends Prisma.Listing$reviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Listing$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -2086,6 +2616,12 @@ export interface ListingFieldRefs {
   readonly price: Prisma.FieldRef<"Listing", 'Decimal'>
   readonly currency: Prisma.FieldRef<"Listing", 'String'>
   readonly quantity: Prisma.FieldRef<"Listing", 'Int'>
+  readonly platform: Prisma.FieldRef<"Listing", 'String'>
+  readonly region: Prisma.FieldRef<"Listing", 'String'>
+  readonly deliveryType: Prisma.FieldRef<"Listing", 'DeliveryType'>
+  readonly deliveryEstimate: Prisma.FieldRef<"Listing", 'String'>
+  readonly expiresAt: Prisma.FieldRef<"Listing", 'DateTime'>
+  readonly reviewNote: Prisma.FieldRef<"Listing", 'String'>
   readonly status: Prisma.FieldRef<"Listing", 'ListingStatus'>
   readonly images: Prisma.FieldRef<"Listing", 'Json'>
   readonly publishedAt: Prisma.FieldRef<"Listing", 'DateTime'>
@@ -2513,6 +3049,30 @@ export type Listing$attributesArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.ListingAttributeScalarFieldEnum | Prisma.ListingAttributeScalarFieldEnum[]
+}
+
+/**
+ * Listing.revisions
+ */
+export type Listing$revisionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ListingRevision
+   */
+  select?: Prisma.ListingRevisionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ListingRevision
+   */
+  omit?: Prisma.ListingRevisionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ListingRevisionInclude<ExtArgs> | null
+  where?: Prisma.ListingRevisionWhereInput
+  orderBy?: Prisma.ListingRevisionOrderByWithRelationInput | Prisma.ListingRevisionOrderByWithRelationInput[]
+  cursor?: Prisma.ListingRevisionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ListingRevisionScalarFieldEnum | Prisma.ListingRevisionScalarFieldEnum[]
 }
 
 /**

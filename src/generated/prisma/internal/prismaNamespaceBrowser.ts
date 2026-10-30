@@ -63,6 +63,7 @@ export const ModelName = {
   CategoryField: 'CategoryField',
   Listing: 'Listing',
   ListingAttribute: 'ListingAttribute',
+  ListingRevision: 'ListingRevision',
   Order: 'Order',
   OrderItem: 'OrderItem',
   Payment: 'Payment',
@@ -253,6 +254,12 @@ export const ListingScalarFieldEnum = {
   price: 'price',
   currency: 'currency',
   quantity: 'quantity',
+  platform: 'platform',
+  region: 'region',
+  deliveryType: 'deliveryType',
+  deliveryEstimate: 'deliveryEstimate',
+  expiresAt: 'expiresAt',
+  reviewNote: 'reviewNote',
   status: 'status',
   images: 'images',
   publishedAt: 'publishedAt',
@@ -274,6 +281,18 @@ export const ListingAttributeScalarFieldEnum = {
 } as const
 
 export type ListingAttributeScalarFieldEnum = (typeof ListingAttributeScalarFieldEnum)[keyof typeof ListingAttributeScalarFieldEnum]
+
+
+export const ListingRevisionScalarFieldEnum = {
+  id: 'id',
+  listingId: 'listingId',
+  revisionNumber: 'revisionNumber',
+  changedById: 'changedById',
+  snapshot: 'snapshot',
+  createdAt: 'createdAt'
+} as const
+
+export type ListingRevisionScalarFieldEnum = (typeof ListingRevisionScalarFieldEnum)[keyof typeof ListingRevisionScalarFieldEnum]
 
 
 export const OrderScalarFieldEnum = {

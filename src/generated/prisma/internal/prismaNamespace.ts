@@ -409,6 +409,7 @@ export const ModelName = {
   CategoryField: 'CategoryField',
   Listing: 'Listing',
   ListingAttribute: 'ListingAttribute',
+  ListingRevision: 'ListingRevision',
   Order: 'Order',
   OrderItem: 'OrderItem',
   Payment: 'Payment',
@@ -437,7 +438,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "session" | "account" | "verification" | "rateLimit" | "accountProfile" | "sellerProfile" | "game" | "category" | "categoryField" | "listing" | "listingAttribute" | "order" | "orderItem" | "payment" | "delivery" | "conversation" | "message" | "review" | "dispute" | "disputeEvidence" | "ledgerEntry" | "withdrawal" | "notification" | "auditLog"
+    modelProps: "user" | "session" | "account" | "verification" | "rateLimit" | "accountProfile" | "sellerProfile" | "game" | "category" | "categoryField" | "listing" | "listingAttribute" | "listingRevision" | "order" | "orderItem" | "payment" | "delivery" | "conversation" | "message" | "review" | "dispute" | "disputeEvidence" | "ledgerEntry" | "withdrawal" | "notification" | "auditLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1326,6 +1327,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ListingAttributeCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ListingAttributeCountAggregateOutputType> | number
+        }
+      }
+    }
+    ListingRevision: {
+      payload: Prisma.$ListingRevisionPayload<ExtArgs>
+      fields: Prisma.ListingRevisionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ListingRevisionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ListingRevisionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ListingRevisionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ListingRevisionPayload>
+        }
+        findFirst: {
+          args: Prisma.ListingRevisionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ListingRevisionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ListingRevisionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ListingRevisionPayload>
+        }
+        findMany: {
+          args: Prisma.ListingRevisionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ListingRevisionPayload>[]
+        }
+        create: {
+          args: Prisma.ListingRevisionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ListingRevisionPayload>
+        }
+        createMany: {
+          args: Prisma.ListingRevisionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ListingRevisionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ListingRevisionPayload>[]
+        }
+        delete: {
+          args: Prisma.ListingRevisionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ListingRevisionPayload>
+        }
+        update: {
+          args: Prisma.ListingRevisionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ListingRevisionPayload>
+        }
+        deleteMany: {
+          args: Prisma.ListingRevisionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ListingRevisionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ListingRevisionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ListingRevisionPayload>[]
+        }
+        upsert: {
+          args: Prisma.ListingRevisionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ListingRevisionPayload>
+        }
+        aggregate: {
+          args: Prisma.ListingRevisionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateListingRevision>
+        }
+        groupBy: {
+          args: Prisma.ListingRevisionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ListingRevisionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ListingRevisionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ListingRevisionCountAggregateOutputType> | number
         }
       }
     }
@@ -2489,6 +2564,12 @@ export const ListingScalarFieldEnum = {
   price: 'price',
   currency: 'currency',
   quantity: 'quantity',
+  platform: 'platform',
+  region: 'region',
+  deliveryType: 'deliveryType',
+  deliveryEstimate: 'deliveryEstimate',
+  expiresAt: 'expiresAt',
+  reviewNote: 'reviewNote',
   status: 'status',
   images: 'images',
   publishedAt: 'publishedAt',
@@ -2510,6 +2591,18 @@ export const ListingAttributeScalarFieldEnum = {
 } as const
 
 export type ListingAttributeScalarFieldEnum = (typeof ListingAttributeScalarFieldEnum)[keyof typeof ListingAttributeScalarFieldEnum]
+
+
+export const ListingRevisionScalarFieldEnum = {
+  id: 'id',
+  listingId: 'listingId',
+  revisionNumber: 'revisionNumber',
+  changedById: 'changedById',
+  snapshot: 'snapshot',
+  createdAt: 'createdAt'
+} as const
+
+export type ListingRevisionScalarFieldEnum = (typeof ListingRevisionScalarFieldEnum)[keyof typeof ListingRevisionScalarFieldEnum]
 
 
 export const OrderScalarFieldEnum = {
@@ -2916,6 +3009,20 @@ export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMo
 
 
 /**
+ * Reference to a field of type 'DeliveryType'
+ */
+export type EnumDeliveryTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DeliveryType'>
+
+
+
+/**
+ * Reference to a field of type 'DeliveryType[]'
+ */
+export type ListEnumDeliveryTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DeliveryType[]'>
+
+
+
+/**
  * Reference to a field of type 'ListingStatus'
  */
 export type EnumListingStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ListingStatus'>
@@ -3245,6 +3352,7 @@ export type GlobalOmitConfig = {
   categoryField?: Prisma.CategoryFieldOmit
   listing?: Prisma.ListingOmit
   listingAttribute?: Prisma.ListingAttributeOmit
+  listingRevision?: Prisma.ListingRevisionOmit
   order?: Prisma.OrderOmit
   orderItem?: Prisma.OrderItemOmit
   payment?: Prisma.PaymentOmit

@@ -41,10 +41,16 @@ enum CategoryFieldType {
 
 enum ListingStatus {
   DRAFT
+  PENDING_REVIEW
   ACTIVE
   PAUSED
   SOLD_OUT
   REMOVED
+}
+
+enum DeliveryType {
+  INSTANT
+  MANUAL
 }
 
 enum OrderStatus {
@@ -151,6 +157,7 @@ model User {
   submittedEvidence   DisputeEvidence[]
   notifications       Notification[]
   auditLogs           AuditLog[]        @relation("AuditActor")
+  listingRevisions    ListingRevision[]
 
   @@index([role])
   @@map("user")
@@ -305,30 +312,38 @@ model CategoryField {
 }
 
 model Listing {
-  id          String             @id @default(cuid())
-  sellerId    String
-  gameId      String
-  categoryId  String
-  title       String
-  description String
-  price       Decimal            @db.Decimal(12, 2)
-  currency    String             @default("USD") @db.Char(3)
-  quantity    Int                @default(1)
-  status      ListingStatus      @default(DRAFT)
-  images      Json               @default("[]")
-  publishedAt DateTime?
-  createdAt   DateTime           @default(now())
-  updatedAt   DateTime           @updatedAt
-  seller      SellerProfile      @relation(fields: [sellerId], references: [id], onDelete: Restrict)
-  game        Game               @relation(fields: [gameId], references: [id], onDelete: Restrict)
-  category    Category           @relation(fields: [categoryId, gameId], references: [id, gameId], onDelete: Restrict)
-  attributes  ListingAttribute[]
-  orderItems  OrderItem[]
-  reviews     Review[]
+  id               String             @id @default(cuid())
+  sellerId         String
+  gameId           String
+  categoryId       String
+  title            String
+  description      String
+  price            Decimal            @db.Decimal(12, 2)
+  currency         String             @default("USD") @db.Char(3)
+  quantity         Int                @default(1)
+  platform         String?
+  region           String?
+  deliveryType     DeliveryType       @default(MANUAL)
+  deliveryEstimate String?
+  expiresAt        DateTime?
+  reviewNote       String?
+  status           ListingStatus      @default(DRAFT)
+  images           Json               @default("[]")
+  publishedAt      DateTime?
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  seller           SellerProfile      @relation(fields: [sellerId], references: [id], onDelete: Restrict)
+  game             Game               @relation(fields: [gameId], references: [id], onDelete: Restrict)
+  category         Category           @relation(fields: [categoryId, gameId], references: [id, gameId], onDelete: Restrict)
+  attributes       ListingAttribute[]
+  revisions        ListingRevision[]
+  orderItems       OrderItem[]
+  reviews          Review[]
 
   @@index([gameId, categoryId, status, publishedAt])
   @@index([sellerId, status, createdAt])
   @@index([status, price])
+  @@index([status, expiresAt])
 }
 
 model ListingAttribute {
@@ -343,6 +358,20 @@ model ListingAttribute {
 
   @@unique([listingId, key])
   @@index([key])
+}
+
+model ListingRevision {
+  id             String   @id @default(cuid())
+  listingId      String
+  revisionNumber Int
+  changedById    String
+  snapshot       Json
+  createdAt      DateTime @default(now())
+  listing        Listing  @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  changedBy      User     @relation(fields: [changedById], references: [id], onDelete: Restrict)
+
+  @@index([listingId, revisionNumber])
+  @@index([changedById, createdAt])
 }
 
 model Order {

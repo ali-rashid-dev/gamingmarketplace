@@ -41,7 +41,28 @@ Individual offers are at `/offers/[offerId]`; approved seller shops are at
 at `/help`, `/policies`, `/contact`, and `/sell`.
 
 Only active listings attached to published games, visible categories, and
-approved sellers are shown publicly.
+approved sellers are shown publicly. Offers with an expiration date are hidden
+once that date passes.
+
+## Seller listings
+
+Approved sellers manage drafts and offers at `/seller/listings`. The listing
+editor uses the published game catalog, configured category fields and
+platforms, validated image uploads, delivery details, and optional expiration.
+Submitting a listing sends it to `/admin/listings` for moderation; only approved
+offers become visible on the storefront. Editing listing details requires a new
+review, while price and quantity updates are available from the seller listing
+dashboard. A quantity of zero marks an offer sold out.
+
+Listing revisions are retained for seller edits, availability changes,
+moderation, and removal. Removed listings are hidden from seller and buyer
+views while their order and revision history remains available to the system.
+Account passwords, recovery codes, and other account credentials are not
+accepted in listing descriptions or category attributes. Secure credential
+handover is not currently supported.
+
+Apply the seller listing database migration with
+`pnpm exec prisma migrate dev` before using seller listings or moderation.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 

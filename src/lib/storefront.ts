@@ -3,13 +3,17 @@ import type { Prisma } from "@/generated/prisma/client";
 import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
 
-const publicListingWhere: Prisma.ListingWhereInput = {
-  status: ListingStatus.ACTIVE,
-  publishedAt: { not: null },
-  game: { status: GameStatus.PUBLISHED },
-  category: { isActive: true },
-  seller: { status: SellerStatus.APPROVED },
-};
+function publicListingWhere(): Prisma.ListingWhereInput {
+  return {
+    status: ListingStatus.ACTIVE,
+    publishedAt: { not: null },
+    quantity: { gt: 0 },
+    OR: [{ expiresAt: null }, { expiresAt: { gt: new Date() } }],
+    game: { status: GameStatus.PUBLISHED },
+    category: { isActive: true },
+    seller: { status: SellerStatus.APPROVED },
+  };
+}
 
 const publicListingInclude = {
   game: { select: { name: true, slug: true, logoUrl: true } },
@@ -23,6 +27,7 @@ export type StorefrontOffer = Prisma.ListingGetPayload<{
 }>;
 
 export async function getFeaturedGames() {
+  const visibleListings = publicListingWhere();
   return prisma.game.findMany({
     where: {
       status: GameStatus.PUBLISHED,
@@ -39,7 +44,7 @@ export async function getFeaturedGames() {
       },
       _count: {
         select: {
-          listings: { where: publicListingWhere },
+          listings: { where: visibleListings },
         },
       },
     },
@@ -53,7 +58,7 @@ export async function getOffers(
   skip = 0
 ): Promise<StorefrontOffer[]> {
   return prisma.listing.findMany({
-    where: { AND: [publicListingWhere, where] },
+    where: { AND: [publicListingWhere(), where] },
     include: publicListingInclude,
     orderBy:
       sort === "popular"
@@ -65,6 +70,7 @@ export async function getOffers(
 }
 
 export async function getPublishedGames(search?: string) {
+  const visibleListings = publicListingWhere();
   const query = search?.trim();
   return prisma.game.findMany({
     where: {
@@ -96,7 +102,7 @@ export async function getPublishedGames(search?: string) {
       },
       _count: {
         select: {
-          listings: { where: publicListingWhere },
+          listings: { where: visibleListings },
         },
       },
     },
@@ -104,6 +110,7 @@ export async function getPublishedGames(search?: string) {
 }
 
 export async function getGameBySlug(slug: string) {
+  const visibleListings = publicListingWhere();
   const game = await prisma.game.findFirst({
     where: { slug, status: GameStatus.PUBLISHED },
     include: {
@@ -112,7 +119,7 @@ export async function getGameBySlug(slug: string) {
         orderBy: { name: "asc" },
         include: {
           _count: {
-            select: { listings: { where: publicListingWhere } },
+            select: { listings: { where: visibleListings } },
           },
         },
       },
@@ -123,6 +130,7 @@ export async function getGameBySlug(slug: string) {
 }
 
 export async function getCategoryBySlugs(gameSlug: string, categorySlug: string) {
+  const visibleListings = publicListingWhere();
   const category = await prisma.category.findFirst({
     where: {
       slug: categorySlug,
@@ -132,7 +140,7 @@ export async function getCategoryBySlugs(gameSlug: string, categorySlug: string)
     include: {
       game: { select: { name: true, slug: true, description: true } },
       _count: {
-        select: { listings: { where: publicListingWhere } },
+        select: { listings: { where: visibleListings } },
       },
     },
   });
@@ -141,8 +149,9 @@ export async function getCategoryBySlugs(gameSlug: string, categorySlug: string)
 }
 
 export async function getOfferById(id: string) {
+  const visibleListings = publicListingWhere();
   const offer = await prisma.listing.findFirst({
-    where: { AND: [publicListingWhere, { id }] },
+    where: { AND: [visibleListings, { id }] },
     include: {
       ...publicListingInclude,
       attributes: { orderBy: { key: "asc" } },
@@ -153,7 +162,7 @@ export async function getOfferById(id: string) {
           description: true,
           verifiedAt: true,
           _count: {
-            select: { listings: { where: publicListingWhere } },
+            select: { listings: { where: visibleListings } },
           },
         },
       },
