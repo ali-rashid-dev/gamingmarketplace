@@ -101,6 +101,13 @@ listing descriptions or messages.
 Apply the `20261030233000_seller_availability` migration along with the seller
 listing and search migrations before enabling the seller dashboard.
 
+## Demo marketplace data
+
+Run `pnpm exec prisma db seed` to idempotently create the demo seller, games,
+categories, and clearly labeled, non-redeemable sample listings. The seed uses
+reserved `.invalid` email addresses and fixed `seed-` record identifiers. It
+does not create buyer orders, payments, or real credentials.
+
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ## Learn More
