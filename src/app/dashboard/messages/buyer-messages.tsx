@@ -61,10 +61,10 @@ function ConversationCard({
   }
 
   return (
-    <article className="rounded-xl border border-border bg-card p-5">
+    <article className="min-w-0 rounded-xl border border-border bg-card p-4 sm:p-5">
       <div className="flex flex-wrap items-start justify-between gap-3">
-        <div>
-          <h2 className="font-semibold">{conversation.seller.name}</h2>
+        <div className="min-w-0">
+          <h2 className="break-words font-semibold">{conversation.seller.name}</h2>
           <p className="mt-1 text-xs text-muted-foreground">{conversation.order?.orderNumber ?? "Seller conversation"}</p>
         </div>
         {unread && (
@@ -77,12 +77,14 @@ function ConversationCard({
         {conversation.messages.length ? conversation.messages.map((message) => (
           <div
             key={message.id}
-            className={`max-w-[92%] rounded-lg border border-border px-4 py-3 ${
+            className={`max-w-[92%] break-words rounded-lg border border-border px-3 py-3 sm:px-4 ${
               message.senderId === buyerId ? "ml-auto bg-secondary/60" : "bg-background"
             }`}
           >
-            <p className="whitespace-pre-wrap text-sm leading-6">{message.body}</p>
-            <time className="mt-2 block text-[10px] text-muted-foreground">{message.createdAt.toLocaleString()}</time>
+            <p className="whitespace-pre-wrap break-words text-sm leading-6">{message.body}</p>
+            <time className="mt-2 block text-[10px] text-muted-foreground">
+              {message.createdAt.toLocaleString("en-US", { timeZone: "UTC" })}
+            </time>
           </div>
         )) : <p className="text-sm text-muted-foreground">No messages in this conversation yet.</p>}
       </div>
@@ -117,7 +119,7 @@ export function BuyerMessages({
 }) {
   if (!conversations.length) {
     return (
-      <p className="mt-6 rounded-xl border border-dashed border-border p-8 text-center text-sm text-muted-foreground">
+      <p className="mt-6 rounded-xl border border-dashed border-border p-5 text-center text-sm text-muted-foreground sm:p-8">
         Your buyer–seller conversations will appear here.
       </p>
     );

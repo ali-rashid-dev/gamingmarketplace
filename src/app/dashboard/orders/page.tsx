@@ -35,7 +35,7 @@ export default async function BuyerOrdersPage({ searchParams }: Props) {
   return (
     <div>
       <p className="text-xs font-semibold uppercase tracking-[0.18em] text-patina">Purchases</p>
-      <h1 className="mt-2 font-display text-3xl font-semibold">My orders</h1>
+      <h1 className="mt-2 break-words font-display text-3xl font-semibold">My orders</h1>
       <p className="mt-2 text-sm text-muted-foreground">Review order status, delivery, and seller details.</p>
 
       <form className="mt-6 flex flex-col gap-3 sm:flex-row">
@@ -46,14 +46,17 @@ export default async function BuyerOrdersPage({ searchParams }: Props) {
           className="min-h-10 flex-1 rounded-lg border border-border bg-card px-3 text-sm outline-none focus:border-gold"
         />
         {selected !== "ALL" && <input type="hidden" name="status" value={selected} />}
-        <button className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground">Search orders</button>
+        <button className="min-h-10 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground sm:shrink-0">Search orders</button>
       </form>
 
       <nav aria-label="Filter orders" className="mt-4 flex gap-2 overflow-x-auto pb-2">
         {filters.map((filter) => (
           <Link
             key={filter.value}
-            href={`/dashboard/orders${filter.value === "ALL" ? "" : `?status=${filter.value}`}`}
+            href={`/dashboard/orders?${new URLSearchParams({
+              ...(filter.value === "ALL" ? {} : { status: filter.value }),
+              ...(params.q ? { q: params.q } : {}),
+            }).toString()}`}
             aria-current={selected === filter.value ? "page" : undefined}
             className={`shrink-0 rounded-full border px-3 py-1.5 text-xs font-medium ${
               selected === filter.value
@@ -69,11 +72,11 @@ export default async function BuyerOrdersPage({ searchParams }: Props) {
       {orders.length ? (
         <div className="mt-4 space-y-3">
           {orders.map((order) => (
-            <article key={order.id} className="rounded-xl border border-border bg-card p-5">
+            <article key={order.id} className="rounded-xl border border-border bg-card p-4 sm:p-5">
               <div className="flex flex-wrap items-start justify-between gap-3">
-                <div>
+                <div className="min-w-0 flex-1">
                   <p className="text-xs text-muted-foreground">{order.orderNumber} · {order.placedAt.toLocaleDateString()}</p>
-                  <h2 className="mt-1 font-semibold">{order.items[0]?.listingTitle ?? "Order"}</h2>
+                  <h2 className="mt-1 break-words font-semibold">{order.items[0]?.listingTitle ?? "Order"}</h2>
                   {order.items.length > 1 && <p className="mt-1 text-xs text-muted-foreground">and {order.items.length - 1} more item(s)</p>}
                 </div>
                 <div className="text-right">
@@ -93,7 +96,7 @@ export default async function BuyerOrdersPage({ searchParams }: Props) {
           ))}
         </div>
       ) : (
-        <p className="mt-5 rounded-xl border border-dashed border-border p-8 text-center text-sm text-muted-foreground">
+        <p className="mt-5 rounded-xl border border-dashed border-border p-5 text-center text-sm text-muted-foreground sm:p-8">
           No orders match this filter. <Link href="/offers" className="font-semibold text-gold hover:underline">Browse offers</Link>
         </p>
       )}

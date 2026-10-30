@@ -15,7 +15,7 @@ export function DashboardLogout() {
           },
         })
       }
-      className="rounded-md border border-border px-3 py-2 text-sm text-muted-foreground transition hover:border-gold/40 hover:text-foreground"
+      className="min-h-10 rounded-md border border-border px-3 py-2 text-xs text-muted-foreground transition hover:border-gold/40 hover:text-foreground sm:text-sm"
     >
       Sign out
     </button>

@@ -50,15 +50,15 @@ export function NotificationList({ notifications }: { notifications: Notificatio
         const content = (
           <>
             <div className="flex items-start justify-between gap-3">
-              <h2 className="font-semibold">{notification.title}</h2>
+              <h2 className="break-words font-semibold">{notification.title}</h2>
               {!notification.readAt && <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-gold" aria-label="Unread" />}
             </div>
-            <p className="mt-2 text-sm leading-6 text-muted-foreground">{notification.body}</p>
+            <p className="mt-2 break-words text-sm leading-6 text-muted-foreground">{notification.body}</p>
             <time className="mt-3 block text-[11px] text-muted-foreground">{notification.createdAt.toLocaleString()}</time>
           </>
         );
         return (
-          <article key={notification.id} className={`rounded-xl border bg-card p-5 ${notification.readAt ? "border-border" : "border-gold/30"}`}>
+          <article key={notification.id} className={`min-w-0 rounded-xl border bg-card p-4 sm:p-5 ${notification.readAt ? "border-border" : "border-gold/30"}`}>
             {href ? <Link href={href} className="block hover:text-gold">{content}</Link> : content}
             {!notification.readAt && (
               <button type="button" disabled={busy} onClick={() => markRead(notification.id)} className="mt-3 text-xs font-semibold text-gold hover:underline disabled:opacity-50">

@@ -28,7 +28,7 @@ export default async function BuyerWishlistPage() {
           })}
         </div>
       ) : (
-        <p className="mt-6 rounded-xl border border-dashed border-border p-8 text-center text-sm text-muted-foreground">
+        <p className="mt-6 rounded-xl border border-dashed border-border p-5 text-center text-sm text-muted-foreground sm:p-8">
           No saved offers yet. You can save listings from offer details.
         </p>
       )}

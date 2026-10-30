@@ -34,14 +34,14 @@ export default async function BuyerDashboardLayout({
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header className="border-b border-border bg-card/80">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-4 sm:px-8">
-          <div>
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-3 sm:flex-nowrap sm:gap-4 sm:px-8 sm:py-4">
+          <div className="min-w-0">
             <Link href="/dashboard" className="font-display text-lg font-semibold">
               GameTrade <span className="text-gold">Account</span>
             </Link>
-            <p className="mt-0.5 text-xs text-muted-foreground">{user.name}</p>
+            <p className="mt-0.5 truncate text-xs text-muted-foreground">{user.name}</p>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="ml-auto flex max-w-full flex-wrap items-center justify-end gap-2">
             {user.role === "SELLER" && (
               <Link
                 href="/seller"
@@ -72,16 +72,16 @@ export default async function BuyerDashboardLayout({
         <aside>
           <nav
             aria-label="Account navigation"
-            className="flex gap-2 overflow-x-auto pb-2 lg:sticky lg:top-6 lg:grid lg:gap-1 lg:overflow-visible lg:pb-0"
+            className="grid grid-cols-2 gap-2 pb-2 sm:grid-cols-3 md:grid-cols-4 lg:sticky lg:top-6 lg:grid-cols-1 lg:gap-1 lg:pb-0"
           >
             {navigation.map(({ href, label, icon: Icon }) => (
               <Link
                 key={href}
                 href={href}
-                className="inline-flex shrink-0 items-center gap-2 rounded-lg border border-border px-3 py-2 text-xs font-medium text-muted-foreground transition hover:border-gold/40 hover:bg-card hover:text-foreground lg:border-transparent lg:px-3 lg:text-sm"
+                className="inline-flex min-w-0 items-center gap-2 rounded-lg border border-border px-2.5 py-2 text-left text-xs font-medium text-muted-foreground transition hover:border-gold/40 hover:bg-card hover:text-foreground sm:px-3 lg:border-transparent lg:text-sm"
               >
-                <Icon aria-hidden="true" className="h-4 w-4 text-gold" />
-                {label}
+                <Icon aria-hidden="true" className="h-4 w-4 shrink-0 text-gold" />
+                <span className="truncate">{label}</span>
               </Link>
             ))}
           </nav>
@@ -89,7 +89,7 @@ export default async function BuyerDashboardLayout({
             Keep order communication and support requests on GameTrade. Never share passwords or recovery codes.
           </p>
         </aside>
-        <main className="min-w-0">{children}</main>
+        <main className="min-w-0 max-w-full">{children}</main>
       </div>
     </div>
   );

@@ -137,25 +137,37 @@ export async function startBuyerConversation(
       category: { isActive: true },
       seller: { status: "APPROVED", isAvailable: true },
     },
-    select: { id: true, seller: { select: { userId: true } } },
+    select: { id: true, title: true, seller: { select: { userId: true } } },
   });
   if (!listing) return { success: false, error: "This offer is no longer available" };
   if (listing.seller.userId === user.id) {
     return { success: false, error: "You cannot message yourself about your own offer" };
   }
   const conversation = await prisma.$transaction(async (transaction) => {
-    const created = await transaction.conversation.create({
+    const existing = await transaction.conversation.findFirst({
+      where: {
+        buyerId: user.id,
+        sellerId: listing.seller.userId,
+        orderId: null,
+      },
+      select: { id: true },
+    });
+    const target = existing ?? await transaction.conversation.create({
       data: { buyerId: user.id, sellerId: listing.seller.userId },
       select: { id: true },
     });
     await transaction.message.create({
       data: {
-        conversationId: created.id,
+        conversationId: target.id,
         senderId: user.id,
-        body: body.data,
+        body: `Regarding ${listing.title} (${listing.id}):\n\n${body.data}`,
       },
     });
-    return created;
+    await transaction.conversation.update({
+      where: { id: target.id },
+      data: { updatedAt: new Date() },
+    });
+    return target;
   });
   revalidatePath("/dashboard/messages");
   return { success: true, data: { conversationId: conversation.id } };
@@ -486,7 +498,7 @@ export async function replyToBuyerSupportTicket(
 export async function revokeBuyerOtherSessions(): Promise<ActionResult<{ revoked: true }>> {
   await requirePageSession();
   const result = await auth.api.revokeOtherSessions({ headers: await headers() });
-  if (result?.status) return { success: false, error: "Unable to revoke other sessions" };
+  if (!result?.status) return { success: false, error: "Unable to revoke other sessions" };
   revalidatePath("/dashboard/security");
   return { success: true, data: { revoked: true } };
 }

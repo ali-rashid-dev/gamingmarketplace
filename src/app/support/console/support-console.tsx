@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { createSupportAgentReply, updateSupportTicketStatus } from "@/app/dashboard/actions";
@@ -21,7 +22,17 @@ type Ticket = {
   }[];
 };
 
-export function SupportConsole({ tickets }: { tickets: Ticket[] }) {
+export function SupportConsole({
+  tickets,
+  page,
+  pageCount,
+  totalCount,
+}: {
+  tickets: Ticket[];
+  page: number;
+  pageCount: number;
+  totalCount: number;
+}) {
   const router = useRouter();
   const [replies, setReplies] = useState<Record<string, string>>({});
   const [error, setError] = useState("");
@@ -55,6 +66,7 @@ export function SupportConsole({ tickets }: { tickets: Ticket[] }) {
       <p className="text-xs font-semibold uppercase tracking-[0.18em] text-patina">Support operations</p>
       <h1 className="mt-2 font-display text-3xl font-semibold">Support tickets</h1>
       <p className="mt-2 text-sm text-muted-foreground">Buyer requests and conversation history.</p>
+      <p className="mt-2 text-xs text-muted-foreground">{totalCount} total tickets · Page {page} of {pageCount}</p>
       {error && <p role="alert" className="mt-4 text-sm text-destructive">{error}</p>}
       {tickets.length ? (
         <div className="mt-6 space-y-4">
@@ -91,6 +103,20 @@ export function SupportConsole({ tickets }: { tickets: Ticket[] }) {
           ))}
         </div>
       ) : <p className="mt-6 rounded-xl border border-dashed border-border p-8 text-sm text-muted-foreground">No support tickets are waiting.</p>}
+      {pageCount > 1 && (
+        <nav aria-label="Support ticket pages" className="mt-6 flex items-center justify-between gap-4">
+          {page > 1 ? (
+            <Link href={`/support/console?page=${page - 1}`} className="rounded-lg border border-border px-4 py-2 text-sm hover:bg-muted">
+              Previous
+            </Link>
+          ) : <span />}
+          {page < pageCount && (
+            <Link href={`/support/console?page=${page + 1}`} className="ml-auto rounded-lg border border-border px-4 py-2 text-sm hover:bg-muted">
+              Next
+            </Link>
+          )}
+        </nav>
+      )}
     </div>
   );
 }

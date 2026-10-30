@@ -68,7 +68,7 @@ export function ProfileForm({ profile }: { profile: Profile }) {
       </label>
       <div>
         <p className="text-xs font-medium text-muted-foreground">Email</p>
-        <p className="mt-1.5 rounded-lg border border-border bg-secondary/60 px-3 py-2.5 text-sm">{profile.email}</p>
+        <p className="mt-1.5 break-all rounded-lg border border-border bg-secondary/60 px-3 py-2.5 text-sm">{profile.email}</p>
         <p className="mt-1.5 text-[11px] text-muted-foreground">
           {profile.emailVerified ? "Verified" : "Not verified"} · Email changes require verification and aren’t available here yet.
         </p>
@@ -107,7 +107,7 @@ export function ProfileForm({ profile }: { profile: Profile }) {
       </div>
       {error && <p role="alert" className="text-sm text-destructive">{error}</p>}
       {saved && <p role="status" className="text-sm text-patina">Profile updated.</p>}
-      <button disabled={busy} className="rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground disabled:opacity-50">
+      <button disabled={busy} className="min-h-10 w-full rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground disabled:opacity-50 sm:w-auto">
         {busy ? "Saving…" : "Save profile"}
       </button>
     </form>

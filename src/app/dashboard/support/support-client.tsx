@@ -89,8 +89,8 @@ export function SupportClient({
     });
   }
   return (
-    <div className="mt-6 grid gap-5 xl:grid-cols-[0.8fr_1.2fr]">
-      <form onSubmit={submit} className="h-fit rounded-xl border border-border bg-card p-5">
+    <div className="mt-6 grid min-w-0 gap-4 sm:gap-5 xl:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
+      <form onSubmit={submit} className="h-fit min-w-0 rounded-xl border border-border bg-card p-4 sm:p-5">
         <h2 className="font-display text-xl font-semibold">Open a support ticket</h2>
         <p className="mt-1 text-xs leading-5 text-muted-foreground">For order problems, include the order reference. Support tickets aren’t formal payment disputes.</p>
         <label className="mt-4 block text-xs text-muted-foreground">
@@ -108,26 +108,26 @@ export function SupportClient({
         <p className="mt-2 text-[11px] text-muted-foreground">Never include passwords, payment credentials, or recovery codes.</p>
         {error && <p role="alert" className="mt-3 text-sm text-destructive">{error}</p>}
         {created && <p role="status" className="mt-3 text-sm text-patina">Ticket created.</p>}
-        <button disabled={busy} className="mt-4 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground disabled:opacity-50">{busy ? "Opening…" : "Open ticket"}</button>
+        <button disabled={busy} className="mt-4 min-h-10 w-full rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground disabled:opacity-50 sm:w-auto">{busy ? "Opening…" : "Open ticket"}</button>
       </form>
 
-      <section>
+      <section className="min-w-0">
         <h2 className="font-display text-xl font-semibold">Your support tickets</h2>
         {tickets.length ? (
           <div className="mt-4 space-y-4">
             {tickets.map((ticket) => (
-              <article key={ticket.id} className="rounded-xl border border-border bg-card p-5">
+              <article key={ticket.id} className="min-w-0 rounded-xl border border-border bg-card p-4 sm:p-5">
                 <div className="flex flex-wrap justify-between gap-2">
-                  <div>
-                    <h3 className="font-semibold">{ticket.subject}</h3>
+                  <div className="min-w-0 flex-1">
+                    <h3 className="break-words font-semibold">{ticket.subject}</h3>
                     <p className="mt-1 text-xs text-muted-foreground">{ticket.order?.orderNumber ? `Order ${ticket.order.orderNumber} · ` : ""}Opened {ticket.createdAt.toLocaleDateString()}</p>
                   </div>
                   <span className="h-fit rounded-full border border-border px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-gold">{ticket.status.toLowerCase().replaceAll("_", " ")}</span>
                 </div>
                 <div className="mt-4 space-y-3">
                   {ticket.messages.map((entry) => (
-                    <div key={entry.id} className={`rounded-lg border border-border p-3 ${entry.senderId === buyerId ? "bg-secondary/50" : "bg-background"}`}>
-                      <p className="whitespace-pre-wrap text-sm leading-6">{entry.body}</p>
+                    <div key={entry.id} className={`break-words rounded-lg border border-border p-3 ${entry.senderId === buyerId ? "bg-secondary/50" : "bg-background"}`}>
+                      <p className="whitespace-pre-wrap break-words text-sm leading-6">{entry.body}</p>
                       <time className="mt-2 block text-[10px] text-muted-foreground">{entry.createdAt.toLocaleString()}</time>
                     </div>
                   ))}

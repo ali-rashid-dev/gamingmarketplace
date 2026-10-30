@@ -16,6 +16,9 @@ export function ReviewForm({
   const [error, setError] = useState("");
   const [saved, setSaved] = useState(false);
   const [busy, startTransition] = useTransition();
+  const selectedOrderItemId = eligibleItems.some((item) => item.id === orderItemId)
+    ? orderItemId
+    : eligibleItems[0]?.id ?? "";
 
   function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -23,7 +26,7 @@ export function ReviewForm({
     setSaved(false);
     startTransition(async () => {
       try {
-        const result = await submitBuyerReview({ orderItemId, rating: Number(rating), comment });
+        const result = await submitBuyerReview({ orderItemId: selectedOrderItemId, rating: Number(rating), comment });
         if (!result.success) throw new Error(result.error);
         setSaved(true);
         setComment("");
@@ -35,12 +38,12 @@ export function ReviewForm({
   }
 
   return (
-    <form onSubmit={submit} className="rounded-xl border border-border bg-card p-5">
+    <form onSubmit={submit} className="min-w-0 rounded-xl border border-border bg-card p-4 sm:p-5">
       <h2 className="font-display text-xl font-semibold">Review a purchase</h2>
       <p className="mt-1 text-xs text-muted-foreground">Only completed orders are eligible. One review per purchase.</p>
       <label className="mt-4 block text-xs text-muted-foreground">
         Completed purchase
-        <select value={orderItemId} onChange={(event) => setOrderItemId(event.target.value)} className="mt-2 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground">
+        <select value={selectedOrderItemId} onChange={(event) => setOrderItemId(event.target.value)} className="mt-2 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground">
           {eligibleItems.map((item) => (
             <option key={item.id} value={item.id}>{item.listingTitle} · {item.order.orderNumber}</option>
           ))}
@@ -58,7 +61,7 @@ export function ReviewForm({
       </label>
       {error && <p role="alert" className="mt-3 text-sm text-destructive">{error}</p>}
       {saved && <p role="status" className="mt-3 text-sm text-patina">Review submitted.</p>}
-      <button disabled={busy || !orderItemId} className="mt-4 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground disabled:opacity-50">
+      <button disabled={busy || !selectedOrderItemId} className="mt-4 min-h-10 w-full rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground disabled:opacity-50 sm:w-auto">
         {busy ? "Submitting…" : "Submit review"}
       </button>
     </form>

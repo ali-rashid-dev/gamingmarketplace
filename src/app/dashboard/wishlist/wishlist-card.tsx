@@ -41,11 +41,11 @@ export function WishlistCard({
   const content = (
     <>
       <div className="flex items-start justify-between gap-3">
-        <div>
+        <div className="min-w-0 flex-1">
           <p className="text-xs text-muted-foreground">{item.listing.game.name} · {item.listing.category.name}</p>
-          <h2 className="mt-1 font-semibold">{item.listing.title}</h2>
+          <h2 className="mt-1 break-words font-semibold">{item.listing.title}</h2>
         </div>
-        <p className="shrink-0 text-sm font-semibold">
+        <p className="max-w-[40%] shrink-0 text-right text-sm font-semibold">
           {new Intl.NumberFormat("en", { style: "currency", currency: item.listing.currency }).format(Number(item.listing.price))}
         </p>
       </div>
@@ -53,7 +53,7 @@ export function WishlistCard({
     </>
   );
   return (
-    <article className="rounded-xl border border-border bg-card p-5">
+    <article className="min-w-0 rounded-xl border border-border bg-card p-4 sm:p-5">
       {available ? <Link href={`/offers/${item.listing.id}`} className="block hover:text-gold">{content}</Link> : <div className="opacity-75">{content}</div>}
       {error && <p role="alert" className="mt-3 text-xs text-destructive">{error}</p>}
       <button type="button" onClick={remove} disabled={busy} className="mt-4 inline-flex items-center gap-2 text-xs font-semibold text-muted-foreground hover:text-destructive disabled:opacity-50">

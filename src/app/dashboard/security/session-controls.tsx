@@ -34,14 +34,14 @@ export function SessionControls({ sessions }: { sessions: SessionInfo[] }) {
     });
   }
   return (
-    <section className="mt-6 rounded-xl border border-border bg-card p-5 sm:p-6">
+    <section className="mt-6 rounded-xl border border-border bg-card p-4 sm:p-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <h2 className="font-display text-xl font-semibold">Active sessions</h2>
           <p className="mt-1 text-xs text-muted-foreground">Sign out other devices while keeping this session active.</p>
         </div>
         {sessions.some((session) => !session.current) && (
-          <button type="button" disabled={busy} onClick={revoke} className="rounded-lg border border-border px-3 py-2 text-xs font-semibold hover:border-gold/40 disabled:opacity-50">
+          <button type="button" disabled={busy} onClick={revoke} className="min-h-10 rounded-lg border border-border px-3 py-2 text-xs font-semibold hover:border-gold/40 disabled:opacity-50">
             {busy ? "Signing out…" : "Sign out other sessions"}
           </button>
         )}
@@ -53,8 +53,11 @@ export function SessionControls({ sessions }: { sessions: SessionInfo[] }) {
           {sessions.map((session) => (
             <li key={session.id} className="py-3 first:pt-0 last:pb-0">
               <p className="text-sm font-medium">{session.current ? "This device" : "Signed-in device"}{session.current && <span className="ml-2 text-xs text-patina">Current</span>}</p>
-              <p className="mt-1 text-xs text-muted-foreground">{session.userAgent || "Device information unavailable"}{session.ipAddress ? ` · ${session.ipAddress}` : ""}</p>
-              <p className="mt-1 text-[11px] text-muted-foreground">Last active {session.updatedAt.toLocaleString()} · Expires {session.expiresAt.toLocaleDateString()}</p>
+              <p className="mt-1 break-words text-xs text-muted-foreground">{session.userAgent || "Device information unavailable"}{session.ipAddress ? ` · ${session.ipAddress}` : ""}</p>
+              <p className="mt-1 text-[11px] text-muted-foreground">
+                Last active {session.updatedAt.toLocaleString("en-US", { timeZone: "UTC" })} · Expires{" "}
+                {session.expiresAt.toLocaleDateString("en-US", { timeZone: "UTC" })}
+              </p>
             </li>
           ))}
         </ul>
