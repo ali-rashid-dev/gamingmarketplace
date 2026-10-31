@@ -3,10 +3,11 @@ import prisma from "@/lib/prisma";
 export default async function AuditLogsPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string }>;
+  searchParams: Promise<{ q?: string | string[] }>;
 }) {
-  const { q = "" } = await searchParams;
-  const term = q.trim();
+  const { q } = await searchParams;
+  const query = Array.isArray(q) ? q[0] ?? "" : q ?? "";
+  const term = query.trim();
   const logs = await prisma.auditLog.findMany({
     where: term
       ? {
@@ -43,7 +44,7 @@ export default async function AuditLogsPage({
       <form className="mt-5 flex max-w-xl gap-2" role="search">
         <input
           name="q"
-          defaultValue={q}
+          defaultValue={query}
           placeholder="Search action, account, or record"
           aria-label="Search audit logs"
           className="min-w-0 flex-1 rounded-md border border-border bg-background px-3 py-2 text-sm"

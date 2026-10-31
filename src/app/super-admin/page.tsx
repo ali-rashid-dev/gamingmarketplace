@@ -74,7 +74,9 @@ export default async function SuperAdminDashboardPage() {
             <div>
               <h2 className="font-display font-semibold">Database</h2>
               <CardDescription className="mt-1">
-                {metrics.databaseReady ? "Database connection is responding." : "Database probe returned an unexpected result."}
+                {metrics.databaseReady
+                  ? "Database connection and overview queries are responding."
+                  : "Database or overview data is unavailable; affected metrics may be incomplete."}
               </CardDescription>
             </div>
           </CardHeader>

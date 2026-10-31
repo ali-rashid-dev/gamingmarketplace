@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
+import Link from "next/link";
 import { reviewSellerApplication } from "../seller-actions";
 
 type SellerApplication = {
@@ -39,7 +40,7 @@ function ApplicationCard({ application }: { application: SellerApplication }) {
             {application.user.name} · {application.user.email}
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
-            Applied {application.createdAt.toLocaleDateString()}
+            Applied {application.createdAt.toLocaleDateString("en-US", { timeZone: "UTC" })}
           </p>
         </div>
         <div className="flex shrink-0 gap-2">
@@ -71,9 +72,20 @@ function ApplicationCard({ application }: { application: SellerApplication }) {
 
 export function SellerApplicationQueue({
   applications,
+  page,
+  pageSize,
+  totalApplications,
+  totalPages,
 }: {
   applications: SellerApplication[];
+  page: number;
+  pageSize: number;
+  totalApplications: number;
+  totalPages: number;
 }) {
+  const firstApplication = totalApplications === 0 ? 0 : (page - 1) * pageSize + 1;
+  const lastApplication = Math.min(page * pageSize, totalApplications);
+
   return (
     <main className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
       <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">Seller management</p>
@@ -81,6 +93,40 @@ export function SellerApplicationQueue({
       <p className="mt-2 text-sm text-muted-foreground">
         Review shop applications and approve or reject seller verification.
       </p>
+      <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
+        <p className="text-sm text-muted-foreground">
+          Showing {firstApplication}–{lastApplication} of {totalApplications} pending applications
+        </p>
+        <nav aria-label="Seller application pages" className="flex items-center gap-2">
+          {page > 1 ? (
+            <Link
+              href={`/admin/sellers?page=${page - 1}`}
+              className="rounded-md border border-border px-3 py-2 text-sm hover:bg-accent"
+            >
+              Previous
+            </Link>
+          ) : (
+            <span aria-disabled="true" className="rounded-md border border-border px-3 py-2 text-sm text-muted-foreground opacity-50">
+              Previous
+            </span>
+          )}
+          <span aria-current="page" className="px-2 text-sm tabular-nums text-muted-foreground">
+            Page {page} of {totalPages}
+          </span>
+          {page < totalPages ? (
+            <Link
+              href={`/admin/sellers?page=${page + 1}`}
+              className="rounded-md border border-border px-3 py-2 text-sm hover:bg-accent"
+            >
+              Next
+            </Link>
+          ) : (
+            <span aria-disabled="true" className="rounded-md border border-border px-3 py-2 text-sm text-muted-foreground opacity-50">
+              Next
+            </span>
+          )}
+        </nav>
+      </div>
       {applications.length ? (
         <div className="mt-6 space-y-3">
           {applications.map((application) => (
