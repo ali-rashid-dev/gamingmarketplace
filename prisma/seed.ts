@@ -96,11 +96,10 @@ const listings = [
 async function seed() {
   await prisma.user.upsert({
     where: { id: sellerUser.id },
-    update: { name: "Demo Seller", role: UserRole.SELLER, emailVerified: true },
+    update: { name: "Demo Seller", emailVerified: true },
     create: {
       ...sellerUser,
       name: "Demo Seller",
-      role: UserRole.SELLER,
       emailVerified: true,
     },
   });
@@ -122,6 +121,15 @@ async function seed() {
       status: SellerStatus.APPROVED,
       isAvailable: true,
     },
+  });
+
+  const sellerRole = await prisma.role.findUniqueOrThrow({
+    where: { key: UserRole.SELLER },
+    select: { id: true },
+  });
+  await prisma.userRoleAssignment.createMany({
+    data: { userId: sellerUser.id, roleId: sellerRole.id },
+    skipDuplicates: true,
   });
 
   for (const gameData of games) {

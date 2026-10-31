@@ -1,10 +1,10 @@
 "use server";
 
 import { Prisma } from "@/generated/prisma/client";
-import { ListingStatus, UserRole } from "@/generated/prisma/enums";
+import { ListingStatus } from "@/generated/prisma/enums";
 import { revalidatePath } from "next/cache";
 import type { ActionResult } from "@/lib/action-result";
-import { requirePageRoles } from "@/lib/authorization";
+import { requirePagePermissions } from "@/lib/authorization";
 import prisma from "@/lib/prisma";
 import { z } from "zod";
 
@@ -14,7 +14,7 @@ export async function reviewListing(
   noteInput: unknown,
   reviewedAtInput: unknown
 ): Promise<ActionResult<{ status: ListingStatus }>> {
-  const authorization = await requirePageRoles([UserRole.ADMIN, UserRole.SUPER_ADMIN]);
+  const authorization = await requirePagePermissions(["listings.moderate"]);
   const listingId = z.string().trim().min(1).max(128).safeParse(listingIdInput);
   const decision = z.enum(["approve", "return"]).safeParse(decisionInput);
   const note = z.string().trim().max(1000).safeParse(noteInput);

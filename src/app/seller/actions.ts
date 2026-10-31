@@ -3,7 +3,7 @@
 import { Prisma } from "@/generated/prisma/client";
 import { SellerStatus, UserRole } from "@/generated/prisma/enums";
 import prisma from "@/lib/prisma";
-import { requirePageSession } from "@/lib/authorization";
+import { hasAnyRole, requirePageSession } from "@/lib/authorization";
 import type { ActionResult } from "@/lib/action-result";
 import { z } from "zod";
 
@@ -49,10 +49,10 @@ export async function submitSellerApplication(
   input: unknown
 ): Promise<ActionResult<{ sellerProfile: SellerApplication }>> {
   const { user } = await requirePageSession();
-  if (user.role !== UserRole.BUYER) {
+  if (!(await hasAnyRole(user.id, [UserRole.BUYER]))) {
     return {
       success: false,
-      error: "Only buyer accounts can submit a seller application",
+      error: "A buyer role is required to submit a seller application",
     };
   }
 

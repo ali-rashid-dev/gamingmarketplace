@@ -1,14 +1,12 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {
-  NativeSelect,
-  NativeSelectOption,
-} from "@/components/ui/native-select";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import type { UserRole } from "@/generated/prisma/enums";
-import { changePrivilegedUserRole, revokeUserSessions } from "./actions";
+import { revokeUserSessions, setUserRoles } from "./actions";
 
 const roleOptions: { value: UserRole; label: string }[] = [
   { value: "BUYER", label: "Buyer" },
@@ -20,32 +18,41 @@ const roleOptions: { value: UserRole; label: string }[] = [
 
 export function UserAccessControls({
   userId,
-  role,
+  roles,
   isSelf,
 }: {
   userId: string;
-  role: UserRole;
+  roles: UserRole[];
   isSelf: boolean;
 }) {
   const router = useRouter();
-  const [selectedRole, setSelectedRole] = useState(role);
+  const [selectedRoles, setSelectedRoles] = useState(roles);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [busy, startTransition] = useTransition();
 
-  function updateRole() {
-    if (selectedRole === role || isSelf) return;
-    if (!window.confirm(`Change this account's role from ${role} to ${selectedRole}? This change will be audited.`)) return;
+  function toggleRole(role: UserRole, checked: boolean) {
+    setSelectedRoles((current) => {
+      if (checked) return current.includes(role) ? current : [...current, role];
+      return current.filter((value) => value !== role);
+    });
+  }
+
+  function updateRoles() {
+    if (isSelf || selectedRoles.length === roles.length && roles.every((role) => selectedRoles.includes(role))) return;
+    if (selectedRoles.length === 0) return;
+    if (!window.confirm(`Update this account's role assignments? The change will be audited.`)) return;
     setError("");
     setMessage("");
     startTransition(async () => {
       try {
-        const result = await changePrivilegedUserRole(userId, selectedRole);
+        const result = await setUserRoles(userId, selectedRoles);
         if (!result.success) throw new Error(result.error);
-        setMessage("Role updated and recorded in the audit log.");
+        setSelectedRoles(result.data.roles);
+        setMessage("Role assignments updated and recorded in the audit log.");
         router.refresh();
       } catch (caught) {
-        setError(caught instanceof Error ? caught.message : "Unable to update account role");
+        setError(caught instanceof Error ? caught.message : "Unable to update account roles");
       }
     });
   }
@@ -68,27 +75,32 @@ export function UserAccessControls({
 
   return (
     <div className="min-w-0">
-      <div className="flex flex-wrap items-center gap-2">
-        <NativeSelect
-          aria-label="Account role"
-          size="sm"
-          value={selectedRole}
-          disabled={busy || isSelf}
-          onChange={(event) => setSelectedRole(event.target.value as UserRole)}
-        >
-          {roleOptions.map((option) => (
-            <NativeSelectOption key={option.value} value={option.value}>
-              {option.label}
-            </NativeSelectOption>
-          ))}
-        </NativeSelect>
+      <div className="flex flex-wrap gap-x-4 gap-y-2">
+        {roleOptions.map(({ value, label }) => (
+          <Label key={value} className="text-xs">
+            <Checkbox
+              checked={selectedRoles.includes(value)}
+              disabled={busy || isSelf}
+              onCheckedChange={(checked) => toggleRole(value, checked === true)}
+              aria-label={`${label} role`}
+            />
+            {label}
+          </Label>
+        ))}
+      </div>
+      <div className="mt-3 flex flex-wrap gap-2">
         <Button
           type="button"
           size="sm"
-          disabled={busy || isSelf || selectedRole === role}
-          onClick={updateRole}
+          disabled={
+            busy ||
+            isSelf ||
+            selectedRoles.length === 0 ||
+            selectedRoles.length === roles.length && roles.every((role) => selectedRoles.includes(role))
+          }
+          onClick={updateRoles}
         >
-          Save role
+          Save roles
         </Button>
         <Button
           type="button"
@@ -100,7 +112,7 @@ export function UserAccessControls({
           Revoke sessions
         </Button>
       </div>
-      {isSelf && <p className="mt-2 text-xs text-muted-foreground">Your own privileged role and sessions cannot be changed here.</p>}
+      {isSelf && <p className="mt-2 text-xs text-muted-foreground">Your own role assignments and sessions cannot be changed here.</p>}
       {message && <p role="status" className="mt-2 text-xs text-emerald-500">{message}</p>}
       {error && <p role="alert" className="mt-2 text-xs text-destructive">{error}</p>}
     </div>

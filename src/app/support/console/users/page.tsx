@@ -28,7 +28,9 @@ export default async function SupportUsersPage({ searchParams }: Props) {
                     <CardTitle className="break-words text-base">{user.name}</CardTitle>
                     <p className="mt-1 break-all text-xs text-muted-foreground">{user.email}</p>
                   </div>
-                  <Badge variant="outline">{user.role}</Badge>
+                  <Badge variant="outline">
+                    {user.roles.map((role) => role.replaceAll("_", " ")).join(", ")}
+                  </Badge>
                 </CardHeader>
                 <CardContent>
                   <p className="text-xs text-muted-foreground">Account ID: <span className="break-all">{user.id}</span></p>

@@ -31,6 +31,29 @@ server environment to enable uploads; image URLs can also be entered directly.
 Application data mutations use authenticated Server Actions. The `/api/auth`
 route remains for Better Auth's required authentication protocol endpoints.
 
+## Roles and permissions
+
+Roles are assigned through `UserRoleAssignment`; permissions are granted through
+`RolePermission`. A database trigger assigns the Buyer role to every newly
+created user. Seller access is added only when an administrator approves the
+seller application, and server-side authorization also checks that the seller
+profile remains approved. Support and administrator roles are assigned through
+the super-admin workflow. Users cannot assign themselves roles.
+
+The initial role-permission policy is seeded by the
+`20261031200000_multi_role_rbac` migration. Role and permission assignments are
+queried server-side rather than taken from session role claims. Apply the
+migration before deploying the updated application:
+
+```bash
+pnpm exec prisma migrate deploy
+```
+
+The super-admin roles page displays the persisted role-permission matrix.
+Permission grants are currently fixed by the migration; a configurable
+permission-management UI and mandatory multi-factor authentication are not
+implemented.
+
 ## Public storefront
 
 The public storefront is server-rendered and available without an account:

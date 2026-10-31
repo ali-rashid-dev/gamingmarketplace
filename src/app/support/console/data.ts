@@ -6,7 +6,7 @@ import {
   UserRole,
 } from "@/generated/prisma/enums";
 import prisma from "@/lib/prisma";
-import { requirePageRoles } from "@/lib/authorization";
+import { getActiveRoles, requirePageRoles } from "@/lib/authorization";
 
 const supportRoles = [UserRole.SUPPORT, UserRole.ADMIN, UserRole.SUPER_ADMIN] as const;
 const activeTicketStatuses = [SupportTicketStatus.OPEN, SupportTicketStatus.IN_PROGRESS];
@@ -105,7 +105,9 @@ export async function getSupportDashboard() {
 export async function getSupportAgents() {
   await requirePageRoles(supportRoles);
   return prisma.user.findMany({
-    where: { role: UserRole.SUPPORT },
+    where: {
+      roleAssignments: { some: { role: { key: UserRole.SUPPORT } } },
+    },
     orderBy: [{ name: "asc" }, { id: "asc" }],
     select: { id: true, name: true, supportAgentProfile: { select: { isAvailable: true } } },
   });
@@ -165,7 +167,14 @@ export async function getSupportTicket(ticketId: string) {
       createdAt: true,
       updatedAt: true,
       resolvedAt: true,
-      user: { select: { id: true, name: true, email: true, role: true } },
+      user: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          roleAssignments: { select: { role: { select: { key: true } } } },
+        },
+      },
       order: {
         select: {
           id: true,
@@ -194,7 +203,13 @@ export async function getSupportTicket(ticketId: string) {
           body: true,
           isInternal: true,
           createdAt: true,
-          sender: { select: { id: true, name: true, role: true } },
+          sender: {
+            select: {
+              id: true,
+              name: true,
+              roleAssignments: { select: { role: { select: { key: true } } } },
+            },
+          },
         },
       },
     },
@@ -276,7 +291,12 @@ export async function getSupportDispute(disputeId: string) {
           url: true,
           description: true,
           createdAt: true,
-          submittedBy: { select: { name: true, role: true } },
+          submittedBy: {
+            select: {
+              name: true,
+              roleAssignments: { select: { role: { select: { key: true } } } },
+            },
+          },
         },
       },
     },
@@ -325,7 +345,7 @@ export async function searchSupportUsers(query: string) {
   await requirePageRoles(supportRoles);
   const term = query.trim().slice(0, 100);
   if (term.length < 2) return [];
-  return prisma.user.findMany({
+  const users = await prisma.user.findMany({
     where: {
       OR: [
         { email: { contains: term, mode: "insensitive" } },
@@ -339,12 +359,16 @@ export async function searchSupportUsers(query: string) {
       id: true,
       name: true,
       email: true,
-      role: true,
       createdAt: true,
       sellerProfile: { select: { shopName: true, status: true } },
       _count: { select: { orders: true, supportTickets: true } },
+      roleAssignments: { select: { role: { select: { key: true } } } },
     },
   });
+  return users.map(({ roleAssignments, ...user }) => ({
+    ...user,
+    roles: roleAssignments.map(({ role }) => role.key),
+  }));
 }
 
 export async function getSupportReports() {
@@ -368,15 +392,16 @@ export async function getSupportReports() {
 
 export async function getSupportProfile() {
   const { user } = await requirePageRoles(supportRoles);
-  const [profile, ticketCounts] = await Promise.all([
+  const [profile, ticketCounts, roles] = await Promise.all([
     prisma.supportAgentProfile.findUnique({
       where: { userId: user.id },
       select: { isAvailable: true, createdAt: true, updatedAt: true },
     }),
     prisma.supportTicket.count({ where: { assignedToId: user.id, status: { in: activeTicketStatuses } } }),
+    getActiveRoles(user.id),
   ]);
   return {
-    user: { id: user.id, name: user.name, email: user.email, role: user.role },
+    user: { id: user.id, name: user.name, email: user.email, role: roles.join(", ") },
     isAvailable: profile?.isAvailable ?? true,
     assignedOpenTickets: ticketCounts,
   };

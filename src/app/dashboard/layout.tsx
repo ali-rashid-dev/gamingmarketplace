@@ -11,7 +11,7 @@ import {
   Star,
   UserRound,
 } from "lucide-react";
-import { requirePageSession } from "@/lib/authorization";
+import { getActiveRoles, requirePageSession } from "@/lib/authorization";
 import { DashboardLogout } from "./dashboard-logout";
 
 const navigation = [
@@ -31,6 +31,7 @@ export default async function BuyerDashboardLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const { user } = await requirePageSession();
+  const roles = await getActiveRoles(user.id);
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header className="border-b border-border bg-card/80">
@@ -42,7 +43,7 @@ export default async function BuyerDashboardLayout({
             <p className="mt-0.5 truncate text-xs text-muted-foreground">{user.name}</p>
           </div>
           <div className="ml-auto flex max-w-full flex-wrap items-center justify-end gap-2">
-            {user.role === "SELLER" && (
+            {roles.includes("SELLER") && (
               <Link
                 href="/seller"
                 className="hidden rounded-md border border-border px-3 py-2 text-sm text-muted-foreground transition hover:text-foreground sm:inline-flex"
@@ -50,7 +51,7 @@ export default async function BuyerDashboardLayout({
                 Seller studio
               </Link>
             )}
-            {["SUPPORT", "ADMIN", "SUPER_ADMIN"].includes(user.role ?? "") && (
+            {roles.some((role) => ["SUPPORT", "ADMIN", "SUPER_ADMIN"].includes(role)) && (
               <Link
                 href="/support/console"
                 className="hidden rounded-md border border-border px-3 py-2 text-sm text-muted-foreground transition hover:text-foreground sm:inline-flex"

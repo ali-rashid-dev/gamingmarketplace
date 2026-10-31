@@ -26,6 +26,8 @@ function ApplicationCard({ application }: { application: SellerApplication }) {
   const [busy, startTransition] = useTransition();
 
   function decide(status: "APPROVED" | "REJECTED") {
+    const decision = status === "APPROVED" ? "approve this seller and grant seller access" : "reject this seller application";
+    if (!window.confirm(`Are you sure you want to ${decision}? This action will be audited.`)) return;
     setError("");
     startTransition(async () => {
       try {

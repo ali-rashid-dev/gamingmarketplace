@@ -43,12 +43,22 @@ export async function getSuperAdminOverview() {
     withUnavailableFallback("users", prisma.user.count(), 0),
     withUnavailableFallback(
       "administrators",
-      prisma.user.count({ where: { role: { in: [UserRole.ADMIN, UserRole.SUPER_ADMIN] } } }),
+      prisma.user.count({
+        where: {
+          roleAssignments: {
+            some: { role: { key: { in: [UserRole.ADMIN, UserRole.SUPER_ADMIN] } } },
+          },
+        },
+      }),
       0
     ),
     withUnavailableFallback(
       "support staff",
-      prisma.user.count({ where: { role: UserRole.SUPPORT } }),
+      prisma.user.count({
+        where: {
+          roleAssignments: { some: { role: { key: UserRole.SUPPORT } } },
+        },
+      }),
       0
     ),
     withUnavailableFallback("orders", prisma.order.count(), 0),
@@ -140,9 +150,13 @@ export async function getPrivilegedUsers(
   const term = query.trim();
   const roleFilter: Prisma.UserWhereInput =
     group === "administrators"
-      ? { role: { in: [UserRole.ADMIN, UserRole.SUPER_ADMIN] } }
-      : { role: UserRole.SUPPORT };
-  return prisma.user.findMany({
+      ? {
+          roleAssignments: {
+            some: { role: { key: { in: [UserRole.ADMIN, UserRole.SUPER_ADMIN] } } },
+          },
+        }
+      : { roleAssignments: { some: { role: { key: UserRole.SUPPORT } } } };
+  const users = await prisma.user.findMany({
     where: term
       ? {
           AND: [
@@ -162,10 +176,14 @@ export async function getPrivilegedUsers(
       id: true,
       name: true,
       email: true,
-      role: true,
       emailVerified: true,
       createdAt: true,
       _count: { select: { sessions: true } },
+      roleAssignments: { select: { role: { select: { key: true } } } },
     },
   });
+  return users.map(({ roleAssignments, ...user }) => ({
+    ...user,
+    roles: roleAssignments.map(({ role }) => role.key),
+  }));
 }

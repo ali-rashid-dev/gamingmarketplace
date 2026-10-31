@@ -7,7 +7,7 @@ import {
   SellerStatus,
   UserRole,
 } from "@/generated/prisma/enums";
-import { requirePageRoles } from "@/lib/authorization";
+import { requirePagePermissions } from "@/lib/authorization";
 import type { ActionResult } from "@/lib/action-result";
 import prisma from "@/lib/prisma";
 import { z } from "zod";
@@ -31,10 +31,7 @@ export async function reviewSellerApplication(
   sellerIdInput: unknown,
   statusInput: unknown
 ): Promise<ActionResult<{ sellerProfile: ReviewedSeller }>> {
-  const authorization = await requirePageRoles([
-    UserRole.ADMIN,
-    UserRole.SUPER_ADMIN,
-  ]);
+  const authorization = await requirePagePermissions(["sellers.verify"]);
   const sellerId = sellerIdSchema.safeParse(sellerIdInput);
   if (!sellerId.success) {
     return { success: false, error: "Invalid seller application id" };
@@ -69,10 +66,24 @@ export async function reviewSellerApplication(
       });
       if (changed.count !== 1) return null;
 
-      await transaction.user.update({
-        where: { id: sellerProfile.userId },
-        data: { role: approved ? UserRole.SELLER : UserRole.BUYER },
-      });
+      if (approved) {
+        const sellerRole = await transaction.role.findUniqueOrThrow({
+          where: { key: UserRole.SELLER },
+          select: { id: true },
+        });
+        await transaction.userRoleAssignment.createMany({
+          data: { userId: sellerProfile.userId, roleId: sellerRole.id },
+          skipDuplicates: true,
+        });
+      } else {
+        const sellerRole = await transaction.role.findUniqueOrThrow({
+          where: { key: UserRole.SELLER },
+          select: { id: true },
+        });
+        await transaction.userRoleAssignment.deleteMany({
+          where: { userId: sellerProfile.userId, roleId: sellerRole.id },
+        });
+      }
 
       await transaction.notification.create({
         data: {

@@ -58,7 +58,9 @@ export default async function SupportDisputeDetailPage({ params }: Props) {
               <CardContent className="space-y-3">
                 {dispute.evidence.map((evidence) => (
                   <div key={evidence.id} className="min-w-0 rounded-lg border border-border p-3">
-                    <p className="text-xs font-medium">{evidence.submittedBy.name} · {evidence.submittedBy.role}</p>
+                    <p className="text-xs font-medium">
+                      {evidence.submittedBy.name} · {evidence.submittedBy.roleAssignments.map(({ role }) => role.key.replaceAll("_", " ")).join(", ")}
+                    </p>
                     {evidence.description && <p className="mt-1 break-words text-sm">{evidence.description}</p>}
                     <a href={evidence.url} target="_blank" rel="noreferrer" className="mt-2 block break-all text-xs text-primary underline">Open evidence</a>
                     <time className="mt-2 block text-[10px] text-muted-foreground">{evidence.createdAt.toLocaleString()}</time>

@@ -5,6 +5,7 @@ import { SellerStatus, UserRole } from "@/generated/prisma/enums";
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import SellerApplicationForm from "@/components/storefront/seller-application-form";
+import { hasAnyRole } from "@/lib/authorization";
 
 export const metadata: Metadata = {
   title: "Seller application | GameTrade",
@@ -25,6 +26,7 @@ export default async function SellerApplicationPage() {
       status: true,
     },
   });
+  const canApply = await hasAnyRole(session.user.id, [UserRole.BUYER]);
 
   return (
     <main className="mx-auto min-h-[65vh] max-w-3xl px-5 py-12 sm:px-8 sm:py-16">
@@ -34,7 +36,7 @@ export default async function SellerApplicationPage() {
         Tell us about the shop you want to open. Applications are reviewed before seller access is enabled.
       </p>
       <SellerApplicationForm
-        canApply={session.user.role === UserRole.BUYER}
+        canApply={canApply}
         initialApplication={
           sellerProfile
             ? {

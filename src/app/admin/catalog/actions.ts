@@ -1,9 +1,9 @@
 "use server";
 
 import { Prisma } from "@/generated/prisma/client";
-import { GameStatus, UserRole } from "@/generated/prisma/enums";
+import { GameStatus } from "@/generated/prisma/enums";
 import { UTApi } from "uploadthing/server";
-import { requirePageRoles } from "@/lib/authorization";
+import { requirePagePermissions } from "@/lib/authorization";
 import {
   categoryPatchSchema,
   categorySchema,
@@ -28,7 +28,7 @@ const allowedImageTypes = new Set([
 ]);
 
 async function requireCatalogAdmin() {
-  return requirePageRoles([UserRole.ADMIN, UserRole.SUPER_ADMIN]);
+  return requirePagePermissions(["games.manage"]);
 }
 
 function validationError(error: z.ZodError) {

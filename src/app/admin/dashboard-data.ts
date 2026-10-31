@@ -28,7 +28,11 @@ export async function getAdminDashboard() {
     recentDisputes,
   ] = await Promise.all([
     prisma.user.count({
-      where: { role: { in: [UserRole.BUYER, UserRole.SELLER] } },
+      where: {
+        roleAssignments: {
+          some: { role: { key: { in: [UserRole.BUYER, UserRole.SELLER] } } },
+        },
+      },
     }),
     prisma.order.count(),
     prisma.order.groupBy({

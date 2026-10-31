@@ -170,7 +170,6 @@ model User {
   email                    String                 @unique
   emailVerified            Boolean
   image                    String?
-  role                     UserRole               @default(BUYER)
   createdAt                DateTime               @default(now())
   updatedAt                DateTime               @updatedAt
   sessions                 Session[]
@@ -192,12 +191,52 @@ model User {
   assignedSupportTickets   SupportTicket[]        @relation("SupportTicketAssignee")
   supportMessages          SupportTicketMessage[] @relation("SupportMessageSender")
   supportAgentProfile      SupportAgentProfile?
+  roleAssignments          UserRoleAssignment[]
   submittedSupportReports  SupportReport[]        @relation("SupportReportSubmitter")
   reportedBySupportReports SupportReport[]        @relation("SupportReportSubject")
   assignedSupportReports   SupportReport[]        @relation("SupportReportAssignee")
 
-  @@index([role])
   @@map("user")
+}
+
+model Role {
+  id          String               @id @default(cuid())
+  key         UserRole             @unique
+  assignments UserRoleAssignment[]
+  permissions RolePermission[]
+
+  @@map("role")
+}
+
+model Permission {
+  key         String           @id
+  description String
+  roles       RolePermission[]
+
+  @@map("permission")
+}
+
+model RolePermission {
+  roleId        String
+  permissionKey String
+  role          Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission    Permission @relation(fields: [permissionKey], references: [key], onDelete: Cascade)
+
+  @@id([roleId, permissionKey])
+  @@index([permissionKey])
+  @@map("role_permission")
+}
+
+model UserRoleAssignment {
+  userId    String
+  roleId    String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role      Role     @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@id([userId, roleId])
+  @@index([roleId, createdAt])
+  @@map("user_role_assignment")
 }
 
 model Session {

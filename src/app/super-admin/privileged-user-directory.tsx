@@ -39,12 +39,12 @@ export function PrivilegedUserDirectory({
                 <p className="break-words text-sm font-semibold">{user.name}</p>
                 <p className="mt-1 break-all text-xs text-muted-foreground">{user.email}</p>
                 <p className="mt-1 text-xs text-muted-foreground">
-                  {user.role.replaceAll("_", " ")} · {user.emailVerified ? "Email verified" : "Email not verified"} · {user._count.sessions} active session(s)
+                  {user.roles.map((role) => role.replaceAll("_", " ")).join(", ")} · {user.emailVerified ? "Email verified" : "Email not verified"} · {user._count.sessions} active session(s)
                 </p>
               </div>
               <UserAccessControls
                 userId={user.id}
-                role={user.role}
+                roles={user.roles}
                 isSelf={user.id === sessionUserId}
               />
             </CardContent>

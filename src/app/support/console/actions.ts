@@ -31,7 +31,10 @@ export async function assignSupportTicket(
   const targetId = assigneeId.data || null;
   if (targetId) {
     const target = await prisma.user.findFirst({
-      where: { id: targetId, role: UserRole.SUPPORT },
+      where: {
+        id: targetId,
+        roleAssignments: { some: { role: { key: UserRole.SUPPORT } } },
+      },
       select: { id: true },
     });
     if (!target) return { success: false, error: "Choose an active support agent" };

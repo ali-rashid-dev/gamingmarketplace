@@ -23,7 +23,7 @@ export default async function SupportTicketDetailPage({ params }: Props) {
           <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">Ticket details</p>
           <h1 className="mt-2 break-words font-display text-2xl font-semibold sm:text-3xl">{ticket.subject}</h1>
           <p className="mt-2 break-words text-sm text-muted-foreground">
-            {ticket.user.name} · {ticket.user.email} · {ticket.user.role}
+            {ticket.user.name} · {ticket.user.email} · {ticket.user.roleAssignments.map(({ role }) => role.key.replaceAll("_", " ")).join(", ")}
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -50,7 +50,9 @@ export default async function SupportTicketDetailPage({ params }: Props) {
                 }`}
               >
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <p className="text-xs font-semibold">{message.sender.name} · {message.sender.role}</p>
+                  <p className="text-xs font-semibold">
+                    {message.sender.name} · {message.sender.roleAssignments.map(({ role }) => role.key.replaceAll("_", " ")).join(", ")}
+                  </p>
                   {message.isInternal && <Badge variant="secondary">Internal note</Badge>}
                 </div>
                 <p className="mt-2 break-words whitespace-pre-wrap text-sm leading-6">{message.body}</p>
