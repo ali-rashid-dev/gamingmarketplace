@@ -1,8 +1,15 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
-import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import {
+  Empty,
+  EmptyDescription,
+  EmptyHeader,
+  EmptyTitle,
+} from "@/components/ui/empty";
 import { reviewSellerApplication } from "../seller-actions";
 
 type SellerApplication = {
@@ -44,22 +51,23 @@ function ApplicationCard({ application }: { application: SellerApplication }) {
           </p>
         </div>
         <div className="flex shrink-0 gap-2">
-          <button
+          <Button
             type="button"
+            size="sm"
             disabled={busy}
             onClick={() => decide("APPROVED")}
-            className="rounded-md bg-primary px-3 py-2 text-sm font-medium text-primary-foreground disabled:opacity-50"
           >
             Approve
-          </button>
-          <button
+          </Button>
+          <Button
             type="button"
+            size="sm"
+            variant="outline"
             disabled={busy}
             onClick={() => decide("REJECTED")}
-            className="rounded-md border border-border px-3 py-2 text-sm font-medium hover:bg-accent disabled:opacity-50"
           >
             Reject
-          </button>
+          </Button>
         </div>
       </div>
       {application.description && (
@@ -99,31 +107,35 @@ export function SellerApplicationQueue({
         </p>
         <nav aria-label="Seller application pages" className="flex items-center gap-2">
           {page > 1 ? (
-            <Link
-              href={`/admin/sellers?page=${page - 1}`}
-              className="rounded-md border border-border px-3 py-2 text-sm hover:bg-accent"
+            <Button
+              render={<Link href={`/admin/sellers?page=${page - 1}`} />}
+              nativeButton={false}
+              variant="outline"
+              size="sm"
             >
               Previous
-            </Link>
+            </Button>
           ) : (
-            <span aria-disabled="true" className="rounded-md border border-border px-3 py-2 text-sm text-muted-foreground opacity-50">
+            <Button type="button" variant="outline" size="sm" disabled>
               Previous
-            </span>
+            </Button>
           )}
           <span aria-current="page" className="px-2 text-sm tabular-nums text-muted-foreground">
             Page {page} of {totalPages}
           </span>
           {page < totalPages ? (
-            <Link
-              href={`/admin/sellers?page=${page + 1}`}
-              className="rounded-md border border-border px-3 py-2 text-sm hover:bg-accent"
+            <Button
+              render={<Link href={`/admin/sellers?page=${page + 1}`} />}
+              nativeButton={false}
+              variant="outline"
+              size="sm"
             >
               Next
-            </Link>
+            </Button>
           ) : (
-            <span aria-disabled="true" className="rounded-md border border-border px-3 py-2 text-sm text-muted-foreground opacity-50">
+            <Button type="button" variant="outline" size="sm" disabled>
               Next
-            </span>
+            </Button>
           )}
         </nav>
       </div>
@@ -134,9 +146,12 @@ export function SellerApplicationQueue({
           ))}
         </div>
       ) : (
-        <p className="mt-6 rounded-lg border border-dashed border-border p-8 text-sm text-muted-foreground">
-          No seller applications are awaiting review.
-        </p>
+        <Empty className="mt-6 rounded-lg border">
+          <EmptyHeader>
+            <EmptyTitle>No pending applications</EmptyTitle>
+            <EmptyDescription>No seller applications are awaiting review.</EmptyDescription>
+          </EmptyHeader>
+        </Empty>
       )}
     </main>
   );

@@ -1,9 +1,14 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import {
+  NativeSelect,
+  NativeSelectOption,
+} from "@/components/ui/native-select";
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
-import { revokeUserSessions, changePrivilegedUserRole } from "./actions";
 import type { UserRole } from "@/generated/prisma/enums";
+import { changePrivilegedUserRole, revokeUserSessions } from "./actions";
 
 const roleOptions: { value: UserRole; label: string }[] = [
   { value: "BUYER", label: "Buyer" },
@@ -64,33 +69,36 @@ export function UserAccessControls({
   return (
     <div className="min-w-0">
       <div className="flex flex-wrap items-center gap-2">
-        <select
+        <NativeSelect
           aria-label="Account role"
+          size="sm"
           value={selectedRole}
           disabled={busy || isSelf}
           onChange={(event) => setSelectedRole(event.target.value as UserRole)}
-          className="rounded-md border border-border bg-background px-2 py-1.5 text-xs text-foreground disabled:opacity-50"
         >
           {roleOptions.map((option) => (
-            <option key={option.value} value={option.value}>{option.label}</option>
+            <NativeSelectOption key={option.value} value={option.value}>
+              {option.label}
+            </NativeSelectOption>
           ))}
-        </select>
-        <button
+        </NativeSelect>
+        <Button
           type="button"
+          size="sm"
           disabled={busy || isSelf || selectedRole === role}
           onClick={updateRole}
-          className="rounded-md bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground disabled:opacity-50"
         >
           Save role
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
+          size="sm"
+          variant="outline"
           disabled={busy || isSelf}
           onClick={revokeSessions}
-          className="rounded-md border border-border px-3 py-1.5 text-xs font-medium hover:bg-accent disabled:opacity-50"
         >
           Revoke sessions
-        </button>
+        </Button>
       </div>
       {isSelf && <p className="mt-2 text-xs text-muted-foreground">Your own privileged role and sessions cannot be changed here.</p>}
       {message && <p role="status" className="mt-2 text-xs text-emerald-500">{message}</p>}
