@@ -131,7 +131,7 @@ WHERE u."role" IN ('SELLER', 'SUPPORT', 'ADMIN', 'SUPER_ADMIN')
   AND (
     u."role" <> 'SELLER'
     OR EXISTS (
-      SELECT 1 FROM "sellerProfile" sp
+      SELECT 1 FROM "SellerProfile" sp
       WHERE sp."userId" = u."id" AND sp."status" = 'APPROVED'
     )
   )
@@ -139,7 +139,7 @@ ON CONFLICT DO NOTHING;
 
 INSERT INTO "user_role_assignment" ("userId", "roleId")
 SELECT sp."userId", 'role_seller'
-FROM "sellerProfile" sp
+FROM "SellerProfile" sp
 WHERE sp."status" = 'APPROVED'
 ON CONFLICT DO NOTHING;
 
