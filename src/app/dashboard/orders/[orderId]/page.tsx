@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { requirePageSession } from "@/lib/authorization";
 import { getBuyerOrder } from "../../buyer-data";
 import { ConfirmReceiptButton } from "../order-item-actions";
+import { PrintReceiptButton } from "../print-receipt-button";
 
 type Props = { params: Promise<{ orderId: string }> };
 
@@ -27,6 +28,14 @@ export default async function BuyerOrderDetailPage({ params }: Props) {
       <p className="mt-2 text-sm capitalize text-muted-foreground">
         {order.status.toLowerCase().replaceAll("_", " ")} · Placed {order.placedAt.toLocaleString()}
       </p>
+      {["PAID", "PROCESSING", "COMPLETED", "DISPUTED", "REFUNDED"].includes(order.status) && (
+        <div className="mt-4">
+          <PrintReceiptButton />
+          <p className="mt-2 text-xs text-muted-foreground">
+            Order receipt only; it is not a tax invoice.
+          </p>
+        </div>
+      )}
 
       <section className="mt-6 rounded-xl border border-border bg-card p-4 sm:p-5">
         <h2 className="font-display text-xl font-semibold">Items and delivery</h2>

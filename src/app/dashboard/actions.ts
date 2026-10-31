@@ -252,6 +252,7 @@ export async function confirmBuyerReceipt(
     select: {
       id: true,
       orderId: true,
+      order: { select: { status: true } },
       deliveries: {
         where: { status: DeliveryStatus.DELIVERED },
         orderBy: [{ createdAt: "desc" }, { id: "desc" }],
@@ -263,41 +264,93 @@ export async function confirmBuyerReceipt(
   if (!item || !item.deliveries[0]) {
     return { success: false, error: "This delivery cannot be confirmed" };
   }
-  const completed = await prisma.$transaction(async (transaction) => {
-    const changed = await transaction.orderItem.updateMany({
-      where: {
-        id: item.id,
-        status: OrderItemStatus.DELIVERED,
-        order: { buyerId: user.id },
-        disputes: {
-          none: { status: { in: [DisputeStatus.OPEN, DisputeStatus.UNDER_REVIEW] } },
-        },
-      },
-      data: { status: OrderItemStatus.COMPLETED },
-    });
-    if (changed.count !== 1) return false;
-    await transaction.delivery.updateMany({
-      where: { id: item.deliveries[0].id, status: DeliveryStatus.DELIVERED },
-      data: { status: DeliveryStatus.ACCEPTED, acceptedAt: new Date() },
-    });
-    const remaining = await transaction.orderItem.count({
-      where: {
-        orderId: item.orderId,
-        status: { notIn: [OrderItemStatus.COMPLETED, OrderItemStatus.CANCELLED, OrderItemStatus.REFUNDED] },
-      },
-    });
-    if (remaining === 0) {
-      await transaction.order.updateMany({
+  let completed: boolean;
+  try {
+    completed = await prisma.$transaction(async (transaction) => {
+      const changed = await transaction.orderItem.updateMany({
         where: {
-          id: item.orderId,
-          buyerId: user.id,
-          status: { in: [OrderStatus.PAID, OrderStatus.PROCESSING] },
+          id: item.id,
+          status: OrderItemStatus.DELIVERED,
+          order: {
+            buyerId: user.id,
+            status: { in: [OrderStatus.PAID, OrderStatus.PROCESSING] },
+          },
+          disputes: {
+            none: { status: { in: [DisputeStatus.OPEN, DisputeStatus.UNDER_REVIEW] } },
+          },
         },
-        data: { status: OrderStatus.COMPLETED, completedAt: new Date() },
+        data: { status: OrderItemStatus.COMPLETED },
       });
+      if (changed.count !== 1) return false;
+      const deliveryChanged = await transaction.delivery.updateMany({
+        where: { id: item.deliveries[0].id, status: DeliveryStatus.DELIVERED },
+        data: { status: DeliveryStatus.ACCEPTED, acceptedAt: new Date() },
+      });
+      if (deliveryChanged.count !== 1) {
+        throw new Error("ORDER_TRANSITION_CONFLICT");
+      }
+      await transaction.auditLog.create({
+        data: {
+          actorId: user.id,
+          action: "order.item.completed",
+          entityType: "OrderItem",
+          entityId: item.id,
+          metadata: {
+            orderId: item.orderId,
+            from: OrderItemStatus.DELIVERED,
+            to: OrderItemStatus.COMPLETED,
+            deliveryFrom: DeliveryStatus.DELIVERED,
+            deliveryTo: DeliveryStatus.ACCEPTED,
+          },
+        },
+      });
+      const remaining = await transaction.orderItem.count({
+        where: {
+          orderId: item.orderId,
+          status: { notIn: [OrderItemStatus.COMPLETED, OrderItemStatus.CANCELLED, OrderItemStatus.REFUNDED] },
+        },
+      });
+      if (remaining === 0) {
+        const orderChanged = await transaction.order.updateMany({
+          where: {
+            id: item.orderId,
+            buyerId: user.id,
+            status: { in: [OrderStatus.PAID, OrderStatus.PROCESSING] },
+          },
+          data: { status: OrderStatus.COMPLETED, completedAt: new Date() },
+        });
+        if (orderChanged.count === 1) {
+          await transaction.auditLog.create({
+            data: {
+              actorId: user.id,
+              action: "order.status_changed",
+              entityType: "Order",
+              entityId: item.orderId,
+              metadata: {
+                from: item.order.status,
+                to: OrderStatus.COMPLETED,
+                reason: "all_items_confirmed",
+              },
+            },
+          });
+        } else {
+          const currentOrder = await transaction.order.findUnique({
+            where: { id: item.orderId },
+            select: { status: true },
+          });
+          if (currentOrder?.status !== OrderStatus.COMPLETED) {
+            throw new Error("ORDER_TRANSITION_CONFLICT");
+          }
+        }
+      }
+      return true;
+    });
+  } catch (error) {
+    if (error instanceof Error && error.message === "ORDER_TRANSITION_CONFLICT") {
+      return { success: false, error: "Order item changed; refresh and try again" };
     }
-    return true;
-  });
+    throw error;
+  }
   if (!completed) return { success: false, error: "Order item changed; refresh and try again" };
   revalidatePath("/dashboard/orders");
   revalidatePath(`/dashboard/orders/${item.orderId}`);

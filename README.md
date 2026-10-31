@@ -84,6 +84,23 @@ payouts as separate audited operations. Configure currency precision, fees,
 taxes, and discounts before showing a final payable total. Do not deploy a
 success-shaped mock payment flow.
 
+## Orders and digital delivery
+
+The buyer dashboard provides order history and detail pages; approved sellers
+have an order queue to start fulfillment and record delivery instructions.
+Buyer receipt confirmation completes an item, and completes the order only
+when all its items are completed, cancelled, or refunded. Seller fulfillment
+and buyer confirmation are checked server-side and written to `AuditLog` in
+the same database transaction as their state changes. Buyers can print a
+receipt from eligible orders; it is not a tax invoice.
+
+Automatic order creation, failed-payment recovery, cancellation/refund
+processing, instant digital delivery, admin order overrides, and
+delivery-deadline alerts are not enabled. Orders remain gated on payment
+provider verification; account passwords and recovery codes must not be put
+in delivery instructions. Configure a delivery SLA before adding due dates or
+overdue alerts rather than deriving deadlines from free-form delivery estimates.
+
 ## Offer search
 
 The `/offers` page searches listing titles and descriptions with PostgreSQL

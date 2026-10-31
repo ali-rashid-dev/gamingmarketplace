@@ -24,13 +24,18 @@ type Order = {
 function OrderRow({ order }: { order: Order }) {
   const router = useRouter();
   const [error, setError] = useState("");
+  const [deliveryInstructions, setDeliveryInstructions] = useState("");
   const [busy, startTransition] = useTransition();
-  function update(action: "process" | "mark-delivered") {
+  function update(
+    action: "process" | "mark-delivered",
+    instructions?: string
+  ) {
     setError("");
     startTransition(async () => {
       try {
-        const result = await updateSellerOrderItem(order.id, action);
+        const result = await updateSellerOrderItem(order.id, action, instructions);
         if (!result.success) throw new Error(result.error);
+        setDeliveryInstructions("");
         router.refresh();
       } catch (caught) {
         setError(caught instanceof Error ? caught.message : "Unable to update order");
@@ -67,7 +72,26 @@ function OrderRow({ order }: { order: Order }) {
             <button disabled={busy || Boolean(order.dispute)} onClick={() => update("process")} className="rounded-lg bg-cyan-300 px-4 py-2 text-xs font-bold text-slate-950 disabled:opacity-50">Start processing</button>
           )}
           {order.status === "PROCESSING" && (
-            <button disabled={busy || Boolean(order.dispute)} onClick={() => update("mark-delivered")} className="rounded-lg bg-emerald-300 px-4 py-2 text-xs font-bold text-slate-950 disabled:opacity-50">Mark delivered</button>
+            <div className="w-full space-y-2">
+              <label className="block text-xs text-slate-400">
+                Delivery instructions
+                <textarea
+                  value={deliveryInstructions}
+                  onChange={(event) => setDeliveryInstructions(event.target.value)}
+                  maxLength={2000}
+                  rows={3}
+                  placeholder="Explain how the buyer can receive or use the item. Do not include passwords or recovery codes."
+                  className="mt-2 w-full resize-y rounded-lg border border-white/10 bg-slate-950/50 px-3 py-2 text-sm text-white placeholder:text-slate-500"
+                />
+              </label>
+              <button
+                disabled={busy || Boolean(order.dispute) || deliveryInstructions.trim().length < 5}
+                onClick={() => update("mark-delivered", deliveryInstructions)}
+                className="rounded-lg bg-emerald-300 px-4 py-2 text-xs font-bold text-slate-950 disabled:opacity-50"
+              >
+                {busy ? "Saving delivery…" : "Mark delivered"}
+              </button>
+            </div>
           )}
           {order.dispute && <span className="self-center text-xs text-slate-500">Fulfillment controls are paused while disputed.</span>}
         </div>
