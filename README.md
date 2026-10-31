@@ -67,6 +67,23 @@ Only active listings attached to published games, visible categories, and
 approved sellers are shown publicly. Offers with an expiration date are hidden
 once that date passes.
 
+## Checkout and payments
+
+Signed-in buyers can review an offer at `/checkout/[offerId]`. Checkout is
+intentionally read-only until a marketplace-capable payment provider is
+configured: it does not create an order or payment record, reserve inventory,
+or mark an order as paid. No payment success URL should be treated as proof of
+payment.
+
+Before enabling order creation, integrate a provider that supports the
+marketplace's seller countries, seller onboarding, delayed transfers, and
+refunds. The server-side integration must use idempotent payment intents,
+verify signed webhooks before changing order/payment state, reconcile delayed
+and duplicate events, and keep authorization, capture, seller balances, and
+payouts as separate audited operations. Configure currency precision, fees,
+taxes, and discounts before showing a final payable total. Do not deploy a
+success-shaped mock payment flow.
+
 ## Offer search
 
 The `/offers` page searches listing titles and descriptions with PostgreSQL

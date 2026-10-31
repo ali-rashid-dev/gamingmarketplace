@@ -112,7 +112,10 @@ export default async function OfferDetailPage({ params }: Props) {
                   <p className="rounded-xl border border-cyan-300/20 bg-cyan-300/[0.06] px-4 py-3 text-center text-sm text-cyan-100">
                     Signed in as {session.user.email}
                   </p>
-                  <Link href="/dashboard" className="rounded-xl bg-primary px-4 py-3 text-center text-sm font-bold text-primary-foreground transition hover:bg-primary/90">
+                  <Link href={`/checkout/${offer.id}`} className="rounded-xl bg-primary px-4 py-3 text-center text-sm font-bold text-primary-foreground transition hover:bg-primary/90">
+                    Review purchase
+                  </Link>
+                  <Link href="/dashboard" className="text-center text-xs text-slate-400 hover:text-white">
                     Go to your account
                   </Link>
                   <WishlistButton listingId={offer.id} />
