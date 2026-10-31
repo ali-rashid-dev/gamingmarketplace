@@ -421,6 +421,7 @@ export const ModelName = {
   Conversation: 'Conversation',
   Message: 'Message',
   Review: 'Review',
+  ReviewReport: 'ReviewReport',
   Dispute: 'Dispute',
   DisputeEvidence: 'DisputeEvidence',
   LedgerEntry: 'LedgerEntry',
@@ -447,7 +448,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "role" | "permission" | "rolePermission" | "userRoleAssignment" | "session" | "account" | "verification" | "rateLimit" | "accountProfile" | "sellerProfile" | "game" | "category" | "categoryField" | "listing" | "listingAttribute" | "listingRevision" | "order" | "orderItem" | "payment" | "delivery" | "conversation" | "message" | "review" | "dispute" | "disputeEvidence" | "ledgerEntry" | "withdrawal" | "notification" | "wishlistItem" | "supportTicket" | "supportTicketMessage" | "supportAgentProfile" | "supportReport" | "auditLog"
+    modelProps: "user" | "role" | "permission" | "rolePermission" | "userRoleAssignment" | "session" | "account" | "verification" | "rateLimit" | "accountProfile" | "sellerProfile" | "game" | "category" | "categoryField" | "listing" | "listingAttribute" | "listingRevision" | "order" | "orderItem" | "payment" | "delivery" | "conversation" | "message" | "review" | "reviewReport" | "dispute" | "disputeEvidence" | "ledgerEntry" | "withdrawal" | "notification" | "wishlistItem" | "supportTicket" | "supportTicketMessage" | "supportAgentProfile" | "supportReport" | "auditLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2227,6 +2228,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ReviewReport: {
+      payload: Prisma.$ReviewReportPayload<ExtArgs>
+      fields: Prisma.ReviewReportFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ReviewReportFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReviewReportPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ReviewReportFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReviewReportPayload>
+        }
+        findFirst: {
+          args: Prisma.ReviewReportFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReviewReportPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ReviewReportFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReviewReportPayload>
+        }
+        findMany: {
+          args: Prisma.ReviewReportFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReviewReportPayload>[]
+        }
+        create: {
+          args: Prisma.ReviewReportCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReviewReportPayload>
+        }
+        createMany: {
+          args: Prisma.ReviewReportCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ReviewReportCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReviewReportPayload>[]
+        }
+        delete: {
+          args: Prisma.ReviewReportDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReviewReportPayload>
+        }
+        update: {
+          args: Prisma.ReviewReportUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReviewReportPayload>
+        }
+        deleteMany: {
+          args: Prisma.ReviewReportDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ReviewReportUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ReviewReportUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReviewReportPayload>[]
+        }
+        upsert: {
+          args: Prisma.ReviewReportUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ReviewReportPayload>
+        }
+        aggregate: {
+          args: Prisma.ReviewReportAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateReviewReport>
+        }
+        groupBy: {
+          args: Prisma.ReviewReportGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ReviewReportGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ReviewReportCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ReviewReportCountAggregateOutputType> | number
+        }
+      }
+    }
     Dispute: {
       payload: Prisma.$DisputePayload<ExtArgs>
       fields: Prisma.DisputeFieldRefs
@@ -3419,11 +3494,28 @@ export const ReviewScalarFieldEnum = {
   listingId: 'listingId',
   rating: 'rating',
   comment: 'comment',
+  status: 'status',
+  sellerResponse: 'sellerResponse',
+  sellerRespondedAt: 'sellerRespondedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type ReviewScalarFieldEnum = (typeof ReviewScalarFieldEnum)[keyof typeof ReviewScalarFieldEnum]
+
+
+export const ReviewReportScalarFieldEnum = {
+  id: 'id',
+  reviewId: 'reviewId',
+  reporterId: 'reporterId',
+  reason: 'reason',
+  details: 'details',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ReviewReportScalarFieldEnum = (typeof ReviewReportScalarFieldEnum)[keyof typeof ReviewReportScalarFieldEnum]
 
 
 export const DisputeScalarFieldEnum = {
@@ -3867,6 +3959,48 @@ export type ListEnumDeliveryStatusFieldRefInput<$PrismaModel> = FieldRefInputTyp
 
 
 /**
+ * Reference to a field of type 'ReviewStatus'
+ */
+export type EnumReviewStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReviewStatus'>
+
+
+
+/**
+ * Reference to a field of type 'ReviewStatus[]'
+ */
+export type ListEnumReviewStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReviewStatus[]'>
+
+
+
+/**
+ * Reference to a field of type 'ReviewReportReason'
+ */
+export type EnumReviewReportReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReviewReportReason'>
+
+
+
+/**
+ * Reference to a field of type 'ReviewReportReason[]'
+ */
+export type ListEnumReviewReportReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReviewReportReason[]'>
+
+
+
+/**
+ * Reference to a field of type 'ReviewReportStatus'
+ */
+export type EnumReviewReportStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReviewReportStatus'>
+
+
+
+/**
+ * Reference to a field of type 'ReviewReportStatus[]'
+ */
+export type ListEnumReviewReportStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReviewReportStatus[]'>
+
+
+
+/**
  * Reference to a field of type 'DisputeStatus'
  */
 export type EnumDisputeStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DisputeStatus'>
@@ -4194,6 +4328,7 @@ export type GlobalOmitConfig = {
   conversation?: Prisma.ConversationOmit
   message?: Prisma.MessageOmit
   review?: Prisma.ReviewOmit
+  reviewReport?: Prisma.ReviewReportOmit
   dispute?: Prisma.DisputeOmit
   disputeEvidence?: Prisma.DisputeEvidenceOmit
   ledgerEntry?: Prisma.LedgerEntryOmit

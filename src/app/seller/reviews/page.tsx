@@ -1,4 +1,5 @@
 import { getSellerReviews } from "../dashboard-data";
+import { ReviewResponseForm } from "./review-response-form";
 
 export default async function SellerReviewsPage() {
   const { average, count, reviews } = await getSellerReviews();
@@ -19,6 +20,10 @@ export default async function SellerReviewsPage() {
               </div>
               {review.listing && <p className="mt-2 text-xs text-cyan-200">{review.listing.title}</p>}
               <p className="mt-3 whitespace-pre-wrap text-sm leading-6 text-slate-300">{review.comment || "No written feedback."}</p>
+              <span className="mt-3 inline-flex rounded-full border border-emerald-300/20 px-2 py-1 text-[10px] font-semibold uppercase tracking-wide text-emerald-200">
+                Verified purchase
+              </span>
+              <ReviewResponseForm reviewId={review.id} initialResponse={review.sellerResponse} />
             </article>
           ))}
         </div>

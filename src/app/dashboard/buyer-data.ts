@@ -300,6 +300,8 @@ export async function getBuyerReviews(userId: string) {
         id: true,
         rating: true,
         comment: true,
+        status: true,
+        sellerResponse: true,
         createdAt: true,
         listing: { select: { title: true } },
         orderItem: { select: { listingTitle: true, order: { select: { id: true, orderNumber: true } } } },

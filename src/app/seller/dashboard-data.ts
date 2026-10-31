@@ -3,6 +3,8 @@ import {
   DisputeStatus,
   ListingStatus,
   OrderItemStatus,
+  OrderStatus,
+  ReviewStatus,
   WithdrawalStatus,
 } from "@/generated/prisma/enums";
 import { Prisma } from "@/generated/prisma/client";
@@ -43,8 +45,28 @@ export async function getSellerOverview() {
       _sum: { totalPrice: true },
     }),
     prisma.listing.count({ where: { sellerId, status: ListingStatus.ACTIVE } }),
-    prisma.review.aggregate({ where: { sellerId }, _avg: { rating: true }, _count: true }),
-    prisma.review.count({ where: { sellerId } }),
+    prisma.review.aggregate({
+      where: {
+        sellerId,
+        status: ReviewStatus.PUBLISHED,
+        orderItem: {
+          status: OrderItemStatus.COMPLETED,
+          order: { status: OrderStatus.COMPLETED },
+        },
+      },
+      _avg: { rating: true },
+      _count: true,
+    }),
+    prisma.review.count({
+      where: {
+        sellerId,
+        status: ReviewStatus.PUBLISHED,
+        orderItem: {
+          status: OrderItemStatus.COMPLETED,
+          order: { status: OrderStatus.COMPLETED },
+        },
+      },
+    }),
     prisma.delivery.count({
       where: {
         status: { in: [DeliveryStatus.PENDING, DeliveryStatus.IN_PROGRESS] },
@@ -235,21 +257,34 @@ export async function getSellerConversations() {
 
 export async function getSellerReviews() {
   const { sellerId } = await requireApprovedSeller();
+  const eligibleReview = {
+    status: ReviewStatus.PUBLISHED,
+    orderItem: {
+      status: OrderItemStatus.COMPLETED,
+      order: { status: OrderStatus.COMPLETED },
+    },
+  };
   const [reviews, summary] = await Promise.all([
     prisma.review.findMany({
-      where: { sellerId },
+      where: { sellerId, ...eligibleReview },
       orderBy: [{ createdAt: "desc" }, { id: "desc" }],
       take: 100,
       select: {
         id: true,
         rating: true,
         comment: true,
+        sellerResponse: true,
+        sellerRespondedAt: true,
         createdAt: true,
         buyer: { select: { name: true } },
         listing: { select: { title: true } },
       },
     }),
-    prisma.review.aggregate({ where: { sellerId }, _avg: { rating: true }, _count: true }),
+    prisma.review.aggregate({
+      where: { sellerId, ...eligibleReview },
+      _avg: { rating: true },
+      _count: true,
+    }),
   ]);
   return {
     average: summary._avg.rating,

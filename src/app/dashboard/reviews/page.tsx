@@ -2,6 +2,7 @@ import { requirePageSession } from "@/lib/authorization";
 import Link from "next/link";
 import { getBuyerReviews } from "../buyer-data";
 import { ReviewForm } from "./review-form";
+import { ReportReviewButton } from "./report-review-button";
 
 export default async function BuyerReviewsPage() {
   const { user } = await requirePageSession();
@@ -33,9 +34,21 @@ export default async function BuyerReviewsPage() {
                   </div>
                   <p className="mt-1 text-xs text-muted-foreground">Order {review.orderItem.order.orderNumber}</p>
                   <p className="mt-3 whitespace-pre-wrap text-sm leading-6 text-muted-foreground">{review.comment || "No written feedback."}</p>
+                  {review.sellerResponse && (
+                    <div className="mt-3 rounded-lg bg-secondary/60 p-3">
+                      <p className="text-xs font-semibold">Seller response</p>
+                      <p className="mt-1 whitespace-pre-wrap text-sm text-muted-foreground">{review.sellerResponse}</p>
+                    </div>
+                  )}
+                  {review.status === "HIDDEN" && (
+                    <p className="mt-3 text-xs text-muted-foreground">
+                      This review is hidden from the public shop while under moderation.
+                    </p>
+                  )}
                   <Link href={`/dashboard/support?orderId=${review.orderItem.order.id}`} className="mt-3 inline-flex text-xs font-semibold text-gold hover:underline">
                     Report seller behavior
                   </Link>
+                  {review.status === "PUBLISHED" && <ReportReviewButton reviewId={review.id} />}
                 </article>
               ))}
             </div>

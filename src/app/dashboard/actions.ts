@@ -5,6 +5,8 @@ import {
   DisputeStatus,
   OrderItemStatus,
   OrderStatus,
+  ReviewReportReason,
+  ReviewStatus,
   SupportTicketStatus,
   UserRole,
 } from "@/generated/prisma/enums";
@@ -380,26 +382,52 @@ export async function submitBuyerReview(
       status: OrderItemStatus.COMPLETED,
       order: { buyerId: user.id, status: OrderStatus.COMPLETED },
     },
-    select: { id: true, sellerId: true, listingId: true, review: { select: { id: true } } },
+    select: {
+      id: true,
+      sellerId: true,
+      listingId: true,
+      seller: { select: { slug: true } },
+      review: { select: { id: true } },
+    },
   });
   if (!item) {
     return { success: false, error: "Only completed purchases can be reviewed" };
   }
   if (item.review) return { success: false, error: "This purchase already has a review" };
   try {
-    const review = await prisma.review.create({
-      data: {
-        orderItemId: item.id,
-        buyerId: user.id,
-        sellerId: item.sellerId,
-        listingId: item.listingId,
-        rating: parsed.data.rating,
-        comment: parsed.data.comment || null,
-      },
-      select: { id: true },
+    const review = await prisma.$transaction(async (transaction) => {
+      const created = await transaction.review.create({
+        data: {
+          orderItemId: item.id,
+          buyerId: user.id,
+          sellerId: item.sellerId,
+          listingId: item.listingId,
+          rating: parsed.data.rating,
+          comment: parsed.data.comment || null,
+          status: ReviewStatus.PUBLISHED,
+        },
+        select: { id: true },
+      });
+      await transaction.auditLog.create({
+        data: {
+          actorId: user.id,
+          action: "review.submitted",
+          entityType: "Review",
+          entityId: created.id,
+          metadata: {
+            orderItemId: item.id,
+            sellerId: item.sellerId,
+            rating: parsed.data.rating,
+          },
+        },
+      });
+      return created;
     });
     revalidatePath("/dashboard/reviews");
     revalidatePath("/dashboard");
+    revalidatePath("/admin/reviews");
+    revalidatePath("/seller/reviews");
+    revalidatePath(`/shops/${item.seller.slug}`);
     return { success: true, data: { reviewId: review.id } };
   } catch (error) {
     if (
@@ -407,6 +435,65 @@ export async function submitBuyerReview(
       error.code === "P2002"
     ) {
       return { success: false, error: "This purchase already has a review" };
+    }
+    throw error;
+  }
+}
+
+export async function reportReview(
+  reviewIdInput: unknown,
+  reasonInput: unknown,
+  detailsInput: unknown
+): Promise<ActionResult<{ reportId: string }>> {
+  const { user } = await requirePageSession();
+  const reviewId = z.string().trim().min(1).max(128).safeParse(reviewIdInput);
+  const reason = z.nativeEnum(ReviewReportReason).safeParse(reasonInput);
+  const details = z.string().trim().max(1000).safeParse(detailsInput);
+  if (!reviewId.success || !reason.success || !details.success) {
+    return { success: false, error: "Invalid review report" };
+  }
+  const review = await prisma.review.findFirst({
+    where: {
+      id: reviewId.data,
+      status: ReviewStatus.PUBLISHED,
+      buyerId: { not: user.id },
+    },
+    select: { id: true, seller: { select: { userId: true } } },
+  });
+  if (!review) return { success: false, error: "This review cannot be reported" };
+  if (review.seller.userId === user.id) {
+    return { success: false, error: "You cannot report a review of your own shop" };
+  }
+  try {
+    const report = await prisma.$transaction(async (transaction) => {
+      const created = await transaction.reviewReport.create({
+        data: {
+          reviewId: review.id,
+          reporterId: user.id,
+          reason: reason.data,
+          details: details.data || null,
+        },
+        select: { id: true },
+      });
+      await transaction.auditLog.create({
+        data: {
+          actorId: user.id,
+          action: "review.reported",
+          entityType: "Review",
+          entityId: review.id,
+          metadata: { reportId: created.id, reason: reason.data },
+        },
+      });
+      return created;
+    });
+    revalidatePath("/admin/reviews");
+    return { success: true, data: { reportId: report.id } };
+  } catch (error) {
+    if (
+      error instanceof Prisma.PrismaClientKnownRequestError &&
+      error.code === "P2002"
+    ) {
+      return { success: false, error: "You have already reported this review" };
     }
     throw error;
   }

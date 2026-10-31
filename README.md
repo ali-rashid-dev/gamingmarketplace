@@ -101,6 +101,20 @@ provider verification; account passwords and recovery codes must not be put
 in delivery instructions. Configure a delivery SLA before adding due dates or
 overdue alerts rather than deriving deadlines from free-form delivery estimates.
 
+## Reviews and reputation
+
+Buyers can review only their own completed order items, with one review per
+item enforced by a unique database constraint. Ratings and review counts are
+calculated server-side from published reviews attached to completed orders.
+Seller storefronts display verified-purchase reviews and allow buyers to
+report a review; administrators can resolve reports, hide reviews, or restore
+them, with moderation actions recorded in the audit log. Sellers can post or
+update a public response to a published review.
+
+The `20261101010000_review_reputation` migration adds review visibility,
+seller responses, and unique per-buyer reports. Apply it through the reviewed
+database migration deployment process before deploying these changes.
+
 ## Offer search
 
 The `/offers` page searches listing titles and descriptions with PostgreSQL

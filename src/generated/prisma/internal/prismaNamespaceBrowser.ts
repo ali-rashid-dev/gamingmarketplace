@@ -75,6 +75,7 @@ export const ModelName = {
   Conversation: 'Conversation',
   Message: 'Message',
   Review: 'Review',
+  ReviewReport: 'ReviewReport',
   Dispute: 'Dispute',
   DisputeEvidence: 'DisputeEvidence',
   LedgerEntry: 'LedgerEntry',
@@ -443,11 +444,28 @@ export const ReviewScalarFieldEnum = {
   listingId: 'listingId',
   rating: 'rating',
   comment: 'comment',
+  status: 'status',
+  sellerResponse: 'sellerResponse',
+  sellerRespondedAt: 'sellerRespondedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type ReviewScalarFieldEnum = (typeof ReviewScalarFieldEnum)[keyof typeof ReviewScalarFieldEnum]
+
+
+export const ReviewReportScalarFieldEnum = {
+  id: 'id',
+  reviewId: 'reviewId',
+  reporterId: 'reporterId',
+  reason: 'reason',
+  details: 'details',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ReviewReportScalarFieldEnum = (typeof ReviewReportScalarFieldEnum)[keyof typeof ReviewReportScalarFieldEnum]
 
 
 export const DisputeScalarFieldEnum = {

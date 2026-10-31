@@ -2,6 +2,7 @@ import {
   DisputeStatus,
   ListingStatus,
   OrderStatus,
+  ReviewReportStatus,
   SellerStatus,
   SupportTicketStatus,
   UserRole,
@@ -23,6 +24,7 @@ export async function getAdminDashboard() {
     pendingDisputes,
     pendingListings,
     pendingSellers,
+    pendingReviewReports,
     openTickets,
     recentListings,
     recentDisputes,
@@ -44,6 +46,7 @@ export async function getAdminDashboard() {
     prisma.dispute.count({ where: { status: { in: activeDisputeStatuses } } }),
     prisma.listing.count({ where: { status: ListingStatus.PENDING_REVIEW } }),
     prisma.sellerProfile.count({ where: { status: SellerStatus.PENDING } }),
+    prisma.reviewReport.count({ where: { status: ReviewReportStatus.OPEN } }),
     prisma.supportTicket.count({
       where: {
         status: { in: [SupportTicketStatus.OPEN, SupportTicketStatus.IN_PROGRESS] },
@@ -86,6 +89,7 @@ export async function getAdminDashboard() {
       pendingDisputes,
       pendingListings,
       pendingSellers,
+      pendingReviewReports,
       openTickets,
     },
     recentListings,

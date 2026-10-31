@@ -501,6 +501,57 @@ export type EnumDeliveryStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumDeliveryStatusFilter<$PrismaModel>
 }
 
+export type EnumReviewStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReviewStatus | Prisma.EnumReviewStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ReviewStatus[] | Prisma.ListEnumReviewStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReviewStatus[] | Prisma.ListEnumReviewStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReviewStatusFilter<$PrismaModel> | $Enums.ReviewStatus
+}
+
+export type EnumReviewStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReviewStatus | Prisma.EnumReviewStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ReviewStatus[] | Prisma.ListEnumReviewStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReviewStatus[] | Prisma.ListEnumReviewStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReviewStatusWithAggregatesFilter<$PrismaModel> | $Enums.ReviewStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumReviewStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumReviewStatusFilter<$PrismaModel>
+}
+
+export type EnumReviewReportReasonFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReviewReportReason | Prisma.EnumReviewReportReasonFieldRefInput<$PrismaModel>
+  in?: $Enums.ReviewReportReason[] | Prisma.ListEnumReviewReportReasonFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReviewReportReason[] | Prisma.ListEnumReviewReportReasonFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReviewReportReasonFilter<$PrismaModel> | $Enums.ReviewReportReason
+}
+
+export type EnumReviewReportStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReviewReportStatus | Prisma.EnumReviewReportStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ReviewReportStatus[] | Prisma.ListEnumReviewReportStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReviewReportStatus[] | Prisma.ListEnumReviewReportStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReviewReportStatusFilter<$PrismaModel> | $Enums.ReviewReportStatus
+}
+
+export type EnumReviewReportReasonWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReviewReportReason | Prisma.EnumReviewReportReasonFieldRefInput<$PrismaModel>
+  in?: $Enums.ReviewReportReason[] | Prisma.ListEnumReviewReportReasonFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReviewReportReason[] | Prisma.ListEnumReviewReportReasonFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReviewReportReasonWithAggregatesFilter<$PrismaModel> | $Enums.ReviewReportReason
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumReviewReportReasonFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumReviewReportReasonFilter<$PrismaModel>
+}
+
+export type EnumReviewReportStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReviewReportStatus | Prisma.EnumReviewReportStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ReviewReportStatus[] | Prisma.ListEnumReviewReportStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReviewReportStatus[] | Prisma.ListEnumReviewReportStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReviewReportStatusWithAggregatesFilter<$PrismaModel> | $Enums.ReviewReportStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumReviewReportStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumReviewReportStatusFilter<$PrismaModel>
+}
+
 export type EnumDisputeStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.DisputeStatus | Prisma.EnumDisputeStatusFieldRefInput<$PrismaModel>
   in?: $Enums.DisputeStatus[] | Prisma.ListEnumDisputeStatusFieldRefInput<$PrismaModel>
@@ -1115,6 +1166,57 @@ export type NestedEnumDeliveryStatusWithAggregatesFilter<$PrismaModel = never> =
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumDeliveryStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumDeliveryStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumReviewStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReviewStatus | Prisma.EnumReviewStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ReviewStatus[] | Prisma.ListEnumReviewStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReviewStatus[] | Prisma.ListEnumReviewStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReviewStatusFilter<$PrismaModel> | $Enums.ReviewStatus
+}
+
+export type NestedEnumReviewStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReviewStatus | Prisma.EnumReviewStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ReviewStatus[] | Prisma.ListEnumReviewStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReviewStatus[] | Prisma.ListEnumReviewStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReviewStatusWithAggregatesFilter<$PrismaModel> | $Enums.ReviewStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumReviewStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumReviewStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumReviewReportReasonFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReviewReportReason | Prisma.EnumReviewReportReasonFieldRefInput<$PrismaModel>
+  in?: $Enums.ReviewReportReason[] | Prisma.ListEnumReviewReportReasonFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReviewReportReason[] | Prisma.ListEnumReviewReportReasonFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReviewReportReasonFilter<$PrismaModel> | $Enums.ReviewReportReason
+}
+
+export type NestedEnumReviewReportStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReviewReportStatus | Prisma.EnumReviewReportStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ReviewReportStatus[] | Prisma.ListEnumReviewReportStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReviewReportStatus[] | Prisma.ListEnumReviewReportStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReviewReportStatusFilter<$PrismaModel> | $Enums.ReviewReportStatus
+}
+
+export type NestedEnumReviewReportReasonWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReviewReportReason | Prisma.EnumReviewReportReasonFieldRefInput<$PrismaModel>
+  in?: $Enums.ReviewReportReason[] | Prisma.ListEnumReviewReportReasonFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReviewReportReason[] | Prisma.ListEnumReviewReportReasonFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReviewReportReasonWithAggregatesFilter<$PrismaModel> | $Enums.ReviewReportReason
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumReviewReportReasonFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumReviewReportReasonFilter<$PrismaModel>
+}
+
+export type NestedEnumReviewReportStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ReviewReportStatus | Prisma.EnumReviewReportStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ReviewReportStatus[] | Prisma.ListEnumReviewReportStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ReviewReportStatus[] | Prisma.ListEnumReviewReportStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumReviewReportStatusWithAggregatesFilter<$PrismaModel> | $Enums.ReviewReportStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumReviewReportStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumReviewReportStatusFilter<$PrismaModel>
 }
 
 export type NestedEnumDisputeStatusFilter<$PrismaModel = never> = {

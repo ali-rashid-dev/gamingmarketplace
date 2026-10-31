@@ -1,4 +1,11 @@
-import { GameStatus, ListingStatus, SellerStatus } from "@/generated/prisma/enums";
+import {
+  GameStatus,
+  ListingStatus,
+  OrderItemStatus,
+  OrderStatus,
+  ReviewStatus,
+  SellerStatus,
+} from "@/generated/prisma/enums";
 import type { Prisma } from "@/generated/prisma/client";
 import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
@@ -173,6 +180,13 @@ export async function getOfferById(id: string) {
 }
 
 export async function getSellerBySlug(slug: string) {
+  const eligibleReviews = {
+    status: ReviewStatus.PUBLISHED,
+    orderItem: {
+      status: OrderItemStatus.COMPLETED,
+      order: { status: OrderStatus.COMPLETED },
+    },
+  };
   const seller = await prisma.sellerProfile.findFirst({
     where: { slug, status: SellerStatus.APPROVED, isAvailable: true },
     select: {
@@ -182,11 +196,39 @@ export async function getSellerBySlug(slug: string) {
       description: true,
       verifiedAt: true,
       createdAt: true,
+      reviews: {
+        where: eligibleReviews,
+        orderBy: [{ createdAt: "desc" }, { id: "desc" }],
+        take: 10,
+        select: {
+          id: true,
+          rating: true,
+          comment: true,
+          sellerResponse: true,
+          createdAt: true,
+          buyer: { select: { name: true } },
+          orderItem: { select: { status: true, order: { select: { status: true } } } },
+        },
+      },
     },
   });
   if (!seller) notFound();
-  const offers = await getOffers("recent", 24, { sellerId: seller.id });
-  return { seller, offers };
+  const [offers, reviewSummary] = await Promise.all([
+    getOffers("recent", 24, { sellerId: seller.id }),
+    prisma.review.aggregate({
+      where: { sellerId: seller.id, ...eligibleReviews },
+      _avg: { rating: true },
+      _count: true,
+    }),
+  ]);
+  return {
+    seller,
+    offers,
+    reviewSummary: {
+      average: reviewSummary._avg.rating,
+      count: reviewSummary._count,
+    },
+  };
 }
 
 export function getOfferImage(images: Prisma.JsonValue): string | null {

@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
+import { Star } from "lucide-react";
 import { submitBuyerReview } from "../actions";
 
 export function ReviewForm({
@@ -11,7 +12,7 @@ export function ReviewForm({
 }) {
   const router = useRouter();
   const [orderItemId, setOrderItemId] = useState(eligibleItems[0]?.id ?? "");
-  const [rating, setRating] = useState("5");
+  const [rating, setRating] = useState(5);
   const [comment, setComment] = useState("");
   const [error, setError] = useState("");
   const [saved, setSaved] = useState(false);
@@ -26,7 +27,7 @@ export function ReviewForm({
     setSaved(false);
     startTransition(async () => {
       try {
-        const result = await submitBuyerReview({ orderItemId: selectedOrderItemId, rating: Number(rating), comment });
+        const result = await submitBuyerReview({ orderItemId: selectedOrderItemId, rating, comment });
         if (!result.success) throw new Error(result.error);
         setSaved(true);
         setComment("");
@@ -49,12 +50,23 @@ export function ReviewForm({
           ))}
         </select>
       </label>
-      <label className="mt-4 block text-xs text-muted-foreground">
-        Rating
-        <select value={rating} onChange={(event) => setRating(event.target.value)} className="mt-2 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground">
-          {[5, 4, 3, 2, 1].map((value) => <option key={value} value={value}>{value} / 5</option>)}
-        </select>
-      </label>
+      <fieldset className="mt-4">
+        <legend className="text-xs text-muted-foreground">Rating: {rating} / 5</legend>
+        <div className="mt-2 flex gap-1" role="group" aria-label="Choose a rating from one to five stars">
+          {[1, 2, 3, 4, 5].map((value) => (
+            <button
+              key={value}
+              type="button"
+              aria-label={`${value} star${value === 1 ? "" : "s"}`}
+              aria-pressed={rating === value}
+              onClick={() => setRating(value)}
+              className="rounded p-1 text-amber-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-ring"
+            >
+              <Star className="size-5" fill={value <= rating ? "currentColor" : "none"} />
+            </button>
+          ))}
+        </div>
+      </fieldset>
       <label className="mt-4 block text-xs text-muted-foreground">
         Feedback
         <textarea value={comment} onChange={(event) => setComment(event.target.value)} maxLength={2000} rows={4} className="mt-2 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground" />

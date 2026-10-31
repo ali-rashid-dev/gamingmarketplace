@@ -138,6 +138,11 @@ export type Message = Prisma.MessageModel
  */
 export type Review = Prisma.ReviewModel
 /**
+ * Model ReviewReport
+ *
+ */
+export type ReviewReport = Prisma.ReviewReportModel
+/**
  * Model Dispute
  *
  */

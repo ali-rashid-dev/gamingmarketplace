@@ -164,6 +164,25 @@ enum SupportReportStatus {
   DISMISSED
 }
 
+enum ReviewStatus {
+  PUBLISHED
+  HIDDEN
+}
+
+enum ReviewReportStatus {
+  OPEN
+  RESOLVED
+  DISMISSED
+}
+
+enum ReviewReportReason {
+  ABUSE
+  HARASSMENT
+  SPAM
+  FRAUD
+  OTHER
+}
+
 model User {
   id                       String                 @id
   name                     String
@@ -181,6 +200,7 @@ model User {
   sellerConversations      Conversation[]         @relation("ConversationSeller")
   messages                 Message[]
   reviews                  Review[]               @relation("ReviewBuyer")
+  reviewReports            ReviewReport[]
   openedDisputes           Dispute[]              @relation("DisputeOpener")
   submittedEvidence        DisputeEvidence[]
   notifications            Notification[]
@@ -581,23 +601,44 @@ model Message {
 }
 
 model Review {
-  id          String        @id @default(cuid())
-  orderItemId String        @unique
-  buyerId     String
-  sellerId    String
-  listingId   String?
-  rating      Int
-  comment     String?
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  orderItem   OrderItem     @relation(fields: [orderItemId], references: [id], onDelete: Restrict)
-  buyer       User          @relation("ReviewBuyer", fields: [buyerId], references: [id], onDelete: Restrict)
-  seller      SellerProfile @relation(fields: [sellerId], references: [id], onDelete: Restrict)
-  listing     Listing?      @relation(fields: [listingId], references: [id], onDelete: SetNull)
+  id                String         @id @default(cuid())
+  orderItemId       String         @unique
+  buyerId           String
+  sellerId          String
+  listingId         String?
+  rating            Int
+  comment           String?
+  status            ReviewStatus   @default(PUBLISHED)
+  sellerResponse    String?
+  sellerRespondedAt DateTime?
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+  orderItem         OrderItem      @relation(fields: [orderItemId], references: [id], onDelete: Restrict)
+  buyer             User           @relation("ReviewBuyer", fields: [buyerId], references: [id], onDelete: Restrict)
+  seller            SellerProfile  @relation(fields: [sellerId], references: [id], onDelete: Restrict)
+  listing           Listing?       @relation(fields: [listingId], references: [id], onDelete: SetNull)
+  reports           ReviewReport[]
 
-  @@index([sellerId, createdAt])
+  @@index([sellerId, status, createdAt])
   @@index([sellerId, rating])
   @@index([listingId, createdAt])
+}
+
+model ReviewReport {
+  id         String             @id @default(cuid())
+  reviewId   String
+  reporterId String
+  reason     ReviewReportReason
+  details    String?
+  status     ReviewReportStatus @default(OPEN)
+  createdAt  DateTime           @default(now())
+  updatedAt  DateTime           @updatedAt
+  review     Review             @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  reporter   User               @relation(fields: [reporterId], references: [id], onDelete: Restrict)
+
+  @@unique([reviewId, reporterId])
+  @@index([status, createdAt])
+  @@index([reporterId, createdAt])
 }
 
 model Dispute {

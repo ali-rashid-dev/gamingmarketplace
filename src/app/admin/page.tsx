@@ -8,6 +8,7 @@ import {
   Headset,
   Store,
   Users,
+  MessageSquareWarning,
 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { getAdminDashboard } from "./dashboard-data";
@@ -42,6 +43,7 @@ function Metric({
 const queues = [
   { href: "/admin/sellers", label: "Seller applications", icon: Store, metric: "pendingSellers" },
   { href: "/admin/listings", label: "Listing reviews", icon: ClipboardCheck, metric: "pendingListings" },
+  { href: "/admin/reviews", label: "Review reports", icon: MessageSquareWarning, metric: "pendingReviewReports" },
   { href: "/support/console/disputes", label: "Disputes", icon: Gavel, metric: "pendingDisputes" },
   { href: "/support/console/tickets", label: "Support tickets", icon: Headset, metric: "openTickets" },
 ] as const;
