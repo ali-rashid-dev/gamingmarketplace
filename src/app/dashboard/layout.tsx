@@ -11,6 +11,7 @@ import {
   Star,
   UserRound,
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { getActiveRoles, requirePageSession } from "@/lib/authorization";
 import { DashboardLogout } from "./dashboard-logout";
 
@@ -44,27 +45,18 @@ export default async function BuyerDashboardLayout({
           </div>
           <div className="ml-auto flex max-w-full flex-wrap items-center justify-end gap-2">
             {roles.includes("SELLER") && (
-              <Link
-                href="/seller"
-                className="hidden rounded-md border border-border px-3 py-2 text-sm text-muted-foreground transition hover:text-foreground sm:inline-flex"
-              >
+              <Button render={<Link href="/seller" />} variant="outline" className="hidden sm:inline-flex">
                 Seller studio
-              </Link>
+              </Button>
             )}
             {roles.some((role) => ["SUPPORT", "ADMIN", "SUPER_ADMIN"].includes(role)) && (
-              <Link
-                href="/support/console"
-                className="hidden rounded-md border border-border px-3 py-2 text-sm text-muted-foreground transition hover:text-foreground sm:inline-flex"
-              >
+              <Button render={<Link href="/support/console" />} variant="outline" className="hidden sm:inline-flex">
                 Support console
-              </Link>
+              </Button>
             )}
-            <Link
-              href="/"
-              className="hidden rounded-md px-3 py-2 text-sm text-muted-foreground transition hover:text-foreground sm:inline-flex"
-            >
+            <Button render={<Link href="/" />} variant="ghost" className="hidden sm:inline-flex">
               Browse marketplace
-            </Link>
+            </Button>
             <DashboardLogout />
           </div>
         </div>
@@ -76,14 +68,15 @@ export default async function BuyerDashboardLayout({
             className="grid grid-cols-2 gap-2 pb-2 sm:grid-cols-3 md:grid-cols-4 lg:sticky lg:top-6 lg:grid-cols-1 lg:gap-1 lg:pb-0"
           >
             {navigation.map(({ href, label, icon: Icon }) => (
-              <Link
+              <Button
                 key={href}
-                href={href}
-                className="inline-flex min-w-0 items-center gap-2 rounded-lg border border-border px-2.5 py-2 text-left text-xs font-medium text-muted-foreground transition hover:border-gold/40 hover:bg-card hover:text-foreground sm:px-3 lg:border-transparent lg:text-sm"
+                render={<Link href={href} />}
+                variant="ghost"
+                className="h-auto min-h-9 w-full min-w-0 justify-start gap-2 rounded-lg border border-border px-2.5 py-2 text-left text-xs text-muted-foreground sm:px-3 lg:border-transparent lg:text-sm"
               >
-                <Icon aria-hidden="true" className="h-4 w-4 shrink-0 text-gold" />
+                <Icon aria-hidden="true" className="size-4 shrink-0 text-primary" />
                 <span className="truncate">{label}</span>
-              </Link>
+              </Button>
             ))}
           </nav>
           <p className="mt-8 hidden rounded-xl border border-border bg-card p-4 text-xs leading-5 text-muted-foreground lg:block">

@@ -1,21 +1,17 @@
-import {
-  Activity,
-  ClipboardList,
-  KeyRound,
-  Shield,
-  Users,
-} from "lucide-react";
 import { UserRole } from "@/generated/prisma/enums";
 import { requirePageRoles } from "@/lib/authorization";
-import { WorkspaceShell } from "@/components/workspace-shell";
+import {
+  WorkspaceShell,
+  type WorkspaceNavigationItem,
+} from "@/components/workspace-shell";
 
 const navigation = [
-  { href: "/super-admin", label: "Overview", icon: Activity },
-  { href: "/super-admin/administrators", label: "Administrators", icon: Shield },
-  { href: "/super-admin/support-staff", label: "Support staff", icon: Users },
-  { href: "/super-admin/audit-logs", label: "Audit logs", icon: ClipboardList },
-  { href: "/super-admin/roles", label: "Role structure", icon: KeyRound },
-];
+  { href: "/super-admin", label: "Overview", icon: "Activity" },
+  { href: "/super-admin/administrators", label: "Administrators", icon: "Shield" },
+  { href: "/super-admin/support-staff", label: "Support staff", icon: "Users" },
+  { href: "/super-admin/audit-logs", label: "Audit logs", icon: "ClipboardList" },
+  { href: "/super-admin/roles", label: "Role structure", icon: "KeyRound" },
+] satisfies WorkspaceNavigationItem[];
 
 export default async function SuperAdminLayout({
   children,

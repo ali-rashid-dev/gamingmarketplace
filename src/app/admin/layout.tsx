@@ -1,16 +1,18 @@
 import { UserRole } from "@/generated/prisma/enums";
 import { requirePageRoles } from "@/lib/authorization";
-import { WorkspaceShell } from "@/components/workspace-shell";
-import { ClipboardCheck, Gamepad2, Headset, LayoutDashboard, MessageSquareWarning, Store } from "lucide-react";
+import {
+  WorkspaceShell,
+  type WorkspaceNavigationItem,
+} from "@/components/workspace-shell";
 
 const navigation = [
-  { href: "/admin", label: "Overview", icon: LayoutDashboard },
-  { href: "/admin/sellers", label: "Seller applications", icon: Store },
-  { href: "/admin/catalog", label: "Games & categories", icon: Gamepad2 },
-  { href: "/admin/listings", label: "Listing moderation", icon: ClipboardCheck },
-  { href: "/admin/reviews", label: "Review moderation", icon: MessageSquareWarning },
-  { href: "/support/console", label: "Support & disputes", icon: Headset },
-];
+  { href: "/admin", label: "Overview", icon: "LayoutDashboard" },
+  { href: "/admin/sellers", label: "Seller applications", icon: "Store" },
+  { href: "/admin/catalog", label: "Games & categories", icon: "Gamepad2" },
+  { href: "/admin/listings", label: "Listing moderation", icon: "ClipboardCheck" },
+  { href: "/admin/reviews", label: "Review moderation", icon: "MessageSquareWarning" },
+  { href: "/support/console", label: "Support & disputes", icon: "Headset" },
+] satisfies WorkspaceNavigationItem[];
 
 export default async function AdminLayout({
   children,
