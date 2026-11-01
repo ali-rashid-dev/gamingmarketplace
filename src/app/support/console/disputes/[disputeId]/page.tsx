@@ -4,14 +4,17 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MessageAttachmentList } from "@/app/dashboard/messages/message-controls";
-import { getSupportDispute } from "../../data";
+import { getSupportAgents, getSupportDispute } from "../../data";
 import { DisputeActions } from "./dispute-actions";
 
 type Props = { params: Promise<{ disputeId: string }> };
 
 export default async function SupportDisputeDetailPage({ params }: Props) {
   const { disputeId } = await params;
-  const dispute = await getSupportDispute(disputeId);
+  const [dispute, agents] = await Promise.all([
+    getSupportDispute(disputeId),
+    getSupportAgents(),
+  ]);
   if (!dispute) notFound();
   const active = ["OPEN", "UNDER_REVIEW"].includes(dispute.status);
   return (
@@ -32,6 +35,22 @@ export default async function SupportDisputeDetailPage({ params }: Props) {
             <CardContent>
               <p className="whitespace-pre-wrap break-words text-sm leading-6">{dispute.description}</p>
               {dispute.resolution && <p className="mt-4 border-t border-border pt-4 text-sm">{dispute.resolution}</p>}
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader><CardTitle>Case responses and history</CardTitle></CardHeader>
+            <CardContent className="space-y-3">
+              {dispute.messages.map((message) => (
+                <div key={message.id} className="rounded-lg border border-border p-3">
+                  <p className="text-xs font-medium text-muted-foreground">{message.sender.name} · {message.createdAt.toLocaleString()}</p>
+                  <p className="mt-1 whitespace-pre-wrap break-words text-sm">{message.body}</p>
+                </div>
+              ))}
+              {dispute.events.map((event) => (
+                <p key={event.id} className="text-xs text-muted-foreground">
+                  {event.actor.name} · {event.type.replaceAll("_", " ").toLowerCase()} · {event.createdAt.toLocaleString()}
+                </p>
+              ))}
             </CardContent>
           </Card>
           <Card>
@@ -86,7 +105,16 @@ export default async function SupportDisputeDetailPage({ params }: Props) {
             </Card>
           )}
         </div>
-        <DisputeActions disputeId={dispute.id} active={active} status={dispute.status} />
+        <DisputeActions
+          disputeId={dispute.id}
+          active={active}
+          status={dispute.status}
+          assignedToId={dispute.assignedTo?.id ?? null}
+          agents={agents}
+          itemTotal={dispute.orderItem
+            ? `${dispute.orderItem.currency} ${dispute.orderItem.totalPrice.toString()}`
+            : null}
+        />
       </div>
     </main>
   );

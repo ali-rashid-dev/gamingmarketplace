@@ -5,6 +5,8 @@ import { getBuyerOrder } from "../../buyer-data";
 import { ConfirmReceiptButton } from "../order-item-actions";
 import { PrintReceiptButton } from "../print-receipt-button";
 import { OrderMessageButton } from "../order-message-button";
+import { BuyerDisputeWorkflow } from "@/app/disputes/dispute-workflow";
+import { getBuyerProtectionDeadline, getDisputeAppealDeadline, isBuyerProtectionOpen } from "@/lib/buyer-protection";
 
 type Props = { params: Promise<{ orderId: string }> };
 
@@ -50,6 +52,35 @@ export default async function BuyerOrderDetailPage({ params }: Props) {
                     Sold by {item.seller.shopName} · Qty {item.quantity} · {item.status.toLowerCase()}
                   </p>
                   <OrderMessageButton orderId={order.id} sellerUserId={item.seller.user.id} />
+                  <BuyerDisputeWorkflow
+                    orderItemId={item.id}
+                    orderItemStatus={item.status}
+                    orderStatus={order.status}
+                    disputes={item.disputes.map((dispute) => ({
+                      ...dispute,
+                      appealOpen: Boolean(
+                        dispute.resolvedAt &&
+                        !dispute.appealedAt &&
+                        getDisputeAppealDeadline(dispute.resolvedAt).getTime() >= Date.now()
+                      ),
+                    }))}
+                    buyerId={user.id}
+                    delivered={item.deliveries.some((delivery) => delivery.status === "DELIVERED" || delivery.status === "ACCEPTED")}
+                    deadline={getBuyerProtectionDeadline({
+                      placedAt: order.placedAt,
+                      deliveredAt: item.deliveries
+                        .filter((delivery) => delivery.status === "DELIVERED" || delivery.status === "ACCEPTED")
+                        .map((delivery) => delivery.deliveredAt ?? delivery.acceptedAt ?? delivery.createdAt)
+                        .sort((left, right) => left.getTime() - right.getTime())[0] ?? null,
+                    })}
+                    canOpen={isBuyerProtectionOpen({
+                      placedAt: order.placedAt,
+                      deliveredAt: item.deliveries
+                        .filter((delivery) => delivery.status === "DELIVERED" || delivery.status === "ACCEPTED")
+                        .map((delivery) => delivery.deliveredAt ?? delivery.acceptedAt ?? delivery.createdAt)
+                        .sort((left, right) => left.getTime() - right.getTime())[0] ?? null,
+                    })}
+                  />
                 </div>
                 <p className="text-sm font-semibold">{money(item.totalPrice, item.currency)}</p>
               </div>

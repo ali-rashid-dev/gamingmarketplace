@@ -228,9 +228,11 @@ export async function getSupportDisputes(status?: string) {
     select: {
       id: true,
       reason: true,
+      reasonCode: true,
       status: true,
       createdAt: true,
       updatedAt: true,
+      assignedTo: { select: { id: true, name: true } },
       order: {
         select: {
           id: true,
@@ -252,11 +254,17 @@ export async function getSupportDispute(disputeId: string) {
     select: {
       id: true,
       reason: true,
+      reasonCode: true,
       description: true,
       status: true,
+      decision: true,
+      decisionAmount: true,
       resolution: true,
       createdAt: true,
       updatedAt: true,
+      resolvedAt: true,
+      appealedAt: true,
+      assignedTo: { select: { id: true, name: true } },
       order: {
         select: {
           id: true,
@@ -290,13 +298,16 @@ export async function getSupportDispute(disputeId: string) {
         },
       },
       openedBy: { select: { id: true, name: true, email: true } },
-      orderItem: { select: { listingTitle: true } },
+      orderItem: { select: { listingTitle: true, totalPrice: true, currency: true } },
       evidence: {
         orderBy: [{ createdAt: "asc" }, { id: "asc" }],
         select: {
           id: true,
           url: true,
           description: true,
+          name: true,
+          contentType: true,
+          size: true,
           createdAt: true,
           submittedBy: {
             select: {
@@ -304,6 +315,34 @@ export async function getSupportDispute(disputeId: string) {
               roleAssignments: { select: { role: { select: { key: true } } } },
             },
           },
+        },
+      },
+      messages: {
+        orderBy: [{ createdAt: "asc" }, { id: "asc" }],
+        take: 200,
+        select: {
+          id: true,
+          body: true,
+          senderId: true,
+          createdAt: true,
+          sender: {
+            select: {
+              id: true,
+              name: true,
+              roleAssignments: { select: { role: { select: { key: true } } } },
+            },
+          },
+        },
+      },
+      events: {
+        orderBy: [{ createdAt: "asc" }, { id: "asc" }],
+        take: 200,
+        select: {
+          id: true,
+          type: true,
+          details: true,
+          createdAt: true,
+          actor: { select: { name: true } },
         },
       },
     },

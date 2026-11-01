@@ -2,6 +2,7 @@
 
 import {
   DisputeStatus,
+  DisputeEventType,
   ConversationReportStatus,
   SupportReportCategory,
   SupportReportStatus,
@@ -215,10 +216,14 @@ export async function escalateSupportDispute(
     },
   });
   if (!dispute) return { success: false, error: "Open dispute not found" };
-  await prisma.$transaction(async (transaction) => {
-    await transaction.dispute.update({
-      where: { id: dispute.id },
-      data: { status: DisputeStatus.UNDER_REVIEW },
+  const updated = await prisma.$transaction(async (transaction) => {
+    const changed = await transaction.dispute.updateMany({
+      where: { id: dispute.id, status: { in: [DisputeStatus.OPEN, DisputeStatus.UNDER_REVIEW] } },
+      data: { status: DisputeStatus.UNDER_REVIEW, updatedAt: new Date() },
+    });
+    if (changed.count !== 1) return false;
+    await transaction.disputeEvent.create({
+      data: { disputeId: dispute.id, actorId: user.id, type: DisputeEventType.ESCALATED },
     });
     await transaction.auditLog.create({
       data: {
@@ -229,7 +234,9 @@ export async function escalateSupportDispute(
         metadata: { orderId: dispute.orderId },
       },
     });
+    return true;
   });
+  if (!updated) return { success: false, error: "Case changed; refresh and try again" };
   revalidatePath("/support/console/disputes");
   revalidatePath(`/support/console/disputes/${dispute.id}`);
   return { success: true, data: { updated: true } };
@@ -256,10 +263,10 @@ export async function requestDisputeEvidence(
     select: {
       id: true,
       orderId: true,
+      orderItem: { select: { seller: { select: { userId: true } } } },
       order: {
         select: {
           buyerId: true,
-          items: { select: { seller: { select: { userId: true } } } },
         },
       },
     },
@@ -267,7 +274,7 @@ export async function requestDisputeEvidence(
   if (!dispute) return { success: false, error: "Open dispute not found" };
   const recipientIds = Array.from(new Set([
     dispute.order.buyerId,
-    ...dispute.order.items.map((item) => item.seller.userId),
+    ...(dispute.orderItem?.seller.userId ? [dispute.orderItem.seller.userId] : []),
   ]));
   await prisma.$transaction([
     ...recipientIds.map((userId) =>
@@ -277,7 +284,11 @@ export async function requestDisputeEvidence(
           type: "DISPUTE_UPDATE",
           title: "Evidence requested for a dispute",
           body: request.data,
-          data: { disputeId: dispute.id, orderId: dispute.orderId },
+          data: {
+            disputeId: dispute.id,
+            orderId: dispute.orderId,
+            recipientWorkspace: userId === dispute.order.buyerId ? "BUYER" : "SELLER",
+          },
         },
       })
     ),
@@ -288,6 +299,14 @@ export async function requestDisputeEvidence(
         entityType: "Dispute",
         entityId: dispute.id,
         metadata: { recipientCount: recipientIds.length },
+      },
+    }),
+    prisma.disputeEvent.create({
+      data: {
+        disputeId: dispute.id,
+        actorId: user.id,
+        type: DisputeEventType.EVIDENCE_REQUESTED,
+        details: { recipientCount: recipientIds.length },
       },
     }),
   ]);

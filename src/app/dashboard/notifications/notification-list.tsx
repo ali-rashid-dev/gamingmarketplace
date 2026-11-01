@@ -22,6 +22,13 @@ function notificationHref(data: unknown) {
     const workspace = record.recipientWorkspace === "SELLER" ? "/seller/messages" : "/dashboard/messages";
     return `${workspace}#conversation-${encodeURIComponent(record.conversationId)}`;
   }
+  if (typeof record.disputeId === "string") {
+    const workspace = record.recipientWorkspace === "SELLER" ? "/seller/disputes" : "/dashboard/orders";
+    const target = record.recipientWorkspace === "SELLER" || typeof record.orderId !== "string"
+      ? workspace
+      : `/dashboard/orders/${encodeURIComponent(record.orderId)}`;
+    return `${target}#dispute-${encodeURIComponent(record.disputeId)}`;
+  }
   if (typeof record.orderId === "string") return `/dashboard/orders/${encodeURIComponent(record.orderId)}`;
   if (typeof record.ticketId === "string") return "/dashboard/support";
   return null;

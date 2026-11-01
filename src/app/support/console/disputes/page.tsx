@@ -31,7 +31,9 @@ export default async function SupportDisputesPage({ searchParams }: Props) {
                     Order {dispute.order.orderNumber} · {dispute.order.buyer.name}
                     {dispute.orderItem ? ` · ${dispute.orderItem.listingTitle}` : ""}
                   </span>
-                  <span className="mt-1 block text-xs text-muted-foreground">Opened {dispute.createdAt.toLocaleString()}</span>
+                  <span className="mt-1 block text-xs text-muted-foreground">
+                    Opened {dispute.createdAt.toLocaleString()} · {dispute.assignedTo?.name ?? "Unassigned"}
+                  </span>
                 </Link>
                 <Badge variant={dispute.status === "OPEN" ? "destructive" : "secondary"}>{dispute.status.replaceAll("_", " ")}</Badge>
               </CardContent>

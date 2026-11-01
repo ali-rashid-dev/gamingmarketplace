@@ -130,6 +130,41 @@ export const DisputeStatus = {
 export type DisputeStatus = (typeof DisputeStatus)[keyof typeof DisputeStatus]
 
 
+export const DisputeReasonCode = {
+  NOT_DELIVERED: 'NOT_DELIVERED',
+  INVALID_GOODS: 'INVALID_GOODS',
+  NOT_AS_DESCRIBED: 'NOT_AS_DESCRIBED',
+  OTHER: 'OTHER'
+} as const
+
+export type DisputeReasonCode = (typeof DisputeReasonCode)[keyof typeof DisputeReasonCode]
+
+
+export const DisputeDecision = {
+  FULL_REFUND: 'FULL_REFUND',
+  PARTIAL_REFUND: 'PARTIAL_REFUND',
+  RELEASE_TO_SELLER: 'RELEASE_TO_SELLER',
+  NO_FINANCIAL_ADJUSTMENT: 'NO_FINANCIAL_ADJUSTMENT',
+  OTHER: 'OTHER'
+} as const
+
+export type DisputeDecision = (typeof DisputeDecision)[keyof typeof DisputeDecision]
+
+
+export const DisputeEventType = {
+  OPENED: 'OPENED',
+  MESSAGE: 'MESSAGE',
+  EVIDENCE_ADDED: 'EVIDENCE_ADDED',
+  ASSIGNED: 'ASSIGNED',
+  EVIDENCE_REQUESTED: 'EVIDENCE_REQUESTED',
+  ESCALATED: 'ESCALATED',
+  DECIDED: 'DECIDED',
+  APPEALED: 'APPEALED'
+} as const
+
+export type DisputeEventType = (typeof DisputeEventType)[keyof typeof DisputeEventType]
+
+
 export const WithdrawalStatus = {
   REQUESTED: 'REQUESTED',
   APPROVED: 'APPROVED',

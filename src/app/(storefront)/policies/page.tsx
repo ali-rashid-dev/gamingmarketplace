@@ -10,17 +10,18 @@ const sections = [
     id: "buyer-protection",
     title: "Buyer protection",
     text: [
-      "Review the full offer description, game, category, platform, price, and seller shop before placing an order.",
-      "Keep payments and order communication within GameTrade checkout and messaging features when they are available. Do not share passwords, payment credentials, or account recovery codes in public listing content.",
-      "If a transaction has a problem, preserve relevant order information and contact support promptly. Protection and remedies depend on the order record, the issue, and applicable law.",
+      "For an item not marked delivered, open a case within 30 days of order placement. For missing, invalid, or misdescribed goods marked delivered, open a case within 7 days of the recorded delivery time. A case must be linked to an eligible paid order item.",
+      "Choose the closest issue reason, describe what happened, and add relevant evidence. The seller and support may respond in the case. Keep communications and evidence relevant to the order; never upload passwords, recovery codes, payment credentials, or unrelated sensitive information.",
+      "Support reviews the order record and submissions from both parties. A buyer may appeal a recorded decision once within 7 days. Cases and actions are retained in the case history and audit log.",
+      "A support decision records a case outcome only. Refunds, partial refunds, and held-fund release are not currently connected to a payment provider and are not executed by this case workflow. Applicable legal rights are not limited by this policy.",
     ],
   },
   {
     id: "refunds",
     title: "Refunds and disputes",
     text: [
-      "Refund eligibility depends on the item, delivery status, and circumstances of the order. Digital goods may be difficult to reverse after delivery or use.",
-      "When checkout and dispute tools are available, use the order page to report an issue before arranging any off-platform refund. GameTrade may review transaction records and information supplied by both parties.",
+      "Buyer-protection cases are available from an eligible order item. Non-delivery cases must be opened within 30 days of order placement; delivery-quality cases must be opened within 7 days of recorded delivery. An appeal may be submitted once within 7 days of a decision.",
+      "Authorized support staff record the outcome and explanation after reviewing case history and evidence. The current workflow does not initiate full or partial refunds, release held funds, or change payment and balance records. Do not treat a case decision as proof that a payment adjustment has occurred.",
       "Nothing in this summary limits rights that cannot be waived under applicable consumer protection law.",
     ],
   },

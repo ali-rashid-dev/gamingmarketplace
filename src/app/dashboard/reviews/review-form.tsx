@@ -69,7 +69,7 @@ export function ReviewForm({
       </fieldset>
       <label className="mt-4 block text-xs text-muted-foreground">
         Feedback
-        <textarea value={comment} onChange={(event) => setComment(event.target.value)} maxLength={2000} rows={4} className="mt-2 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground" />
+        <textarea value={comment} onChange={(event) => setComment(event.target.value)} minLength={1} maxLength={2000} required rows={4} className="mt-2 w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground" />
       </label>
       {error && <p role="alert" className="mt-3 text-sm text-destructive">{error}</p>}
       {saved && <p role="status" className="mt-3 text-sm text-patina">Review submitted.</p>}

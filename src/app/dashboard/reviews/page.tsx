@@ -2,7 +2,6 @@ import { requirePageSession } from "@/lib/authorization";
 import Link from "next/link";
 import { getBuyerReviews } from "../buyer-data";
 import { ReviewForm } from "./review-form";
-import { ReportReviewButton } from "./report-review-button";
 
 export default async function BuyerReviewsPage() {
   const { user } = await requirePageSession();
@@ -48,7 +47,6 @@ export default async function BuyerReviewsPage() {
                   <Link href={`/dashboard/support?orderId=${review.orderItem.order.id}`} className="mt-3 inline-flex text-xs font-semibold text-gold hover:underline">
                     Report seller behavior
                   </Link>
-                  {review.status === "PUBLISHED" && <ReportReviewButton reviewId={review.id} />}
                 </article>
               ))}
             </div>

@@ -598,7 +598,7 @@ export async function submitBuyerReview(
     .object({
       orderItemId: z.string().trim().min(1).max(128),
       rating: z.number().int().min(1).max(5),
-      comment: z.string().trim().max(2000),
+      comment: z.string().trim().min(1, "Write feedback for your purchase").max(2000),
     })
     .strict()
     .safeParse(input);

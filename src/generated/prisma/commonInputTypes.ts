@@ -593,6 +593,31 @@ export type EnumDisputeStatusFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumDisputeStatusFilter<$PrismaModel> | $Enums.DisputeStatus
 }
 
+export type EnumDisputeReasonCodeFilter<$PrismaModel = never> = {
+  equals?: $Enums.DisputeReasonCode | Prisma.EnumDisputeReasonCodeFieldRefInput<$PrismaModel>
+  in?: $Enums.DisputeReasonCode[] | Prisma.ListEnumDisputeReasonCodeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DisputeReasonCode[] | Prisma.ListEnumDisputeReasonCodeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDisputeReasonCodeFilter<$PrismaModel> | $Enums.DisputeReasonCode
+}
+
+export type EnumDisputeDecisionNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.DisputeDecision | Prisma.EnumDisputeDecisionFieldRefInput<$PrismaModel> | null
+  in?: $Enums.DisputeDecision[] | Prisma.ListEnumDisputeDecisionFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.DisputeDecision[] | Prisma.ListEnumDisputeDecisionFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumDisputeDecisionNullableFilter<$PrismaModel> | $Enums.DisputeDecision | null
+}
+
+export type DecimalNullableFilter<$PrismaModel = never> = {
+  equals?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel> | null
+  in?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | Prisma.ListDecimalFieldRefInput<$PrismaModel> | null
+  notIn?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | Prisma.ListDecimalFieldRefInput<$PrismaModel> | null
+  lt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  lte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  gt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  gte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedDecimalNullableFilter<$PrismaModel> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+}
+
 export type EnumDisputeStatusWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.DisputeStatus | Prisma.EnumDisputeStatusFieldRefInput<$PrismaModel>
   in?: $Enums.DisputeStatus[] | Prisma.ListEnumDisputeStatusFieldRefInput<$PrismaModel>
@@ -601,6 +626,86 @@ export type EnumDisputeStatusWithAggregatesFilter<$PrismaModel = never> = {
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumDisputeStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumDisputeStatusFilter<$PrismaModel>
+}
+
+export type EnumDisputeReasonCodeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DisputeReasonCode | Prisma.EnumDisputeReasonCodeFieldRefInput<$PrismaModel>
+  in?: $Enums.DisputeReasonCode[] | Prisma.ListEnumDisputeReasonCodeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DisputeReasonCode[] | Prisma.ListEnumDisputeReasonCodeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDisputeReasonCodeWithAggregatesFilter<$PrismaModel> | $Enums.DisputeReasonCode
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDisputeReasonCodeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDisputeReasonCodeFilter<$PrismaModel>
+}
+
+export type EnumDisputeDecisionNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DisputeDecision | Prisma.EnumDisputeDecisionFieldRefInput<$PrismaModel> | null
+  in?: $Enums.DisputeDecision[] | Prisma.ListEnumDisputeDecisionFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.DisputeDecision[] | Prisma.ListEnumDisputeDecisionFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumDisputeDecisionNullableWithAggregatesFilter<$PrismaModel> | $Enums.DisputeDecision | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDisputeDecisionNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDisputeDecisionNullableFilter<$PrismaModel>
+}
+
+export type DecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel> | null
+  in?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | Prisma.ListDecimalFieldRefInput<$PrismaModel> | null
+  notIn?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | Prisma.ListDecimalFieldRefInput<$PrismaModel> | null
+  lt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  lte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  gt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  gte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedDecimalNullableWithAggregatesFilter<$PrismaModel> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _avg?: Prisma.NestedDecimalNullableFilter<$PrismaModel>
+  _sum?: Prisma.NestedDecimalNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedDecimalNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedDecimalNullableFilter<$PrismaModel>
+}
+
+export type EnumDisputeEventTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.DisputeEventType | Prisma.EnumDisputeEventTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.DisputeEventType[] | Prisma.ListEnumDisputeEventTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DisputeEventType[] | Prisma.ListEnumDisputeEventTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDisputeEventTypeFilter<$PrismaModel> | $Enums.DisputeEventType
+}
+
+export type EnumDisputeEventTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DisputeEventType | Prisma.EnumDisputeEventTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.DisputeEventType[] | Prisma.ListEnumDisputeEventTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DisputeEventType[] | Prisma.ListEnumDisputeEventTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDisputeEventTypeWithAggregatesFilter<$PrismaModel> | $Enums.DisputeEventType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDisputeEventTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDisputeEventTypeFilter<$PrismaModel>
+}
+
+export type IntNullableFilter<$PrismaModel = never> = {
+  equals?: number | Prisma.IntFieldRefInput<$PrismaModel> | null
+  in?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel> | null
+  notIn?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel> | null
+  lt?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  lte?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  gt?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  gte?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedIntNullableFilter<$PrismaModel> | number | null
+}
+
+export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: number | Prisma.IntFieldRefInput<$PrismaModel> | null
+  in?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel> | null
+  notIn?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel> | null
+  lt?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  lte?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  gt?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  gte?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _avg?: Prisma.NestedFloatNullableFilter<$PrismaModel>
+  _sum?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedIntNullableFilter<$PrismaModel>
 }
 
 export type EnumLedgerEntryTypeFilter<$PrismaModel = never> = {
@@ -1294,6 +1399,31 @@ export type NestedEnumDisputeStatusFilter<$PrismaModel = never> = {
   not?: Prisma.NestedEnumDisputeStatusFilter<$PrismaModel> | $Enums.DisputeStatus
 }
 
+export type NestedEnumDisputeReasonCodeFilter<$PrismaModel = never> = {
+  equals?: $Enums.DisputeReasonCode | Prisma.EnumDisputeReasonCodeFieldRefInput<$PrismaModel>
+  in?: $Enums.DisputeReasonCode[] | Prisma.ListEnumDisputeReasonCodeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DisputeReasonCode[] | Prisma.ListEnumDisputeReasonCodeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDisputeReasonCodeFilter<$PrismaModel> | $Enums.DisputeReasonCode
+}
+
+export type NestedEnumDisputeDecisionNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.DisputeDecision | Prisma.EnumDisputeDecisionFieldRefInput<$PrismaModel> | null
+  in?: $Enums.DisputeDecision[] | Prisma.ListEnumDisputeDecisionFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.DisputeDecision[] | Prisma.ListEnumDisputeDecisionFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumDisputeDecisionNullableFilter<$PrismaModel> | $Enums.DisputeDecision | null
+}
+
+export type NestedDecimalNullableFilter<$PrismaModel = never> = {
+  equals?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel> | null
+  in?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | Prisma.ListDecimalFieldRefInput<$PrismaModel> | null
+  notIn?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | Prisma.ListDecimalFieldRefInput<$PrismaModel> | null
+  lt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  lte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  gt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  gte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedDecimalNullableFilter<$PrismaModel> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+}
+
 export type NestedEnumDisputeStatusWithAggregatesFilter<$PrismaModel = never> = {
   equals?: $Enums.DisputeStatus | Prisma.EnumDisputeStatusFieldRefInput<$PrismaModel>
   in?: $Enums.DisputeStatus[] | Prisma.ListEnumDisputeStatusFieldRefInput<$PrismaModel>
@@ -1302,6 +1432,86 @@ export type NestedEnumDisputeStatusWithAggregatesFilter<$PrismaModel = never> = 
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumDisputeStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumDisputeStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumDisputeReasonCodeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DisputeReasonCode | Prisma.EnumDisputeReasonCodeFieldRefInput<$PrismaModel>
+  in?: $Enums.DisputeReasonCode[] | Prisma.ListEnumDisputeReasonCodeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DisputeReasonCode[] | Prisma.ListEnumDisputeReasonCodeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDisputeReasonCodeWithAggregatesFilter<$PrismaModel> | $Enums.DisputeReasonCode
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDisputeReasonCodeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDisputeReasonCodeFilter<$PrismaModel>
+}
+
+export type NestedEnumDisputeDecisionNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DisputeDecision | Prisma.EnumDisputeDecisionFieldRefInput<$PrismaModel> | null
+  in?: $Enums.DisputeDecision[] | Prisma.ListEnumDisputeDecisionFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.DisputeDecision[] | Prisma.ListEnumDisputeDecisionFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumDisputeDecisionNullableWithAggregatesFilter<$PrismaModel> | $Enums.DisputeDecision | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDisputeDecisionNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDisputeDecisionNullableFilter<$PrismaModel>
+}
+
+export type NestedDecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel> | null
+  in?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | Prisma.ListDecimalFieldRefInput<$PrismaModel> | null
+  notIn?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | Prisma.ListDecimalFieldRefInput<$PrismaModel> | null
+  lt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  lte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  gt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  gte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedDecimalNullableWithAggregatesFilter<$PrismaModel> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _avg?: Prisma.NestedDecimalNullableFilter<$PrismaModel>
+  _sum?: Prisma.NestedDecimalNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedDecimalNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedDecimalNullableFilter<$PrismaModel>
+}
+
+export type NestedEnumDisputeEventTypeFilter<$PrismaModel = never> = {
+  equals?: $Enums.DisputeEventType | Prisma.EnumDisputeEventTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.DisputeEventType[] | Prisma.ListEnumDisputeEventTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DisputeEventType[] | Prisma.ListEnumDisputeEventTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDisputeEventTypeFilter<$PrismaModel> | $Enums.DisputeEventType
+}
+
+export type NestedEnumDisputeEventTypeWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.DisputeEventType | Prisma.EnumDisputeEventTypeFieldRefInput<$PrismaModel>
+  in?: $Enums.DisputeEventType[] | Prisma.ListEnumDisputeEventTypeFieldRefInput<$PrismaModel>
+  notIn?: $Enums.DisputeEventType[] | Prisma.ListEnumDisputeEventTypeFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumDisputeEventTypeWithAggregatesFilter<$PrismaModel> | $Enums.DisputeEventType
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumDisputeEventTypeFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumDisputeEventTypeFilter<$PrismaModel>
+}
+
+export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: number | Prisma.IntFieldRefInput<$PrismaModel> | null
+  in?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel> | null
+  notIn?: number[] | Prisma.ListIntFieldRefInput<$PrismaModel> | null
+  lt?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  lte?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  gt?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  gte?: number | Prisma.IntFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _avg?: Prisma.NestedFloatNullableFilter<$PrismaModel>
+  _sum?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedIntNullableFilter<$PrismaModel>
+}
+
+export type NestedFloatNullableFilter<$PrismaModel = never> = {
+  equals?: number | Prisma.FloatFieldRefInput<$PrismaModel> | null
+  in?: number[] | Prisma.ListFloatFieldRefInput<$PrismaModel> | null
+  notIn?: number[] | Prisma.ListFloatFieldRefInput<$PrismaModel> | null
+  lt?: number | Prisma.FloatFieldRefInput<$PrismaModel>
+  lte?: number | Prisma.FloatFieldRefInput<$PrismaModel>
+  gt?: number | Prisma.FloatFieldRefInput<$PrismaModel>
+  gte?: number | Prisma.FloatFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedFloatNullableFilter<$PrismaModel> | number | null
 }
 
 export type NestedEnumLedgerEntryTypeFilter<$PrismaModel = never> = {

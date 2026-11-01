@@ -78,6 +78,8 @@ export const ModelName = {
   Review: 'Review',
   ReviewReport: 'ReviewReport',
   Dispute: 'Dispute',
+  DisputeMessage: 'DisputeMessage',
+  DisputeEvent: 'DisputeEvent',
   DisputeEvidence: 'DisputeEvidence',
   LedgerEntry: 'LedgerEntry',
   Withdrawal: 'Withdrawal',
@@ -490,16 +492,44 @@ export const DisputeScalarFieldEnum = {
   orderId: 'orderId',
   orderItemId: 'orderItemId',
   openedById: 'openedById',
+  assignedToId: 'assignedToId',
   status: 'status',
+  reasonCode: 'reasonCode',
   reason: 'reason',
   description: 'description',
+  decision: 'decision',
+  decisionAmount: 'decisionAmount',
   resolution: 'resolution',
   resolvedAt: 'resolvedAt',
+  appealedAt: 'appealedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type DisputeScalarFieldEnum = (typeof DisputeScalarFieldEnum)[keyof typeof DisputeScalarFieldEnum]
+
+
+export const DisputeMessageScalarFieldEnum = {
+  id: 'id',
+  disputeId: 'disputeId',
+  senderId: 'senderId',
+  body: 'body',
+  createdAt: 'createdAt'
+} as const
+
+export type DisputeMessageScalarFieldEnum = (typeof DisputeMessageScalarFieldEnum)[keyof typeof DisputeMessageScalarFieldEnum]
+
+
+export const DisputeEventScalarFieldEnum = {
+  id: 'id',
+  disputeId: 'disputeId',
+  actorId: 'actorId',
+  type: 'type',
+  details: 'details',
+  createdAt: 'createdAt'
+} as const
+
+export type DisputeEventScalarFieldEnum = (typeof DisputeEventScalarFieldEnum)[keyof typeof DisputeEventScalarFieldEnum]
 
 
 export const DisputeEvidenceScalarFieldEnum = {
@@ -508,6 +538,9 @@ export const DisputeEvidenceScalarFieldEnum = {
   submittedById: 'submittedById',
   url: 'url',
   description: 'description',
+  name: 'name',
+  contentType: 'contentType',
+  size: 'size',
   createdAt: 'createdAt'
 } as const
 

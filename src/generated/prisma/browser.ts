@@ -153,6 +153,16 @@ export type ReviewReport = Prisma.ReviewReportModel
  */
 export type Dispute = Prisma.DisputeModel
 /**
+ * Model DisputeMessage
+ *
+ */
+export type DisputeMessage = Prisma.DisputeMessageModel
+/**
+ * Model DisputeEvent
+ *
+ */
+export type DisputeEvent = Prisma.DisputeEventModel
+/**
  * Model DisputeEvidence
  *
  */

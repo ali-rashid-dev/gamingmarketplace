@@ -110,11 +110,33 @@ provider verification; account passwords and recovery codes must not be put
 in delivery instructions. Configure a delivery SLA before adding due dates or
 overdue alerts rather than deriving deadlines from free-form delivery estimates.
 
+## Buyer protection and disputes
+
+GameTrade's buyer-protection policy allows one active case per eligible order
+item. Buyers may open non-delivery cases within 30 days of order placement and
+delivery-quality cases within 7 days of the recorded delivery timestamp.
+Structured reasons cover non-delivery, invalid goods, goods not as described,
+and other issues. Buyers, the relevant seller, and authorized support staff can
+respond and submit JPEG, PNG, WebP, or PDF evidence up to 8 MB when
+`UPLOADTHING_TOKEN` is configured. A buyer may appeal a recorded decision once
+within 7 days.
+
+Support can assign cases to support agents and record a reasoned decision.
+Decisions and participant responses are retained in case history and the audit
+log. Refund, partial-refund, and release-to-seller decisions are records only:
+the application has no configured payment provider/refund operation, so this
+workflow never changes payment, seller balance, withdrawal, or held-fund state.
+Only a future, separately authorized payment integration may carry out such
+financial operations. This is GameTrade's own case policy, not a claim of
+third-party buyer-protection coverage. Do not upload credentials or unrelated
+sensitive data as evidence.
+
 ## Reviews and reputation
 
-Buyers can review only their own completed order items, with one review per
-item enforced by a unique database constraint. Ratings and review counts are
-calculated server-side from published reviews attached to completed orders.
+Buyers can submit a 1–5 star rating and written feedback only for their own
+completed order items, with one review per item enforced by a unique database
+constraint. Ratings and review counts are calculated server-side from published
+reviews attached to completed orders.
 Seller storefronts display verified-purchase reviews and allow buyers to
 report a review; administrators can resolve reports, hide reviews, or restore
 them, with moderation actions recorded in the audit log. Sellers can post or
