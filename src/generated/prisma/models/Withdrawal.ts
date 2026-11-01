@@ -257,6 +257,7 @@ export type WithdrawalWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Withdrawal"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Withdrawal"> | Date | string
   seller?: Prisma.XOR<Prisma.SellerProfileScalarRelationFilter, Prisma.SellerProfileWhereInput>
+  events?: Prisma.WithdrawalEventListRelationFilter
 }
 
 export type WithdrawalOrderByWithRelationInput = {
@@ -271,10 +272,12 @@ export type WithdrawalOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   seller?: Prisma.SellerProfileOrderByWithRelationInput
+  events?: Prisma.WithdrawalEventOrderByRelationAggregateInput
 }
 
 export type WithdrawalWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  providerReference?: string
   AND?: Prisma.WithdrawalWhereInput | Prisma.WithdrawalWhereInput[]
   OR?: Prisma.WithdrawalWhereInput[]
   NOT?: Prisma.WithdrawalWhereInput | Prisma.WithdrawalWhereInput[]
@@ -282,13 +285,13 @@ export type WithdrawalWhereUniqueInput = Prisma.AtLeast<{
   amount?: Prisma.DecimalFilter<"Withdrawal"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   currency?: Prisma.StringFilter<"Withdrawal"> | string
   status?: Prisma.EnumWithdrawalStatusFilter<"Withdrawal"> | $Enums.WithdrawalStatus
-  providerReference?: Prisma.StringNullableFilter<"Withdrawal"> | string | null
   requestedAt?: Prisma.DateTimeFilter<"Withdrawal"> | Date | string
   processedAt?: Prisma.DateTimeNullableFilter<"Withdrawal"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Withdrawal"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Withdrawal"> | Date | string
   seller?: Prisma.XOR<Prisma.SellerProfileScalarRelationFilter, Prisma.SellerProfileWhereInput>
-}, "id">
+  events?: Prisma.WithdrawalEventListRelationFilter
+}, "id" | "providerReference">
 
 export type WithdrawalOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -335,6 +338,7 @@ export type WithdrawalCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   seller: Prisma.SellerProfileCreateNestedOneWithoutWithdrawalsInput
+  events?: Prisma.WithdrawalEventCreateNestedManyWithoutWithdrawalInput
 }
 
 export type WithdrawalUncheckedCreateInput = {
@@ -348,6 +352,7 @@ export type WithdrawalUncheckedCreateInput = {
   processedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  events?: Prisma.WithdrawalEventUncheckedCreateNestedManyWithoutWithdrawalInput
 }
 
 export type WithdrawalUpdateInput = {
@@ -361,6 +366,7 @@ export type WithdrawalUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   seller?: Prisma.SellerProfileUpdateOneRequiredWithoutWithdrawalsNestedInput
+  events?: Prisma.WithdrawalEventUpdateManyWithoutWithdrawalNestedInput
 }
 
 export type WithdrawalUncheckedUpdateInput = {
@@ -374,6 +380,7 @@ export type WithdrawalUncheckedUpdateInput = {
   processedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  events?: Prisma.WithdrawalEventUncheckedUpdateManyWithoutWithdrawalNestedInput
 }
 
 export type WithdrawalCreateManyInput = {
@@ -471,6 +478,11 @@ export type WithdrawalSumOrderByAggregateInput = {
   amount?: Prisma.SortOrder
 }
 
+export type WithdrawalScalarRelationFilter = {
+  is?: Prisma.WithdrawalWhereInput
+  isNot?: Prisma.WithdrawalWhereInput
+}
+
 export type WithdrawalCreateNestedManyWithoutSellerInput = {
   create?: Prisma.XOR<Prisma.WithdrawalCreateWithoutSellerInput, Prisma.WithdrawalUncheckedCreateWithoutSellerInput> | Prisma.WithdrawalCreateWithoutSellerInput[] | Prisma.WithdrawalUncheckedCreateWithoutSellerInput[]
   connectOrCreate?: Prisma.WithdrawalCreateOrConnectWithoutSellerInput | Prisma.WithdrawalCreateOrConnectWithoutSellerInput[]
@@ -517,6 +529,20 @@ export type EnumWithdrawalStatusFieldUpdateOperationsInput = {
   set?: $Enums.WithdrawalStatus
 }
 
+export type WithdrawalCreateNestedOneWithoutEventsInput = {
+  create?: Prisma.XOR<Prisma.WithdrawalCreateWithoutEventsInput, Prisma.WithdrawalUncheckedCreateWithoutEventsInput>
+  connectOrCreate?: Prisma.WithdrawalCreateOrConnectWithoutEventsInput
+  connect?: Prisma.WithdrawalWhereUniqueInput
+}
+
+export type WithdrawalUpdateOneRequiredWithoutEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.WithdrawalCreateWithoutEventsInput, Prisma.WithdrawalUncheckedCreateWithoutEventsInput>
+  connectOrCreate?: Prisma.WithdrawalCreateOrConnectWithoutEventsInput
+  upsert?: Prisma.WithdrawalUpsertWithoutEventsInput
+  connect?: Prisma.WithdrawalWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.WithdrawalUpdateToOneWithWhereWithoutEventsInput, Prisma.WithdrawalUpdateWithoutEventsInput>, Prisma.WithdrawalUncheckedUpdateWithoutEventsInput>
+}
+
 export type WithdrawalCreateWithoutSellerInput = {
   id?: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -527,6 +553,7 @@ export type WithdrawalCreateWithoutSellerInput = {
   processedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  events?: Prisma.WithdrawalEventCreateNestedManyWithoutWithdrawalInput
 }
 
 export type WithdrawalUncheckedCreateWithoutSellerInput = {
@@ -539,6 +566,7 @@ export type WithdrawalUncheckedCreateWithoutSellerInput = {
   processedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  events?: Prisma.WithdrawalEventUncheckedCreateNestedManyWithoutWithdrawalInput
 }
 
 export type WithdrawalCreateOrConnectWithoutSellerInput = {
@@ -583,6 +611,74 @@ export type WithdrawalScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Withdrawal"> | Date | string
 }
 
+export type WithdrawalCreateWithoutEventsInput = {
+  id?: string
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency: string
+  status?: $Enums.WithdrawalStatus
+  providerReference?: string | null
+  requestedAt?: Date | string
+  processedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  seller: Prisma.SellerProfileCreateNestedOneWithoutWithdrawalsInput
+}
+
+export type WithdrawalUncheckedCreateWithoutEventsInput = {
+  id?: string
+  sellerId: string
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency: string
+  status?: $Enums.WithdrawalStatus
+  providerReference?: string | null
+  requestedAt?: Date | string
+  processedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type WithdrawalCreateOrConnectWithoutEventsInput = {
+  where: Prisma.WithdrawalWhereUniqueInput
+  create: Prisma.XOR<Prisma.WithdrawalCreateWithoutEventsInput, Prisma.WithdrawalUncheckedCreateWithoutEventsInput>
+}
+
+export type WithdrawalUpsertWithoutEventsInput = {
+  update: Prisma.XOR<Prisma.WithdrawalUpdateWithoutEventsInput, Prisma.WithdrawalUncheckedUpdateWithoutEventsInput>
+  create: Prisma.XOR<Prisma.WithdrawalCreateWithoutEventsInput, Prisma.WithdrawalUncheckedCreateWithoutEventsInput>
+  where?: Prisma.WithdrawalWhereInput
+}
+
+export type WithdrawalUpdateToOneWithWhereWithoutEventsInput = {
+  where?: Prisma.WithdrawalWhereInput
+  data: Prisma.XOR<Prisma.WithdrawalUpdateWithoutEventsInput, Prisma.WithdrawalUncheckedUpdateWithoutEventsInput>
+}
+
+export type WithdrawalUpdateWithoutEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumWithdrawalStatusFieldUpdateOperationsInput | $Enums.WithdrawalStatus
+  providerReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requestedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  processedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  seller?: Prisma.SellerProfileUpdateOneRequiredWithoutWithdrawalsNestedInput
+}
+
+export type WithdrawalUncheckedUpdateWithoutEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  sellerId?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumWithdrawalStatusFieldUpdateOperationsInput | $Enums.WithdrawalStatus
+  providerReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  requestedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  processedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type WithdrawalCreateManySellerInput = {
   id?: string
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
@@ -605,6 +701,7 @@ export type WithdrawalUpdateWithoutSellerInput = {
   processedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  events?: Prisma.WithdrawalEventUpdateManyWithoutWithdrawalNestedInput
 }
 
 export type WithdrawalUncheckedUpdateWithoutSellerInput = {
@@ -617,6 +714,7 @@ export type WithdrawalUncheckedUpdateWithoutSellerInput = {
   processedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  events?: Prisma.WithdrawalEventUncheckedUpdateManyWithoutWithdrawalNestedInput
 }
 
 export type WithdrawalUncheckedUpdateManyWithoutSellerInput = {
@@ -632,6 +730,35 @@ export type WithdrawalUncheckedUpdateManyWithoutSellerInput = {
 }
 
 
+/**
+ * Count Type WithdrawalCountOutputType
+ */
+
+export type WithdrawalCountOutputType = {
+  events: number
+}
+
+export type WithdrawalCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  events?: boolean | WithdrawalCountOutputTypeCountEventsArgs
+}
+
+/**
+ * WithdrawalCountOutputType without action
+ */
+export type WithdrawalCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WithdrawalCountOutputType
+   */
+  select?: Prisma.WithdrawalCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * WithdrawalCountOutputType without action
+ */
+export type WithdrawalCountOutputTypeCountEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.WithdrawalEventWhereInput
+}
+
 
 export type WithdrawalSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -645,6 +772,8 @@ export type WithdrawalSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   createdAt?: boolean
   updatedAt?: boolean
   seller?: boolean | Prisma.SellerProfileDefaultArgs<ExtArgs>
+  events?: boolean | Prisma.Withdrawal$eventsArgs<ExtArgs>
+  _count?: boolean | Prisma.WithdrawalCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["withdrawal"]>
 
 export type WithdrawalSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -691,6 +820,8 @@ export type WithdrawalSelectScalar = {
 export type WithdrawalOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sellerId" | "amount" | "currency" | "status" | "providerReference" | "requestedAt" | "processedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["withdrawal"]>
 export type WithdrawalInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   seller?: boolean | Prisma.SellerProfileDefaultArgs<ExtArgs>
+  events?: boolean | Prisma.Withdrawal$eventsArgs<ExtArgs>
+  _count?: boolean | Prisma.WithdrawalCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type WithdrawalIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   seller?: boolean | Prisma.SellerProfileDefaultArgs<ExtArgs>
@@ -703,6 +834,7 @@ export type $WithdrawalPayload<ExtArgs extends runtime.Types.Extensions.Internal
   name: "Withdrawal"
   objects: {
     seller: Prisma.$SellerProfilePayload<ExtArgs>
+    events: Prisma.$WithdrawalEventPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1110,6 +1242,7 @@ readonly fields: WithdrawalFieldRefs;
 export interface Prisma__WithdrawalClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   seller<T extends Prisma.SellerProfileDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SellerProfileDefaultArgs<ExtArgs>>): Prisma.Prisma__SellerProfileClient<runtime.Types.Result.GetResult<Prisma.$SellerProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  events<T extends Prisma.Withdrawal$eventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Withdrawal$eventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WithdrawalEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1547,6 +1680,30 @@ export type WithdrawalDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.In
    * Limit how many Withdrawals to delete.
    */
   limit?: number
+}
+
+/**
+ * Withdrawal.events
+ */
+export type Withdrawal$eventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WithdrawalEvent
+   */
+  select?: Prisma.WithdrawalEventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the WithdrawalEvent
+   */
+  omit?: Prisma.WithdrawalEventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WithdrawalEventInclude<ExtArgs> | null
+  where?: Prisma.WithdrawalEventWhereInput
+  orderBy?: Prisma.WithdrawalEventOrderByWithRelationInput | Prisma.WithdrawalEventOrderByWithRelationInput[]
+  cursor?: Prisma.WithdrawalEventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.WithdrawalEventScalarFieldEnum | Prisma.WithdrawalEventScalarFieldEnum[]
 }
 
 /**

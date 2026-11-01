@@ -1,4 +1,5 @@
 import { getSellerEarnings, getSellerOverview } from "../dashboard-data";
+import { WithdrawalRequestForm } from "./withdrawal-request-form";
 
 export default async function SellerEarningsPage() {
   const [history, overview] = await Promise.all([getSellerEarnings(), getSellerOverview()]);
@@ -14,7 +15,7 @@ export default async function SellerEarningsPage() {
             <p className="text-xs text-cyan-200">{balance.currency}</p>
             <p className="mt-3 text-xs text-slate-400">Available balance<span className="mt-1 block text-2xl font-semibold text-white">{balance.available}</span></p>
             <p className="mt-3 text-xs text-slate-400">Pending payout<span className="mt-1 block text-lg font-semibold text-white">{balance.pendingPayout}</span></p>
-            <p className="mt-3 text-xs text-slate-400">Pending order balance<span className="mt-1 block text-lg font-semibold text-white">{balance.pendingBalance}</span></p>
+            <p className="mt-3 text-xs text-slate-400">Pending order gross (not withdrawable)<span className="mt-1 block text-lg font-semibold text-white">{balance.pendingBalance}</span></p>
           </article>
         )) : (
           <p className="rounded-2xl border border-dashed border-white/15 p-5 text-sm text-slate-400">No ledger balance is available yet.</p>
@@ -23,7 +24,8 @@ export default async function SellerEarningsPage() {
 
       <section className="mt-8 grid min-w-0 gap-6 xl:grid-cols-2">
         <div id="withdrawals" className="scroll-mt-20 min-w-0">
-          <h2 className="font-semibold text-white">Completed sales</h2>
+          <h2 className="font-semibold text-white">Completed item sales (gross)</h2>
+          <p className="mt-1 text-xs text-slate-500">Gross order totals are not the same as settled seller earnings.</p>
           {history.sales.length ? (
             <ul className="mt-3 divide-y divide-white/[0.07] rounded-2xl border border-white/[0.09] bg-card px-4">
               {history.sales.map((sale) => (
@@ -43,13 +45,17 @@ export default async function SellerEarningsPage() {
                 <li key={withdrawal.id} className="flex flex-wrap justify-between gap-2 py-3 text-sm">
                   <span><span className="block text-slate-200">{withdrawal.status.toLowerCase()}</span><span className="text-xs text-slate-500">{withdrawal.requestedAt.toLocaleDateString()}</span></span>
                   <span className="text-slate-200">{withdrawal.currency} {withdrawal.amount}</span>
+                  {withdrawal.providerReference && <span className="basis-full text-xs text-slate-500">Reference: {withdrawal.providerReference}</span>}
                 </li>
               ))}
             </ul>
           ) : <p className="mt-3 rounded-xl border border-dashed border-white/15 p-5 text-sm text-slate-400">No payout requests have been recorded.</p>}
           <p className="mt-3 rounded-xl border border-amber-300/15 bg-amber-300/[0.04] p-4 text-xs leading-5 text-amber-100/80">
-            Payout method setup and withdrawal requests are not available in this marketplace yet. No bank or payment credentials are collected here.
+            Requests reserve settled ledger funds only. GameTrade has no payment or payout gateway configured, so a request records intent and never moves money. Do not send bank or payment credentials here.
           </p>
+          {overview.metrics.balances.filter((balance) => Number(balance.available) > 0).map((balance) => (
+            <WithdrawalRequestForm key={balance.currency} currency={balance.currency} />
+          ))}
         </div>
       </section>
       <section id="transactions" className="mt-8 scroll-mt-20">

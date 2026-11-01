@@ -44,6 +44,9 @@ export type LedgerEntryMinAggregateOutputType = {
   sourceId: string | null
   description: string | null
   createdAt: Date | null
+  availableAt: Date | null
+  idempotencyKey: string | null
+  orderItemId: string | null
 }
 
 export type LedgerEntryMaxAggregateOutputType = {
@@ -56,6 +59,9 @@ export type LedgerEntryMaxAggregateOutputType = {
   sourceId: string | null
   description: string | null
   createdAt: Date | null
+  availableAt: Date | null
+  idempotencyKey: string | null
+  orderItemId: string | null
 }
 
 export type LedgerEntryCountAggregateOutputType = {
@@ -68,6 +74,9 @@ export type LedgerEntryCountAggregateOutputType = {
   sourceId: number
   description: number
   createdAt: number
+  availableAt: number
+  idempotencyKey: number
+  orderItemId: number
   _all: number
 }
 
@@ -90,6 +99,9 @@ export type LedgerEntryMinAggregateInputType = {
   sourceId?: true
   description?: true
   createdAt?: true
+  availableAt?: true
+  idempotencyKey?: true
+  orderItemId?: true
 }
 
 export type LedgerEntryMaxAggregateInputType = {
@@ -102,6 +114,9 @@ export type LedgerEntryMaxAggregateInputType = {
   sourceId?: true
   description?: true
   createdAt?: true
+  availableAt?: true
+  idempotencyKey?: true
+  orderItemId?: true
 }
 
 export type LedgerEntryCountAggregateInputType = {
@@ -114,6 +129,9 @@ export type LedgerEntryCountAggregateInputType = {
   sourceId?: true
   description?: true
   createdAt?: true
+  availableAt?: true
+  idempotencyKey?: true
+  orderItemId?: true
   _all?: true
 }
 
@@ -213,6 +231,9 @@ export type LedgerEntryGroupByOutputType = {
   sourceId: string
   description: string | null
   createdAt: Date
+  availableAt: Date | null
+  idempotencyKey: string
+  orderItemId: string | null
   _count: LedgerEntryCountAggregateOutputType | null
   _avg: LedgerEntryAvgAggregateOutputType | null
   _sum: LedgerEntrySumAggregateOutputType | null
@@ -248,7 +269,11 @@ export type LedgerEntryWhereInput = {
   sourceId?: Prisma.StringFilter<"LedgerEntry"> | string
   description?: Prisma.StringNullableFilter<"LedgerEntry"> | string | null
   createdAt?: Prisma.DateTimeFilter<"LedgerEntry"> | Date | string
+  availableAt?: Prisma.DateTimeNullableFilter<"LedgerEntry"> | Date | string | null
+  idempotencyKey?: Prisma.StringFilter<"LedgerEntry"> | string
+  orderItemId?: Prisma.StringNullableFilter<"LedgerEntry"> | string | null
   seller?: Prisma.XOR<Prisma.SellerProfileScalarRelationFilter, Prisma.SellerProfileWhereInput>
+  orderItem?: Prisma.XOR<Prisma.OrderItemNullableScalarRelationFilter, Prisma.OrderItemWhereInput> | null
 }
 
 export type LedgerEntryOrderByWithRelationInput = {
@@ -261,11 +286,16 @@ export type LedgerEntryOrderByWithRelationInput = {
   sourceId?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  availableAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  idempotencyKey?: Prisma.SortOrder
+  orderItemId?: Prisma.SortOrderInput | Prisma.SortOrder
   seller?: Prisma.SellerProfileOrderByWithRelationInput
+  orderItem?: Prisma.OrderItemOrderByWithRelationInput
 }
 
 export type LedgerEntryWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  idempotencyKey?: string
   AND?: Prisma.LedgerEntryWhereInput | Prisma.LedgerEntryWhereInput[]
   OR?: Prisma.LedgerEntryWhereInput[]
   NOT?: Prisma.LedgerEntryWhereInput | Prisma.LedgerEntryWhereInput[]
@@ -277,8 +307,11 @@ export type LedgerEntryWhereUniqueInput = Prisma.AtLeast<{
   sourceId?: Prisma.StringFilter<"LedgerEntry"> | string
   description?: Prisma.StringNullableFilter<"LedgerEntry"> | string | null
   createdAt?: Prisma.DateTimeFilter<"LedgerEntry"> | Date | string
+  availableAt?: Prisma.DateTimeNullableFilter<"LedgerEntry"> | Date | string | null
+  orderItemId?: Prisma.StringNullableFilter<"LedgerEntry"> | string | null
   seller?: Prisma.XOR<Prisma.SellerProfileScalarRelationFilter, Prisma.SellerProfileWhereInput>
-}, "id">
+  orderItem?: Prisma.XOR<Prisma.OrderItemNullableScalarRelationFilter, Prisma.OrderItemWhereInput> | null
+}, "id" | "idempotencyKey">
 
 export type LedgerEntryOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -290,6 +323,9 @@ export type LedgerEntryOrderByWithAggregationInput = {
   sourceId?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  availableAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  idempotencyKey?: Prisma.SortOrder
+  orderItemId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.LedgerEntryCountOrderByAggregateInput
   _avg?: Prisma.LedgerEntryAvgOrderByAggregateInput
   _max?: Prisma.LedgerEntryMaxOrderByAggregateInput
@@ -310,6 +346,9 @@ export type LedgerEntryScalarWhereWithAggregatesInput = {
   sourceId?: Prisma.StringWithAggregatesFilter<"LedgerEntry"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"LedgerEntry"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"LedgerEntry"> | Date | string
+  availableAt?: Prisma.DateTimeNullableWithAggregatesFilter<"LedgerEntry"> | Date | string | null
+  idempotencyKey?: Prisma.StringWithAggregatesFilter<"LedgerEntry"> | string
+  orderItemId?: Prisma.StringNullableWithAggregatesFilter<"LedgerEntry"> | string | null
 }
 
 export type LedgerEntryCreateInput = {
@@ -321,7 +360,10 @@ export type LedgerEntryCreateInput = {
   sourceId: string
   description?: string | null
   createdAt?: Date | string
+  availableAt?: Date | string | null
+  idempotencyKey: string
   seller: Prisma.SellerProfileCreateNestedOneWithoutLedgerEntriesInput
+  orderItem?: Prisma.OrderItemCreateNestedOneWithoutLedgerEntriesInput
 }
 
 export type LedgerEntryUncheckedCreateInput = {
@@ -334,6 +376,9 @@ export type LedgerEntryUncheckedCreateInput = {
   sourceId: string
   description?: string | null
   createdAt?: Date | string
+  availableAt?: Date | string | null
+  idempotencyKey: string
+  orderItemId?: string | null
 }
 
 export type LedgerEntryUpdateInput = {
@@ -345,7 +390,10 @@ export type LedgerEntryUpdateInput = {
   sourceId?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  availableAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  idempotencyKey?: Prisma.StringFieldUpdateOperationsInput | string
   seller?: Prisma.SellerProfileUpdateOneRequiredWithoutLedgerEntriesNestedInput
+  orderItem?: Prisma.OrderItemUpdateOneWithoutLedgerEntriesNestedInput
 }
 
 export type LedgerEntryUncheckedUpdateInput = {
@@ -358,6 +406,9 @@ export type LedgerEntryUncheckedUpdateInput = {
   sourceId?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  availableAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  idempotencyKey?: Prisma.StringFieldUpdateOperationsInput | string
+  orderItemId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type LedgerEntryCreateManyInput = {
@@ -370,6 +421,9 @@ export type LedgerEntryCreateManyInput = {
   sourceId: string
   description?: string | null
   createdAt?: Date | string
+  availableAt?: Date | string | null
+  idempotencyKey: string
+  orderItemId?: string | null
 }
 
 export type LedgerEntryUpdateManyMutationInput = {
@@ -381,6 +435,8 @@ export type LedgerEntryUpdateManyMutationInput = {
   sourceId?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  availableAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  idempotencyKey?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 export type LedgerEntryUncheckedUpdateManyInput = {
@@ -393,6 +449,9 @@ export type LedgerEntryUncheckedUpdateManyInput = {
   sourceId?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  availableAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  idempotencyKey?: Prisma.StringFieldUpdateOperationsInput | string
+  orderItemId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type LedgerEntryListRelationFilter = {
@@ -415,6 +474,9 @@ export type LedgerEntryCountOrderByAggregateInput = {
   sourceId?: Prisma.SortOrder
   description?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  availableAt?: Prisma.SortOrder
+  idempotencyKey?: Prisma.SortOrder
+  orderItemId?: Prisma.SortOrder
 }
 
 export type LedgerEntryAvgOrderByAggregateInput = {
@@ -431,6 +493,9 @@ export type LedgerEntryMaxOrderByAggregateInput = {
   sourceId?: Prisma.SortOrder
   description?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  availableAt?: Prisma.SortOrder
+  idempotencyKey?: Prisma.SortOrder
+  orderItemId?: Prisma.SortOrder
 }
 
 export type LedgerEntryMinOrderByAggregateInput = {
@@ -443,6 +508,9 @@ export type LedgerEntryMinOrderByAggregateInput = {
   sourceId?: Prisma.SortOrder
   description?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  availableAt?: Prisma.SortOrder
+  idempotencyKey?: Prisma.SortOrder
+  orderItemId?: Prisma.SortOrder
 }
 
 export type LedgerEntrySumOrderByAggregateInput = {
@@ -491,6 +559,48 @@ export type LedgerEntryUncheckedUpdateManyWithoutSellerNestedInput = {
   deleteMany?: Prisma.LedgerEntryScalarWhereInput | Prisma.LedgerEntryScalarWhereInput[]
 }
 
+export type LedgerEntryCreateNestedManyWithoutOrderItemInput = {
+  create?: Prisma.XOR<Prisma.LedgerEntryCreateWithoutOrderItemInput, Prisma.LedgerEntryUncheckedCreateWithoutOrderItemInput> | Prisma.LedgerEntryCreateWithoutOrderItemInput[] | Prisma.LedgerEntryUncheckedCreateWithoutOrderItemInput[]
+  connectOrCreate?: Prisma.LedgerEntryCreateOrConnectWithoutOrderItemInput | Prisma.LedgerEntryCreateOrConnectWithoutOrderItemInput[]
+  createMany?: Prisma.LedgerEntryCreateManyOrderItemInputEnvelope
+  connect?: Prisma.LedgerEntryWhereUniqueInput | Prisma.LedgerEntryWhereUniqueInput[]
+}
+
+export type LedgerEntryUncheckedCreateNestedManyWithoutOrderItemInput = {
+  create?: Prisma.XOR<Prisma.LedgerEntryCreateWithoutOrderItemInput, Prisma.LedgerEntryUncheckedCreateWithoutOrderItemInput> | Prisma.LedgerEntryCreateWithoutOrderItemInput[] | Prisma.LedgerEntryUncheckedCreateWithoutOrderItemInput[]
+  connectOrCreate?: Prisma.LedgerEntryCreateOrConnectWithoutOrderItemInput | Prisma.LedgerEntryCreateOrConnectWithoutOrderItemInput[]
+  createMany?: Prisma.LedgerEntryCreateManyOrderItemInputEnvelope
+  connect?: Prisma.LedgerEntryWhereUniqueInput | Prisma.LedgerEntryWhereUniqueInput[]
+}
+
+export type LedgerEntryUpdateManyWithoutOrderItemNestedInput = {
+  create?: Prisma.XOR<Prisma.LedgerEntryCreateWithoutOrderItemInput, Prisma.LedgerEntryUncheckedCreateWithoutOrderItemInput> | Prisma.LedgerEntryCreateWithoutOrderItemInput[] | Prisma.LedgerEntryUncheckedCreateWithoutOrderItemInput[]
+  connectOrCreate?: Prisma.LedgerEntryCreateOrConnectWithoutOrderItemInput | Prisma.LedgerEntryCreateOrConnectWithoutOrderItemInput[]
+  upsert?: Prisma.LedgerEntryUpsertWithWhereUniqueWithoutOrderItemInput | Prisma.LedgerEntryUpsertWithWhereUniqueWithoutOrderItemInput[]
+  createMany?: Prisma.LedgerEntryCreateManyOrderItemInputEnvelope
+  set?: Prisma.LedgerEntryWhereUniqueInput | Prisma.LedgerEntryWhereUniqueInput[]
+  disconnect?: Prisma.LedgerEntryWhereUniqueInput | Prisma.LedgerEntryWhereUniqueInput[]
+  delete?: Prisma.LedgerEntryWhereUniqueInput | Prisma.LedgerEntryWhereUniqueInput[]
+  connect?: Prisma.LedgerEntryWhereUniqueInput | Prisma.LedgerEntryWhereUniqueInput[]
+  update?: Prisma.LedgerEntryUpdateWithWhereUniqueWithoutOrderItemInput | Prisma.LedgerEntryUpdateWithWhereUniqueWithoutOrderItemInput[]
+  updateMany?: Prisma.LedgerEntryUpdateManyWithWhereWithoutOrderItemInput | Prisma.LedgerEntryUpdateManyWithWhereWithoutOrderItemInput[]
+  deleteMany?: Prisma.LedgerEntryScalarWhereInput | Prisma.LedgerEntryScalarWhereInput[]
+}
+
+export type LedgerEntryUncheckedUpdateManyWithoutOrderItemNestedInput = {
+  create?: Prisma.XOR<Prisma.LedgerEntryCreateWithoutOrderItemInput, Prisma.LedgerEntryUncheckedCreateWithoutOrderItemInput> | Prisma.LedgerEntryCreateWithoutOrderItemInput[] | Prisma.LedgerEntryUncheckedCreateWithoutOrderItemInput[]
+  connectOrCreate?: Prisma.LedgerEntryCreateOrConnectWithoutOrderItemInput | Prisma.LedgerEntryCreateOrConnectWithoutOrderItemInput[]
+  upsert?: Prisma.LedgerEntryUpsertWithWhereUniqueWithoutOrderItemInput | Prisma.LedgerEntryUpsertWithWhereUniqueWithoutOrderItemInput[]
+  createMany?: Prisma.LedgerEntryCreateManyOrderItemInputEnvelope
+  set?: Prisma.LedgerEntryWhereUniqueInput | Prisma.LedgerEntryWhereUniqueInput[]
+  disconnect?: Prisma.LedgerEntryWhereUniqueInput | Prisma.LedgerEntryWhereUniqueInput[]
+  delete?: Prisma.LedgerEntryWhereUniqueInput | Prisma.LedgerEntryWhereUniqueInput[]
+  connect?: Prisma.LedgerEntryWhereUniqueInput | Prisma.LedgerEntryWhereUniqueInput[]
+  update?: Prisma.LedgerEntryUpdateWithWhereUniqueWithoutOrderItemInput | Prisma.LedgerEntryUpdateWithWhereUniqueWithoutOrderItemInput[]
+  updateMany?: Prisma.LedgerEntryUpdateManyWithWhereWithoutOrderItemInput | Prisma.LedgerEntryUpdateManyWithWhereWithoutOrderItemInput[]
+  deleteMany?: Prisma.LedgerEntryScalarWhereInput | Prisma.LedgerEntryScalarWhereInput[]
+}
+
 export type EnumLedgerEntryTypeFieldUpdateOperationsInput = {
   set?: $Enums.LedgerEntryType
 }
@@ -508,6 +618,9 @@ export type LedgerEntryCreateWithoutSellerInput = {
   sourceId: string
   description?: string | null
   createdAt?: Date | string
+  availableAt?: Date | string | null
+  idempotencyKey: string
+  orderItem?: Prisma.OrderItemCreateNestedOneWithoutLedgerEntriesInput
 }
 
 export type LedgerEntryUncheckedCreateWithoutSellerInput = {
@@ -519,6 +632,9 @@ export type LedgerEntryUncheckedCreateWithoutSellerInput = {
   sourceId: string
   description?: string | null
   createdAt?: Date | string
+  availableAt?: Date | string | null
+  idempotencyKey: string
+  orderItemId?: string | null
 }
 
 export type LedgerEntryCreateOrConnectWithoutSellerInput = {
@@ -560,6 +676,63 @@ export type LedgerEntryScalarWhereInput = {
   sourceId?: Prisma.StringFilter<"LedgerEntry"> | string
   description?: Prisma.StringNullableFilter<"LedgerEntry"> | string | null
   createdAt?: Prisma.DateTimeFilter<"LedgerEntry"> | Date | string
+  availableAt?: Prisma.DateTimeNullableFilter<"LedgerEntry"> | Date | string | null
+  idempotencyKey?: Prisma.StringFilter<"LedgerEntry"> | string
+  orderItemId?: Prisma.StringNullableFilter<"LedgerEntry"> | string | null
+}
+
+export type LedgerEntryCreateWithoutOrderItemInput = {
+  id?: string
+  type: $Enums.LedgerEntryType
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency: string
+  sourceType: $Enums.LedgerSourceType
+  sourceId: string
+  description?: string | null
+  createdAt?: Date | string
+  availableAt?: Date | string | null
+  idempotencyKey: string
+  seller: Prisma.SellerProfileCreateNestedOneWithoutLedgerEntriesInput
+}
+
+export type LedgerEntryUncheckedCreateWithoutOrderItemInput = {
+  id?: string
+  sellerId: string
+  type: $Enums.LedgerEntryType
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency: string
+  sourceType: $Enums.LedgerSourceType
+  sourceId: string
+  description?: string | null
+  createdAt?: Date | string
+  availableAt?: Date | string | null
+  idempotencyKey: string
+}
+
+export type LedgerEntryCreateOrConnectWithoutOrderItemInput = {
+  where: Prisma.LedgerEntryWhereUniqueInput
+  create: Prisma.XOR<Prisma.LedgerEntryCreateWithoutOrderItemInput, Prisma.LedgerEntryUncheckedCreateWithoutOrderItemInput>
+}
+
+export type LedgerEntryCreateManyOrderItemInputEnvelope = {
+  data: Prisma.LedgerEntryCreateManyOrderItemInput | Prisma.LedgerEntryCreateManyOrderItemInput[]
+  skipDuplicates?: boolean
+}
+
+export type LedgerEntryUpsertWithWhereUniqueWithoutOrderItemInput = {
+  where: Prisma.LedgerEntryWhereUniqueInput
+  update: Prisma.XOR<Prisma.LedgerEntryUpdateWithoutOrderItemInput, Prisma.LedgerEntryUncheckedUpdateWithoutOrderItemInput>
+  create: Prisma.XOR<Prisma.LedgerEntryCreateWithoutOrderItemInput, Prisma.LedgerEntryUncheckedCreateWithoutOrderItemInput>
+}
+
+export type LedgerEntryUpdateWithWhereUniqueWithoutOrderItemInput = {
+  where: Prisma.LedgerEntryWhereUniqueInput
+  data: Prisma.XOR<Prisma.LedgerEntryUpdateWithoutOrderItemInput, Prisma.LedgerEntryUncheckedUpdateWithoutOrderItemInput>
+}
+
+export type LedgerEntryUpdateManyWithWhereWithoutOrderItemInput = {
+  where: Prisma.LedgerEntryScalarWhereInput
+  data: Prisma.XOR<Prisma.LedgerEntryUpdateManyMutationInput, Prisma.LedgerEntryUncheckedUpdateManyWithoutOrderItemInput>
 }
 
 export type LedgerEntryCreateManySellerInput = {
@@ -571,6 +744,9 @@ export type LedgerEntryCreateManySellerInput = {
   sourceId: string
   description?: string | null
   createdAt?: Date | string
+  availableAt?: Date | string | null
+  idempotencyKey: string
+  orderItemId?: string | null
 }
 
 export type LedgerEntryUpdateWithoutSellerInput = {
@@ -582,6 +758,9 @@ export type LedgerEntryUpdateWithoutSellerInput = {
   sourceId?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  availableAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  idempotencyKey?: Prisma.StringFieldUpdateOperationsInput | string
+  orderItem?: Prisma.OrderItemUpdateOneWithoutLedgerEntriesNestedInput
 }
 
 export type LedgerEntryUncheckedUpdateWithoutSellerInput = {
@@ -593,6 +772,9 @@ export type LedgerEntryUncheckedUpdateWithoutSellerInput = {
   sourceId?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  availableAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  idempotencyKey?: Prisma.StringFieldUpdateOperationsInput | string
+  orderItemId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type LedgerEntryUncheckedUpdateManyWithoutSellerInput = {
@@ -604,6 +786,65 @@ export type LedgerEntryUncheckedUpdateManyWithoutSellerInput = {
   sourceId?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  availableAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  idempotencyKey?: Prisma.StringFieldUpdateOperationsInput | string
+  orderItemId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+}
+
+export type LedgerEntryCreateManyOrderItemInput = {
+  id?: string
+  sellerId: string
+  type: $Enums.LedgerEntryType
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency: string
+  sourceType: $Enums.LedgerSourceType
+  sourceId: string
+  description?: string | null
+  createdAt?: Date | string
+  availableAt?: Date | string | null
+  idempotencyKey: string
+}
+
+export type LedgerEntryUpdateWithoutOrderItemInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumLedgerEntryTypeFieldUpdateOperationsInput | $Enums.LedgerEntryType
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceType?: Prisma.EnumLedgerSourceTypeFieldUpdateOperationsInput | $Enums.LedgerSourceType
+  sourceId?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  availableAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  idempotencyKey?: Prisma.StringFieldUpdateOperationsInput | string
+  seller?: Prisma.SellerProfileUpdateOneRequiredWithoutLedgerEntriesNestedInput
+}
+
+export type LedgerEntryUncheckedUpdateWithoutOrderItemInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  sellerId?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumLedgerEntryTypeFieldUpdateOperationsInput | $Enums.LedgerEntryType
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceType?: Prisma.EnumLedgerSourceTypeFieldUpdateOperationsInput | $Enums.LedgerSourceType
+  sourceId?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  availableAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  idempotencyKey?: Prisma.StringFieldUpdateOperationsInput | string
+}
+
+export type LedgerEntryUncheckedUpdateManyWithoutOrderItemInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  sellerId?: Prisma.StringFieldUpdateOperationsInput | string
+  type?: Prisma.EnumLedgerEntryTypeFieldUpdateOperationsInput | $Enums.LedgerEntryType
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  sourceType?: Prisma.EnumLedgerSourceTypeFieldUpdateOperationsInput | $Enums.LedgerSourceType
+  sourceId?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  availableAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  idempotencyKey?: Prisma.StringFieldUpdateOperationsInput | string
 }
 
 
@@ -618,7 +859,11 @@ export type LedgerEntrySelect<ExtArgs extends runtime.Types.Extensions.InternalA
   sourceId?: boolean
   description?: boolean
   createdAt?: boolean
+  availableAt?: boolean
+  idempotencyKey?: boolean
+  orderItemId?: boolean
   seller?: boolean | Prisma.SellerProfileDefaultArgs<ExtArgs>
+  orderItem?: boolean | Prisma.LedgerEntry$orderItemArgs<ExtArgs>
 }, ExtArgs["result"]["ledgerEntry"]>
 
 export type LedgerEntrySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -631,7 +876,11 @@ export type LedgerEntrySelectCreateManyAndReturn<ExtArgs extends runtime.Types.E
   sourceId?: boolean
   description?: boolean
   createdAt?: boolean
+  availableAt?: boolean
+  idempotencyKey?: boolean
+  orderItemId?: boolean
   seller?: boolean | Prisma.SellerProfileDefaultArgs<ExtArgs>
+  orderItem?: boolean | Prisma.LedgerEntry$orderItemArgs<ExtArgs>
 }, ExtArgs["result"]["ledgerEntry"]>
 
 export type LedgerEntrySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -644,7 +893,11 @@ export type LedgerEntrySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.E
   sourceId?: boolean
   description?: boolean
   createdAt?: boolean
+  availableAt?: boolean
+  idempotencyKey?: boolean
+  orderItemId?: boolean
   seller?: boolean | Prisma.SellerProfileDefaultArgs<ExtArgs>
+  orderItem?: boolean | Prisma.LedgerEntry$orderItemArgs<ExtArgs>
 }, ExtArgs["result"]["ledgerEntry"]>
 
 export type LedgerEntrySelectScalar = {
@@ -657,23 +910,30 @@ export type LedgerEntrySelectScalar = {
   sourceId?: boolean
   description?: boolean
   createdAt?: boolean
+  availableAt?: boolean
+  idempotencyKey?: boolean
+  orderItemId?: boolean
 }
 
-export type LedgerEntryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sellerId" | "type" | "amount" | "currency" | "sourceType" | "sourceId" | "description" | "createdAt", ExtArgs["result"]["ledgerEntry"]>
+export type LedgerEntryOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "sellerId" | "type" | "amount" | "currency" | "sourceType" | "sourceId" | "description" | "createdAt" | "availableAt" | "idempotencyKey" | "orderItemId", ExtArgs["result"]["ledgerEntry"]>
 export type LedgerEntryInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   seller?: boolean | Prisma.SellerProfileDefaultArgs<ExtArgs>
+  orderItem?: boolean | Prisma.LedgerEntry$orderItemArgs<ExtArgs>
 }
 export type LedgerEntryIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   seller?: boolean | Prisma.SellerProfileDefaultArgs<ExtArgs>
+  orderItem?: boolean | Prisma.LedgerEntry$orderItemArgs<ExtArgs>
 }
 export type LedgerEntryIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   seller?: boolean | Prisma.SellerProfileDefaultArgs<ExtArgs>
+  orderItem?: boolean | Prisma.LedgerEntry$orderItemArgs<ExtArgs>
 }
 
 export type $LedgerEntryPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "LedgerEntry"
   objects: {
     seller: Prisma.$SellerProfilePayload<ExtArgs>
+    orderItem: Prisma.$OrderItemPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -685,6 +945,9 @@ export type $LedgerEntryPayload<ExtArgs extends runtime.Types.Extensions.Interna
     sourceId: string
     description: string | null
     createdAt: Date
+    availableAt: Date | null
+    idempotencyKey: string
+    orderItemId: string | null
   }, ExtArgs["result"]["ledgerEntry"]>
   composites: {}
 }
@@ -1080,6 +1343,7 @@ readonly fields: LedgerEntryFieldRefs;
 export interface Prisma__LedgerEntryClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   seller<T extends Prisma.SellerProfileDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SellerProfileDefaultArgs<ExtArgs>>): Prisma.Prisma__SellerProfileClient<runtime.Types.Result.GetResult<Prisma.$SellerProfilePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  orderItem<T extends Prisma.LedgerEntry$orderItemArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LedgerEntry$orderItemArgs<ExtArgs>>): Prisma.Prisma__OrderItemClient<runtime.Types.Result.GetResult<Prisma.$OrderItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1118,6 +1382,9 @@ export interface LedgerEntryFieldRefs {
   readonly sourceId: Prisma.FieldRef<"LedgerEntry", 'String'>
   readonly description: Prisma.FieldRef<"LedgerEntry", 'String'>
   readonly createdAt: Prisma.FieldRef<"LedgerEntry", 'DateTime'>
+  readonly availableAt: Prisma.FieldRef<"LedgerEntry", 'DateTime'>
+  readonly idempotencyKey: Prisma.FieldRef<"LedgerEntry", 'String'>
+  readonly orderItemId: Prisma.FieldRef<"LedgerEntry", 'String'>
 }
 
 
@@ -1516,6 +1783,25 @@ export type LedgerEntryDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.I
    * Limit how many LedgerEntries to delete.
    */
   limit?: number
+}
+
+/**
+ * LedgerEntry.orderItem
+ */
+export type LedgerEntry$orderItemArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the OrderItem
+   */
+  select?: Prisma.OrderItemSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the OrderItem
+   */
+  omit?: Prisma.OrderItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.OrderItemInclude<ExtArgs> | null
+  where?: Prisma.OrderItemWhereInput
 }
 
 /**

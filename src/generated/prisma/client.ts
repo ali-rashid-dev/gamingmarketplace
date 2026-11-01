@@ -202,6 +202,21 @@ export type LedgerEntry = Prisma.LedgerEntryModel
  */
 export type Withdrawal = Prisma.WithdrawalModel
 /**
+ * Model CommissionRule
+ *
+ */
+export type CommissionRule = Prisma.CommissionRuleModel
+/**
+ * Model SellerCommission
+ *
+ */
+export type SellerCommission = Prisma.SellerCommissionModel
+/**
+ * Model WithdrawalEvent
+ *
+ */
+export type WithdrawalEvent = Prisma.WithdrawalEventModel
+/**
  * Model Notification
  *
  */

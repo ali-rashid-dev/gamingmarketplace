@@ -429,6 +429,9 @@ export const ModelName = {
   DisputeEvidence: 'DisputeEvidence',
   LedgerEntry: 'LedgerEntry',
   Withdrawal: 'Withdrawal',
+  CommissionRule: 'CommissionRule',
+  SellerCommission: 'SellerCommission',
+  WithdrawalEvent: 'WithdrawalEvent',
   Notification: 'Notification',
   WishlistItem: 'WishlistItem',
   SupportTicket: 'SupportTicket',
@@ -451,7 +454,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "role" | "permission" | "rolePermission" | "userRoleAssignment" | "session" | "account" | "verification" | "rateLimit" | "accountProfile" | "sellerProfile" | "game" | "category" | "categoryField" | "listing" | "listingAttribute" | "listingRevision" | "order" | "orderItem" | "payment" | "delivery" | "conversation" | "conversationReport" | "message" | "review" | "reviewReport" | "dispute" | "disputeMessage" | "disputeEvent" | "disputeEvidence" | "ledgerEntry" | "withdrawal" | "notification" | "wishlistItem" | "supportTicket" | "supportTicketMessage" | "supportAgentProfile" | "supportReport" | "auditLog"
+    modelProps: "user" | "role" | "permission" | "rolePermission" | "userRoleAssignment" | "session" | "account" | "verification" | "rateLimit" | "accountProfile" | "sellerProfile" | "game" | "category" | "categoryField" | "listing" | "listingAttribute" | "listingRevision" | "order" | "orderItem" | "payment" | "delivery" | "conversation" | "conversationReport" | "message" | "review" | "reviewReport" | "dispute" | "disputeMessage" | "disputeEvent" | "disputeEvidence" | "ledgerEntry" | "withdrawal" | "commissionRule" | "sellerCommission" | "withdrawalEvent" | "notification" | "wishlistItem" | "supportTicket" | "supportTicketMessage" | "supportAgentProfile" | "supportReport" | "auditLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2823,6 +2826,228 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    CommissionRule: {
+      payload: Prisma.$CommissionRulePayload<ExtArgs>
+      fields: Prisma.CommissionRuleFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CommissionRuleFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommissionRulePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CommissionRuleFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommissionRulePayload>
+        }
+        findFirst: {
+          args: Prisma.CommissionRuleFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommissionRulePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CommissionRuleFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommissionRulePayload>
+        }
+        findMany: {
+          args: Prisma.CommissionRuleFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommissionRulePayload>[]
+        }
+        create: {
+          args: Prisma.CommissionRuleCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommissionRulePayload>
+        }
+        createMany: {
+          args: Prisma.CommissionRuleCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CommissionRuleCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommissionRulePayload>[]
+        }
+        delete: {
+          args: Prisma.CommissionRuleDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommissionRulePayload>
+        }
+        update: {
+          args: Prisma.CommissionRuleUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommissionRulePayload>
+        }
+        deleteMany: {
+          args: Prisma.CommissionRuleDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CommissionRuleUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CommissionRuleUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommissionRulePayload>[]
+        }
+        upsert: {
+          args: Prisma.CommissionRuleUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CommissionRulePayload>
+        }
+        aggregate: {
+          args: Prisma.CommissionRuleAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCommissionRule>
+        }
+        groupBy: {
+          args: Prisma.CommissionRuleGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CommissionRuleGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CommissionRuleCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CommissionRuleCountAggregateOutputType> | number
+        }
+      }
+    }
+    SellerCommission: {
+      payload: Prisma.$SellerCommissionPayload<ExtArgs>
+      fields: Prisma.SellerCommissionFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.SellerCommissionFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellerCommissionPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.SellerCommissionFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellerCommissionPayload>
+        }
+        findFirst: {
+          args: Prisma.SellerCommissionFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellerCommissionPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.SellerCommissionFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellerCommissionPayload>
+        }
+        findMany: {
+          args: Prisma.SellerCommissionFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellerCommissionPayload>[]
+        }
+        create: {
+          args: Prisma.SellerCommissionCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellerCommissionPayload>
+        }
+        createMany: {
+          args: Prisma.SellerCommissionCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.SellerCommissionCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellerCommissionPayload>[]
+        }
+        delete: {
+          args: Prisma.SellerCommissionDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellerCommissionPayload>
+        }
+        update: {
+          args: Prisma.SellerCommissionUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellerCommissionPayload>
+        }
+        deleteMany: {
+          args: Prisma.SellerCommissionDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.SellerCommissionUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.SellerCommissionUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellerCommissionPayload>[]
+        }
+        upsert: {
+          args: Prisma.SellerCommissionUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$SellerCommissionPayload>
+        }
+        aggregate: {
+          args: Prisma.SellerCommissionAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSellerCommission>
+        }
+        groupBy: {
+          args: Prisma.SellerCommissionGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SellerCommissionGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.SellerCommissionCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.SellerCommissionCountAggregateOutputType> | number
+        }
+      }
+    }
+    WithdrawalEvent: {
+      payload: Prisma.$WithdrawalEventPayload<ExtArgs>
+      fields: Prisma.WithdrawalEventFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.WithdrawalEventFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WithdrawalEventPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.WithdrawalEventFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WithdrawalEventPayload>
+        }
+        findFirst: {
+          args: Prisma.WithdrawalEventFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WithdrawalEventPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.WithdrawalEventFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WithdrawalEventPayload>
+        }
+        findMany: {
+          args: Prisma.WithdrawalEventFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WithdrawalEventPayload>[]
+        }
+        create: {
+          args: Prisma.WithdrawalEventCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WithdrawalEventPayload>
+        }
+        createMany: {
+          args: Prisma.WithdrawalEventCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.WithdrawalEventCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WithdrawalEventPayload>[]
+        }
+        delete: {
+          args: Prisma.WithdrawalEventDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WithdrawalEventPayload>
+        }
+        update: {
+          args: Prisma.WithdrawalEventUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WithdrawalEventPayload>
+        }
+        deleteMany: {
+          args: Prisma.WithdrawalEventDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.WithdrawalEventUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.WithdrawalEventUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WithdrawalEventPayload>[]
+        }
+        upsert: {
+          args: Prisma.WithdrawalEventUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$WithdrawalEventPayload>
+        }
+        aggregate: {
+          args: Prisma.WithdrawalEventAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateWithdrawalEvent>
+        }
+        groupBy: {
+          args: Prisma.WithdrawalEventGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WithdrawalEventGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.WithdrawalEventCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.WithdrawalEventCountAggregateOutputType> | number
+        }
+      }
+    }
     Notification: {
       payload: Prisma.$NotificationPayload<ExtArgs>
       fields: Prisma.NotificationFieldRefs
@@ -3662,6 +3887,8 @@ export const PaymentScalarFieldEnum = {
   currency: 'currency',
   metadata: 'metadata',
   paidAt: 'paidAt',
+  settledAt: 'settledAt',
+  providerSettlementReference: 'providerSettlementReference',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -3828,7 +4055,10 @@ export const LedgerEntryScalarFieldEnum = {
   sourceType: 'sourceType',
   sourceId: 'sourceId',
   description: 'description',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  availableAt: 'availableAt',
+  idempotencyKey: 'idempotencyKey',
+  orderItemId: 'orderItemId'
 } as const
 
 export type LedgerEntryScalarFieldEnum = (typeof LedgerEntryScalarFieldEnum)[keyof typeof LedgerEntryScalarFieldEnum]
@@ -3848,6 +4078,45 @@ export const WithdrawalScalarFieldEnum = {
 } as const
 
 export type WithdrawalScalarFieldEnum = (typeof WithdrawalScalarFieldEnum)[keyof typeof WithdrawalScalarFieldEnum]
+
+
+export const CommissionRuleScalarFieldEnum = {
+  id: 'id',
+  basisPoints: 'basisPoints',
+  effectiveAt: 'effectiveAt',
+  createdById: 'createdById',
+  createdAt: 'createdAt'
+} as const
+
+export type CommissionRuleScalarFieldEnum = (typeof CommissionRuleScalarFieldEnum)[keyof typeof CommissionRuleScalarFieldEnum]
+
+
+export const SellerCommissionScalarFieldEnum = {
+  id: 'id',
+  orderItemId: 'orderItemId',
+  sellerId: 'sellerId',
+  commissionRuleId: 'commissionRuleId',
+  grossAmount: 'grossAmount',
+  commissionAmount: 'commissionAmount',
+  sellerNet: 'sellerNet',
+  currency: 'currency',
+  createdAt: 'createdAt'
+} as const
+
+export type SellerCommissionScalarFieldEnum = (typeof SellerCommissionScalarFieldEnum)[keyof typeof SellerCommissionScalarFieldEnum]
+
+
+export const WithdrawalEventScalarFieldEnum = {
+  id: 'id',
+  withdrawalId: 'withdrawalId',
+  actorId: 'actorId',
+  status: 'status',
+  providerReference: 'providerReference',
+  details: 'details',
+  createdAt: 'createdAt'
+} as const
+
+export type WithdrawalEventScalarFieldEnum = (typeof WithdrawalEventScalarFieldEnum)[keyof typeof WithdrawalEventScalarFieldEnum]
 
 
 export const NotificationScalarFieldEnum = {
@@ -4678,6 +4947,9 @@ export type GlobalOmitConfig = {
   disputeEvidence?: Prisma.DisputeEvidenceOmit
   ledgerEntry?: Prisma.LedgerEntryOmit
   withdrawal?: Prisma.WithdrawalOmit
+  commissionRule?: Prisma.CommissionRuleOmit
+  sellerCommission?: Prisma.SellerCommissionOmit
+  withdrawalEvent?: Prisma.WithdrawalEventOmit
   notification?: Prisma.NotificationOmit
   wishlistItem?: Prisma.WishlistItemOmit
   supportTicket?: Prisma.SupportTicketOmit

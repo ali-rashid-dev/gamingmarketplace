@@ -11,6 +11,7 @@ const navigation = [
   { href: "/admin/catalog", label: "Games & categories", icon: "Gamepad2" },
   { href: "/admin/listings", label: "Listing moderation", icon: "ClipboardCheck" },
   { href: "/admin/reviews", label: "Review moderation", icon: "MessageSquareWarning" },
+  { href: "/admin/finance", label: "Finance & payouts", icon: "CircleDollarSign" },
   { href: "/support/console", label: "Support & disputes", icon: "Headset" },
 ] satisfies WorkspaceNavigationItem[];
 

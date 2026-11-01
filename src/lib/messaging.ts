@@ -37,7 +37,7 @@ export async function enforceMessageRateLimit(
   transaction: Prisma.TransactionClient,
   userId: string
 ) {
-  await transaction.$queryRaw`
+  await transaction.$executeRaw`
     SELECT pg_advisory_xact_lock(
       hashtext('gamingmarketplace:messages'),
       hashtext(${userId})

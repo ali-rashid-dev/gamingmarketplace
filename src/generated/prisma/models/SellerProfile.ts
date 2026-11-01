@@ -228,6 +228,7 @@ export type SellerProfileWhereInput = {
   reviews?: Prisma.ReviewListRelationFilter
   ledgerEntries?: Prisma.LedgerEntryListRelationFilter
   withdrawals?: Prisma.WithdrawalListRelationFilter
+  sellerCommissions?: Prisma.SellerCommissionListRelationFilter
 }
 
 export type SellerProfileOrderByWithRelationInput = {
@@ -247,6 +248,7 @@ export type SellerProfileOrderByWithRelationInput = {
   reviews?: Prisma.ReviewOrderByRelationAggregateInput
   ledgerEntries?: Prisma.LedgerEntryOrderByRelationAggregateInput
   withdrawals?: Prisma.WithdrawalOrderByRelationAggregateInput
+  sellerCommissions?: Prisma.SellerCommissionOrderByRelationAggregateInput
 }
 
 export type SellerProfileWhereUniqueInput = Prisma.AtLeast<{
@@ -269,6 +271,7 @@ export type SellerProfileWhereUniqueInput = Prisma.AtLeast<{
   reviews?: Prisma.ReviewListRelationFilter
   ledgerEntries?: Prisma.LedgerEntryListRelationFilter
   withdrawals?: Prisma.WithdrawalListRelationFilter
+  sellerCommissions?: Prisma.SellerCommissionListRelationFilter
 }, "id" | "userId" | "slug">
 
 export type SellerProfileOrderByWithAggregationInput = {
@@ -319,6 +322,7 @@ export type SellerProfileCreateInput = {
   reviews?: Prisma.ReviewCreateNestedManyWithoutSellerInput
   ledgerEntries?: Prisma.LedgerEntryCreateNestedManyWithoutSellerInput
   withdrawals?: Prisma.WithdrawalCreateNestedManyWithoutSellerInput
+  sellerCommissions?: Prisma.SellerCommissionCreateNestedManyWithoutSellerInput
 }
 
 export type SellerProfileUncheckedCreateInput = {
@@ -337,6 +341,7 @@ export type SellerProfileUncheckedCreateInput = {
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutSellerInput
   ledgerEntries?: Prisma.LedgerEntryUncheckedCreateNestedManyWithoutSellerInput
   withdrawals?: Prisma.WithdrawalUncheckedCreateNestedManyWithoutSellerInput
+  sellerCommissions?: Prisma.SellerCommissionUncheckedCreateNestedManyWithoutSellerInput
 }
 
 export type SellerProfileUpdateInput = {
@@ -355,6 +360,7 @@ export type SellerProfileUpdateInput = {
   reviews?: Prisma.ReviewUpdateManyWithoutSellerNestedInput
   ledgerEntries?: Prisma.LedgerEntryUpdateManyWithoutSellerNestedInput
   withdrawals?: Prisma.WithdrawalUpdateManyWithoutSellerNestedInput
+  sellerCommissions?: Prisma.SellerCommissionUpdateManyWithoutSellerNestedInput
 }
 
 export type SellerProfileUncheckedUpdateInput = {
@@ -373,6 +379,7 @@ export type SellerProfileUncheckedUpdateInput = {
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutSellerNestedInput
   ledgerEntries?: Prisma.LedgerEntryUncheckedUpdateManyWithoutSellerNestedInput
   withdrawals?: Prisma.WithdrawalUncheckedUpdateManyWithoutSellerNestedInput
+  sellerCommissions?: Prisma.SellerCommissionUncheckedUpdateManyWithoutSellerNestedInput
 }
 
 export type SellerProfileCreateManyInput = {
@@ -568,6 +575,20 @@ export type SellerProfileUpdateOneRequiredWithoutWithdrawalsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.SellerProfileUpdateToOneWithWhereWithoutWithdrawalsInput, Prisma.SellerProfileUpdateWithoutWithdrawalsInput>, Prisma.SellerProfileUncheckedUpdateWithoutWithdrawalsInput>
 }
 
+export type SellerProfileCreateNestedOneWithoutSellerCommissionsInput = {
+  create?: Prisma.XOR<Prisma.SellerProfileCreateWithoutSellerCommissionsInput, Prisma.SellerProfileUncheckedCreateWithoutSellerCommissionsInput>
+  connectOrCreate?: Prisma.SellerProfileCreateOrConnectWithoutSellerCommissionsInput
+  connect?: Prisma.SellerProfileWhereUniqueInput
+}
+
+export type SellerProfileUpdateOneRequiredWithoutSellerCommissionsNestedInput = {
+  create?: Prisma.XOR<Prisma.SellerProfileCreateWithoutSellerCommissionsInput, Prisma.SellerProfileUncheckedCreateWithoutSellerCommissionsInput>
+  connectOrCreate?: Prisma.SellerProfileCreateOrConnectWithoutSellerCommissionsInput
+  upsert?: Prisma.SellerProfileUpsertWithoutSellerCommissionsInput
+  connect?: Prisma.SellerProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SellerProfileUpdateToOneWithWhereWithoutSellerCommissionsInput, Prisma.SellerProfileUpdateWithoutSellerCommissionsInput>, Prisma.SellerProfileUncheckedUpdateWithoutSellerCommissionsInput>
+}
+
 export type SellerProfileCreateWithoutUserInput = {
   id?: string
   shopName: string
@@ -583,6 +604,7 @@ export type SellerProfileCreateWithoutUserInput = {
   reviews?: Prisma.ReviewCreateNestedManyWithoutSellerInput
   ledgerEntries?: Prisma.LedgerEntryCreateNestedManyWithoutSellerInput
   withdrawals?: Prisma.WithdrawalCreateNestedManyWithoutSellerInput
+  sellerCommissions?: Prisma.SellerCommissionCreateNestedManyWithoutSellerInput
 }
 
 export type SellerProfileUncheckedCreateWithoutUserInput = {
@@ -600,6 +622,7 @@ export type SellerProfileUncheckedCreateWithoutUserInput = {
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutSellerInput
   ledgerEntries?: Prisma.LedgerEntryUncheckedCreateNestedManyWithoutSellerInput
   withdrawals?: Prisma.WithdrawalUncheckedCreateNestedManyWithoutSellerInput
+  sellerCommissions?: Prisma.SellerCommissionUncheckedCreateNestedManyWithoutSellerInput
 }
 
 export type SellerProfileCreateOrConnectWithoutUserInput = {
@@ -633,6 +656,7 @@ export type SellerProfileUpdateWithoutUserInput = {
   reviews?: Prisma.ReviewUpdateManyWithoutSellerNestedInput
   ledgerEntries?: Prisma.LedgerEntryUpdateManyWithoutSellerNestedInput
   withdrawals?: Prisma.WithdrawalUpdateManyWithoutSellerNestedInput
+  sellerCommissions?: Prisma.SellerCommissionUpdateManyWithoutSellerNestedInput
 }
 
 export type SellerProfileUncheckedUpdateWithoutUserInput = {
@@ -650,6 +674,7 @@ export type SellerProfileUncheckedUpdateWithoutUserInput = {
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutSellerNestedInput
   ledgerEntries?: Prisma.LedgerEntryUncheckedUpdateManyWithoutSellerNestedInput
   withdrawals?: Prisma.WithdrawalUncheckedUpdateManyWithoutSellerNestedInput
+  sellerCommissions?: Prisma.SellerCommissionUncheckedUpdateManyWithoutSellerNestedInput
 }
 
 export type SellerProfileCreateWithoutListingsInput = {
@@ -667,6 +692,7 @@ export type SellerProfileCreateWithoutListingsInput = {
   reviews?: Prisma.ReviewCreateNestedManyWithoutSellerInput
   ledgerEntries?: Prisma.LedgerEntryCreateNestedManyWithoutSellerInput
   withdrawals?: Prisma.WithdrawalCreateNestedManyWithoutSellerInput
+  sellerCommissions?: Prisma.SellerCommissionCreateNestedManyWithoutSellerInput
 }
 
 export type SellerProfileUncheckedCreateWithoutListingsInput = {
@@ -684,6 +710,7 @@ export type SellerProfileUncheckedCreateWithoutListingsInput = {
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutSellerInput
   ledgerEntries?: Prisma.LedgerEntryUncheckedCreateNestedManyWithoutSellerInput
   withdrawals?: Prisma.WithdrawalUncheckedCreateNestedManyWithoutSellerInput
+  sellerCommissions?: Prisma.SellerCommissionUncheckedCreateNestedManyWithoutSellerInput
 }
 
 export type SellerProfileCreateOrConnectWithoutListingsInput = {
@@ -717,6 +744,7 @@ export type SellerProfileUpdateWithoutListingsInput = {
   reviews?: Prisma.ReviewUpdateManyWithoutSellerNestedInput
   ledgerEntries?: Prisma.LedgerEntryUpdateManyWithoutSellerNestedInput
   withdrawals?: Prisma.WithdrawalUpdateManyWithoutSellerNestedInput
+  sellerCommissions?: Prisma.SellerCommissionUpdateManyWithoutSellerNestedInput
 }
 
 export type SellerProfileUncheckedUpdateWithoutListingsInput = {
@@ -734,6 +762,7 @@ export type SellerProfileUncheckedUpdateWithoutListingsInput = {
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutSellerNestedInput
   ledgerEntries?: Prisma.LedgerEntryUncheckedUpdateManyWithoutSellerNestedInput
   withdrawals?: Prisma.WithdrawalUncheckedUpdateManyWithoutSellerNestedInput
+  sellerCommissions?: Prisma.SellerCommissionUncheckedUpdateManyWithoutSellerNestedInput
 }
 
 export type SellerProfileCreateWithoutOrderItemsInput = {
@@ -751,6 +780,7 @@ export type SellerProfileCreateWithoutOrderItemsInput = {
   reviews?: Prisma.ReviewCreateNestedManyWithoutSellerInput
   ledgerEntries?: Prisma.LedgerEntryCreateNestedManyWithoutSellerInput
   withdrawals?: Prisma.WithdrawalCreateNestedManyWithoutSellerInput
+  sellerCommissions?: Prisma.SellerCommissionCreateNestedManyWithoutSellerInput
 }
 
 export type SellerProfileUncheckedCreateWithoutOrderItemsInput = {
@@ -768,6 +798,7 @@ export type SellerProfileUncheckedCreateWithoutOrderItemsInput = {
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutSellerInput
   ledgerEntries?: Prisma.LedgerEntryUncheckedCreateNestedManyWithoutSellerInput
   withdrawals?: Prisma.WithdrawalUncheckedCreateNestedManyWithoutSellerInput
+  sellerCommissions?: Prisma.SellerCommissionUncheckedCreateNestedManyWithoutSellerInput
 }
 
 export type SellerProfileCreateOrConnectWithoutOrderItemsInput = {
@@ -801,6 +832,7 @@ export type SellerProfileUpdateWithoutOrderItemsInput = {
   reviews?: Prisma.ReviewUpdateManyWithoutSellerNestedInput
   ledgerEntries?: Prisma.LedgerEntryUpdateManyWithoutSellerNestedInput
   withdrawals?: Prisma.WithdrawalUpdateManyWithoutSellerNestedInput
+  sellerCommissions?: Prisma.SellerCommissionUpdateManyWithoutSellerNestedInput
 }
 
 export type SellerProfileUncheckedUpdateWithoutOrderItemsInput = {
@@ -818,6 +850,7 @@ export type SellerProfileUncheckedUpdateWithoutOrderItemsInput = {
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutSellerNestedInput
   ledgerEntries?: Prisma.LedgerEntryUncheckedUpdateManyWithoutSellerNestedInput
   withdrawals?: Prisma.WithdrawalUncheckedUpdateManyWithoutSellerNestedInput
+  sellerCommissions?: Prisma.SellerCommissionUncheckedUpdateManyWithoutSellerNestedInput
 }
 
 export type SellerProfileCreateWithoutReviewsInput = {
@@ -835,6 +868,7 @@ export type SellerProfileCreateWithoutReviewsInput = {
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutSellerInput
   ledgerEntries?: Prisma.LedgerEntryCreateNestedManyWithoutSellerInput
   withdrawals?: Prisma.WithdrawalCreateNestedManyWithoutSellerInput
+  sellerCommissions?: Prisma.SellerCommissionCreateNestedManyWithoutSellerInput
 }
 
 export type SellerProfileUncheckedCreateWithoutReviewsInput = {
@@ -852,6 +886,7 @@ export type SellerProfileUncheckedCreateWithoutReviewsInput = {
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutSellerInput
   ledgerEntries?: Prisma.LedgerEntryUncheckedCreateNestedManyWithoutSellerInput
   withdrawals?: Prisma.WithdrawalUncheckedCreateNestedManyWithoutSellerInput
+  sellerCommissions?: Prisma.SellerCommissionUncheckedCreateNestedManyWithoutSellerInput
 }
 
 export type SellerProfileCreateOrConnectWithoutReviewsInput = {
@@ -885,6 +920,7 @@ export type SellerProfileUpdateWithoutReviewsInput = {
   orderItems?: Prisma.OrderItemUpdateManyWithoutSellerNestedInput
   ledgerEntries?: Prisma.LedgerEntryUpdateManyWithoutSellerNestedInput
   withdrawals?: Prisma.WithdrawalUpdateManyWithoutSellerNestedInput
+  sellerCommissions?: Prisma.SellerCommissionUpdateManyWithoutSellerNestedInput
 }
 
 export type SellerProfileUncheckedUpdateWithoutReviewsInput = {
@@ -902,6 +938,7 @@ export type SellerProfileUncheckedUpdateWithoutReviewsInput = {
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutSellerNestedInput
   ledgerEntries?: Prisma.LedgerEntryUncheckedUpdateManyWithoutSellerNestedInput
   withdrawals?: Prisma.WithdrawalUncheckedUpdateManyWithoutSellerNestedInput
+  sellerCommissions?: Prisma.SellerCommissionUncheckedUpdateManyWithoutSellerNestedInput
 }
 
 export type SellerProfileCreateWithoutLedgerEntriesInput = {
@@ -919,6 +956,7 @@ export type SellerProfileCreateWithoutLedgerEntriesInput = {
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutSellerInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutSellerInput
   withdrawals?: Prisma.WithdrawalCreateNestedManyWithoutSellerInput
+  sellerCommissions?: Prisma.SellerCommissionCreateNestedManyWithoutSellerInput
 }
 
 export type SellerProfileUncheckedCreateWithoutLedgerEntriesInput = {
@@ -936,6 +974,7 @@ export type SellerProfileUncheckedCreateWithoutLedgerEntriesInput = {
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutSellerInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutSellerInput
   withdrawals?: Prisma.WithdrawalUncheckedCreateNestedManyWithoutSellerInput
+  sellerCommissions?: Prisma.SellerCommissionUncheckedCreateNestedManyWithoutSellerInput
 }
 
 export type SellerProfileCreateOrConnectWithoutLedgerEntriesInput = {
@@ -969,6 +1008,7 @@ export type SellerProfileUpdateWithoutLedgerEntriesInput = {
   orderItems?: Prisma.OrderItemUpdateManyWithoutSellerNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutSellerNestedInput
   withdrawals?: Prisma.WithdrawalUpdateManyWithoutSellerNestedInput
+  sellerCommissions?: Prisma.SellerCommissionUpdateManyWithoutSellerNestedInput
 }
 
 export type SellerProfileUncheckedUpdateWithoutLedgerEntriesInput = {
@@ -986,6 +1026,7 @@ export type SellerProfileUncheckedUpdateWithoutLedgerEntriesInput = {
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutSellerNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutSellerNestedInput
   withdrawals?: Prisma.WithdrawalUncheckedUpdateManyWithoutSellerNestedInput
+  sellerCommissions?: Prisma.SellerCommissionUncheckedUpdateManyWithoutSellerNestedInput
 }
 
 export type SellerProfileCreateWithoutWithdrawalsInput = {
@@ -1003,6 +1044,7 @@ export type SellerProfileCreateWithoutWithdrawalsInput = {
   orderItems?: Prisma.OrderItemCreateNestedManyWithoutSellerInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutSellerInput
   ledgerEntries?: Prisma.LedgerEntryCreateNestedManyWithoutSellerInput
+  sellerCommissions?: Prisma.SellerCommissionCreateNestedManyWithoutSellerInput
 }
 
 export type SellerProfileUncheckedCreateWithoutWithdrawalsInput = {
@@ -1020,6 +1062,7 @@ export type SellerProfileUncheckedCreateWithoutWithdrawalsInput = {
   orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutSellerInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutSellerInput
   ledgerEntries?: Prisma.LedgerEntryUncheckedCreateNestedManyWithoutSellerInput
+  sellerCommissions?: Prisma.SellerCommissionUncheckedCreateNestedManyWithoutSellerInput
 }
 
 export type SellerProfileCreateOrConnectWithoutWithdrawalsInput = {
@@ -1053,6 +1096,7 @@ export type SellerProfileUpdateWithoutWithdrawalsInput = {
   orderItems?: Prisma.OrderItemUpdateManyWithoutSellerNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutSellerNestedInput
   ledgerEntries?: Prisma.LedgerEntryUpdateManyWithoutSellerNestedInput
+  sellerCommissions?: Prisma.SellerCommissionUpdateManyWithoutSellerNestedInput
 }
 
 export type SellerProfileUncheckedUpdateWithoutWithdrawalsInput = {
@@ -1070,6 +1114,95 @@ export type SellerProfileUncheckedUpdateWithoutWithdrawalsInput = {
   orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutSellerNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutSellerNestedInput
   ledgerEntries?: Prisma.LedgerEntryUncheckedUpdateManyWithoutSellerNestedInput
+  sellerCommissions?: Prisma.SellerCommissionUncheckedUpdateManyWithoutSellerNestedInput
+}
+
+export type SellerProfileCreateWithoutSellerCommissionsInput = {
+  id?: string
+  shopName: string
+  slug: string
+  description?: string | null
+  status?: $Enums.SellerStatus
+  isAvailable?: boolean
+  verifiedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutSellerProfileInput
+  listings?: Prisma.ListingCreateNestedManyWithoutSellerInput
+  orderItems?: Prisma.OrderItemCreateNestedManyWithoutSellerInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutSellerInput
+  ledgerEntries?: Prisma.LedgerEntryCreateNestedManyWithoutSellerInput
+  withdrawals?: Prisma.WithdrawalCreateNestedManyWithoutSellerInput
+}
+
+export type SellerProfileUncheckedCreateWithoutSellerCommissionsInput = {
+  id?: string
+  userId: string
+  shopName: string
+  slug: string
+  description?: string | null
+  status?: $Enums.SellerStatus
+  isAvailable?: boolean
+  verifiedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  listings?: Prisma.ListingUncheckedCreateNestedManyWithoutSellerInput
+  orderItems?: Prisma.OrderItemUncheckedCreateNestedManyWithoutSellerInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutSellerInput
+  ledgerEntries?: Prisma.LedgerEntryUncheckedCreateNestedManyWithoutSellerInput
+  withdrawals?: Prisma.WithdrawalUncheckedCreateNestedManyWithoutSellerInput
+}
+
+export type SellerProfileCreateOrConnectWithoutSellerCommissionsInput = {
+  where: Prisma.SellerProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.SellerProfileCreateWithoutSellerCommissionsInput, Prisma.SellerProfileUncheckedCreateWithoutSellerCommissionsInput>
+}
+
+export type SellerProfileUpsertWithoutSellerCommissionsInput = {
+  update: Prisma.XOR<Prisma.SellerProfileUpdateWithoutSellerCommissionsInput, Prisma.SellerProfileUncheckedUpdateWithoutSellerCommissionsInput>
+  create: Prisma.XOR<Prisma.SellerProfileCreateWithoutSellerCommissionsInput, Prisma.SellerProfileUncheckedCreateWithoutSellerCommissionsInput>
+  where?: Prisma.SellerProfileWhereInput
+}
+
+export type SellerProfileUpdateToOneWithWhereWithoutSellerCommissionsInput = {
+  where?: Prisma.SellerProfileWhereInput
+  data: Prisma.XOR<Prisma.SellerProfileUpdateWithoutSellerCommissionsInput, Prisma.SellerProfileUncheckedUpdateWithoutSellerCommissionsInput>
+}
+
+export type SellerProfileUpdateWithoutSellerCommissionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  shopName?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus
+  isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutSellerProfileNestedInput
+  listings?: Prisma.ListingUpdateManyWithoutSellerNestedInput
+  orderItems?: Prisma.OrderItemUpdateManyWithoutSellerNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutSellerNestedInput
+  ledgerEntries?: Prisma.LedgerEntryUpdateManyWithoutSellerNestedInput
+  withdrawals?: Prisma.WithdrawalUpdateManyWithoutSellerNestedInput
+}
+
+export type SellerProfileUncheckedUpdateWithoutSellerCommissionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  shopName?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  status?: Prisma.EnumSellerStatusFieldUpdateOperationsInput | $Enums.SellerStatus
+  isAvailable?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  verifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  listings?: Prisma.ListingUncheckedUpdateManyWithoutSellerNestedInput
+  orderItems?: Prisma.OrderItemUncheckedUpdateManyWithoutSellerNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutSellerNestedInput
+  ledgerEntries?: Prisma.LedgerEntryUncheckedUpdateManyWithoutSellerNestedInput
+  withdrawals?: Prisma.WithdrawalUncheckedUpdateManyWithoutSellerNestedInput
 }
 
 
@@ -1083,6 +1216,7 @@ export type SellerProfileCountOutputType = {
   reviews: number
   ledgerEntries: number
   withdrawals: number
+  sellerCommissions: number
 }
 
 export type SellerProfileCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1091,6 +1225,7 @@ export type SellerProfileCountOutputTypeSelect<ExtArgs extends runtime.Types.Ext
   reviews?: boolean | SellerProfileCountOutputTypeCountReviewsArgs
   ledgerEntries?: boolean | SellerProfileCountOutputTypeCountLedgerEntriesArgs
   withdrawals?: boolean | SellerProfileCountOutputTypeCountWithdrawalsArgs
+  sellerCommissions?: boolean | SellerProfileCountOutputTypeCountSellerCommissionsArgs
 }
 
 /**
@@ -1138,6 +1273,13 @@ export type SellerProfileCountOutputTypeCountWithdrawalsArgs<ExtArgs extends run
   where?: Prisma.WithdrawalWhereInput
 }
 
+/**
+ * SellerProfileCountOutputType without action
+ */
+export type SellerProfileCountOutputTypeCountSellerCommissionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.SellerCommissionWhereInput
+}
+
 
 export type SellerProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1156,6 +1298,7 @@ export type SellerProfileSelect<ExtArgs extends runtime.Types.Extensions.Interna
   reviews?: boolean | Prisma.SellerProfile$reviewsArgs<ExtArgs>
   ledgerEntries?: boolean | Prisma.SellerProfile$ledgerEntriesArgs<ExtArgs>
   withdrawals?: boolean | Prisma.SellerProfile$withdrawalsArgs<ExtArgs>
+  sellerCommissions?: boolean | Prisma.SellerProfile$sellerCommissionsArgs<ExtArgs>
   _count?: boolean | Prisma.SellerProfileCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["sellerProfile"]>
 
@@ -1208,6 +1351,7 @@ export type SellerProfileInclude<ExtArgs extends runtime.Types.Extensions.Intern
   reviews?: boolean | Prisma.SellerProfile$reviewsArgs<ExtArgs>
   ledgerEntries?: boolean | Prisma.SellerProfile$ledgerEntriesArgs<ExtArgs>
   withdrawals?: boolean | Prisma.SellerProfile$withdrawalsArgs<ExtArgs>
+  sellerCommissions?: boolean | Prisma.SellerProfile$sellerCommissionsArgs<ExtArgs>
   _count?: boolean | Prisma.SellerProfileCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type SellerProfileIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1226,6 +1370,7 @@ export type $SellerProfilePayload<ExtArgs extends runtime.Types.Extensions.Inter
     reviews: Prisma.$ReviewPayload<ExtArgs>[]
     ledgerEntries: Prisma.$LedgerEntryPayload<ExtArgs>[]
     withdrawals: Prisma.$WithdrawalPayload<ExtArgs>[]
+    sellerCommissions: Prisma.$SellerCommissionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1638,6 +1783,7 @@ export interface Prisma__SellerProfileClient<T, Null = never, ExtArgs extends ru
   reviews<T extends Prisma.SellerProfile$reviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SellerProfile$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   ledgerEntries<T extends Prisma.SellerProfile$ledgerEntriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SellerProfile$ledgerEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LedgerEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   withdrawals<T extends Prisma.SellerProfile$withdrawalsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SellerProfile$withdrawalsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WithdrawalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  sellerCommissions<T extends Prisma.SellerProfile$sellerCommissionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SellerProfile$sellerCommissionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SellerCommissionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2195,6 +2341,30 @@ export type SellerProfile$withdrawalsArgs<ExtArgs extends runtime.Types.Extensio
   take?: number
   skip?: number
   distinct?: Prisma.WithdrawalScalarFieldEnum | Prisma.WithdrawalScalarFieldEnum[]
+}
+
+/**
+ * SellerProfile.sellerCommissions
+ */
+export type SellerProfile$sellerCommissionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the SellerCommission
+   */
+  select?: Prisma.SellerCommissionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the SellerCommission
+   */
+  omit?: Prisma.SellerCommissionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.SellerCommissionInclude<ExtArgs> | null
+  where?: Prisma.SellerCommissionWhereInput
+  orderBy?: Prisma.SellerCommissionOrderByWithRelationInput | Prisma.SellerCommissionOrderByWithRelationInput[]
+  cursor?: Prisma.SellerCommissionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.SellerCommissionScalarFieldEnum | Prisma.SellerCommissionScalarFieldEnum[]
 }
 
 /**

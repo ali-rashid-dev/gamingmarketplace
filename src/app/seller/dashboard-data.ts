@@ -4,11 +4,13 @@ import {
   ListingStatus,
   OrderItemStatus,
   OrderStatus,
+  PaymentStatus,
   ReviewStatus,
   WithdrawalStatus,
 } from "@/generated/prisma/enums";
 import { Prisma } from "@/generated/prisma/client";
 import { requireApprovedSeller } from "@/app/seller/listings/listing-data";
+import { getAvailableSellerBalance } from "@/lib/finance-ledger";
 import prisma from "@/lib/prisma";
 
 export async function getSellerOverview() {
@@ -40,7 +42,11 @@ export async function getSellerOverview() {
       where: {
         sellerId,
         status: { in: [OrderItemStatus.PENDING, OrderItemStatus.PROCESSING, OrderItemStatus.DELIVERED] },
-        order: { status: { in: ["PAID", "PROCESSING"] } },
+        order: {
+          status: { in: [OrderStatus.PAID, OrderStatus.PROCESSING] },
+          payments: { some: { status: PaymentStatus.SUCCEEDED } },
+        },
+        disputes: { none: { status: { in: [DisputeStatus.OPEN, DisputeStatus.UNDER_REVIEW] } } },
       },
       _sum: { totalPrice: true },
     }),
@@ -87,10 +93,16 @@ export async function getSellerOverview() {
         },
       },
     }),
-    prisma.ledgerEntry.groupBy({
-      by: ["currency", "type"],
-      where: { sellerId },
-      _sum: { amount: true },
+    prisma.$transaction(async (transaction) => {
+      const ledgerCurrencies = await transaction.ledgerEntry.findMany({
+        where: { sellerId, availableAt: { lte: new Date() } },
+        distinct: ["currency"],
+        select: { currency: true },
+      });
+      return Promise.all(ledgerCurrencies.map(async ({ currency }) => ({
+        currency,
+        available: await getAvailableSellerBalance(transaction, sellerId, currency),
+      })));
     }),
     prisma.withdrawal.groupBy({
       by: ["currency", "status"],
@@ -128,18 +140,6 @@ export async function getSellerOverview() {
     amount: item._sum.totalPrice?.toString() ?? "0",
   }));
   const balanceByCurrency = Array.from(currencyCodes).map((currency) => {
-    const credits = balances
-      .filter((entry) => entry.currency === currency && entry.type === "CREDIT")
-      .reduce(
-        (sum, entry) => sum.add(entry._sum.amount ?? 0),
-        new Prisma.Decimal(0)
-      );
-    const debits = balances
-      .filter((entry) => entry.currency === currency && entry.type === "DEBIT")
-      .reduce(
-        (sum, entry) => sum.add(entry._sum.amount ?? 0),
-        new Prisma.Decimal(0)
-      );
     const pending = pendingWithdrawals
       .filter((entry) => entry.currency === currency)
       .reduce(
@@ -148,7 +148,7 @@ export async function getSellerOverview() {
       );
     return {
       currency,
-      available: credits.sub(debits).toFixed(2),
+      available: balances.find((entry) => entry.currency === currency)?.available.toFixed(2) ?? "0.00",
       pendingBalance:
         pendingSales.find((entry) => entry.currency === currency)?._sum.totalPrice?.toString() ??
         "0",
@@ -335,6 +335,7 @@ export async function getSellerEarnings() {
         status: true,
         requestedAt: true,
         processedAt: true,
+        providerReference: true,
       },
     }),
     prisma.orderItem.findMany({

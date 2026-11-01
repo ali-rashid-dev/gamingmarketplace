@@ -83,6 +83,9 @@ export const ModelName = {
   DisputeEvidence: 'DisputeEvidence',
   LedgerEntry: 'LedgerEntry',
   Withdrawal: 'Withdrawal',
+  CommissionRule: 'CommissionRule',
+  SellerCommission: 'SellerCommission',
+  WithdrawalEvent: 'WithdrawalEvent',
   Notification: 'Notification',
   WishlistItem: 'WishlistItem',
   SupportTicket: 'SupportTicket',
@@ -390,6 +393,8 @@ export const PaymentScalarFieldEnum = {
   currency: 'currency',
   metadata: 'metadata',
   paidAt: 'paidAt',
+  settledAt: 'settledAt',
+  providerSettlementReference: 'providerSettlementReference',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -556,7 +561,10 @@ export const LedgerEntryScalarFieldEnum = {
   sourceType: 'sourceType',
   sourceId: 'sourceId',
   description: 'description',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  availableAt: 'availableAt',
+  idempotencyKey: 'idempotencyKey',
+  orderItemId: 'orderItemId'
 } as const
 
 export type LedgerEntryScalarFieldEnum = (typeof LedgerEntryScalarFieldEnum)[keyof typeof LedgerEntryScalarFieldEnum]
@@ -576,6 +584,45 @@ export const WithdrawalScalarFieldEnum = {
 } as const
 
 export type WithdrawalScalarFieldEnum = (typeof WithdrawalScalarFieldEnum)[keyof typeof WithdrawalScalarFieldEnum]
+
+
+export const CommissionRuleScalarFieldEnum = {
+  id: 'id',
+  basisPoints: 'basisPoints',
+  effectiveAt: 'effectiveAt',
+  createdById: 'createdById',
+  createdAt: 'createdAt'
+} as const
+
+export type CommissionRuleScalarFieldEnum = (typeof CommissionRuleScalarFieldEnum)[keyof typeof CommissionRuleScalarFieldEnum]
+
+
+export const SellerCommissionScalarFieldEnum = {
+  id: 'id',
+  orderItemId: 'orderItemId',
+  sellerId: 'sellerId',
+  commissionRuleId: 'commissionRuleId',
+  grossAmount: 'grossAmount',
+  commissionAmount: 'commissionAmount',
+  sellerNet: 'sellerNet',
+  currency: 'currency',
+  createdAt: 'createdAt'
+} as const
+
+export type SellerCommissionScalarFieldEnum = (typeof SellerCommissionScalarFieldEnum)[keyof typeof SellerCommissionScalarFieldEnum]
+
+
+export const WithdrawalEventScalarFieldEnum = {
+  id: 'id',
+  withdrawalId: 'withdrawalId',
+  actorId: 'actorId',
+  status: 'status',
+  providerReference: 'providerReference',
+  details: 'details',
+  createdAt: 'createdAt'
+} as const
+
+export type WithdrawalEventScalarFieldEnum = (typeof WithdrawalEventScalarFieldEnum)[keyof typeof WithdrawalEventScalarFieldEnum]
 
 
 export const NotificationScalarFieldEnum = {

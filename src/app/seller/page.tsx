@@ -55,11 +55,11 @@ export default async function SellerDashboardPage() {
       <section aria-label="Shop performance" className="mt-7 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <Metric label="Total orders" value={metrics.totalOrders} />
         <Metric
-          label="Sales revenue"
+          label="Completed sales (gross)"
           value={metrics.salesByCurrency.length
             ? metrics.salesByCurrency.map((item) => `${item.currency} ${item.amount}`).join(" · ")
             : "—"}
-          detail="Completed seller order items"
+          detail="Order-item totals before commission and settlement"
         />
         <Metric label="Active listings" value={metrics.activeListings} />
         <Metric label="Average rating" value={metrics.averageRating?.toFixed(1) ?? "—"} detail={`${metrics.reviewCount} reviews`} />

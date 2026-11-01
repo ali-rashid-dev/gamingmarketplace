@@ -227,6 +227,8 @@ export type UserWhereInput = {
   submittedSupportReports?: Prisma.SupportReportListRelationFilter
   reportedBySupportReports?: Prisma.SupportReportListRelationFilter
   assignedSupportReports?: Prisma.SupportReportListRelationFilter
+  commissionRulesCreated?: Prisma.CommissionRuleListRelationFilter
+  withdrawalEvents?: Prisma.WithdrawalEventListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -266,6 +268,8 @@ export type UserOrderByWithRelationInput = {
   submittedSupportReports?: Prisma.SupportReportOrderByRelationAggregateInput
   reportedBySupportReports?: Prisma.SupportReportOrderByRelationAggregateInput
   assignedSupportReports?: Prisma.SupportReportOrderByRelationAggregateInput
+  commissionRulesCreated?: Prisma.CommissionRuleOrderByRelationAggregateInput
+  withdrawalEvents?: Prisma.WithdrawalEventOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -308,6 +312,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   submittedSupportReports?: Prisma.SupportReportListRelationFilter
   reportedBySupportReports?: Prisma.SupportReportListRelationFilter
   assignedSupportReports?: Prisma.SupportReportListRelationFilter
+  commissionRulesCreated?: Prisma.CommissionRuleListRelationFilter
+  withdrawalEvents?: Prisma.WithdrawalEventListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -373,6 +379,8 @@ export type UserCreateInput = {
   submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -412,6 +420,8 @@ export type UserUncheckedCreateInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserUpdateInput = {
@@ -451,6 +461,8 @@ export type UserUpdateInput = {
   submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -490,6 +502,8 @@ export type UserUncheckedUpdateInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -848,6 +862,34 @@ export type UserUpdateOneRequiredWithoutSubmittedEvidenceNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSubmittedEvidenceInput, Prisma.UserUpdateWithoutSubmittedEvidenceInput>, Prisma.UserUncheckedUpdateWithoutSubmittedEvidenceInput>
 }
 
+export type UserCreateNestedOneWithoutCommissionRulesCreatedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCommissionRulesCreatedInput, Prisma.UserUncheckedCreateWithoutCommissionRulesCreatedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCommissionRulesCreatedInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutCommissionRulesCreatedNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutCommissionRulesCreatedInput, Prisma.UserUncheckedCreateWithoutCommissionRulesCreatedInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutCommissionRulesCreatedInput
+  upsert?: Prisma.UserUpsertWithoutCommissionRulesCreatedInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutCommissionRulesCreatedInput, Prisma.UserUpdateWithoutCommissionRulesCreatedInput>, Prisma.UserUncheckedUpdateWithoutCommissionRulesCreatedInput>
+}
+
+export type UserCreateNestedOneWithoutWithdrawalEventsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutWithdrawalEventsInput, Prisma.UserUncheckedCreateWithoutWithdrawalEventsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutWithdrawalEventsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutWithdrawalEventsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutWithdrawalEventsInput, Prisma.UserUncheckedCreateWithoutWithdrawalEventsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutWithdrawalEventsInput
+  upsert?: Prisma.UserUpsertWithoutWithdrawalEventsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutWithdrawalEventsInput, Prisma.UserUpdateWithoutWithdrawalEventsInput>, Prisma.UserUncheckedUpdateWithoutWithdrawalEventsInput>
+}
+
 export type UserCreateNestedOneWithoutNotificationsInput = {
   create?: Prisma.XOR<Prisma.UserCreateWithoutNotificationsInput, Prisma.UserUncheckedCreateWithoutNotificationsInput>
   connectOrCreate?: Prisma.UserCreateOrConnectWithoutNotificationsInput
@@ -1032,6 +1074,8 @@ export type UserCreateWithoutRoleAssignmentsInput = {
   submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutRoleAssignmentsInput = {
@@ -1070,6 +1114,8 @@ export type UserUncheckedCreateWithoutRoleAssignmentsInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutRoleAssignmentsInput = {
@@ -1124,6 +1170,8 @@ export type UserUpdateWithoutRoleAssignmentsInput = {
   submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRoleAssignmentsInput = {
@@ -1162,6 +1210,8 @@ export type UserUncheckedUpdateWithoutRoleAssignmentsInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutSessionsInput = {
@@ -1200,6 +1250,8 @@ export type UserCreateWithoutSessionsInput = {
   submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutSessionsInput = {
@@ -1238,6 +1290,8 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutSessionsInput = {
@@ -1292,6 +1346,8 @@ export type UserUpdateWithoutSessionsInput = {
   submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -1330,6 +1386,8 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutAccountsInput = {
@@ -1368,6 +1426,8 @@ export type UserCreateWithoutAccountsInput = {
   submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutAccountsInput = {
@@ -1406,6 +1466,8 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutAccountsInput = {
@@ -1460,6 +1522,8 @@ export type UserUpdateWithoutAccountsInput = {
   submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -1498,6 +1562,8 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutProfileInput = {
@@ -1536,6 +1602,8 @@ export type UserCreateWithoutProfileInput = {
   submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutProfileInput = {
@@ -1574,6 +1642,8 @@ export type UserUncheckedCreateWithoutProfileInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutProfileInput = {
@@ -1628,6 +1698,8 @@ export type UserUpdateWithoutProfileInput = {
   submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutProfileInput = {
@@ -1666,6 +1738,8 @@ export type UserUncheckedUpdateWithoutProfileInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutSellerProfileInput = {
@@ -1704,6 +1778,8 @@ export type UserCreateWithoutSellerProfileInput = {
   submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutSellerProfileInput = {
@@ -1742,6 +1818,8 @@ export type UserUncheckedCreateWithoutSellerProfileInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutSellerProfileInput = {
@@ -1796,6 +1874,8 @@ export type UserUpdateWithoutSellerProfileInput = {
   submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSellerProfileInput = {
@@ -1834,6 +1914,8 @@ export type UserUncheckedUpdateWithoutSellerProfileInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutListingRevisionsInput = {
@@ -1872,6 +1954,8 @@ export type UserCreateWithoutListingRevisionsInput = {
   submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutListingRevisionsInput = {
@@ -1910,6 +1994,8 @@ export type UserUncheckedCreateWithoutListingRevisionsInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutListingRevisionsInput = {
@@ -1964,6 +2050,8 @@ export type UserUpdateWithoutListingRevisionsInput = {
   submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutListingRevisionsInput = {
@@ -2002,6 +2090,8 @@ export type UserUncheckedUpdateWithoutListingRevisionsInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutOrdersInput = {
@@ -2040,6 +2130,8 @@ export type UserCreateWithoutOrdersInput = {
   submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutOrdersInput = {
@@ -2078,6 +2170,8 @@ export type UserUncheckedCreateWithoutOrdersInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutOrdersInput = {
@@ -2132,6 +2226,8 @@ export type UserUpdateWithoutOrdersInput = {
   submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOrdersInput = {
@@ -2170,6 +2266,8 @@ export type UserUncheckedUpdateWithoutOrdersInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutBuyerConversationsInput = {
@@ -2208,6 +2306,8 @@ export type UserCreateWithoutBuyerConversationsInput = {
   submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutBuyerConversationsInput = {
@@ -2246,6 +2346,8 @@ export type UserUncheckedCreateWithoutBuyerConversationsInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutBuyerConversationsInput = {
@@ -2289,6 +2391,8 @@ export type UserCreateWithoutSellerConversationsInput = {
   submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutSellerConversationsInput = {
@@ -2327,6 +2431,8 @@ export type UserUncheckedCreateWithoutSellerConversationsInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutSellerConversationsInput = {
@@ -2381,6 +2487,8 @@ export type UserUpdateWithoutBuyerConversationsInput = {
   submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutBuyerConversationsInput = {
@@ -2419,6 +2527,8 @@ export type UserUncheckedUpdateWithoutBuyerConversationsInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserUpsertWithoutSellerConversationsInput = {
@@ -2468,6 +2578,8 @@ export type UserUpdateWithoutSellerConversationsInput = {
   submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSellerConversationsInput = {
@@ -2506,6 +2618,8 @@ export type UserUncheckedUpdateWithoutSellerConversationsInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutConversationReportsInput = {
@@ -2544,6 +2658,8 @@ export type UserCreateWithoutConversationReportsInput = {
   submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutConversationReportsInput = {
@@ -2582,6 +2698,8 @@ export type UserUncheckedCreateWithoutConversationReportsInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutConversationReportsInput = {
@@ -2625,6 +2743,8 @@ export type UserCreateWithoutReviewedConversationReportsInput = {
   submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutReviewedConversationReportsInput = {
@@ -2663,6 +2783,8 @@ export type UserUncheckedCreateWithoutReviewedConversationReportsInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutReviewedConversationReportsInput = {
@@ -2717,6 +2839,8 @@ export type UserUpdateWithoutConversationReportsInput = {
   submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutConversationReportsInput = {
@@ -2755,6 +2879,8 @@ export type UserUncheckedUpdateWithoutConversationReportsInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserUpsertWithoutReviewedConversationReportsInput = {
@@ -2804,6 +2930,8 @@ export type UserUpdateWithoutReviewedConversationReportsInput = {
   submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReviewedConversationReportsInput = {
@@ -2842,6 +2970,8 @@ export type UserUncheckedUpdateWithoutReviewedConversationReportsInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutMessagesInput = {
@@ -2880,6 +3010,8 @@ export type UserCreateWithoutMessagesInput = {
   submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutMessagesInput = {
@@ -2918,6 +3050,8 @@ export type UserUncheckedCreateWithoutMessagesInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutMessagesInput = {
@@ -2972,6 +3106,8 @@ export type UserUpdateWithoutMessagesInput = {
   submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutMessagesInput = {
@@ -3010,6 +3146,8 @@ export type UserUncheckedUpdateWithoutMessagesInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutReviewsInput = {
@@ -3048,6 +3186,8 @@ export type UserCreateWithoutReviewsInput = {
   submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutReviewsInput = {
@@ -3086,6 +3226,8 @@ export type UserUncheckedCreateWithoutReviewsInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutReviewsInput = {
@@ -3140,6 +3282,8 @@ export type UserUpdateWithoutReviewsInput = {
   submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReviewsInput = {
@@ -3178,6 +3322,8 @@ export type UserUncheckedUpdateWithoutReviewsInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutReviewReportsInput = {
@@ -3216,6 +3362,8 @@ export type UserCreateWithoutReviewReportsInput = {
   submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutReviewReportsInput = {
@@ -3254,6 +3402,8 @@ export type UserUncheckedCreateWithoutReviewReportsInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutReviewReportsInput = {
@@ -3308,6 +3458,8 @@ export type UserUpdateWithoutReviewReportsInput = {
   submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReviewReportsInput = {
@@ -3346,6 +3498,8 @@ export type UserUncheckedUpdateWithoutReviewReportsInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutOpenedDisputesInput = {
@@ -3384,6 +3538,8 @@ export type UserCreateWithoutOpenedDisputesInput = {
   submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutOpenedDisputesInput = {
@@ -3422,6 +3578,8 @@ export type UserUncheckedCreateWithoutOpenedDisputesInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutOpenedDisputesInput = {
@@ -3465,6 +3623,8 @@ export type UserCreateWithoutAssignedDisputesInput = {
   submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutAssignedDisputesInput = {
@@ -3503,6 +3663,8 @@ export type UserUncheckedCreateWithoutAssignedDisputesInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutAssignedDisputesInput = {
@@ -3557,6 +3719,8 @@ export type UserUpdateWithoutOpenedDisputesInput = {
   submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOpenedDisputesInput = {
@@ -3595,6 +3759,8 @@ export type UserUncheckedUpdateWithoutOpenedDisputesInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserUpsertWithoutAssignedDisputesInput = {
@@ -3644,6 +3810,8 @@ export type UserUpdateWithoutAssignedDisputesInput = {
   submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAssignedDisputesInput = {
@@ -3682,6 +3850,8 @@ export type UserUncheckedUpdateWithoutAssignedDisputesInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutDisputeMessagesInput = {
@@ -3720,6 +3890,8 @@ export type UserCreateWithoutDisputeMessagesInput = {
   submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutDisputeMessagesInput = {
@@ -3758,6 +3930,8 @@ export type UserUncheckedCreateWithoutDisputeMessagesInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutDisputeMessagesInput = {
@@ -3812,6 +3986,8 @@ export type UserUpdateWithoutDisputeMessagesInput = {
   submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutDisputeMessagesInput = {
@@ -3850,6 +4026,8 @@ export type UserUncheckedUpdateWithoutDisputeMessagesInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutDisputeEventsInput = {
@@ -3888,6 +4066,8 @@ export type UserCreateWithoutDisputeEventsInput = {
   submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutDisputeEventsInput = {
@@ -3926,6 +4106,8 @@ export type UserUncheckedCreateWithoutDisputeEventsInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutDisputeEventsInput = {
@@ -3980,6 +4162,8 @@ export type UserUpdateWithoutDisputeEventsInput = {
   submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutDisputeEventsInput = {
@@ -4018,6 +4202,8 @@ export type UserUncheckedUpdateWithoutDisputeEventsInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutSubmittedEvidenceInput = {
@@ -4056,6 +4242,8 @@ export type UserCreateWithoutSubmittedEvidenceInput = {
   submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutSubmittedEvidenceInput = {
@@ -4094,6 +4282,8 @@ export type UserUncheckedCreateWithoutSubmittedEvidenceInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutSubmittedEvidenceInput = {
@@ -4148,6 +4338,8 @@ export type UserUpdateWithoutSubmittedEvidenceInput = {
   submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSubmittedEvidenceInput = {
@@ -4186,6 +4378,360 @@ export type UserUncheckedUpdateWithoutSubmittedEvidenceInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type UserCreateWithoutCommissionRulesCreatedInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  profile?: Prisma.AccountProfileCreateNestedOneWithoutUserInput
+  sellerProfile?: Prisma.SellerProfileCreateNestedOneWithoutUserInput
+  orders?: Prisma.OrderCreateNestedManyWithoutBuyerInput
+  buyerConversations?: Prisma.ConversationCreateNestedManyWithoutBuyerInput
+  sellerConversations?: Prisma.ConversationCreateNestedManyWithoutSellerInput
+  messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReviewedByInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutBuyerInput
+  reviewReports?: Prisma.ReviewReportCreateNestedManyWithoutReporterInput
+  openedDisputes?: Prisma.DisputeCreateNestedManyWithoutOpenedByInput
+  assignedDisputes?: Prisma.DisputeCreateNestedManyWithoutAssignedToInput
+  disputeMessages?: Prisma.DisputeMessageCreateNestedManyWithoutSenderInput
+  disputeEvents?: Prisma.DisputeEventCreateNestedManyWithoutActorInput
+  submittedEvidence?: Prisma.DisputeEvidenceCreateNestedManyWithoutSubmittedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  listingRevisions?: Prisma.ListingRevisionCreateNestedManyWithoutChangedByInput
+  wishlistItems?: Prisma.WishlistItemCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketCreateNestedManyWithoutAssignedToInput
+  supportMessages?: Prisma.SupportTicketMessageCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
+  withdrawalEvents?: Prisma.WithdrawalEventCreateNestedManyWithoutActorInput
+}
+
+export type UserUncheckedCreateWithoutCommissionRulesCreatedInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  profile?: Prisma.AccountProfileUncheckedCreateNestedOneWithoutUserInput
+  sellerProfile?: Prisma.SellerProfileUncheckedCreateNestedOneWithoutUserInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutBuyerInput
+  buyerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutBuyerInput
+  sellerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutSellerInput
+  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReviewedByInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBuyerInput
+  reviewReports?: Prisma.ReviewReportUncheckedCreateNestedManyWithoutReporterInput
+  openedDisputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutOpenedByInput
+  assignedDisputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutAssignedToInput
+  disputeMessages?: Prisma.DisputeMessageUncheckedCreateNestedManyWithoutSenderInput
+  disputeEvents?: Prisma.DisputeEventUncheckedCreateNestedManyWithoutActorInput
+  submittedEvidence?: Prisma.DisputeEvidenceUncheckedCreateNestedManyWithoutSubmittedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  listingRevisions?: Prisma.ListingRevisionUncheckedCreateNestedManyWithoutChangedByInput
+  wishlistItems?: Prisma.WishlistItemUncheckedCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutAssignedToInput
+  supportMessages?: Prisma.SupportTicketMessageUncheckedCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedCreateNestedManyWithoutActorInput
+}
+
+export type UserCreateOrConnectWithoutCommissionRulesCreatedInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutCommissionRulesCreatedInput, Prisma.UserUncheckedCreateWithoutCommissionRulesCreatedInput>
+}
+
+export type UserUpsertWithoutCommissionRulesCreatedInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutCommissionRulesCreatedInput, Prisma.UserUncheckedUpdateWithoutCommissionRulesCreatedInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutCommissionRulesCreatedInput, Prisma.UserUncheckedCreateWithoutCommissionRulesCreatedInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutCommissionRulesCreatedInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutCommissionRulesCreatedInput, Prisma.UserUncheckedUpdateWithoutCommissionRulesCreatedInput>
+}
+
+export type UserUpdateWithoutCommissionRulesCreatedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  profile?: Prisma.AccountProfileUpdateOneWithoutUserNestedInput
+  sellerProfile?: Prisma.SellerProfileUpdateOneWithoutUserNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutBuyerNestedInput
+  buyerConversations?: Prisma.ConversationUpdateManyWithoutBuyerNestedInput
+  sellerConversations?: Prisma.ConversationUpdateManyWithoutSellerNestedInput
+  messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUpdateManyWithoutReviewedByNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutBuyerNestedInput
+  reviewReports?: Prisma.ReviewReportUpdateManyWithoutReporterNestedInput
+  openedDisputes?: Prisma.DisputeUpdateManyWithoutOpenedByNestedInput
+  assignedDisputes?: Prisma.DisputeUpdateManyWithoutAssignedToNestedInput
+  disputeMessages?: Prisma.DisputeMessageUpdateManyWithoutSenderNestedInput
+  disputeEvents?: Prisma.DisputeEventUpdateManyWithoutActorNestedInput
+  submittedEvidence?: Prisma.DisputeEvidenceUpdateManyWithoutSubmittedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  listingRevisions?: Prisma.ListingRevisionUpdateManyWithoutChangedByNestedInput
+  wishlistItems?: Prisma.WishlistItemUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUpdateManyWithoutAssignedToNestedInput
+  supportMessages?: Prisma.SupportTicketMessageUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUpdateManyWithoutActorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutCommissionRulesCreatedInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  profile?: Prisma.AccountProfileUncheckedUpdateOneWithoutUserNestedInput
+  sellerProfile?: Prisma.SellerProfileUncheckedUpdateOneWithoutUserNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutBuyerNestedInput
+  buyerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutBuyerNestedInput
+  sellerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutSellerNestedInput
+  messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReviewedByNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBuyerNestedInput
+  reviewReports?: Prisma.ReviewReportUncheckedUpdateManyWithoutReporterNestedInput
+  openedDisputes?: Prisma.DisputeUncheckedUpdateManyWithoutOpenedByNestedInput
+  assignedDisputes?: Prisma.DisputeUncheckedUpdateManyWithoutAssignedToNestedInput
+  disputeMessages?: Prisma.DisputeMessageUncheckedUpdateManyWithoutSenderNestedInput
+  disputeEvents?: Prisma.DisputeEventUncheckedUpdateManyWithoutActorNestedInput
+  submittedEvidence?: Prisma.DisputeEvidenceUncheckedUpdateManyWithoutSubmittedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  listingRevisions?: Prisma.ListingRevisionUncheckedUpdateManyWithoutChangedByNestedInput
+  wishlistItems?: Prisma.WishlistItemUncheckedUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutAssignedToNestedInput
+  supportMessages?: Prisma.SupportTicketMessageUncheckedUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type UserCreateWithoutWithdrawalEventsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  profile?: Prisma.AccountProfileCreateNestedOneWithoutUserInput
+  sellerProfile?: Prisma.SellerProfileCreateNestedOneWithoutUserInput
+  orders?: Prisma.OrderCreateNestedManyWithoutBuyerInput
+  buyerConversations?: Prisma.ConversationCreateNestedManyWithoutBuyerInput
+  sellerConversations?: Prisma.ConversationCreateNestedManyWithoutSellerInput
+  messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReviewedByInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutBuyerInput
+  reviewReports?: Prisma.ReviewReportCreateNestedManyWithoutReporterInput
+  openedDisputes?: Prisma.DisputeCreateNestedManyWithoutOpenedByInput
+  assignedDisputes?: Prisma.DisputeCreateNestedManyWithoutAssignedToInput
+  disputeMessages?: Prisma.DisputeMessageCreateNestedManyWithoutSenderInput
+  disputeEvents?: Prisma.DisputeEventCreateNestedManyWithoutActorInput
+  submittedEvidence?: Prisma.DisputeEvidenceCreateNestedManyWithoutSubmittedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  listingRevisions?: Prisma.ListingRevisionCreateNestedManyWithoutChangedByInput
+  wishlistItems?: Prisma.WishlistItemCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketCreateNestedManyWithoutAssignedToInput
+  supportMessages?: Prisma.SupportTicketMessageCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleCreateNestedManyWithoutCreatedByInput
+}
+
+export type UserUncheckedCreateWithoutWithdrawalEventsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  profile?: Prisma.AccountProfileUncheckedCreateNestedOneWithoutUserInput
+  sellerProfile?: Prisma.SellerProfileUncheckedCreateNestedOneWithoutUserInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutBuyerInput
+  buyerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutBuyerInput
+  sellerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutSellerInput
+  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReviewedByInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBuyerInput
+  reviewReports?: Prisma.ReviewReportUncheckedCreateNestedManyWithoutReporterInput
+  openedDisputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutOpenedByInput
+  assignedDisputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutAssignedToInput
+  disputeMessages?: Prisma.DisputeMessageUncheckedCreateNestedManyWithoutSenderInput
+  disputeEvents?: Prisma.DisputeEventUncheckedCreateNestedManyWithoutActorInput
+  submittedEvidence?: Prisma.DisputeEvidenceUncheckedCreateNestedManyWithoutSubmittedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  listingRevisions?: Prisma.ListingRevisionUncheckedCreateNestedManyWithoutChangedByInput
+  wishlistItems?: Prisma.WishlistItemUncheckedCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutAssignedToInput
+  supportMessages?: Prisma.SupportTicketMessageUncheckedCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedCreateNestedManyWithoutCreatedByInput
+}
+
+export type UserCreateOrConnectWithoutWithdrawalEventsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutWithdrawalEventsInput, Prisma.UserUncheckedCreateWithoutWithdrawalEventsInput>
+}
+
+export type UserUpsertWithoutWithdrawalEventsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutWithdrawalEventsInput, Prisma.UserUncheckedUpdateWithoutWithdrawalEventsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutWithdrawalEventsInput, Prisma.UserUncheckedCreateWithoutWithdrawalEventsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutWithdrawalEventsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutWithdrawalEventsInput, Prisma.UserUncheckedUpdateWithoutWithdrawalEventsInput>
+}
+
+export type UserUpdateWithoutWithdrawalEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  profile?: Prisma.AccountProfileUpdateOneWithoutUserNestedInput
+  sellerProfile?: Prisma.SellerProfileUpdateOneWithoutUserNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutBuyerNestedInput
+  buyerConversations?: Prisma.ConversationUpdateManyWithoutBuyerNestedInput
+  sellerConversations?: Prisma.ConversationUpdateManyWithoutSellerNestedInput
+  messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUpdateManyWithoutReviewedByNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutBuyerNestedInput
+  reviewReports?: Prisma.ReviewReportUpdateManyWithoutReporterNestedInput
+  openedDisputes?: Prisma.DisputeUpdateManyWithoutOpenedByNestedInput
+  assignedDisputes?: Prisma.DisputeUpdateManyWithoutAssignedToNestedInput
+  disputeMessages?: Prisma.DisputeMessageUpdateManyWithoutSenderNestedInput
+  disputeEvents?: Prisma.DisputeEventUpdateManyWithoutActorNestedInput
+  submittedEvidence?: Prisma.DisputeEvidenceUpdateManyWithoutSubmittedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  listingRevisions?: Prisma.ListingRevisionUpdateManyWithoutChangedByNestedInput
+  wishlistItems?: Prisma.WishlistItemUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUpdateManyWithoutAssignedToNestedInput
+  supportMessages?: Prisma.SupportTicketMessageUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUpdateManyWithoutCreatedByNestedInput
+}
+
+export type UserUncheckedUpdateWithoutWithdrawalEventsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  profile?: Prisma.AccountProfileUncheckedUpdateOneWithoutUserNestedInput
+  sellerProfile?: Prisma.SellerProfileUncheckedUpdateOneWithoutUserNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutBuyerNestedInput
+  buyerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutBuyerNestedInput
+  sellerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutSellerNestedInput
+  messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReviewedByNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBuyerNestedInput
+  reviewReports?: Prisma.ReviewReportUncheckedUpdateManyWithoutReporterNestedInput
+  openedDisputes?: Prisma.DisputeUncheckedUpdateManyWithoutOpenedByNestedInput
+  assignedDisputes?: Prisma.DisputeUncheckedUpdateManyWithoutAssignedToNestedInput
+  disputeMessages?: Prisma.DisputeMessageUncheckedUpdateManyWithoutSenderNestedInput
+  disputeEvents?: Prisma.DisputeEventUncheckedUpdateManyWithoutActorNestedInput
+  submittedEvidence?: Prisma.DisputeEvidenceUncheckedUpdateManyWithoutSubmittedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  listingRevisions?: Prisma.ListingRevisionUncheckedUpdateManyWithoutChangedByNestedInput
+  wishlistItems?: Prisma.WishlistItemUncheckedUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutAssignedToNestedInput
+  supportMessages?: Prisma.SupportTicketMessageUncheckedUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedUpdateManyWithoutCreatedByNestedInput
 }
 
 export type UserCreateWithoutNotificationsInput = {
@@ -4224,6 +4770,8 @@ export type UserCreateWithoutNotificationsInput = {
   submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -4262,6 +4810,8 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -4316,6 +4866,8 @@ export type UserUpdateWithoutNotificationsInput = {
   submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -4354,6 +4906,8 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutWishlistItemsInput = {
@@ -4392,6 +4946,8 @@ export type UserCreateWithoutWishlistItemsInput = {
   submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutWishlistItemsInput = {
@@ -4430,6 +4986,8 @@ export type UserUncheckedCreateWithoutWishlistItemsInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutWishlistItemsInput = {
@@ -4484,6 +5042,8 @@ export type UserUpdateWithoutWishlistItemsInput = {
   submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutWishlistItemsInput = {
@@ -4522,6 +5082,8 @@ export type UserUncheckedUpdateWithoutWishlistItemsInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutSupportTicketsInput = {
@@ -4560,6 +5122,8 @@ export type UserCreateWithoutSupportTicketsInput = {
   submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutSupportTicketsInput = {
@@ -4598,6 +5162,8 @@ export type UserUncheckedCreateWithoutSupportTicketsInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutSupportTicketsInput = {
@@ -4641,6 +5207,8 @@ export type UserCreateWithoutAssignedSupportTicketsInput = {
   submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutAssignedSupportTicketsInput = {
@@ -4679,6 +5247,8 @@ export type UserUncheckedCreateWithoutAssignedSupportTicketsInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutAssignedSupportTicketsInput = {
@@ -4733,6 +5303,8 @@ export type UserUpdateWithoutSupportTicketsInput = {
   submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSupportTicketsInput = {
@@ -4771,6 +5343,8 @@ export type UserUncheckedUpdateWithoutSupportTicketsInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserUpsertWithoutAssignedSupportTicketsInput = {
@@ -4820,6 +5394,8 @@ export type UserUpdateWithoutAssignedSupportTicketsInput = {
   submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAssignedSupportTicketsInput = {
@@ -4858,6 +5434,8 @@ export type UserUncheckedUpdateWithoutAssignedSupportTicketsInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutSupportMessagesInput = {
@@ -4896,6 +5474,8 @@ export type UserCreateWithoutSupportMessagesInput = {
   submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutSupportMessagesInput = {
@@ -4934,6 +5514,8 @@ export type UserUncheckedCreateWithoutSupportMessagesInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutSupportMessagesInput = {
@@ -4988,6 +5570,8 @@ export type UserUpdateWithoutSupportMessagesInput = {
   submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSupportMessagesInput = {
@@ -5026,6 +5610,8 @@ export type UserUncheckedUpdateWithoutSupportMessagesInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutSupportAgentProfileInput = {
@@ -5064,6 +5650,8 @@ export type UserCreateWithoutSupportAgentProfileInput = {
   submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutSupportAgentProfileInput = {
@@ -5102,6 +5690,8 @@ export type UserUncheckedCreateWithoutSupportAgentProfileInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutSupportAgentProfileInput = {
@@ -5156,6 +5746,8 @@ export type UserUpdateWithoutSupportAgentProfileInput = {
   submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSupportAgentProfileInput = {
@@ -5194,6 +5786,8 @@ export type UserUncheckedUpdateWithoutSupportAgentProfileInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutSubmittedSupportReportsInput = {
@@ -5232,6 +5826,8 @@ export type UserCreateWithoutSubmittedSupportReportsInput = {
   roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
   reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutSubmittedSupportReportsInput = {
@@ -5270,6 +5866,8 @@ export type UserUncheckedCreateWithoutSubmittedSupportReportsInput = {
   roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutSubmittedSupportReportsInput = {
@@ -5313,6 +5911,8 @@ export type UserCreateWithoutReportedBySupportReportsInput = {
   roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
   submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
   assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutReportedBySupportReportsInput = {
@@ -5351,6 +5951,8 @@ export type UserUncheckedCreateWithoutReportedBySupportReportsInput = {
   roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
   submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
   assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutReportedBySupportReportsInput = {
@@ -5394,6 +5996,8 @@ export type UserCreateWithoutAssignedSupportReportsInput = {
   roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
   submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
+  commissionRulesCreated?: Prisma.CommissionRuleCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutAssignedSupportReportsInput = {
@@ -5432,6 +6036,8 @@ export type UserUncheckedCreateWithoutAssignedSupportReportsInput = {
   roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
   submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutAssignedSupportReportsInput = {
@@ -5486,6 +6092,8 @@ export type UserUpdateWithoutSubmittedSupportReportsInput = {
   roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
   reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSubmittedSupportReportsInput = {
@@ -5524,6 +6132,8 @@ export type UserUncheckedUpdateWithoutSubmittedSupportReportsInput = {
   roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserUpsertWithoutReportedBySupportReportsInput = {
@@ -5573,6 +6183,8 @@ export type UserUpdateWithoutReportedBySupportReportsInput = {
   roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
   submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
   assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutReportedBySupportReportsInput = {
@@ -5611,6 +6223,8 @@ export type UserUncheckedUpdateWithoutReportedBySupportReportsInput = {
   roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
   submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
   assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserUpsertWithoutAssignedSupportReportsInput = {
@@ -5660,6 +6274,8 @@ export type UserUpdateWithoutAssignedSupportReportsInput = {
   roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
   submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAssignedSupportReportsInput = {
@@ -5698,6 +6314,8 @@ export type UserUncheckedUpdateWithoutAssignedSupportReportsInput = {
   roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
   submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutAuditLogsInput = {
@@ -5736,6 +6354,8 @@ export type UserCreateWithoutAuditLogsInput = {
   submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutAuditLogsInput = {
@@ -5774,6 +6394,8 @@ export type UserUncheckedCreateWithoutAuditLogsInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
   assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedCreateNestedManyWithoutCreatedByInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutAuditLogsInput = {
@@ -5828,6 +6450,8 @@ export type UserUpdateWithoutAuditLogsInput = {
   submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAuditLogsInput = {
@@ -5866,6 +6490,8 @@ export type UserUncheckedUpdateWithoutAuditLogsInput = {
   submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
   reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
   assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
+  commissionRulesCreated?: Prisma.CommissionRuleUncheckedUpdateManyWithoutCreatedByNestedInput
+  withdrawalEvents?: Prisma.WithdrawalEventUncheckedUpdateManyWithoutActorNestedInput
 }
 
 
@@ -5900,6 +6526,8 @@ export type UserCountOutputType = {
   submittedSupportReports: number
   reportedBySupportReports: number
   assignedSupportReports: number
+  commissionRulesCreated: number
+  withdrawalEvents: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -5929,6 +6557,8 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   submittedSupportReports?: boolean | UserCountOutputTypeCountSubmittedSupportReportsArgs
   reportedBySupportReports?: boolean | UserCountOutputTypeCountReportedBySupportReportsArgs
   assignedSupportReports?: boolean | UserCountOutputTypeCountAssignedSupportReportsArgs
+  commissionRulesCreated?: boolean | UserCountOutputTypeCountCommissionRulesCreatedArgs
+  withdrawalEvents?: boolean | UserCountOutputTypeCountWithdrawalEventsArgs
 }
 
 /**
@@ -6123,6 +6753,20 @@ export type UserCountOutputTypeCountAssignedSupportReportsArgs<ExtArgs extends r
   where?: Prisma.SupportReportWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountCommissionRulesCreatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CommissionRuleWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountWithdrawalEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.WithdrawalEventWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -6161,6 +6805,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   submittedSupportReports?: boolean | Prisma.User$submittedSupportReportsArgs<ExtArgs>
   reportedBySupportReports?: boolean | Prisma.User$reportedBySupportReportsArgs<ExtArgs>
   assignedSupportReports?: boolean | Prisma.User$assignedSupportReportsArgs<ExtArgs>
+  commissionRulesCreated?: boolean | Prisma.User$commissionRulesCreatedArgs<ExtArgs>
+  withdrawalEvents?: boolean | Prisma.User$withdrawalEventsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -6225,6 +6871,8 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   submittedSupportReports?: boolean | Prisma.User$submittedSupportReportsArgs<ExtArgs>
   reportedBySupportReports?: boolean | Prisma.User$reportedBySupportReportsArgs<ExtArgs>
   assignedSupportReports?: boolean | Prisma.User$assignedSupportReportsArgs<ExtArgs>
+  commissionRulesCreated?: boolean | Prisma.User$commissionRulesCreatedArgs<ExtArgs>
+  withdrawalEvents?: boolean | Prisma.User$withdrawalEventsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -6262,6 +6910,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     submittedSupportReports: Prisma.$SupportReportPayload<ExtArgs>[]
     reportedBySupportReports: Prisma.$SupportReportPayload<ExtArgs>[]
     assignedSupportReports: Prisma.$SupportReportPayload<ExtArgs>[]
+    commissionRulesCreated: Prisma.$CommissionRulePayload<ExtArgs>[]
+    withdrawalEvents: Prisma.$WithdrawalEventPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -6694,6 +7344,8 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   submittedSupportReports<T extends Prisma.User$submittedSupportReportsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$submittedSupportReportsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SupportReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   reportedBySupportReports<T extends Prisma.User$reportedBySupportReportsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$reportedBySupportReportsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SupportReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   assignedSupportReports<T extends Prisma.User$assignedSupportReportsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$assignedSupportReportsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$SupportReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  commissionRulesCreated<T extends Prisma.User$commissionRulesCreatedArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$commissionRulesCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CommissionRulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  withdrawalEvents<T extends Prisma.User$withdrawalEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$withdrawalEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WithdrawalEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7801,6 +8453,54 @@ export type User$assignedSupportReportsArgs<ExtArgs extends runtime.Types.Extens
   take?: number
   skip?: number
   distinct?: Prisma.SupportReportScalarFieldEnum | Prisma.SupportReportScalarFieldEnum[]
+}
+
+/**
+ * User.commissionRulesCreated
+ */
+export type User$commissionRulesCreatedArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CommissionRule
+   */
+  select?: Prisma.CommissionRuleSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CommissionRule
+   */
+  omit?: Prisma.CommissionRuleOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CommissionRuleInclude<ExtArgs> | null
+  where?: Prisma.CommissionRuleWhereInput
+  orderBy?: Prisma.CommissionRuleOrderByWithRelationInput | Prisma.CommissionRuleOrderByWithRelationInput[]
+  cursor?: Prisma.CommissionRuleWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CommissionRuleScalarFieldEnum | Prisma.CommissionRuleScalarFieldEnum[]
+}
+
+/**
+ * User.withdrawalEvents
+ */
+export type User$withdrawalEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WithdrawalEvent
+   */
+  select?: Prisma.WithdrawalEventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the WithdrawalEvent
+   */
+  omit?: Prisma.WithdrawalEventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WithdrawalEventInclude<ExtArgs> | null
+  where?: Prisma.WithdrawalEventWhereInput
+  orderBy?: Prisma.WithdrawalEventOrderByWithRelationInput | Prisma.WithdrawalEventOrderByWithRelationInput[]
+  cursor?: Prisma.WithdrawalEventWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.WithdrawalEventScalarFieldEnum | Prisma.WithdrawalEventScalarFieldEnum[]
 }
 
 /**

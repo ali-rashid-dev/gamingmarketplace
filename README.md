@@ -110,6 +110,36 @@ provider verification; account passwords and recovery codes must not be put
 in delivery instructions. Configure a delivery SLA before adding due dates or
 overdue alerts rather than deriving deadlines from free-form delivery estimates.
 
+## Seller ledger, commissions, and payouts
+
+The seller finance view separates settled ledger funds from gross pending order
+value. Pending, unpaid, unsettled, or actively disputed items are not withdrawable.
+Commission rates are versioned and must be explicitly configured by an
+administrator at `/admin/finance`; there is no assumed marketplace rate.
+Each posted completed sale records an immutable commission snapshot and an
+idempotent seller-ledger credit. The posting operation requires a successful
+payment with a settlement timestamp and provider settlement reference, a
+completed item, sufficient settled payment for the order, and no active dispute
+or recorded full/partial refund decision.
+
+Ledger entries, commission snapshots, commission rules, and payout-status events
+are append-only at the database layer. A withdrawal request atomically reserves
+available ledger funds; rejection or failure records a separate release credit.
+Only finance-authorized administrators can change payout status, and recording a
+paid payout requires an external provider reference. These controls record and
+reconcile financial events; they do not initiate transfers, refunds, or
+chargebacks.
+
+No marketplace-capable payment or payout gateway is configured yet. Therefore
+the app currently cannot create trusted settlement records, post seller
+earnings, execute refunds, or send payouts. A future gateway integration must
+verify signed provider events, own the trusted settlement fields, handle
+idempotency and reversals, and reconcile provider balances before enabling live
+fund movement. Finance pages must not be interpreted as a statement that funds
+are held by GameTrade or available from a payment provider.
+Apply `20261101050000_seller_finance_ledger` with the reviewed
+`prisma migrate deploy` process before deploying these schema changes.
+
 ## Buyer protection and disputes
 
 GameTrade's buyer-protection policy allows one active case per eligible order

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   Activity,
+  CircleDollarSign,
   ClipboardCheck,
   ClipboardList,
   Gamepad2,
@@ -36,6 +37,7 @@ import {
 
 const icons = {
   Activity,
+  CircleDollarSign,
   ClipboardCheck,
   ClipboardList,
   Gamepad2,

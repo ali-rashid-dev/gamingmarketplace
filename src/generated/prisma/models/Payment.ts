@@ -43,6 +43,8 @@ export type PaymentMinAggregateOutputType = {
   amount: runtime.Decimal | null
   currency: string | null
   paidAt: Date | null
+  settledAt: Date | null
+  providerSettlementReference: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -56,6 +58,8 @@ export type PaymentMaxAggregateOutputType = {
   amount: runtime.Decimal | null
   currency: string | null
   paidAt: Date | null
+  settledAt: Date | null
+  providerSettlementReference: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -70,6 +74,8 @@ export type PaymentCountAggregateOutputType = {
   currency: number
   metadata: number
   paidAt: number
+  settledAt: number
+  providerSettlementReference: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -93,6 +99,8 @@ export type PaymentMinAggregateInputType = {
   amount?: true
   currency?: true
   paidAt?: true
+  settledAt?: true
+  providerSettlementReference?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -106,6 +114,8 @@ export type PaymentMaxAggregateInputType = {
   amount?: true
   currency?: true
   paidAt?: true
+  settledAt?: true
+  providerSettlementReference?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -120,6 +130,8 @@ export type PaymentCountAggregateInputType = {
   currency?: true
   metadata?: true
   paidAt?: true
+  settledAt?: true
+  providerSettlementReference?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -221,6 +233,8 @@ export type PaymentGroupByOutputType = {
   currency: string
   metadata: runtime.JsonValue | null
   paidAt: Date | null
+  settledAt: Date | null
+  providerSettlementReference: string | null
   createdAt: Date
   updatedAt: Date
   _count: PaymentCountAggregateOutputType | null
@@ -258,6 +272,8 @@ export type PaymentWhereInput = {
   currency?: Prisma.StringFilter<"Payment"> | string
   metadata?: Prisma.JsonNullableFilter<"Payment">
   paidAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
+  settledAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
+  providerSettlementReference?: Prisma.StringNullableFilter<"Payment"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
   order?: Prisma.XOR<Prisma.OrderScalarRelationFilter, Prisma.OrderWhereInput>
@@ -273,6 +289,8 @@ export type PaymentOrderByWithRelationInput = {
   currency?: Prisma.SortOrder
   metadata?: Prisma.SortOrderInput | Prisma.SortOrder
   paidAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  settledAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  providerSettlementReference?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   order?: Prisma.OrderOrderByWithRelationInput
@@ -280,6 +298,7 @@ export type PaymentOrderByWithRelationInput = {
 
 export type PaymentWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  providerSettlementReference?: string
   provider_providerReference?: Prisma.PaymentProviderProviderReferenceCompoundUniqueInput
   AND?: Prisma.PaymentWhereInput | Prisma.PaymentWhereInput[]
   OR?: Prisma.PaymentWhereInput[]
@@ -292,10 +311,11 @@ export type PaymentWhereUniqueInput = Prisma.AtLeast<{
   currency?: Prisma.StringFilter<"Payment"> | string
   metadata?: Prisma.JsonNullableFilter<"Payment">
   paidAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
+  settledAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
   order?: Prisma.XOR<Prisma.OrderScalarRelationFilter, Prisma.OrderWhereInput>
-}, "id" | "provider_providerReference">
+}, "id" | "providerSettlementReference" | "provider_providerReference">
 
 export type PaymentOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -307,6 +327,8 @@ export type PaymentOrderByWithAggregationInput = {
   currency?: Prisma.SortOrder
   metadata?: Prisma.SortOrderInput | Prisma.SortOrder
   paidAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  settledAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  providerSettlementReference?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.PaymentCountOrderByAggregateInput
@@ -329,6 +351,8 @@ export type PaymentScalarWhereWithAggregatesInput = {
   currency?: Prisma.StringWithAggregatesFilter<"Payment"> | string
   metadata?: Prisma.JsonNullableWithAggregatesFilter<"Payment">
   paidAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Payment"> | Date | string | null
+  settledAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Payment"> | Date | string | null
+  providerSettlementReference?: Prisma.StringNullableWithAggregatesFilter<"Payment"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Payment"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Payment"> | Date | string
 }
@@ -342,6 +366,8 @@ export type PaymentCreateInput = {
   currency: string
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   paidAt?: Date | string | null
+  settledAt?: Date | string | null
+  providerSettlementReference?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   order: Prisma.OrderCreateNestedOneWithoutPaymentsInput
@@ -357,6 +383,8 @@ export type PaymentUncheckedCreateInput = {
   currency: string
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   paidAt?: Date | string | null
+  settledAt?: Date | string | null
+  providerSettlementReference?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -370,6 +398,8 @@ export type PaymentUpdateInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  settledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerSettlementReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   order?: Prisma.OrderUpdateOneRequiredWithoutPaymentsNestedInput
@@ -385,6 +415,8 @@ export type PaymentUncheckedUpdateInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  settledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerSettlementReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -399,6 +431,8 @@ export type PaymentCreateManyInput = {
   currency: string
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   paidAt?: Date | string | null
+  settledAt?: Date | string | null
+  providerSettlementReference?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -412,6 +446,8 @@ export type PaymentUpdateManyMutationInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  settledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerSettlementReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -426,6 +462,8 @@ export type PaymentUncheckedUpdateManyInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  settledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerSettlementReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -455,6 +493,8 @@ export type PaymentCountOrderByAggregateInput = {
   currency?: Prisma.SortOrder
   metadata?: Prisma.SortOrder
   paidAt?: Prisma.SortOrder
+  settledAt?: Prisma.SortOrder
+  providerSettlementReference?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -472,6 +512,8 @@ export type PaymentMaxOrderByAggregateInput = {
   amount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   paidAt?: Prisma.SortOrder
+  settledAt?: Prisma.SortOrder
+  providerSettlementReference?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -485,6 +527,8 @@ export type PaymentMinOrderByAggregateInput = {
   amount?: Prisma.SortOrder
   currency?: Prisma.SortOrder
   paidAt?: Prisma.SortOrder
+  settledAt?: Prisma.SortOrder
+  providerSettlementReference?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -548,6 +592,8 @@ export type PaymentCreateWithoutOrderInput = {
   currency: string
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   paidAt?: Date | string | null
+  settledAt?: Date | string | null
+  providerSettlementReference?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -561,6 +607,8 @@ export type PaymentUncheckedCreateWithoutOrderInput = {
   currency: string
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   paidAt?: Date | string | null
+  settledAt?: Date | string | null
+  providerSettlementReference?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -604,6 +652,8 @@ export type PaymentScalarWhereInput = {
   currency?: Prisma.StringFilter<"Payment"> | string
   metadata?: Prisma.JsonNullableFilter<"Payment">
   paidAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
+  settledAt?: Prisma.DateTimeNullableFilter<"Payment"> | Date | string | null
+  providerSettlementReference?: Prisma.StringNullableFilter<"Payment"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
 }
@@ -617,6 +667,8 @@ export type PaymentCreateManyOrderInput = {
   currency: string
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   paidAt?: Date | string | null
+  settledAt?: Date | string | null
+  providerSettlementReference?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -630,6 +682,8 @@ export type PaymentUpdateWithoutOrderInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  settledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerSettlementReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -643,6 +697,8 @@ export type PaymentUncheckedUpdateWithoutOrderInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  settledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerSettlementReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -656,6 +712,8 @@ export type PaymentUncheckedUpdateManyWithoutOrderInput = {
   currency?: Prisma.StringFieldUpdateOperationsInput | string
   metadata?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  settledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  providerSettlementReference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -672,6 +730,8 @@ export type PaymentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   currency?: boolean
   metadata?: boolean
   paidAt?: boolean
+  settledAt?: boolean
+  providerSettlementReference?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   order?: boolean | Prisma.OrderDefaultArgs<ExtArgs>
@@ -687,6 +747,8 @@ export type PaymentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   currency?: boolean
   metadata?: boolean
   paidAt?: boolean
+  settledAt?: boolean
+  providerSettlementReference?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   order?: boolean | Prisma.OrderDefaultArgs<ExtArgs>
@@ -702,6 +764,8 @@ export type PaymentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   currency?: boolean
   metadata?: boolean
   paidAt?: boolean
+  settledAt?: boolean
+  providerSettlementReference?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   order?: boolean | Prisma.OrderDefaultArgs<ExtArgs>
@@ -717,11 +781,13 @@ export type PaymentSelectScalar = {
   currency?: boolean
   metadata?: boolean
   paidAt?: boolean
+  settledAt?: boolean
+  providerSettlementReference?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type PaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderId" | "provider" | "providerReference" | "status" | "amount" | "currency" | "metadata" | "paidAt" | "createdAt" | "updatedAt", ExtArgs["result"]["payment"]>
+export type PaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "orderId" | "provider" | "providerReference" | "status" | "amount" | "currency" | "metadata" | "paidAt" | "settledAt" | "providerSettlementReference" | "createdAt" | "updatedAt", ExtArgs["result"]["payment"]>
 export type PaymentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   order?: boolean | Prisma.OrderDefaultArgs<ExtArgs>
 }
@@ -747,6 +813,8 @@ export type $PaymentPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     currency: string
     metadata: runtime.JsonValue | null
     paidAt: Date | null
+    settledAt: Date | null
+    providerSettlementReference: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["payment"]>
@@ -1182,6 +1250,8 @@ export interface PaymentFieldRefs {
   readonly currency: Prisma.FieldRef<"Payment", 'String'>
   readonly metadata: Prisma.FieldRef<"Payment", 'Json'>
   readonly paidAt: Prisma.FieldRef<"Payment", 'DateTime'>
+  readonly settledAt: Prisma.FieldRef<"Payment", 'DateTime'>
+  readonly providerSettlementReference: Prisma.FieldRef<"Payment", 'String'>
   readonly createdAt: Prisma.FieldRef<"Payment", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Payment", 'DateTime'>
 }
