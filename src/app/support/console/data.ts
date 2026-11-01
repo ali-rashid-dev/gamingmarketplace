@@ -278,7 +278,14 @@ export async function getSupportDispute(disputeId: string) {
           messages: {
             orderBy: [{ createdAt: "asc" }, { id: "asc" }],
             take: 100,
-            select: { id: true, body: true, senderId: true, createdAt: true },
+            select: {
+              id: true,
+              body: true,
+              attachments: true,
+              senderId: true,
+              createdAt: true,
+              sender: { select: { name: true } },
+            },
           },
         },
       },
@@ -386,6 +393,41 @@ export async function getSupportReports() {
       reportedUser: { select: { id: true, name: true, email: true } },
       assignedTo: { select: { name: true } },
       order: { select: { orderNumber: true } },
+    },
+  });
+}
+
+export async function getConversationReports() {
+  await requirePageRoles(supportRoles);
+  return prisma.conversationReport.findMany({
+    where: { status: "OPEN" },
+    orderBy: [{ createdAt: "asc" }, { id: "asc" }],
+    take: 100,
+    select: {
+      id: true,
+      reason: true,
+      details: true,
+      createdAt: true,
+      reporter: { select: { id: true, name: true, email: true } },
+      conversation: {
+        select: {
+          id: true,
+          buyer: { select: { name: true } },
+          seller: { select: { name: true } },
+          order: { select: { orderNumber: true } },
+          messages: {
+            orderBy: [{ createdAt: "desc" }, { id: "desc" }],
+            take: 10,
+            select: {
+              id: true,
+              body: true,
+              attachments: true,
+              createdAt: true,
+              sender: { select: { name: true } },
+            },
+          },
+        },
+      },
     },
   });
 }

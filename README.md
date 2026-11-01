@@ -159,6 +159,20 @@ handover is not currently supported.
 Apply the seller listing database migration with
 `pnpm exec prisma migrate dev` before using seller listings or moderation.
 
+## Buyer–seller messaging
+
+Buyers and approved sellers can exchange messages in participant-scoped
+conversations, including order-specific threads opened from buyer order details.
+Threads refresh by polling, track unread and read messages, and create in-app
+notifications for recipients. JPEG, PNG, WebP, and PDF attachments up to 5 MB
+each are stored with UploadThing; set `UPLOADTHING_TOKEN` to enable uploads.
+Each sender is limited to 10 messages per minute. Participants can report a
+conversation; support, admins, and super-admins review reports in
+`/support/console/conversation-reports`. Support staff can inspect order
+messages only through authorized dispute cases. Apply the
+`20261101030000_module_10_messaging` migration before deploying messaging
+changes.
+
 ## Seller dashboard
 
 Approved sellers use `/seller` for shop metrics and recent sales, with sections

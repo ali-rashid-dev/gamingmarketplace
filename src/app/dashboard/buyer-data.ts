@@ -215,7 +215,7 @@ export async function getBuyerOrder(userId: string, orderId: string) {
           totalPrice: true,
           currency: true,
           status: true,
-          seller: { select: { shopName: true, user: { select: { name: true } } } },
+          seller: { select: { shopName: true, user: { select: { id: true, name: true } } } },
           deliveries: {
             orderBy: [{ createdAt: "desc" }, { id: "desc" }],
             select: {
@@ -270,6 +270,17 @@ export async function getBuyerConversations(userId: string) {
       updatedAt: true,
       seller: { select: { name: true } },
       order: { select: { id: true, orderNumber: true } },
+      reports: {
+        where: { reporterId: userId },
+        orderBy: { createdAt: "desc" },
+        take: 1,
+        select: { status: true },
+      },
+      _count: {
+        select: {
+          messages: { where: { senderId: { not: userId }, readAt: null } },
+        },
+      },
       messages: {
         orderBy: [{ createdAt: "desc" }, { id: "desc" }],
         take: 100,
@@ -277,6 +288,7 @@ export async function getBuyerConversations(userId: string) {
           id: true,
           senderId: true,
           body: true,
+          attachments: true,
           createdAt: true,
           readAt: true,
         },
@@ -285,6 +297,7 @@ export async function getBuyerConversations(userId: string) {
   }).then((conversations) =>
     conversations.map((conversation) => ({
       ...conversation,
+      unreadCount: conversation._count.messages,
       messages: [...conversation.messages].reverse(),
     }))
   );

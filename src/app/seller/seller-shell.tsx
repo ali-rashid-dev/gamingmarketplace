@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
   BadgeDollarSign,
+  Bell,
   ClipboardList,
   FilePlus2,
   LayoutDashboard,
@@ -40,6 +41,7 @@ const navigation = [
   { label: "Create listing", href: "/seller/listings/new", icon: FilePlus2 },
   { label: "Orders", href: "/seller/orders", icon: ClipboardList },
   { label: "Messages", href: "/seller/messages", icon: MessageSquareText },
+  { label: "Notifications", href: "/seller/notifications", icon: Bell },
   { label: "Reviews", href: "/seller/reviews", icon: Star },
   { label: "Earnings & transactions", href: "/seller/earnings#transactions", icon: BadgeDollarSign },
   { label: "Withdrawals", href: "/seller/earnings#withdrawals", icon: Wallet },

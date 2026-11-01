@@ -230,13 +230,25 @@ export async function getSellerConversations() {
     include: {
       buyer: { select: { name: true } },
       order: { select: { orderNumber: true } },
+      reports: {
+        where: { reporterId: userId },
+        orderBy: { createdAt: "desc" },
+        take: 1,
+        select: { status: true },
+      },
+      _count: {
+        select: {
+          messages: { where: { senderId: { not: userId }, readAt: null } },
+        },
+      },
       messages: {
         orderBy: [{ createdAt: "desc" }, { id: "desc" }],
-        take: 5,
+        take: 100,
         select: {
           id: true,
           senderId: true,
           body: true,
+          attachments: true,
           createdAt: true,
           readAt: true,
         },
@@ -250,6 +262,8 @@ export async function getSellerConversations() {
       buyerName: conversation.buyer.name,
       orderNumber: conversation.order?.orderNumber ?? null,
       updatedAt: conversation.updatedAt,
+      unreadCount: conversation._count.messages,
+      reports: conversation.reports,
       messages: [...conversation.messages].reverse(),
     })),
   };

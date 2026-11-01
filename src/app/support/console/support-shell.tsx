@@ -8,6 +8,7 @@ import {
   Flag,
   Gavel,
   LayoutDashboard,
+  MessageSquareText,
   Search,
   UserRound,
   UsersRound,
@@ -37,6 +38,7 @@ const navigation = [
   { label: "Orders", href: "/support/console/orders", icon: Search },
   { label: "Users", href: "/support/console/users", icon: UsersRound },
   { label: "Reports", href: "/support/console/reports", icon: Flag },
+  { label: "Conversation reports", href: "/support/console/conversation-reports", icon: MessageSquareText },
   { label: "Knowledge base", href: "/support/console/knowledge-base", icon: BookOpenText },
   { label: "My profile", href: "/support/console/profile", icon: UserRound },
 ] as const;

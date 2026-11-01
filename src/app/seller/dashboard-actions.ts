@@ -5,6 +5,7 @@ import {
   DisputeStatus,
   OrderItemStatus,
   OrderStatus,
+  NotificationType,
   SellerStatus,
   UserRole,
 } from "@/generated/prisma/enums";
@@ -12,7 +13,14 @@ import { revalidatePath } from "next/cache";
 import type { ActionResult } from "@/lib/action-result";
 import { requirePageRoles } from "@/lib/authorization";
 import prisma from "@/lib/prisma";
+import {
+  enforceMessageRateLimit,
+  messageAttachmentsSchema,
+  messageCredentialPattern,
+} from "@/lib/messaging";
 import { z } from "zod";
+
+const credentialPattern = messageCredentialPattern;
 
 async function requireSeller() {
   const session = await requirePageRoles([UserRole.SELLER]);
@@ -142,21 +150,26 @@ export async function updateSellerAccountSettings(
   }
 }
 
-const credentialPattern =
-  /(?:password|passcode|recovery\s+code|backup\s+code|login\s+credentials?)\s*[:=]\s*\S+/i;
-
 export async function replyToSellerConversation(
   conversationIdInput: unknown,
-  bodyInput: unknown
+  bodyInput: unknown,
+  attachmentsInput: unknown = []
 ): Promise<ActionResult<{ messageId: string }>> {
   const authorization = await requireSeller();
   if (!authorization.success) return { success: false, error: authorization.error };
   const conversationId = z.string().trim().min(1).max(128).safeParse(conversationIdInput);
-  const body = z.string().trim().min(1).max(2000).safeParse(bodyInput);
+  const body = z.string().trim().max(2000).safeParse(bodyInput);
+  const attachments = messageAttachmentsSchema.safeParse(attachmentsInput);
   if (!conversationId.success || !body.success) {
     return { success: false, error: "Enter a message up to 2,000 characters" };
   }
-  if (credentialPattern.test(body.data)) {
+  if (!attachments.success) {
+    return { success: false, error: "Choose up to four supported attachments, each 5 MB or smaller" };
+  }
+  if (!body.data && !attachments.data.length) {
+    return { success: false, error: "Write a message or attach a file" };
+  }
+  if (messageCredentialPattern.test(body.data)) {
     return {
       success: false,
       error: "Do not send account passwords or recovery codes in messages",
@@ -164,17 +177,23 @@ export async function replyToSellerConversation(
   }
   const conversation = await prisma.conversation.findFirst({
     where: { id: conversationId.data, sellerId: authorization.userId },
-    select: { id: true, orderId: true },
+    select: { id: true, orderId: true, buyerId: true },
   });
   if (!conversation) return { success: false, error: "Conversation not found" };
+  const sender = await prisma.user.findUniqueOrThrow({
+    where: { id: authorization.userId },
+    select: { name: true },
+  });
 
   const message = await prisma.$transaction(async (transaction) => {
+    if (!(await enforceMessageRateLimit(transaction, authorization.userId))) return null;
     const created = await transaction.message.create({
       data: {
         conversationId: conversation.id,
         senderId: authorization.userId,
         orderId: conversation.orderId,
         body: body.data,
+        attachments: attachments.data,
       },
       select: { id: true },
     });
@@ -182,9 +201,25 @@ export async function replyToSellerConversation(
       where: { id: conversation.id },
       data: { updatedAt: new Date() },
     });
+    await transaction.notification.create({
+      data: {
+        userId: conversation.buyerId,
+        type: NotificationType.MESSAGE,
+        title: "New message",
+        body: `${sender.name} sent you a message.`,
+        data: {
+          conversationId: conversation.id,
+          orderId: conversation.orderId,
+          recipientWorkspace: "BUYER",
+        },
+      },
+    });
     return created;
   });
+  if (!message) return { success: false, error: "You are sending messages too quickly. Try again in a minute." };
   revalidatePath("/seller/messages");
+  revalidatePath("/dashboard/messages");
+  revalidatePath("/dashboard");
   return { success: true, data: { messageId: message.id } };
 }
 

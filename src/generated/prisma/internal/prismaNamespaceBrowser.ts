@@ -73,6 +73,7 @@ export const ModelName = {
   Payment: 'Payment',
   Delivery: 'Delivery',
   Conversation: 'Conversation',
+  ConversationReport: 'ConversationReport',
   Message: 'Message',
   Review: 'Review',
   ReviewReport: 'ReviewReport',
@@ -420,6 +421,22 @@ export const ConversationScalarFieldEnum = {
 } as const
 
 export type ConversationScalarFieldEnum = (typeof ConversationScalarFieldEnum)[keyof typeof ConversationScalarFieldEnum]
+
+
+export const ConversationReportScalarFieldEnum = {
+  id: 'id',
+  conversationId: 'conversationId',
+  reporterId: 'reporterId',
+  reason: 'reason',
+  details: 'details',
+  status: 'status',
+  reviewedById: 'reviewedById',
+  reviewedAt: 'reviewedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ConversationReportScalarFieldEnum = (typeof ConversationReportScalarFieldEnum)[keyof typeof ConversationReportScalarFieldEnum]
 
 
 export const MessageScalarFieldEnum = {

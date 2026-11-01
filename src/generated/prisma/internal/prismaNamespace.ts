@@ -419,6 +419,7 @@ export const ModelName = {
   Payment: 'Payment',
   Delivery: 'Delivery',
   Conversation: 'Conversation',
+  ConversationReport: 'ConversationReport',
   Message: 'Message',
   Review: 'Review',
   ReviewReport: 'ReviewReport',
@@ -448,7 +449,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "role" | "permission" | "rolePermission" | "userRoleAssignment" | "session" | "account" | "verification" | "rateLimit" | "accountProfile" | "sellerProfile" | "game" | "category" | "categoryField" | "listing" | "listingAttribute" | "listingRevision" | "order" | "orderItem" | "payment" | "delivery" | "conversation" | "message" | "review" | "reviewReport" | "dispute" | "disputeEvidence" | "ledgerEntry" | "withdrawal" | "notification" | "wishlistItem" | "supportTicket" | "supportTicketMessage" | "supportAgentProfile" | "supportReport" | "auditLog"
+    modelProps: "user" | "role" | "permission" | "rolePermission" | "userRoleAssignment" | "session" | "account" | "verification" | "rateLimit" | "accountProfile" | "sellerProfile" | "game" | "category" | "categoryField" | "listing" | "listingAttribute" | "listingRevision" | "order" | "orderItem" | "payment" | "delivery" | "conversation" | "conversationReport" | "message" | "review" | "reviewReport" | "dispute" | "disputeEvidence" | "ledgerEntry" | "withdrawal" | "notification" | "wishlistItem" | "supportTicket" | "supportTicketMessage" | "supportAgentProfile" | "supportReport" | "auditLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -2080,6 +2081,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ConversationReport: {
+      payload: Prisma.$ConversationReportPayload<ExtArgs>
+      fields: Prisma.ConversationReportFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ConversationReportFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConversationReportPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ConversationReportFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConversationReportPayload>
+        }
+        findFirst: {
+          args: Prisma.ConversationReportFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConversationReportPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ConversationReportFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConversationReportPayload>
+        }
+        findMany: {
+          args: Prisma.ConversationReportFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConversationReportPayload>[]
+        }
+        create: {
+          args: Prisma.ConversationReportCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConversationReportPayload>
+        }
+        createMany: {
+          args: Prisma.ConversationReportCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ConversationReportCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConversationReportPayload>[]
+        }
+        delete: {
+          args: Prisma.ConversationReportDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConversationReportPayload>
+        }
+        update: {
+          args: Prisma.ConversationReportUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConversationReportPayload>
+        }
+        deleteMany: {
+          args: Prisma.ConversationReportDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ConversationReportUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ConversationReportUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConversationReportPayload>[]
+        }
+        upsert: {
+          args: Prisma.ConversationReportUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ConversationReportPayload>
+        }
+        aggregate: {
+          args: Prisma.ConversationReportAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateConversationReport>
+        }
+        groupBy: {
+          args: Prisma.ConversationReportGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ConversationReportGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ConversationReportCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ConversationReportCountAggregateOutputType> | number
+        }
+      }
+    }
     Message: {
       payload: Prisma.$MessagePayload<ExtArgs>
       fields: Prisma.MessageFieldRefs
@@ -3472,6 +3547,22 @@ export const ConversationScalarFieldEnum = {
 export type ConversationScalarFieldEnum = (typeof ConversationScalarFieldEnum)[keyof typeof ConversationScalarFieldEnum]
 
 
+export const ConversationReportScalarFieldEnum = {
+  id: 'id',
+  conversationId: 'conversationId',
+  reporterId: 'reporterId',
+  reason: 'reason',
+  details: 'details',
+  status: 'status',
+  reviewedById: 'reviewedById',
+  reviewedAt: 'reviewedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ConversationReportScalarFieldEnum = (typeof ConversationReportScalarFieldEnum)[keyof typeof ConversationReportScalarFieldEnum]
+
+
 export const MessageScalarFieldEnum = {
   id: 'id',
   conversationId: 'conversationId',
@@ -3959,6 +4050,34 @@ export type ListEnumDeliveryStatusFieldRefInput<$PrismaModel> = FieldRefInputTyp
 
 
 /**
+ * Reference to a field of type 'ConversationReportReason'
+ */
+export type EnumConversationReportReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ConversationReportReason'>
+
+
+
+/**
+ * Reference to a field of type 'ConversationReportReason[]'
+ */
+export type ListEnumConversationReportReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ConversationReportReason[]'>
+
+
+
+/**
+ * Reference to a field of type 'ConversationReportStatus'
+ */
+export type EnumConversationReportStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ConversationReportStatus'>
+
+
+
+/**
+ * Reference to a field of type 'ConversationReportStatus[]'
+ */
+export type ListEnumConversationReportStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ConversationReportStatus[]'>
+
+
+
+/**
  * Reference to a field of type 'ReviewStatus'
  */
 export type EnumReviewStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ReviewStatus'>
@@ -4326,6 +4445,7 @@ export type GlobalOmitConfig = {
   payment?: Prisma.PaymentOmit
   delivery?: Prisma.DeliveryOmit
   conversation?: Prisma.ConversationOmit
+  conversationReport?: Prisma.ConversationReportOmit
   message?: Prisma.MessageOmit
   review?: Prisma.ReviewOmit
   reviewReport?: Prisma.ReviewReportOmit

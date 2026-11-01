@@ -4,6 +4,7 @@ import { requirePageSession } from "@/lib/authorization";
 import { getBuyerOrder } from "../../buyer-data";
 import { ConfirmReceiptButton } from "../order-item-actions";
 import { PrintReceiptButton } from "../print-receipt-button";
+import { OrderMessageButton } from "../order-message-button";
 
 type Props = { params: Promise<{ orderId: string }> };
 
@@ -48,6 +49,7 @@ export default async function BuyerOrderDetailPage({ params }: Props) {
                   <p className="mt-1 text-xs text-muted-foreground">
                     Sold by {item.seller.shopName} · Qty {item.quantity} · {item.status.toLowerCase()}
                   </p>
+                  <OrderMessageButton orderId={order.id} sellerUserId={item.seller.user.id} />
                 </div>
                 <p className="text-sm font-semibold">{money(item.totalPrice, item.currency)}</p>
               </div>

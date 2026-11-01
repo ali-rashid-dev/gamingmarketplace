@@ -183,38 +183,54 @@ enum ReviewReportReason {
   OTHER
 }
 
+enum ConversationReportStatus {
+  OPEN
+  RESOLVED
+  DISMISSED
+}
+
+enum ConversationReportReason {
+  ABUSE
+  HARASSMENT
+  SPAM
+  FRAUD
+  OTHER
+}
+
 model User {
-  id                       String                 @id
-  name                     String
-  email                    String                 @unique
-  emailVerified            Boolean
-  image                    String?
-  createdAt                DateTime               @default(now())
-  updatedAt                DateTime               @updatedAt
-  sessions                 Session[]
-  accounts                 Account[]
-  profile                  AccountProfile?
-  sellerProfile            SellerProfile?
-  orders                   Order[]                @relation("OrderBuyer")
-  buyerConversations       Conversation[]         @relation("ConversationBuyer")
-  sellerConversations      Conversation[]         @relation("ConversationSeller")
-  messages                 Message[]
-  reviews                  Review[]               @relation("ReviewBuyer")
-  reviewReports            ReviewReport[]
-  openedDisputes           Dispute[]              @relation("DisputeOpener")
-  submittedEvidence        DisputeEvidence[]
-  notifications            Notification[]
-  auditLogs                AuditLog[]             @relation("AuditActor")
-  listingRevisions         ListingRevision[]
-  wishlistItems            WishlistItem[]
-  supportTickets           SupportTicket[]        @relation("SupportTicketOpener")
-  assignedSupportTickets   SupportTicket[]        @relation("SupportTicketAssignee")
-  supportMessages          SupportTicketMessage[] @relation("SupportMessageSender")
-  supportAgentProfile      SupportAgentProfile?
-  roleAssignments          UserRoleAssignment[]
-  submittedSupportReports  SupportReport[]        @relation("SupportReportSubmitter")
-  reportedBySupportReports SupportReport[]        @relation("SupportReportSubject")
-  assignedSupportReports   SupportReport[]        @relation("SupportReportAssignee")
+  id                          String                 @id
+  name                        String
+  email                       String                 @unique
+  emailVerified               Boolean
+  image                       String?
+  createdAt                   DateTime               @default(now())
+  updatedAt                   DateTime               @updatedAt
+  sessions                    Session[]
+  accounts                    Account[]
+  profile                     AccountProfile?
+  sellerProfile               SellerProfile?
+  orders                      Order[]                @relation("OrderBuyer")
+  buyerConversations          Conversation[]         @relation("ConversationBuyer")
+  sellerConversations         Conversation[]         @relation("ConversationSeller")
+  messages                    Message[]
+  conversationReports         ConversationReport[]   @relation("ConversationReporter")
+  reviewedConversationReports ConversationReport[]   @relation("ConversationReportReviewer")
+  reviews                     Review[]               @relation("ReviewBuyer")
+  reviewReports               ReviewReport[]
+  openedDisputes              Dispute[]              @relation("DisputeOpener")
+  submittedEvidence           DisputeEvidence[]
+  notifications               Notification[]
+  auditLogs                   AuditLog[]             @relation("AuditActor")
+  listingRevisions            ListingRevision[]
+  wishlistItems               WishlistItem[]
+  supportTickets              SupportTicket[]        @relation("SupportTicketOpener")
+  assignedSupportTickets      SupportTicket[]        @relation("SupportTicketAssignee")
+  supportMessages             SupportTicketMessage[] @relation("SupportMessageSender")
+  supportAgentProfile         SupportAgentProfile?
+  roleAssignments             UserRoleAssignment[]
+  submittedSupportReports     SupportReport[]        @relation("SupportReportSubmitter")
+  reportedBySupportReports    SupportReport[]        @relation("SupportReportSubject")
+  assignedSupportReports      SupportReport[]        @relation("SupportReportAssignee")
 
   @@map("user")
 }
@@ -494,7 +510,7 @@ model Order {
   payments       Payment[]
   deliveries     Delivery[]
   messages       Message[]
-  conversation   Conversation?
+  conversations  Conversation[]
   disputes       Dispute[]
   supportTickets SupportTicket[]
   supportReports SupportReport[]
@@ -567,20 +583,42 @@ model Delivery {
 }
 
 model Conversation {
-  id        String    @id @default(cuid())
+  id        String               @id @default(cuid())
   buyerId   String
   sellerId  String
-  orderId   String?   @unique
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  buyer     User      @relation("ConversationBuyer", fields: [buyerId], references: [id], onDelete: Cascade)
-  seller    User      @relation("ConversationSeller", fields: [sellerId], references: [id], onDelete: Cascade)
-  order     Order?    @relation(fields: [orderId], references: [id], onDelete: SetNull)
+  orderId   String?
+  createdAt DateTime             @default(now())
+  updatedAt DateTime             @updatedAt
+  buyer     User                 @relation("ConversationBuyer", fields: [buyerId], references: [id], onDelete: Cascade)
+  seller    User                 @relation("ConversationSeller", fields: [sellerId], references: [id], onDelete: Cascade)
+  order     Order?               @relation(fields: [orderId], references: [id], onDelete: SetNull)
   messages  Message[]
+  reports   ConversationReport[]
 
   // The orderless buyer-seller unique index is partial and is managed by migration SQL.
   @@index([buyerId, updatedAt])
   @@index([sellerId, updatedAt])
+  @@index([orderId])
+}
+
+model ConversationReport {
+  id             String                   @id @default(cuid())
+  conversationId String
+  reporterId     String
+  reason         ConversationReportReason
+  details        String?
+  status         ConversationReportStatus @default(OPEN)
+  reviewedById   String?
+  reviewedAt     DateTime?
+  createdAt      DateTime                 @default(now())
+  updatedAt      DateTime                 @updatedAt
+  conversation   Conversation             @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  reporter       User                     @relation("ConversationReporter", fields: [reporterId], references: [id], onDelete: Restrict)
+  reviewedBy     User?                    @relation("ConversationReportReviewer", fields: [reviewedById], references: [id], onDelete: SetNull)
+
+  @@unique([conversationId, reporterId])
+  @@index([status, createdAt])
+  @@index([reporterId, createdAt])
 }
 
 model Message {

@@ -128,6 +128,11 @@ export type Delivery = Prisma.DeliveryModel
  */
 export type Conversation = Prisma.ConversationModel
 /**
+ * Model ConversationReport
+ *
+ */
+export type ConversationReport = Prisma.ConversationReportModel
+/**
  * Model Message
  *
  */

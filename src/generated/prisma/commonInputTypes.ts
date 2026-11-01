@@ -501,6 +501,40 @@ export type EnumDeliveryStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumDeliveryStatusFilter<$PrismaModel>
 }
 
+export type EnumConversationReportReasonFilter<$PrismaModel = never> = {
+  equals?: $Enums.ConversationReportReason | Prisma.EnumConversationReportReasonFieldRefInput<$PrismaModel>
+  in?: $Enums.ConversationReportReason[] | Prisma.ListEnumConversationReportReasonFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ConversationReportReason[] | Prisma.ListEnumConversationReportReasonFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumConversationReportReasonFilter<$PrismaModel> | $Enums.ConversationReportReason
+}
+
+export type EnumConversationReportStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.ConversationReportStatus | Prisma.EnumConversationReportStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ConversationReportStatus[] | Prisma.ListEnumConversationReportStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ConversationReportStatus[] | Prisma.ListEnumConversationReportStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumConversationReportStatusFilter<$PrismaModel> | $Enums.ConversationReportStatus
+}
+
+export type EnumConversationReportReasonWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ConversationReportReason | Prisma.EnumConversationReportReasonFieldRefInput<$PrismaModel>
+  in?: $Enums.ConversationReportReason[] | Prisma.ListEnumConversationReportReasonFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ConversationReportReason[] | Prisma.ListEnumConversationReportReasonFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumConversationReportReasonWithAggregatesFilter<$PrismaModel> | $Enums.ConversationReportReason
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumConversationReportReasonFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumConversationReportReasonFilter<$PrismaModel>
+}
+
+export type EnumConversationReportStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ConversationReportStatus | Prisma.EnumConversationReportStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ConversationReportStatus[] | Prisma.ListEnumConversationReportStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ConversationReportStatus[] | Prisma.ListEnumConversationReportStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumConversationReportStatusWithAggregatesFilter<$PrismaModel> | $Enums.ConversationReportStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumConversationReportStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumConversationReportStatusFilter<$PrismaModel>
+}
+
 export type EnumReviewStatusFilter<$PrismaModel = never> = {
   equals?: $Enums.ReviewStatus | Prisma.EnumReviewStatusFieldRefInput<$PrismaModel>
   in?: $Enums.ReviewStatus[] | Prisma.ListEnumReviewStatusFieldRefInput<$PrismaModel>
@@ -1166,6 +1200,40 @@ export type NestedEnumDeliveryStatusWithAggregatesFilter<$PrismaModel = never> =
   _count?: Prisma.NestedIntFilter<$PrismaModel>
   _min?: Prisma.NestedEnumDeliveryStatusFilter<$PrismaModel>
   _max?: Prisma.NestedEnumDeliveryStatusFilter<$PrismaModel>
+}
+
+export type NestedEnumConversationReportReasonFilter<$PrismaModel = never> = {
+  equals?: $Enums.ConversationReportReason | Prisma.EnumConversationReportReasonFieldRefInput<$PrismaModel>
+  in?: $Enums.ConversationReportReason[] | Prisma.ListEnumConversationReportReasonFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ConversationReportReason[] | Prisma.ListEnumConversationReportReasonFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumConversationReportReasonFilter<$PrismaModel> | $Enums.ConversationReportReason
+}
+
+export type NestedEnumConversationReportStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.ConversationReportStatus | Prisma.EnumConversationReportStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ConversationReportStatus[] | Prisma.ListEnumConversationReportStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ConversationReportStatus[] | Prisma.ListEnumConversationReportStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumConversationReportStatusFilter<$PrismaModel> | $Enums.ConversationReportStatus
+}
+
+export type NestedEnumConversationReportReasonWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ConversationReportReason | Prisma.EnumConversationReportReasonFieldRefInput<$PrismaModel>
+  in?: $Enums.ConversationReportReason[] | Prisma.ListEnumConversationReportReasonFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ConversationReportReason[] | Prisma.ListEnumConversationReportReasonFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumConversationReportReasonWithAggregatesFilter<$PrismaModel> | $Enums.ConversationReportReason
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumConversationReportReasonFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumConversationReportReasonFilter<$PrismaModel>
+}
+
+export type NestedEnumConversationReportStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.ConversationReportStatus | Prisma.EnumConversationReportStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.ConversationReportStatus[] | Prisma.ListEnumConversationReportStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.ConversationReportStatus[] | Prisma.ListEnumConversationReportStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumConversationReportStatusWithAggregatesFilter<$PrismaModel> | $Enums.ConversationReportStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumConversationReportStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumConversationReportStatusFilter<$PrismaModel>
 }
 
 export type NestedEnumReviewStatusFilter<$PrismaModel = never> = {

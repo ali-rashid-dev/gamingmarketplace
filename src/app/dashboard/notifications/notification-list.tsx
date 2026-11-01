@@ -18,8 +18,11 @@ type Notification = {
 function notificationHref(data: unknown) {
   if (!data || typeof data !== "object" || Array.isArray(data)) return null;
   const record = data as Record<string, unknown>;
+  if (typeof record.conversationId === "string") {
+    const workspace = record.recipientWorkspace === "SELLER" ? "/seller/messages" : "/dashboard/messages";
+    return `${workspace}#conversation-${encodeURIComponent(record.conversationId)}`;
+  }
   if (typeof record.orderId === "string") return `/dashboard/orders/${encodeURIComponent(record.orderId)}`;
-  if (typeof record.conversationId === "string") return "/dashboard/messages";
   if (typeof record.ticketId === "string") return "/dashboard/support";
   return null;
 }

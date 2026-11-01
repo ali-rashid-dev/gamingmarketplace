@@ -2,6 +2,7 @@
 
 import {
   DisputeStatus,
+  ConversationReportStatus,
   SupportReportCategory,
   SupportReportStatus,
   SupportTicketPriority,
@@ -410,4 +411,46 @@ function revalidateSupport() {
   revalidatePath("/support/console");
   revalidatePath("/support/console/tickets");
   revalidatePath("/dashboard/support");
+}
+
+export async function moderateConversationReport(
+  reportIdInput: unknown,
+  decisionInput: unknown
+): Promise<ActionResult<{ updated: true }>> {
+  const { user } = await requirePageRoles(supportRoles);
+  const reportId = z.string().trim().min(1).max(128).safeParse(reportIdInput);
+  const decision = z.enum(["resolve", "dismiss"]).safeParse(decisionInput);
+  if (!reportId.success || !decision.success) {
+    return { success: false, error: "Invalid conversation report action" };
+  }
+  const status = decision.data === "resolve"
+    ? ConversationReportStatus.RESOLVED
+    : ConversationReportStatus.DISMISSED;
+  const report = await prisma.conversationReport.findFirst({
+    where: { id: reportId.data, status: ConversationReportStatus.OPEN },
+    select: { id: true, conversationId: true },
+  });
+  if (!report) return { success: false, error: "Open conversation report not found" };
+
+  const updated = await prisma.$transaction(async (transaction) => {
+    const changed = await transaction.conversationReport.updateMany({
+      where: { id: report.id, status: ConversationReportStatus.OPEN },
+      data: { status, reviewedById: user.id, reviewedAt: new Date() },
+    });
+    if (changed.count !== 1) return false;
+    await transaction.auditLog.create({
+      data: {
+        actorId: user.id,
+        action: `conversation.report.${decision.data}`,
+        entityType: "ConversationReport",
+        entityId: report.id,
+        metadata: { conversationId: report.conversationId },
+      },
+    });
+    return true;
+  });
+  if (!updated) return { success: false, error: "Report changed; reload and try again" };
+  revalidateSupport();
+  revalidatePath("/support/console/conversation-reports");
+  return { success: true, data: { updated: true } };
 }

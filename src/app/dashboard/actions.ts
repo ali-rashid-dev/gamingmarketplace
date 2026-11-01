@@ -2,7 +2,9 @@
 
 import {
   DeliveryStatus,
+  ConversationReportReason,
   DisputeStatus,
+  NotificationType,
   OrderItemStatus,
   OrderStatus,
   ReviewReportReason,
@@ -18,10 +20,37 @@ import { requirePageRoles, requirePageSession } from "@/lib/authorization";
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { publicListingWhere } from "@/lib/storefront";
+import { UTApi } from "uploadthing/server";
+import {
+  enforceMessageRateLimit,
+  MAX_MESSAGE_ATTACHMENT_SIZE,
+  MESSAGE_ATTACHMENT_TYPES,
+  messageAttachmentsSchema,
+  messageCredentialPattern,
+  type MessageAttachment,
+} from "@/lib/messaging";
 import { z } from "zod";
 
-const credentialPattern =
-  /(?:password|passcode|recovery\s+code|backup\s+code|login\s+credentials?)\s*[:=]\s*\S+/i;
+const credentialPattern = messageCredentialPattern;
+
+async function notifyConversationRecipient(
+  transaction: Prisma.TransactionClient,
+  input: { userId: string; conversationId: string; orderId: string | null; senderName: string }
+) {
+  await transaction.notification.create({
+    data: {
+      userId: input.userId,
+      type: NotificationType.MESSAGE,
+      title: "New message",
+      body: `${input.senderName} sent you a message.`,
+      data: {
+        conversationId: input.conversationId,
+        orderId: input.orderId,
+        recipientWorkspace: "SELLER",
+      },
+    },
+  });
+}
 
 export async function addWishlistItem(
   listingIdInput: unknown
@@ -72,15 +101,23 @@ export async function removeWishlistItem(
 
 export async function sendBuyerMessage(
   conversationIdInput: unknown,
-  bodyInput: unknown
+  bodyInput: unknown,
+  attachmentsInput: unknown = []
 ): Promise<ActionResult<{ messageId: string }>> {
   const { user } = await requirePageSession();
   const conversationId = z.string().trim().min(1).max(128).safeParse(conversationIdInput);
-  const body = z.string().trim().min(1).max(2000).safeParse(bodyInput);
+  const body = z.string().trim().max(2000).safeParse(bodyInput);
+  const attachments = messageAttachmentsSchema.safeParse(attachmentsInput);
   if (!conversationId.success || !body.success) {
     return { success: false, error: "Enter a message up to 2,000 characters" };
   }
-  if (credentialPattern.test(body.data)) {
+  if (!attachments.success) {
+    return { success: false, error: "Choose up to four supported attachments, each 5 MB or smaller" };
+  }
+  if (!body.data && !attachments.data.length) {
+    return { success: false, error: "Write a message or attach a file" };
+  }
+  if (messageCredentialPattern.test(body.data)) {
     return {
       success: false,
       error: "Do not send account passwords or recovery codes in messages",
@@ -88,16 +125,18 @@ export async function sendBuyerMessage(
   }
   const conversation = await prisma.conversation.findFirst({
     where: { id: conversationId.data, buyerId: user.id },
-    select: { id: true, orderId: true },
+    select: { id: true, orderId: true, sellerId: true },
   });
   if (!conversation) return { success: false, error: "Conversation not found" };
   const message = await prisma.$transaction(async (transaction) => {
+    if (!(await enforceMessageRateLimit(transaction, user.id))) return null;
     const created = await transaction.message.create({
       data: {
         conversationId: conversation.id,
         senderId: user.id,
         orderId: conversation.orderId,
         body: body.data,
+        attachments: attachments.data,
       },
       select: { id: true },
     });
@@ -105,9 +144,17 @@ export async function sendBuyerMessage(
       where: { id: conversation.id },
       data: { updatedAt: new Date() },
     });
+    await notifyConversationRecipient(transaction, {
+      userId: conversation.sellerId,
+      conversationId: conversation.id,
+      orderId: conversation.orderId,
+      senderName: user.name,
+    });
     return created;
   });
+  if (!message) return { success: false, error: "You are sending messages too quickly. Try again in a minute." };
   revalidatePath("/dashboard/messages");
+  revalidatePath("/seller/messages");
   revalidatePath("/dashboard");
   return { success: true, data: { messageId: message.id } };
 }
@@ -122,7 +169,7 @@ export async function startBuyerConversation(
   if (!listingId.success || !body.success) {
     return { success: false, error: "Enter a message up to 2,000 characters" };
   }
-  if (credentialPattern.test(body.data)) {
+  if (messageCredentialPattern.test(body.data)) {
     return {
       success: false,
       error: "Do not send account passwords or recovery codes in messages",
@@ -155,6 +202,9 @@ export async function startBuyerConversation(
     transaction: Prisma.TransactionClient,
     conversationId: string
   ) => {
+    if (!(await enforceMessageRateLimit(transaction, user.id))) {
+      throw new Error("MESSAGE_RATE_LIMIT");
+    }
     await transaction.message.create({
       data: {
         conversationId,
@@ -165,6 +215,12 @@ export async function startBuyerConversation(
     await transaction.conversation.update({
       where: { id: conversationId },
       data: { updatedAt: new Date() },
+    });
+    await notifyConversationRecipient(transaction, {
+      userId: listing.seller.userId,
+      conversationId,
+      orderId: null,
+      senderName: user.name,
     });
   };
   let conversationCreationFailed = false;
@@ -188,6 +244,9 @@ export async function startBuyerConversation(
       return target;
     });
   } catch (error) {
+    if (error instanceof Error && error.message === "MESSAGE_RATE_LIMIT") {
+      return { success: false, error: "You are sending messages too quickly. Try again in a minute." };
+    }
     if (
       !conversationCreationFailed ||
       !(error instanceof Prisma.PrismaClientKnownRequestError) ||
@@ -207,7 +266,60 @@ export async function startBuyerConversation(
     conversation = existing;
   }
   revalidatePath("/dashboard/messages");
+  revalidatePath("/seller/messages");
   return { success: true, data: { conversationId: conversation.id } };
+}
+
+export async function startBuyerOrderConversation(
+  orderIdInput: unknown,
+  sellerUserIdInput: unknown
+): Promise<ActionResult<{ conversationId: string }>> {
+  const { user } = await requirePageSession();
+  const orderId = z.string().trim().min(1).max(128).safeParse(orderIdInput);
+  const sellerUserId = z.string().trim().min(1).max(128).safeParse(sellerUserIdInput);
+  if (!orderId.success || !sellerUserId.success) {
+    return { success: false, error: "Invalid order conversation" };
+  }
+  const orderItem = await prisma.orderItem.findFirst({
+    where: {
+      orderId: orderId.data,
+      seller: { userId: sellerUserId.data, status: "APPROVED" },
+      order: { buyerId: user.id },
+    },
+    select: { id: true },
+  });
+  if (!orderItem) return { success: false, error: "Order or seller not found" };
+
+  try {
+    const conversation = await prisma.conversation.create({
+      data: {
+        buyerId: user.id,
+        sellerId: sellerUserId.data,
+        orderId: orderId.data,
+      },
+      select: { id: true },
+    });
+    revalidatePath("/dashboard/messages");
+    revalidatePath("/seller/messages");
+    return { success: true, data: { conversationId: conversation.id } };
+  } catch (error) {
+    if (
+      !(error instanceof Prisma.PrismaClientKnownRequestError) ||
+      error.code !== "P2002"
+    ) {
+      throw error;
+    }
+    const existing = await prisma.conversation.findFirst({
+      where: {
+        buyerId: user.id,
+        sellerId: sellerUserId.data,
+        orderId: orderId.data,
+      },
+      select: { id: true },
+    });
+    if (!existing) throw error;
+    return { success: true, data: { conversationId: existing.id } };
+  }
 }
 
 export async function markBuyerConversationRead(
@@ -234,6 +346,123 @@ export async function markBuyerConversationRead(
   revalidatePath("/dashboard/messages");
   revalidatePath("/dashboard");
   return { success: true, data: { updated: result.count } };
+}
+
+export async function markSellerConversationRead(
+  conversationIdInput: unknown
+): Promise<ActionResult<{ updated: number }>> {
+  const { user } = await requirePageRoles([UserRole.SELLER]);
+  const conversationId = z.string().trim().min(1).max(128).safeParse(conversationIdInput);
+  if (!conversationId.success) return { success: false, error: "Invalid conversation" };
+  const conversation = await prisma.conversation.findFirst({
+    where: { id: conversationId.data, sellerId: user.id },
+    select: { id: true },
+  });
+  if (!conversation) return { success: false, error: "Conversation not found" };
+  const result = await prisma.message.updateMany({
+    where: {
+      conversationId: conversation.id,
+      senderId: { not: user.id },
+      readAt: null,
+    },
+    data: { readAt: new Date() },
+  });
+  revalidatePath("/seller/messages");
+  revalidatePath("/dashboard");
+  return { success: true, data: { updated: result.count } };
+}
+
+export async function reportConversation(
+  conversationIdInput: unknown,
+  reasonInput: unknown,
+  detailsInput: unknown
+): Promise<ActionResult<{ reportId: string }>> {
+  const { user } = await requirePageSession();
+  const conversationId = z.string().trim().min(1).max(128).safeParse(conversationIdInput);
+  const reason = z.enum(ConversationReportReason).safeParse(reasonInput);
+  const details = z.string().trim().max(1000).safeParse(detailsInput);
+  if (!conversationId.success || !reason.success || !details.success) {
+    return { success: false, error: "Choose a report reason and enter valid details" };
+  }
+  const conversation = await prisma.conversation.findFirst({
+    where: {
+      id: conversationId.data,
+      OR: [{ buyerId: user.id }, { sellerId: user.id }],
+    },
+    select: { id: true, sellerId: true },
+  });
+  if (!conversation) return { success: false, error: "Conversation not found" };
+  try {
+    const report = await prisma.conversationReport.create({
+      data: {
+        conversationId: conversation.id,
+        reporterId: user.id,
+        reason: reason.data,
+        details: details.data || null,
+      },
+      select: { id: true },
+    });
+    revalidatePath("/support/console/conversation-reports");
+    return { success: true, data: { reportId: report.id } };
+  } catch (error) {
+    if (
+      error instanceof Prisma.PrismaClientKnownRequestError &&
+      error.code === "P2002"
+    ) {
+      return { success: false, error: "You have already reported this conversation" };
+    }
+    throw error;
+  }
+}
+
+export async function uploadConversationAttachment(
+  conversationIdInput: unknown,
+  fileInput: File
+): Promise<ActionResult<MessageAttachment>> {
+  const { user } = await requirePageSession();
+  const conversationId = z.string().trim().min(1).max(128).safeParse(conversationIdInput);
+  if (!conversationId.success) return { success: false, error: "Invalid conversation" };
+  const conversation = await prisma.conversation.findFirst({
+    where: {
+      id: conversationId.data,
+      OR: [{ buyerId: user.id }, { sellerId: user.id }],
+    },
+    select: { id: true, sellerId: true },
+  });
+  if (!conversation) return { success: false, error: "Conversation not found" };
+  if (conversation.sellerId === user.id) {
+    const seller = await prisma.sellerProfile.findUnique({
+      where: { userId: user.id },
+      select: { status: true },
+    });
+    if (seller?.status !== "APPROVED") {
+      return { success: false, error: "An approved seller profile is required" };
+    }
+  }
+  if (!process.env.UPLOADTHING_TOKEN) {
+    return { success: false, error: "Attachments are not configured" };
+  }
+  if (!(fileInput instanceof File)) return { success: false, error: "Choose a file to attach" };
+  const contentType = z.enum(MESSAGE_ATTACHMENT_TYPES).safeParse(fileInput.type);
+  if (!contentType.success) {
+    return { success: false, error: "Attach a JPEG, PNG, WebP image, or PDF" };
+  }
+  if (fileInput.size < 1 || fileInput.size > MAX_MESSAGE_ATTACHMENT_SIZE) {
+    return { success: false, error: "Attachments must be 5 MB or smaller" };
+  }
+  const result = await new UTApi().uploadFiles(fileInput);
+  if (result.error) {
+    return { success: false, error: "Attachment upload failed. Please try again." };
+  }
+  return {
+    success: true,
+    data: {
+      url: result.data.ufsUrl ?? result.data.url,
+      name: result.data.name,
+      size: result.data.size,
+      contentType: contentType.data,
+    },
+  };
 }
 
 export async function confirmBuyerReceipt(

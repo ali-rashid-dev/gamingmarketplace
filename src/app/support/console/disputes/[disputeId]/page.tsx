@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { MessageAttachmentList } from "@/app/dashboard/messages/message-controls";
 import { getSupportDispute } from "../../data";
 import { DisputeActions } from "./dispute-actions";
 
@@ -75,7 +76,9 @@ export default async function SupportDisputeDetailPage({ params }: Props) {
               <CardContent className="space-y-3">
                 {dispute.order.messages.map((message) => (
                   <div key={message.id} className="rounded-lg border border-border p-3">
+                    <p className="mb-1 text-xs font-medium text-muted-foreground">{message.sender.name}</p>
                     <p className="whitespace-pre-wrap break-words text-sm">{message.body}</p>
+                    <MessageAttachmentList attachments={message.attachments} />
                     <time className="mt-2 block text-[10px] text-muted-foreground">{message.createdAt.toLocaleString()}</time>
                   </div>
                 ))}

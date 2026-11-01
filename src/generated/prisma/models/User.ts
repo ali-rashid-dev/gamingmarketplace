@@ -206,6 +206,8 @@ export type UserWhereInput = {
   buyerConversations?: Prisma.ConversationListRelationFilter
   sellerConversations?: Prisma.ConversationListRelationFilter
   messages?: Prisma.MessageListRelationFilter
+  conversationReports?: Prisma.ConversationReportListRelationFilter
+  reviewedConversationReports?: Prisma.ConversationReportListRelationFilter
   reviews?: Prisma.ReviewListRelationFilter
   reviewReports?: Prisma.ReviewReportListRelationFilter
   openedDisputes?: Prisma.DisputeListRelationFilter
@@ -240,6 +242,8 @@ export type UserOrderByWithRelationInput = {
   buyerConversations?: Prisma.ConversationOrderByRelationAggregateInput
   sellerConversations?: Prisma.ConversationOrderByRelationAggregateInput
   messages?: Prisma.MessageOrderByRelationAggregateInput
+  conversationReports?: Prisma.ConversationReportOrderByRelationAggregateInput
+  reviewedConversationReports?: Prisma.ConversationReportOrderByRelationAggregateInput
   reviews?: Prisma.ReviewOrderByRelationAggregateInput
   reviewReports?: Prisma.ReviewReportOrderByRelationAggregateInput
   openedDisputes?: Prisma.DisputeOrderByRelationAggregateInput
@@ -277,6 +281,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   buyerConversations?: Prisma.ConversationListRelationFilter
   sellerConversations?: Prisma.ConversationListRelationFilter
   messages?: Prisma.MessageListRelationFilter
+  conversationReports?: Prisma.ConversationReportListRelationFilter
+  reviewedConversationReports?: Prisma.ConversationReportListRelationFilter
   reviews?: Prisma.ReviewListRelationFilter
   reviewReports?: Prisma.ReviewReportListRelationFilter
   openedDisputes?: Prisma.DisputeListRelationFilter
@@ -337,6 +343,8 @@ export type UserCreateInput = {
   buyerConversations?: Prisma.ConversationCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeCreateNestedManyWithoutOpenedByInput
@@ -371,6 +379,8 @@ export type UserUncheckedCreateInput = {
   buyerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportUncheckedCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutOpenedByInput
@@ -405,6 +415,8 @@ export type UserUpdateInput = {
   buyerConversations?: Prisma.ConversationUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUpdateManyWithoutOpenedByNestedInput
@@ -439,6 +451,8 @@ export type UserUncheckedUpdateInput = {
   buyerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUncheckedUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUncheckedUpdateManyWithoutOpenedByNestedInput
@@ -667,6 +681,36 @@ export type UserUpdateOneRequiredWithoutSellerConversationsNestedInput = {
   upsert?: Prisma.UserUpsertWithoutSellerConversationsInput
   connect?: Prisma.UserWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutSellerConversationsInput, Prisma.UserUpdateWithoutSellerConversationsInput>, Prisma.UserUncheckedUpdateWithoutSellerConversationsInput>
+}
+
+export type UserCreateNestedOneWithoutConversationReportsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutConversationReportsInput, Prisma.UserUncheckedCreateWithoutConversationReportsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutConversationReportsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserCreateNestedOneWithoutReviewedConversationReportsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReviewedConversationReportsInput, Prisma.UserUncheckedCreateWithoutReviewedConversationReportsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReviewedConversationReportsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutConversationReportsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutConversationReportsInput, Prisma.UserUncheckedCreateWithoutConversationReportsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutConversationReportsInput
+  upsert?: Prisma.UserUpsertWithoutConversationReportsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutConversationReportsInput, Prisma.UserUpdateWithoutConversationReportsInput>, Prisma.UserUncheckedUpdateWithoutConversationReportsInput>
+}
+
+export type UserUpdateOneWithoutReviewedConversationReportsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutReviewedConversationReportsInput, Prisma.UserUncheckedCreateWithoutReviewedConversationReportsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutReviewedConversationReportsInput
+  upsert?: Prisma.UserUpsertWithoutReviewedConversationReportsInput
+  disconnect?: Prisma.UserWhereInput | boolean
+  delete?: Prisma.UserWhereInput | boolean
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutReviewedConversationReportsInput, Prisma.UserUpdateWithoutReviewedConversationReportsInput>, Prisma.UserUncheckedUpdateWithoutReviewedConversationReportsInput>
 }
 
 export type UserCreateNestedOneWithoutMessagesInput = {
@@ -903,6 +947,8 @@ export type UserCreateWithoutRoleAssignmentsInput = {
   buyerConversations?: Prisma.ConversationCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeCreateNestedManyWithoutOpenedByInput
@@ -936,6 +982,8 @@ export type UserUncheckedCreateWithoutRoleAssignmentsInput = {
   buyerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportUncheckedCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutOpenedByInput
@@ -985,6 +1033,8 @@ export type UserUpdateWithoutRoleAssignmentsInput = {
   buyerConversations?: Prisma.ConversationUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUpdateManyWithoutOpenedByNestedInput
@@ -1018,6 +1068,8 @@ export type UserUncheckedUpdateWithoutRoleAssignmentsInput = {
   buyerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUncheckedUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUncheckedUpdateManyWithoutOpenedByNestedInput
@@ -1050,6 +1102,8 @@ export type UserCreateWithoutSessionsInput = {
   buyerConversations?: Prisma.ConversationCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeCreateNestedManyWithoutOpenedByInput
@@ -1083,6 +1137,8 @@ export type UserUncheckedCreateWithoutSessionsInput = {
   buyerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportUncheckedCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutOpenedByInput
@@ -1132,6 +1188,8 @@ export type UserUpdateWithoutSessionsInput = {
   buyerConversations?: Prisma.ConversationUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUpdateManyWithoutOpenedByNestedInput
@@ -1165,6 +1223,8 @@ export type UserUncheckedUpdateWithoutSessionsInput = {
   buyerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUncheckedUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUncheckedUpdateManyWithoutOpenedByNestedInput
@@ -1198,6 +1258,8 @@ export type UserCreateWithoutAccountsInput = {
   buyerConversations?: Prisma.ConversationCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeCreateNestedManyWithoutOpenedByInput
@@ -1231,6 +1293,8 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   buyerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportUncheckedCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutOpenedByInput
@@ -1280,6 +1344,8 @@ export type UserUpdateWithoutAccountsInput = {
   buyerConversations?: Prisma.ConversationUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUpdateManyWithoutOpenedByNestedInput
@@ -1313,6 +1379,8 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   buyerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUncheckedUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUncheckedUpdateManyWithoutOpenedByNestedInput
@@ -1346,6 +1414,8 @@ export type UserCreateWithoutProfileInput = {
   buyerConversations?: Prisma.ConversationCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeCreateNestedManyWithoutOpenedByInput
@@ -1379,6 +1449,8 @@ export type UserUncheckedCreateWithoutProfileInput = {
   buyerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportUncheckedCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutOpenedByInput
@@ -1428,6 +1500,8 @@ export type UserUpdateWithoutProfileInput = {
   buyerConversations?: Prisma.ConversationUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUpdateManyWithoutOpenedByNestedInput
@@ -1461,6 +1535,8 @@ export type UserUncheckedUpdateWithoutProfileInput = {
   buyerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUncheckedUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUncheckedUpdateManyWithoutOpenedByNestedInput
@@ -1494,6 +1570,8 @@ export type UserCreateWithoutSellerProfileInput = {
   buyerConversations?: Prisma.ConversationCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeCreateNestedManyWithoutOpenedByInput
@@ -1527,6 +1605,8 @@ export type UserUncheckedCreateWithoutSellerProfileInput = {
   buyerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportUncheckedCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutOpenedByInput
@@ -1576,6 +1656,8 @@ export type UserUpdateWithoutSellerProfileInput = {
   buyerConversations?: Prisma.ConversationUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUpdateManyWithoutOpenedByNestedInput
@@ -1609,6 +1691,8 @@ export type UserUncheckedUpdateWithoutSellerProfileInput = {
   buyerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUncheckedUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUncheckedUpdateManyWithoutOpenedByNestedInput
@@ -1643,6 +1727,8 @@ export type UserCreateWithoutListingRevisionsInput = {
   buyerConversations?: Prisma.ConversationCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeCreateNestedManyWithoutOpenedByInput
@@ -1676,6 +1762,8 @@ export type UserUncheckedCreateWithoutListingRevisionsInput = {
   buyerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportUncheckedCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutOpenedByInput
@@ -1725,6 +1813,8 @@ export type UserUpdateWithoutListingRevisionsInput = {
   buyerConversations?: Prisma.ConversationUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUpdateManyWithoutOpenedByNestedInput
@@ -1758,6 +1848,8 @@ export type UserUncheckedUpdateWithoutListingRevisionsInput = {
   buyerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUncheckedUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUncheckedUpdateManyWithoutOpenedByNestedInput
@@ -1790,6 +1882,8 @@ export type UserCreateWithoutOrdersInput = {
   buyerConversations?: Prisma.ConversationCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeCreateNestedManyWithoutOpenedByInput
@@ -1823,6 +1917,8 @@ export type UserUncheckedCreateWithoutOrdersInput = {
   buyerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportUncheckedCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutOpenedByInput
@@ -1872,6 +1968,8 @@ export type UserUpdateWithoutOrdersInput = {
   buyerConversations?: Prisma.ConversationUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUpdateManyWithoutOpenedByNestedInput
@@ -1905,6 +2003,8 @@ export type UserUncheckedUpdateWithoutOrdersInput = {
   buyerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUncheckedUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUncheckedUpdateManyWithoutOpenedByNestedInput
@@ -1938,6 +2038,8 @@ export type UserCreateWithoutBuyerConversationsInput = {
   orders?: Prisma.OrderCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeCreateNestedManyWithoutOpenedByInput
@@ -1971,6 +2073,8 @@ export type UserUncheckedCreateWithoutBuyerConversationsInput = {
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportUncheckedCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutOpenedByInput
@@ -2009,6 +2113,8 @@ export type UserCreateWithoutSellerConversationsInput = {
   orders?: Prisma.OrderCreateNestedManyWithoutBuyerInput
   buyerConversations?: Prisma.ConversationCreateNestedManyWithoutBuyerInput
   messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeCreateNestedManyWithoutOpenedByInput
@@ -2042,6 +2148,8 @@ export type UserUncheckedCreateWithoutSellerConversationsInput = {
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutBuyerInput
   buyerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutBuyerInput
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportUncheckedCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutOpenedByInput
@@ -2091,6 +2199,8 @@ export type UserUpdateWithoutBuyerConversationsInput = {
   orders?: Prisma.OrderUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUpdateManyWithoutOpenedByNestedInput
@@ -2124,6 +2234,8 @@ export type UserUncheckedUpdateWithoutBuyerConversationsInput = {
   orders?: Prisma.OrderUncheckedUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUncheckedUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUncheckedUpdateManyWithoutOpenedByNestedInput
@@ -2168,6 +2280,8 @@ export type UserUpdateWithoutSellerConversationsInput = {
   orders?: Prisma.OrderUpdateManyWithoutBuyerNestedInput
   buyerConversations?: Prisma.ConversationUpdateManyWithoutBuyerNestedInput
   messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUpdateManyWithoutOpenedByNestedInput
@@ -2201,6 +2315,320 @@ export type UserUncheckedUpdateWithoutSellerConversationsInput = {
   orders?: Prisma.OrderUncheckedUpdateManyWithoutBuyerNestedInput
   buyerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutBuyerNestedInput
   messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReviewedByNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBuyerNestedInput
+  reviewReports?: Prisma.ReviewReportUncheckedUpdateManyWithoutReporterNestedInput
+  openedDisputes?: Prisma.DisputeUncheckedUpdateManyWithoutOpenedByNestedInput
+  submittedEvidence?: Prisma.DisputeEvidenceUncheckedUpdateManyWithoutSubmittedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  listingRevisions?: Prisma.ListingRevisionUncheckedUpdateManyWithoutChangedByNestedInput
+  wishlistItems?: Prisma.WishlistItemUncheckedUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutAssignedToNestedInput
+  supportMessages?: Prisma.SupportTicketMessageUncheckedUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
+}
+
+export type UserCreateWithoutConversationReportsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  profile?: Prisma.AccountProfileCreateNestedOneWithoutUserInput
+  sellerProfile?: Prisma.SellerProfileCreateNestedOneWithoutUserInput
+  orders?: Prisma.OrderCreateNestedManyWithoutBuyerInput
+  buyerConversations?: Prisma.ConversationCreateNestedManyWithoutBuyerInput
+  sellerConversations?: Prisma.ConversationCreateNestedManyWithoutSellerInput
+  messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  reviewedConversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReviewedByInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutBuyerInput
+  reviewReports?: Prisma.ReviewReportCreateNestedManyWithoutReporterInput
+  openedDisputes?: Prisma.DisputeCreateNestedManyWithoutOpenedByInput
+  submittedEvidence?: Prisma.DisputeEvidenceCreateNestedManyWithoutSubmittedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  listingRevisions?: Prisma.ListingRevisionCreateNestedManyWithoutChangedByInput
+  wishlistItems?: Prisma.WishlistItemCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketCreateNestedManyWithoutAssignedToInput
+  supportMessages?: Prisma.SupportTicketMessageCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
+}
+
+export type UserUncheckedCreateWithoutConversationReportsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  profile?: Prisma.AccountProfileUncheckedCreateNestedOneWithoutUserInput
+  sellerProfile?: Prisma.SellerProfileUncheckedCreateNestedOneWithoutUserInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutBuyerInput
+  buyerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutBuyerInput
+  sellerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutSellerInput
+  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReviewedByInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBuyerInput
+  reviewReports?: Prisma.ReviewReportUncheckedCreateNestedManyWithoutReporterInput
+  openedDisputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutOpenedByInput
+  submittedEvidence?: Prisma.DisputeEvidenceUncheckedCreateNestedManyWithoutSubmittedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  listingRevisions?: Prisma.ListingRevisionUncheckedCreateNestedManyWithoutChangedByInput
+  wishlistItems?: Prisma.WishlistItemUncheckedCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutAssignedToInput
+  supportMessages?: Prisma.SupportTicketMessageUncheckedCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
+}
+
+export type UserCreateOrConnectWithoutConversationReportsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutConversationReportsInput, Prisma.UserUncheckedCreateWithoutConversationReportsInput>
+}
+
+export type UserCreateWithoutReviewedConversationReportsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  profile?: Prisma.AccountProfileCreateNestedOneWithoutUserInput
+  sellerProfile?: Prisma.SellerProfileCreateNestedOneWithoutUserInput
+  orders?: Prisma.OrderCreateNestedManyWithoutBuyerInput
+  buyerConversations?: Prisma.ConversationCreateNestedManyWithoutBuyerInput
+  sellerConversations?: Prisma.ConversationCreateNestedManyWithoutSellerInput
+  messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReporterInput
+  reviews?: Prisma.ReviewCreateNestedManyWithoutBuyerInput
+  reviewReports?: Prisma.ReviewReportCreateNestedManyWithoutReporterInput
+  openedDisputes?: Prisma.DisputeCreateNestedManyWithoutOpenedByInput
+  submittedEvidence?: Prisma.DisputeEvidenceCreateNestedManyWithoutSubmittedByInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogCreateNestedManyWithoutActorInput
+  listingRevisions?: Prisma.ListingRevisionCreateNestedManyWithoutChangedByInput
+  wishlistItems?: Prisma.WishlistItemCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketCreateNestedManyWithoutAssignedToInput
+  supportMessages?: Prisma.SupportTicketMessageCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentCreateNestedManyWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportCreateNestedManyWithoutAssignedToInput
+}
+
+export type UserUncheckedCreateWithoutReviewedConversationReportsInput = {
+  id: string
+  name: string
+  email: string
+  emailVerified: boolean
+  image?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  sessions?: Prisma.SessionUncheckedCreateNestedManyWithoutUserInput
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  profile?: Prisma.AccountProfileUncheckedCreateNestedOneWithoutUserInput
+  sellerProfile?: Prisma.SellerProfileUncheckedCreateNestedOneWithoutUserInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutBuyerInput
+  buyerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutBuyerInput
+  sellerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutSellerInput
+  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReporterInput
+  reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBuyerInput
+  reviewReports?: Prisma.ReviewReportUncheckedCreateNestedManyWithoutReporterInput
+  openedDisputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutOpenedByInput
+  submittedEvidence?: Prisma.DisputeEvidenceUncheckedCreateNestedManyWithoutSubmittedByInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  auditLogs?: Prisma.AuditLogUncheckedCreateNestedManyWithoutActorInput
+  listingRevisions?: Prisma.ListingRevisionUncheckedCreateNestedManyWithoutChangedByInput
+  wishlistItems?: Prisma.WishlistItemUncheckedCreateNestedManyWithoutUserInput
+  supportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutUserInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedCreateNestedManyWithoutAssignedToInput
+  supportMessages?: Prisma.SupportTicketMessageUncheckedCreateNestedManyWithoutSenderInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedCreateNestedOneWithoutUserInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedCreateNestedManyWithoutUserInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutSubmittedByInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutReportedUserInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedCreateNestedManyWithoutAssignedToInput
+}
+
+export type UserCreateOrConnectWithoutReviewedConversationReportsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutReviewedConversationReportsInput, Prisma.UserUncheckedCreateWithoutReviewedConversationReportsInput>
+}
+
+export type UserUpsertWithoutConversationReportsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutConversationReportsInput, Prisma.UserUncheckedUpdateWithoutConversationReportsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutConversationReportsInput, Prisma.UserUncheckedCreateWithoutConversationReportsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutConversationReportsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutConversationReportsInput, Prisma.UserUncheckedUpdateWithoutConversationReportsInput>
+}
+
+export type UserUpdateWithoutConversationReportsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  profile?: Prisma.AccountProfileUpdateOneWithoutUserNestedInput
+  sellerProfile?: Prisma.SellerProfileUpdateOneWithoutUserNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutBuyerNestedInput
+  buyerConversations?: Prisma.ConversationUpdateManyWithoutBuyerNestedInput
+  sellerConversations?: Prisma.ConversationUpdateManyWithoutSellerNestedInput
+  messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUpdateManyWithoutReviewedByNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutBuyerNestedInput
+  reviewReports?: Prisma.ReviewReportUpdateManyWithoutReporterNestedInput
+  openedDisputes?: Prisma.DisputeUpdateManyWithoutOpenedByNestedInput
+  submittedEvidence?: Prisma.DisputeEvidenceUpdateManyWithoutSubmittedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  listingRevisions?: Prisma.ListingRevisionUpdateManyWithoutChangedByNestedInput
+  wishlistItems?: Prisma.WishlistItemUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUpdateManyWithoutAssignedToNestedInput
+  supportMessages?: Prisma.SupportTicketMessageUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
+}
+
+export type UserUncheckedUpdateWithoutConversationReportsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  profile?: Prisma.AccountProfileUncheckedUpdateOneWithoutUserNestedInput
+  sellerProfile?: Prisma.SellerProfileUncheckedUpdateOneWithoutUserNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutBuyerNestedInput
+  buyerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutBuyerNestedInput
+  sellerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutSellerNestedInput
+  messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReviewedByNestedInput
+  reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBuyerNestedInput
+  reviewReports?: Prisma.ReviewReportUncheckedUpdateManyWithoutReporterNestedInput
+  openedDisputes?: Prisma.DisputeUncheckedUpdateManyWithoutOpenedByNestedInput
+  submittedEvidence?: Prisma.DisputeEvidenceUncheckedUpdateManyWithoutSubmittedByNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUncheckedUpdateManyWithoutActorNestedInput
+  listingRevisions?: Prisma.ListingRevisionUncheckedUpdateManyWithoutChangedByNestedInput
+  wishlistItems?: Prisma.WishlistItemUncheckedUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUncheckedUpdateManyWithoutAssignedToNestedInput
+  supportMessages?: Prisma.SupportTicketMessageUncheckedUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUncheckedUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUncheckedUpdateManyWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUncheckedUpdateManyWithoutAssignedToNestedInput
+}
+
+export type UserUpsertWithoutReviewedConversationReportsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutReviewedConversationReportsInput, Prisma.UserUncheckedUpdateWithoutReviewedConversationReportsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutReviewedConversationReportsInput, Prisma.UserUncheckedCreateWithoutReviewedConversationReportsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutReviewedConversationReportsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutReviewedConversationReportsInput, Prisma.UserUncheckedUpdateWithoutReviewedConversationReportsInput>
+}
+
+export type UserUpdateWithoutReviewedConversationReportsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  profile?: Prisma.AccountProfileUpdateOneWithoutUserNestedInput
+  sellerProfile?: Prisma.SellerProfileUpdateOneWithoutUserNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutBuyerNestedInput
+  buyerConversations?: Prisma.ConversationUpdateManyWithoutBuyerNestedInput
+  sellerConversations?: Prisma.ConversationUpdateManyWithoutSellerNestedInput
+  messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUpdateManyWithoutReporterNestedInput
+  reviews?: Prisma.ReviewUpdateManyWithoutBuyerNestedInput
+  reviewReports?: Prisma.ReviewReportUpdateManyWithoutReporterNestedInput
+  openedDisputes?: Prisma.DisputeUpdateManyWithoutOpenedByNestedInput
+  submittedEvidence?: Prisma.DisputeEvidenceUpdateManyWithoutSubmittedByNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  auditLogs?: Prisma.AuditLogUpdateManyWithoutActorNestedInput
+  listingRevisions?: Prisma.ListingRevisionUpdateManyWithoutChangedByNestedInput
+  wishlistItems?: Prisma.WishlistItemUpdateManyWithoutUserNestedInput
+  supportTickets?: Prisma.SupportTicketUpdateManyWithoutUserNestedInput
+  assignedSupportTickets?: Prisma.SupportTicketUpdateManyWithoutAssignedToNestedInput
+  supportMessages?: Prisma.SupportTicketMessageUpdateManyWithoutSenderNestedInput
+  supportAgentProfile?: Prisma.SupportAgentProfileUpdateOneWithoutUserNestedInput
+  roleAssignments?: Prisma.UserRoleAssignmentUpdateManyWithoutUserNestedInput
+  submittedSupportReports?: Prisma.SupportReportUpdateManyWithoutSubmittedByNestedInput
+  reportedBySupportReports?: Prisma.SupportReportUpdateManyWithoutReportedUserNestedInput
+  assignedSupportReports?: Prisma.SupportReportUpdateManyWithoutAssignedToNestedInput
+}
+
+export type UserUncheckedUpdateWithoutReviewedConversationReportsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  emailVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  image?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  sessions?: Prisma.SessionUncheckedUpdateManyWithoutUserNestedInput
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  profile?: Prisma.AccountProfileUncheckedUpdateOneWithoutUserNestedInput
+  sellerProfile?: Prisma.SellerProfileUncheckedUpdateOneWithoutUserNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutBuyerNestedInput
+  buyerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutBuyerNestedInput
+  sellerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutSellerNestedInput
+  messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReporterNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUncheckedUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUncheckedUpdateManyWithoutOpenedByNestedInput
@@ -2234,6 +2662,8 @@ export type UserCreateWithoutMessagesInput = {
   orders?: Prisma.OrderCreateNestedManyWithoutBuyerInput
   buyerConversations?: Prisma.ConversationCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationCreateNestedManyWithoutSellerInput
+  conversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeCreateNestedManyWithoutOpenedByInput
@@ -2267,6 +2697,8 @@ export type UserUncheckedCreateWithoutMessagesInput = {
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutBuyerInput
   buyerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutSellerInput
+  conversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportUncheckedCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutOpenedByInput
@@ -2316,6 +2748,8 @@ export type UserUpdateWithoutMessagesInput = {
   orders?: Prisma.OrderUpdateManyWithoutBuyerNestedInput
   buyerConversations?: Prisma.ConversationUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUpdateManyWithoutSellerNestedInput
+  conversationReports?: Prisma.ConversationReportUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUpdateManyWithoutOpenedByNestedInput
@@ -2349,6 +2783,8 @@ export type UserUncheckedUpdateWithoutMessagesInput = {
   orders?: Prisma.OrderUncheckedUpdateManyWithoutBuyerNestedInput
   buyerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutSellerNestedInput
+  conversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUncheckedUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUncheckedUpdateManyWithoutOpenedByNestedInput
@@ -2383,6 +2819,8 @@ export type UserCreateWithoutReviewsInput = {
   buyerConversations?: Prisma.ConversationCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReviewedByInput
   reviewReports?: Prisma.ReviewReportCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeCreateNestedManyWithoutOpenedByInput
   submittedEvidence?: Prisma.DisputeEvidenceCreateNestedManyWithoutSubmittedByInput
@@ -2416,6 +2854,8 @@ export type UserUncheckedCreateWithoutReviewsInput = {
   buyerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReviewedByInput
   reviewReports?: Prisma.ReviewReportUncheckedCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutOpenedByInput
   submittedEvidence?: Prisma.DisputeEvidenceUncheckedCreateNestedManyWithoutSubmittedByInput
@@ -2465,6 +2905,8 @@ export type UserUpdateWithoutReviewsInput = {
   buyerConversations?: Prisma.ConversationUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUpdateManyWithoutReviewedByNestedInput
   reviewReports?: Prisma.ReviewReportUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUpdateManyWithoutOpenedByNestedInput
   submittedEvidence?: Prisma.DisputeEvidenceUpdateManyWithoutSubmittedByNestedInput
@@ -2498,6 +2940,8 @@ export type UserUncheckedUpdateWithoutReviewsInput = {
   buyerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReviewedByNestedInput
   reviewReports?: Prisma.ReviewReportUncheckedUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUncheckedUpdateManyWithoutOpenedByNestedInput
   submittedEvidence?: Prisma.DisputeEvidenceUncheckedUpdateManyWithoutSubmittedByNestedInput
@@ -2531,6 +2975,8 @@ export type UserCreateWithoutReviewReportsInput = {
   buyerConversations?: Prisma.ConversationCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutBuyerInput
   openedDisputes?: Prisma.DisputeCreateNestedManyWithoutOpenedByInput
   submittedEvidence?: Prisma.DisputeEvidenceCreateNestedManyWithoutSubmittedByInput
@@ -2564,6 +3010,8 @@ export type UserUncheckedCreateWithoutReviewReportsInput = {
   buyerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBuyerInput
   openedDisputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutOpenedByInput
   submittedEvidence?: Prisma.DisputeEvidenceUncheckedCreateNestedManyWithoutSubmittedByInput
@@ -2613,6 +3061,8 @@ export type UserUpdateWithoutReviewReportsInput = {
   buyerConversations?: Prisma.ConversationUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutBuyerNestedInput
   openedDisputes?: Prisma.DisputeUpdateManyWithoutOpenedByNestedInput
   submittedEvidence?: Prisma.DisputeEvidenceUpdateManyWithoutSubmittedByNestedInput
@@ -2646,6 +3096,8 @@ export type UserUncheckedUpdateWithoutReviewReportsInput = {
   buyerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBuyerNestedInput
   openedDisputes?: Prisma.DisputeUncheckedUpdateManyWithoutOpenedByNestedInput
   submittedEvidence?: Prisma.DisputeEvidenceUncheckedUpdateManyWithoutSubmittedByNestedInput
@@ -2679,6 +3131,8 @@ export type UserCreateWithoutOpenedDisputesInput = {
   buyerConversations?: Prisma.ConversationCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportCreateNestedManyWithoutReporterInput
   submittedEvidence?: Prisma.DisputeEvidenceCreateNestedManyWithoutSubmittedByInput
@@ -2712,6 +3166,8 @@ export type UserUncheckedCreateWithoutOpenedDisputesInput = {
   buyerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportUncheckedCreateNestedManyWithoutReporterInput
   submittedEvidence?: Prisma.DisputeEvidenceUncheckedCreateNestedManyWithoutSubmittedByInput
@@ -2761,6 +3217,8 @@ export type UserUpdateWithoutOpenedDisputesInput = {
   buyerConversations?: Prisma.ConversationUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUpdateManyWithoutReporterNestedInput
   submittedEvidence?: Prisma.DisputeEvidenceUpdateManyWithoutSubmittedByNestedInput
@@ -2794,6 +3252,8 @@ export type UserUncheckedUpdateWithoutOpenedDisputesInput = {
   buyerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUncheckedUpdateManyWithoutReporterNestedInput
   submittedEvidence?: Prisma.DisputeEvidenceUncheckedUpdateManyWithoutSubmittedByNestedInput
@@ -2827,6 +3287,8 @@ export type UserCreateWithoutSubmittedEvidenceInput = {
   buyerConversations?: Prisma.ConversationCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeCreateNestedManyWithoutOpenedByInput
@@ -2860,6 +3322,8 @@ export type UserUncheckedCreateWithoutSubmittedEvidenceInput = {
   buyerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportUncheckedCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutOpenedByInput
@@ -2909,6 +3373,8 @@ export type UserUpdateWithoutSubmittedEvidenceInput = {
   buyerConversations?: Prisma.ConversationUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUpdateManyWithoutOpenedByNestedInput
@@ -2942,6 +3408,8 @@ export type UserUncheckedUpdateWithoutSubmittedEvidenceInput = {
   buyerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUncheckedUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUncheckedUpdateManyWithoutOpenedByNestedInput
@@ -2975,6 +3443,8 @@ export type UserCreateWithoutNotificationsInput = {
   buyerConversations?: Prisma.ConversationCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeCreateNestedManyWithoutOpenedByInput
@@ -3008,6 +3478,8 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   buyerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportUncheckedCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutOpenedByInput
@@ -3057,6 +3529,8 @@ export type UserUpdateWithoutNotificationsInput = {
   buyerConversations?: Prisma.ConversationUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUpdateManyWithoutOpenedByNestedInput
@@ -3090,6 +3564,8 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   buyerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUncheckedUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUncheckedUpdateManyWithoutOpenedByNestedInput
@@ -3123,6 +3599,8 @@ export type UserCreateWithoutWishlistItemsInput = {
   buyerConversations?: Prisma.ConversationCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeCreateNestedManyWithoutOpenedByInput
@@ -3156,6 +3634,8 @@ export type UserUncheckedCreateWithoutWishlistItemsInput = {
   buyerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportUncheckedCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutOpenedByInput
@@ -3205,6 +3685,8 @@ export type UserUpdateWithoutWishlistItemsInput = {
   buyerConversations?: Prisma.ConversationUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUpdateManyWithoutOpenedByNestedInput
@@ -3238,6 +3720,8 @@ export type UserUncheckedUpdateWithoutWishlistItemsInput = {
   buyerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUncheckedUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUncheckedUpdateManyWithoutOpenedByNestedInput
@@ -3271,6 +3755,8 @@ export type UserCreateWithoutSupportTicketsInput = {
   buyerConversations?: Prisma.ConversationCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeCreateNestedManyWithoutOpenedByInput
@@ -3304,6 +3790,8 @@ export type UserUncheckedCreateWithoutSupportTicketsInput = {
   buyerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportUncheckedCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutOpenedByInput
@@ -3342,6 +3830,8 @@ export type UserCreateWithoutAssignedSupportTicketsInput = {
   buyerConversations?: Prisma.ConversationCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeCreateNestedManyWithoutOpenedByInput
@@ -3375,6 +3865,8 @@ export type UserUncheckedCreateWithoutAssignedSupportTicketsInput = {
   buyerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportUncheckedCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutOpenedByInput
@@ -3424,6 +3916,8 @@ export type UserUpdateWithoutSupportTicketsInput = {
   buyerConversations?: Prisma.ConversationUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUpdateManyWithoutOpenedByNestedInput
@@ -3457,6 +3951,8 @@ export type UserUncheckedUpdateWithoutSupportTicketsInput = {
   buyerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUncheckedUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUncheckedUpdateManyWithoutOpenedByNestedInput
@@ -3501,6 +3997,8 @@ export type UserUpdateWithoutAssignedSupportTicketsInput = {
   buyerConversations?: Prisma.ConversationUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUpdateManyWithoutOpenedByNestedInput
@@ -3534,6 +4032,8 @@ export type UserUncheckedUpdateWithoutAssignedSupportTicketsInput = {
   buyerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUncheckedUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUncheckedUpdateManyWithoutOpenedByNestedInput
@@ -3567,6 +4067,8 @@ export type UserCreateWithoutSupportMessagesInput = {
   buyerConversations?: Prisma.ConversationCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeCreateNestedManyWithoutOpenedByInput
@@ -3600,6 +4102,8 @@ export type UserUncheckedCreateWithoutSupportMessagesInput = {
   buyerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportUncheckedCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutOpenedByInput
@@ -3649,6 +4153,8 @@ export type UserUpdateWithoutSupportMessagesInput = {
   buyerConversations?: Prisma.ConversationUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUpdateManyWithoutOpenedByNestedInput
@@ -3682,6 +4188,8 @@ export type UserUncheckedUpdateWithoutSupportMessagesInput = {
   buyerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUncheckedUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUncheckedUpdateManyWithoutOpenedByNestedInput
@@ -3715,6 +4223,8 @@ export type UserCreateWithoutSupportAgentProfileInput = {
   buyerConversations?: Prisma.ConversationCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeCreateNestedManyWithoutOpenedByInput
@@ -3748,6 +4258,8 @@ export type UserUncheckedCreateWithoutSupportAgentProfileInput = {
   buyerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportUncheckedCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutOpenedByInput
@@ -3797,6 +4309,8 @@ export type UserUpdateWithoutSupportAgentProfileInput = {
   buyerConversations?: Prisma.ConversationUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUpdateManyWithoutOpenedByNestedInput
@@ -3830,6 +4344,8 @@ export type UserUncheckedUpdateWithoutSupportAgentProfileInput = {
   buyerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUncheckedUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUncheckedUpdateManyWithoutOpenedByNestedInput
@@ -3863,6 +4379,8 @@ export type UserCreateWithoutSubmittedSupportReportsInput = {
   buyerConversations?: Prisma.ConversationCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeCreateNestedManyWithoutOpenedByInput
@@ -3896,6 +4414,8 @@ export type UserUncheckedCreateWithoutSubmittedSupportReportsInput = {
   buyerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportUncheckedCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutOpenedByInput
@@ -3934,6 +4454,8 @@ export type UserCreateWithoutReportedBySupportReportsInput = {
   buyerConversations?: Prisma.ConversationCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeCreateNestedManyWithoutOpenedByInput
@@ -3967,6 +4489,8 @@ export type UserUncheckedCreateWithoutReportedBySupportReportsInput = {
   buyerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportUncheckedCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutOpenedByInput
@@ -4005,6 +4529,8 @@ export type UserCreateWithoutAssignedSupportReportsInput = {
   buyerConversations?: Prisma.ConversationCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeCreateNestedManyWithoutOpenedByInput
@@ -4038,6 +4564,8 @@ export type UserUncheckedCreateWithoutAssignedSupportReportsInput = {
   buyerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportUncheckedCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutOpenedByInput
@@ -4087,6 +4615,8 @@ export type UserUpdateWithoutSubmittedSupportReportsInput = {
   buyerConversations?: Prisma.ConversationUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUpdateManyWithoutOpenedByNestedInput
@@ -4120,6 +4650,8 @@ export type UserUncheckedUpdateWithoutSubmittedSupportReportsInput = {
   buyerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUncheckedUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUncheckedUpdateManyWithoutOpenedByNestedInput
@@ -4164,6 +4696,8 @@ export type UserUpdateWithoutReportedBySupportReportsInput = {
   buyerConversations?: Prisma.ConversationUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUpdateManyWithoutOpenedByNestedInput
@@ -4197,6 +4731,8 @@ export type UserUncheckedUpdateWithoutReportedBySupportReportsInput = {
   buyerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUncheckedUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUncheckedUpdateManyWithoutOpenedByNestedInput
@@ -4241,6 +4777,8 @@ export type UserUpdateWithoutAssignedSupportReportsInput = {
   buyerConversations?: Prisma.ConversationUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUpdateManyWithoutOpenedByNestedInput
@@ -4274,6 +4812,8 @@ export type UserUncheckedUpdateWithoutAssignedSupportReportsInput = {
   buyerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUncheckedUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUncheckedUpdateManyWithoutOpenedByNestedInput
@@ -4307,6 +4847,8 @@ export type UserCreateWithoutAuditLogsInput = {
   buyerConversations?: Prisma.ConversationCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeCreateNestedManyWithoutOpenedByInput
@@ -4340,6 +4882,8 @@ export type UserUncheckedCreateWithoutAuditLogsInput = {
   buyerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutBuyerInput
   sellerConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutSellerInput
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderInput
+  conversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReporterInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedCreateNestedManyWithoutReviewedByInput
   reviews?: Prisma.ReviewUncheckedCreateNestedManyWithoutBuyerInput
   reviewReports?: Prisma.ReviewReportUncheckedCreateNestedManyWithoutReporterInput
   openedDisputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutOpenedByInput
@@ -4389,6 +4933,8 @@ export type UserUpdateWithoutAuditLogsInput = {
   buyerConversations?: Prisma.ConversationUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUpdateManyWithoutOpenedByNestedInput
@@ -4422,6 +4968,8 @@ export type UserUncheckedUpdateWithoutAuditLogsInput = {
   buyerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutBuyerNestedInput
   sellerConversations?: Prisma.ConversationUncheckedUpdateManyWithoutSellerNestedInput
   messages?: Prisma.MessageUncheckedUpdateManyWithoutSenderNestedInput
+  conversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReporterNestedInput
+  reviewedConversationReports?: Prisma.ConversationReportUncheckedUpdateManyWithoutReviewedByNestedInput
   reviews?: Prisma.ReviewUncheckedUpdateManyWithoutBuyerNestedInput
   reviewReports?: Prisma.ReviewReportUncheckedUpdateManyWithoutReporterNestedInput
   openedDisputes?: Prisma.DisputeUncheckedUpdateManyWithoutOpenedByNestedInput
@@ -4451,6 +4999,8 @@ export type UserCountOutputType = {
   buyerConversations: number
   sellerConversations: number
   messages: number
+  conversationReports: number
+  reviewedConversationReports: number
   reviews: number
   reviewReports: number
   openedDisputes: number
@@ -4475,6 +5025,8 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   buyerConversations?: boolean | UserCountOutputTypeCountBuyerConversationsArgs
   sellerConversations?: boolean | UserCountOutputTypeCountSellerConversationsArgs
   messages?: boolean | UserCountOutputTypeCountMessagesArgs
+  conversationReports?: boolean | UserCountOutputTypeCountConversationReportsArgs
+  reviewedConversationReports?: boolean | UserCountOutputTypeCountReviewedConversationReportsArgs
   reviews?: boolean | UserCountOutputTypeCountReviewsArgs
   reviewReports?: boolean | UserCountOutputTypeCountReviewReportsArgs
   openedDisputes?: boolean | UserCountOutputTypeCountOpenedDisputesArgs
@@ -4542,6 +5094,20 @@ export type UserCountOutputTypeCountSellerConversationsArgs<ExtArgs extends runt
  */
 export type UserCountOutputTypeCountMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.MessageWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountConversationReportsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ConversationReportWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountReviewedConversationReportsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ConversationReportWhereInput
 }
 
 /**
@@ -4666,6 +5232,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   buyerConversations?: boolean | Prisma.User$buyerConversationsArgs<ExtArgs>
   sellerConversations?: boolean | Prisma.User$sellerConversationsArgs<ExtArgs>
   messages?: boolean | Prisma.User$messagesArgs<ExtArgs>
+  conversationReports?: boolean | Prisma.User$conversationReportsArgs<ExtArgs>
+  reviewedConversationReports?: boolean | Prisma.User$reviewedConversationReportsArgs<ExtArgs>
   reviews?: boolean | Prisma.User$reviewsArgs<ExtArgs>
   reviewReports?: boolean | Prisma.User$reviewReportsArgs<ExtArgs>
   openedDisputes?: boolean | Prisma.User$openedDisputesArgs<ExtArgs>
@@ -4725,6 +5293,8 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   buyerConversations?: boolean | Prisma.User$buyerConversationsArgs<ExtArgs>
   sellerConversations?: boolean | Prisma.User$sellerConversationsArgs<ExtArgs>
   messages?: boolean | Prisma.User$messagesArgs<ExtArgs>
+  conversationReports?: boolean | Prisma.User$conversationReportsArgs<ExtArgs>
+  reviewedConversationReports?: boolean | Prisma.User$reviewedConversationReportsArgs<ExtArgs>
   reviews?: boolean | Prisma.User$reviewsArgs<ExtArgs>
   reviewReports?: boolean | Prisma.User$reviewReportsArgs<ExtArgs>
   openedDisputes?: boolean | Prisma.User$openedDisputesArgs<ExtArgs>
@@ -4757,6 +5327,8 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     buyerConversations: Prisma.$ConversationPayload<ExtArgs>[]
     sellerConversations: Prisma.$ConversationPayload<ExtArgs>[]
     messages: Prisma.$MessagePayload<ExtArgs>[]
+    conversationReports: Prisma.$ConversationReportPayload<ExtArgs>[]
+    reviewedConversationReports: Prisma.$ConversationReportPayload<ExtArgs>[]
     reviews: Prisma.$ReviewPayload<ExtArgs>[]
     reviewReports: Prisma.$ReviewReportPayload<ExtArgs>[]
     openedDisputes: Prisma.$DisputePayload<ExtArgs>[]
@@ -5184,6 +5756,8 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   buyerConversations<T extends Prisma.User$buyerConversationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$buyerConversationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   sellerConversations<T extends Prisma.User$sellerConversationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sellerConversationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   messages<T extends Prisma.User$messagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  conversationReports<T extends Prisma.User$conversationReportsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$conversationReportsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ConversationReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  reviewedConversationReports<T extends Prisma.User$reviewedConversationReportsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$reviewedConversationReportsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ConversationReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   reviews<T extends Prisma.User$reviewsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$reviewsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   reviewReports<T extends Prisma.User$reviewReportsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$reviewReportsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ReviewReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   openedDisputes<T extends Prisma.User$openedDisputesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$openedDisputesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DisputePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -5808,6 +6382,54 @@ export type User$messagesArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.MessageScalarFieldEnum | Prisma.MessageScalarFieldEnum[]
+}
+
+/**
+ * User.conversationReports
+ */
+export type User$conversationReportsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ConversationReport
+   */
+  select?: Prisma.ConversationReportSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ConversationReport
+   */
+  omit?: Prisma.ConversationReportOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ConversationReportInclude<ExtArgs> | null
+  where?: Prisma.ConversationReportWhereInput
+  orderBy?: Prisma.ConversationReportOrderByWithRelationInput | Prisma.ConversationReportOrderByWithRelationInput[]
+  cursor?: Prisma.ConversationReportWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ConversationReportScalarFieldEnum | Prisma.ConversationReportScalarFieldEnum[]
+}
+
+/**
+ * User.reviewedConversationReports
+ */
+export type User$reviewedConversationReportsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ConversationReport
+   */
+  select?: Prisma.ConversationReportSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ConversationReport
+   */
+  omit?: Prisma.ConversationReportOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ConversationReportInclude<ExtArgs> | null
+  where?: Prisma.ConversationReportWhereInput
+  orderBy?: Prisma.ConversationReportOrderByWithRelationInput | Prisma.ConversationReportOrderByWithRelationInput[]
+  cursor?: Prisma.ConversationReportWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ConversationReportScalarFieldEnum | Prisma.ConversationReportScalarFieldEnum[]
 }
 
 /**

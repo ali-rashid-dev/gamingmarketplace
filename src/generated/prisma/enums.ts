@@ -249,3 +249,23 @@ export const ReviewReportReason = {
 } as const
 
 export type ReviewReportReason = (typeof ReviewReportReason)[keyof typeof ReviewReportReason]
+
+
+export const ConversationReportStatus = {
+  OPEN: 'OPEN',
+  RESOLVED: 'RESOLVED',
+  DISMISSED: 'DISMISSED'
+} as const
+
+export type ConversationReportStatus = (typeof ConversationReportStatus)[keyof typeof ConversationReportStatus]
+
+
+export const ConversationReportReason = {
+  ABUSE: 'ABUSE',
+  HARASSMENT: 'HARASSMENT',
+  SPAM: 'SPAM',
+  FRAUD: 'FRAUD',
+  OTHER: 'OTHER'
+} as const
+
+export type ConversationReportReason = (typeof ConversationReportReason)[keyof typeof ConversationReportReason]
