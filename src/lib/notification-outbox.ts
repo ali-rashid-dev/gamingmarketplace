@@ -46,13 +46,24 @@ export async function enqueueUserNotification(
 const maxAttempts = 8;
 const batchSize = 20;
 
-function getResend() {
-  const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) throw new Error("RESEND_API_KEY is not configured");
-  return new Resend(apiKey);
-}
-
 export async function deliverNotificationOutboxBatch() {
+  const apiKey = process.env.RESEND_API_KEY?.trim();
+  if (!apiKey) throw new Error("RESEND_API_KEY is not configured");
+  const sender = process.env.RESEND_FROM_EMAIL?.trim();
+  if (!sender) throw new Error("RESEND_FROM_EMAIL is not configured");
+  const configuredBaseUrl = process.env.BETTER_AUTH_URL?.trim();
+  if (!configuredBaseUrl) throw new Error("BETTER_AUTH_URL is not configured");
+  let baseUrl: string;
+  try {
+    const parsedUrl = new URL(configuredBaseUrl);
+    if (parsedUrl.protocol !== "http:" && parsedUrl.protocol !== "https:") {
+      throw new Error("Unsupported protocol");
+    }
+    baseUrl = parsedUrl.toString().replace(/\/+$/, "");
+  } catch {
+    throw new Error("BETTER_AUTH_URL must be a valid HTTP or HTTPS URL");
+  }
+  const resend = new Resend(apiKey);
   const outboxIds = await prisma.$transaction(async (transaction) => {
     await transaction.notificationOutbox.updateMany({
       where: {
@@ -112,10 +123,6 @@ export async function deliverNotificationOutboxBatch() {
     }
 
     try {
-      const sender = process.env.RESEND_FROM_EMAIL;
-      if (!sender) throw new Error("RESEND_FROM_EMAIL is not configured");
-      const baseUrl = process.env.BETTER_AUTH_URL;
-      if (!baseUrl) throw new Error("BETTER_AUTH_URL is not configured");
       const notificationData = job.notification.data;
       const workspace = notificationData && typeof notificationData === "object" &&
         !Array.isArray(notificationData) && "recipientWorkspace" in notificationData
@@ -126,12 +133,12 @@ export async function deliverNotificationOutboxBatch() {
         : workspace === "SELLER"
           ? "/seller/notifications"
           : "/dashboard/notifications";
-      const response = await getResend().emails.send(
+      const response = await resend.emails.send(
         {
           from: sender,
           to: job.user.email,
           subject: job.notification.title,
-          text: `${job.notification.title}\n\n${job.notification.body}\n\nView your notifications: ${baseUrl.replace(/\/+$/, "")}${notificationsPath}`,
+          text: `${job.notification.title}\n\n${job.notification.body}\n\nView your notifications: ${baseUrl}${notificationsPath}`,
         },
         { idempotencyKey: `notification-outbox-${job.id}` }
       );

@@ -37,11 +37,12 @@ Support ticket notifications open the authorized support case workspace.
 
 Configure `RESEND_API_KEY` and `RESEND_FROM_EMAIL` to deliver email, and set
 `CRON_SECRET` to a unique secret so the scheduled `/api/cron/notifications`
-worker can be authenticated. Vercel Cron invokes the worker every minute;
-other hosting providers must schedule an authenticated GET request to that
-route. The worker also requires `BETTER_AUTH_URL` for absolute links. Users can
-disable email notifications in their account settings; in-app notifications
-remain available.
+worker can be authenticated. The included Vercel Cron schedule runs daily to
+remain compatible with the Hobby plan; teams on a plan supporting more frequent
+cron jobs can increase its cadence. Other hosting providers may schedule an
+authenticated GET request to that route at their supported cadence. The worker
+also requires `BETTER_AUTH_URL` for absolute links. Users can disable email
+notifications in their account settings; in-app notifications remain available.
 
 Apply the additive outbox migration with `pnpm exec prisma migrate deploy`.
 Order, payment, refund, delivery-deadline, and payout-provider notifications

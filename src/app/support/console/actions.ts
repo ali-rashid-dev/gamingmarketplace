@@ -71,7 +71,7 @@ export async function assignSupportTicket(
         },
         select: { id: true },
       });
-      if (targetId && targetId !== ticket.assignedToId) {
+      if (targetId && targetId !== ticket.assignedToId && targetId !== user.id) {
         await enqueueUserNotification(transaction, {
           userId: targetId,
           type: "SUPPORT_UPDATE",

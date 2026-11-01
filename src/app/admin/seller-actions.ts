@@ -85,18 +85,7 @@ export async function reviewSellerApplication(
         });
       }
 
-      await enqueueUserNotification(transaction, {
-        userId: sellerProfile.userId,
-        type: NotificationType.SELLER_UPDATE,
-        title: approved ? "Seller application approved" : "Seller application update",
-        body: approved
-          ? `Your shop "${sellerProfile.shopName}" is approved.`
-          : `Your shop application is ${status.toLowerCase()}.`,
-        eventKey: `seller-application-reviewed:${sellerProfile.id}:${status}`,
-        data: { sellerProfileId: sellerProfile.id, status },
-      });
-
-      await transaction.auditLog.create({
+      const event = await transaction.auditLog.create({
         data: {
           actorId: authorization.user.id,
           action: "seller.application.reviewed",
@@ -104,6 +93,18 @@ export async function reviewSellerApplication(
           entityId: sellerProfile.id,
           metadata: { previousStatus: sellerProfile.status, status },
         },
+        select: { id: true },
+      });
+
+      await enqueueUserNotification(transaction, {
+        userId: sellerProfile.userId,
+        type: NotificationType.SELLER_UPDATE,
+        title: approved ? "Seller application approved" : "Seller application update",
+        body: approved
+          ? `Your shop "${sellerProfile.shopName}" is approved.`
+          : `Your shop application is ${status.toLowerCase()}.`,
+        eventKey: `seller-application-reviewed:${event.id}`,
+        data: { sellerProfileId: sellerProfile.id, status },
       });
 
       return transaction.sellerProfile.findUniqueOrThrow({
