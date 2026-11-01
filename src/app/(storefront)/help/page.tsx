@@ -5,6 +5,7 @@ import { ArrowRight, CircleHelp, ShieldCheck } from "lucide-react";
 export const metadata: Metadata = {
   title: "Help Center | GameTrade",
   description: "Get answers about buying, selling, accounts, and marketplace support.",
+  alternates: { canonical: "/help" },
 };
 
 const helpTopics = [

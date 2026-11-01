@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Marketplace Policies | GameTrade",
   description: "Read GameTrade buyer protection, privacy, terms, and refund information.",
+  alternates: { canonical: "/policies" },
 };
 
 const sections = [

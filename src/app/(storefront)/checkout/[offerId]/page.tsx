@@ -10,10 +10,16 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { requirePageSession } from "@/lib/authorization";
+import type { Metadata } from "next";
 import { getOfferById, formatPrice } from "@/lib/storefront";
 import prisma from "@/lib/prisma";
 
 type Props = { params: Promise<{ offerId: string }> };
+
+export const metadata: Metadata = {
+  title: "Review your purchase | GameTrade",
+  robots: { index: false, follow: false },
+};
 
 export default async function CheckoutPage({ params }: Props) {
   const [{ user }, { offerId }] = await Promise.all([

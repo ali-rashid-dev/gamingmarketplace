@@ -5,6 +5,7 @@ export const metadata: Metadata = {
   title: "Create Account — GameTrade",
   description:
     "Create your GameTrade account to enter the vault and start trading game assets securely.",
+  robots: { index: false, follow: false },
 };
 
 export default async function SignUpPage({

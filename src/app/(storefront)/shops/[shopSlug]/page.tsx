@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { BadgeCheck, Store } from "lucide-react";
+import { BreadcrumbJsonLd } from "@/components/seo/json-ld";
+import { absoluteUrl } from "@/lib/site-url";
 import { OfferCard } from "@/components/storefront/offer-card";
 import { SectionHeading } from "@/components/storefront/section-heading";
 import { ReportReviewButton } from "@/app/dashboard/reviews/report-review-button";
@@ -10,10 +12,19 @@ type Props = { params: Promise<{ shopSlug: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { shopSlug } = await params;
-  const { seller } = await getSellerBySlug(shopSlug);
+  const { seller, offers } = await getSellerBySlug(shopSlug);
+  const description = seller.description || `Browse active offers from ${seller.shopName}.`;
   return {
     title: `${seller.shopName} | GameTrade`,
-    description: seller.description || `Browse active offers from ${seller.shopName}.`,
+    description,
+    alternates: { canonical: `/shops/${seller.slug}` },
+    robots: offers.length ? undefined : { index: false, follow: true },
+    openGraph: {
+      title: `${seller.shopName} | GameTrade`,
+      description,
+      url: `/shops/${seller.slug}`,
+      images: ["/opengraph-image"],
+    },
   };
 }
 
@@ -23,6 +34,18 @@ export default async function SellerShopPage({ params }: Props) {
 
   return (
     <main className="mx-auto min-h-[65vh] max-w-7xl px-5 py-12 sm:px-8 sm:py-16">
+      <BreadcrumbJsonLd items={[
+        { name: "Home", path: absoluteUrl("/") },
+        { name: "Marketplace", path: absoluteUrl("/offers") },
+        { name: seller.shopName },
+      ]} />
+      <nav aria-label="Breadcrumb" className="mb-6 text-xs text-slate-500">
+        <Link href="/" className="hover:text-cyan-200">Home</Link>
+        <span className="mx-2">/</span>
+        <Link href="/offers" className="hover:text-cyan-200">Marketplace</Link>
+        <span className="mx-2">/</span>
+        <span className="text-slate-300">{seller.shopName}</span>
+      </nav>
       <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-[#15243a] to-[#111827] p-7 sm:p-10">
         <span className="grid h-14 w-14 place-items-center rounded-2xl bg-cyan-300/10 text-cyan-200"><Store className="h-7 w-7" /></span>
         <h1 className="mt-5 flex flex-wrap items-center gap-2 font-display text-4xl font-semibold text-white">

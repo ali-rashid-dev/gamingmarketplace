@@ -3,6 +3,8 @@ import Link from "next/link";
 import { ArrowRight, Gamepad2 } from "lucide-react";
 import { OfferCard } from "@/components/storefront/offer-card";
 import { SectionHeading } from "@/components/storefront/section-heading";
+import { BreadcrumbJsonLd } from "@/components/seo/json-ld";
+import { absoluteUrl } from "@/lib/site-url";
 import { getGameBySlug, getOffers } from "@/lib/storefront";
 
 type Props = { params: Promise<{ gameSlug: string }> };
@@ -10,12 +12,22 @@ type Props = { params: Promise<{ gameSlug: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { gameSlug } = await params;
   const game = await getGameBySlug(gameSlug);
+  const description =
+    game.seoDescription ||
+    game.description ||
+    `Explore ${game.name} accounts, items, currency, and services on GameTrade.`;
+  const hasLiveCategories = game.categories.some((category) => category._count.listings > 0);
   return {
     title: game.seoTitle || `${game.name} Marketplace | GameTrade`,
-    description:
-      game.seoDescription ||
-      game.description ||
-      `Explore ${game.name} accounts, items, currency, and services on GameTrade.`,
+    description,
+    alternates: { canonical: `/games/${game.slug}` },
+    robots: hasLiveCategories ? undefined : { index: false, follow: true },
+    openGraph: {
+      title: game.seoTitle || `${game.name} Marketplace | GameTrade`,
+      description,
+      url: `/games/${game.slug}`,
+      images: [game.coverImageUrl || "/opengraph-image"],
+    },
   };
 }
 
@@ -26,6 +38,11 @@ export default async function GameLandingPage({ params }: Props) {
 
   return (
     <main className="mx-auto max-w-7xl px-5 py-10 sm:px-8 sm:py-14">
+      <BreadcrumbJsonLd items={[
+        { name: "Home", path: absoluteUrl("/") },
+        { name: "Games", path: absoluteUrl("/games") },
+        { name: game.name },
+      ]} />
       <nav aria-label="Breadcrumb" className="mb-6 text-xs text-slate-500">
         <Link href="/games" className="hover:text-cyan-200">Games</Link>
         <span className="mx-2">/</span>

@@ -5,6 +5,7 @@ import { ArrowRight, CircleHelp, MessageCircle, ShieldQuestion } from "lucide-re
 export const metadata: Metadata = {
   title: "Contact GameTrade | Support",
   description: "Find the right path to contact GameTrade support.",
+  alternates: { canonical: "/contact" },
 };
 
 export default function ContactPage() {

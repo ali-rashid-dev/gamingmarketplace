@@ -101,6 +101,24 @@ Only active listings attached to published games, visible categories, and
 approved sellers are shown publicly. Offers with an expiration date are hidden
 once that date passes.
 
+## Search visibility and growth
+
+The canonical site origin comes from `BETTER_AUTH_URL`. Public game,
+category, offer, and active seller pages provide canonical metadata and
+Open Graph previews. Search pages with filters, empty catalog pages, checkout,
+and authentication routes are marked `noindex`; `robots.txt` excludes
+account, staff, admin, API, and checkout paths. The dynamic sitemap includes
+published catalog pages and currently available listings only. Product and
+breadcrumb structured data is emitted only for public listings.
+
+The public routes currently use stable offer IDs at `/offers/[offerId]`; a
+unique listing-slug route is not implemented. Affiliate attribution,
+promotional campaign management, sponsored placements, and conversion
+analytics are also not implemented. Checkout is read-only, so the app does not
+claim or record completed purchase conversions. Add those features only with
+explicit attribution and privacy rules and a verified payment lifecycle;
+analytics must never include order contents or account/payment details.
+
 ## Checkout and payments
 
 Signed-in buyers can review an offer at `/checkout/[offerId]`. Checkout is

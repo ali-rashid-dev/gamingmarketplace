@@ -5,6 +5,7 @@ import { ArrowRight, BadgeCheck, Store, TrendingUp } from "lucide-react";
 export const metadata: Metadata = {
   title: "Sell on GameTrade",
   description: "Learn how to open a seller shop on GameTrade.",
+  alternates: { canonical: "/sell" },
 };
 
 export default function SellPage() {

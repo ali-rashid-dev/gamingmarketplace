@@ -4,6 +4,8 @@ import { OfferCard } from "@/components/storefront/offer-card";
 import { OfferSearchFiltersForm } from "@/components/storefront/offer-search-filters";
 import { OfferPagination } from "@/components/storefront/offer-pagination";
 import { SectionHeading } from "@/components/storefront/section-heading";
+import { BreadcrumbJsonLd } from "@/components/seo/json-ld";
+import { absoluteUrl } from "@/lib/site-url";
 import { getCategoryBySlugs } from "@/lib/storefront";
 import {
   buildOfferSearchHref,
@@ -18,14 +20,33 @@ type Props = {
   searchParams: Promise<SearchParams>;
 };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
   const { gameSlug, categorySlug } = await params;
-  const category = await getCategoryBySlugs(gameSlug, categorySlug);
+  const [category, query] = await Promise.all([
+    getCategoryBySlugs(gameSlug, categorySlug),
+    searchParams,
+  ]);
+  const title = `${category.name} for ${category.game.name} | GameTrade`;
+  const description =
+    category.description ||
+    `Explore ${category.name.toLowerCase()} offers for ${category.game.name}.`;
+  const hasFilters = Object.entries(query).some(([key, value]) =>
+    key !== "page" && value !== undefined && value !== ""
+  );
+  const page = typeof query.page === "string" ? Number(query.page) : 1;
   return {
-    title: `${category.name} for ${category.game.name} | GameTrade`,
-    description:
-      category.description ||
-      `Explore ${category.name.toLowerCase()} offers for ${category.game.name}.`,
+    title,
+    description,
+    alternates: { canonical: `/games/${category.game.slug}/${category.slug}` },
+    robots: category._count.listings > 0 && !hasFilters && query.page === undefined && page === 1
+      ? undefined
+      : { index: false, follow: true },
+    openGraph: {
+      title,
+      description,
+      url: `/games/${category.game.slug}/${category.slug}`,
+      images: ["/opengraph-image"],
+    },
   };
 }
 
@@ -72,6 +93,12 @@ export default async function CategoryOffersPage({ params, searchParams }: Props
 
   return (
     <main className="mx-auto min-h-[65vh] max-w-7xl px-5 py-10 sm:px-8 sm:py-14">
+      <BreadcrumbJsonLd items={[
+        { name: "Home", path: absoluteUrl("/") },
+        { name: "Games", path: absoluteUrl("/games") },
+        { name: category.game.name, path: absoluteUrl(`/games/${category.game.slug}`) },
+        { name: category.name },
+      ]} />
       <nav aria-label="Breadcrumb" className="mb-6 text-xs text-slate-500">
         <Link href="/games" className="hover:text-cyan-200">Games</Link>
         <span className="mx-2">/</span>

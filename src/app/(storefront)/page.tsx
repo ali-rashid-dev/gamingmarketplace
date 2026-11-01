@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -20,6 +21,20 @@ import {
 } from "@/lib/storefront";
 import prisma from "@/lib/prisma";
 import { GameStatus } from "@/generated/prisma/enums";
+
+export const metadata: Metadata = {
+  title: "GameTrade — Game Marketplace",
+  description:
+    "Discover game accounts, rare items, top-ups, and services from approved marketplace sellers.",
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: "GameTrade — Game Marketplace",
+    description:
+      "Discover game accounts, rare items, top-ups, and services from approved marketplace sellers.",
+    url: "/",
+    images: ["/opengraph-image"],
+  },
+};
 
 export default async function HomePage() {
   const [games, popularOffers, recentOffers, categories] = await Promise.all([

@@ -7,6 +7,7 @@ import { Loader2 } from "lucide-react";
 export const metadata: Metadata = {
   title: "Verify Email — GameTrade",
   description: "Verify your email address to activate your GameTrade account.",
+  robots: { index: false, follow: false },
 };
 
 export default function VerifyEmailPage() {

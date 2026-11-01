@@ -11,12 +11,26 @@ import {
   type SearchParams,
 } from "@/lib/storefront-search";
 
-export const metadata: Metadata = {
-  title: "Game Offers | GameTrade",
-  description: "Browse active game accounts, items, top-ups, and services.",
-};
-
 type Props = { searchParams: Promise<SearchParams> };
+
+export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
+  const query = await searchParams;
+  const isFiltered = Object.values(query).some((value) =>
+    Array.isArray(value) ? value.length > 0 : Boolean(value)
+  );
+  return {
+    title: "Game Offers | GameTrade",
+    description: "Browse active game accounts, items, top-ups, and services from approved sellers.",
+    alternates: { canonical: "/offers" },
+    robots: isFiltered ? { index: false, follow: true } : undefined,
+    openGraph: {
+      title: "Game Offers | GameTrade",
+      description: "Browse active game accounts, items, top-ups, and services from approved sellers.",
+      url: "/offers",
+      images: ["/opengraph-image"],
+    },
+  };
+}
 
 export default async function OffersPage({ searchParams }: Props) {
   const query = await searchParams;

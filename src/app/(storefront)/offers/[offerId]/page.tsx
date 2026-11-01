@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { headers } from "next/headers";
 import { BadgeCheck, Check, ChevronRight, ShieldCheck } from "lucide-react";
+import { BreadcrumbJsonLd, JsonLd } from "@/components/seo/json-ld";
+import { absoluteUrl } from "@/lib/site-url";
 import { getOfferById, getOfferImage, formatPrice } from "@/lib/storefront";
 import { getAuth } from "@/lib/auth";
 import { WishlistButton } from "@/app/dashboard/wishlist/wishlist-button";
@@ -12,13 +14,17 @@ type Props = { params: Promise<{ offerId: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { offerId } = await params;
   const offer = await getOfferById(offerId);
+  const description = `${offer.title} for ${offer.game.name}. View offer details and seller information.`;
+  const image = getOfferImage(offer.images);
   return {
     title: `${offer.title} | GameTrade`,
-    description: `${offer.title} for ${offer.game.name}. View offer details and seller information.`,
+    description,
+    alternates: { canonical: `/offers/${offer.id}` },
     openGraph: {
       title: `${offer.title} | GameTrade`,
-      description: `${offer.title} for ${offer.game.name}.`,
-      images: getOfferImage(offer.images) ? [getOfferImage(offer.images)!] : undefined,
+      description,
+      url: `/offers/${offer.id}`,
+      images: [image || "/opengraph-image"],
     },
   };
 }
@@ -33,12 +39,44 @@ export default async function OfferDetailPage({ params }: Props) {
 
   return (
     <main className="mx-auto max-w-7xl px-5 py-10 sm:px-8 sm:py-14">
+      <BreadcrumbJsonLd items={[
+        { name: "Home", path: absoluteUrl("/") },
+        { name: "Games", path: absoluteUrl("/games") },
+        { name: offer.game.name, path: absoluteUrl(`/games/${offer.game.slug}`) },
+        { name: offer.category.name, path: absoluteUrl(`/games/${offer.game.slug}/${offer.category.slug}`) },
+        { name: offer.title },
+      ]} />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "Product",
+          name: offer.title,
+          description: offer.description,
+          category: offer.category.name,
+          ...(image ? { image: [image] } : {}),
+          url: absoluteUrl(`/offers/${offer.id}`),
+          offers: {
+            "@type": "Offer",
+            price: offer.price.toString(),
+            priceCurrency: offer.currency,
+            availability: "https://schema.org/InStock",
+            url: absoluteUrl(`/offers/${offer.id}`),
+            seller: {
+              "@type": "Organization",
+              name: offer.seller.shopName,
+              url: absoluteUrl(`/shops/${offer.seller.slug}`),
+            },
+          },
+        }}
+      />
       <nav aria-label="Breadcrumb" className="mb-7 flex flex-wrap items-center gap-2 text-xs text-slate-500">
         <Link href="/games" className="hover:text-cyan-200">Games</Link>
         <ChevronRight className="h-3 w-3" />
         <Link href={`/games/${offer.game.slug}`} className="hover:text-cyan-200">{offer.game.name}</Link>
         <ChevronRight className="h-3 w-3" />
         <Link href={`/games/${offer.game.slug}/${offer.category.slug}`} className="hover:text-cyan-200">{offer.category.name}</Link>
+        <ChevronRight className="h-3 w-3" />
+        <span className="max-w-64 truncate text-slate-300">{offer.title}</span>
       </nav>
 
       <div className="grid gap-8 lg:grid-cols-[minmax(0,1.35fr)_minmax(300px,0.65fr)]">

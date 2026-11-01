@@ -3,14 +3,26 @@ import { GameCard } from "@/components/storefront/game-card";
 import { SectionHeading } from "@/components/storefront/section-heading";
 import { getPublishedGames } from "@/lib/storefront";
 
-export const metadata: Metadata = {
-  title: "Explore Games | GameTrade",
-  description: "Browse games and discover accounts, items, top-ups, and services.",
-};
-
 type Props = {
   searchParams: Promise<{ q?: string | string[] }>;
 };
+
+export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
+  const query = await searchParams;
+  const hasSearch = typeof query.q === "string" && query.q.trim().length > 0;
+  return {
+    title: "Explore Games | GameTrade",
+    description: "Browse published games and discover active accounts, items, top-ups, and services.",
+    alternates: { canonical: "/games" },
+    robots: hasSearch ? { index: false, follow: true } : undefined,
+    openGraph: {
+      title: "Explore Games | GameTrade",
+      description: "Browse published games and discover active accounts, items, top-ups, and services.",
+      url: "/games",
+      images: ["/opengraph-image"],
+    },
+  };
+}
 
 export default async function GamesPage({ searchParams }: Props) {
   const query = await searchParams;

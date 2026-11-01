@@ -10,6 +10,7 @@ import { hasAnyRole } from "@/lib/authorization";
 export const metadata: Metadata = {
   title: "Seller application | GameTrade",
   description: "Apply to open a seller shop on GameTrade.",
+  robots: { index: false, follow: false },
 };
 
 export default async function SellerApplicationPage() {
