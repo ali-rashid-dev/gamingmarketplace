@@ -52,7 +52,7 @@ const navigation = [
   { label: "Settings", href: "/seller/settings", icon: Settings },
 ] as const;
 
-function SellerNavigation() {
+function SellerNavigation({ unreadNotifications }: { unreadNotifications: number }) {
   const pathname = usePathname();
   const { setOpenMobile } = useSidebar();
   const [hash, setHash] = useState("");
@@ -102,7 +102,14 @@ function SellerNavigation() {
                       )}
                     >
                       <Icon aria-hidden="true" />
-                      <span>{label}</span>
+                      <span className="flex min-w-0 flex-1 items-center justify-between gap-2">
+                        <span className="truncate">{label}</span>
+                        {href === "/seller/notifications" && unreadNotifications > 0 && (
+                          <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold text-primary">
+                            {unreadNotifications > 99 ? "99+" : unreadNotifications}
+                          </span>
+                        )}
+                      </span>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 );
@@ -128,10 +135,16 @@ function SellerNavigation() {
   );
 }
 
-export function SellerShell({ children }: { children: React.ReactNode }) {
+export function SellerShell({
+  children,
+  unreadNotifications,
+}: {
+  children: React.ReactNode;
+  unreadNotifications: number;
+}) {
   return (
     <SidebarProvider className="min-h-svh bg-background">
-      <SellerNavigation />
+      <SellerNavigation unreadNotifications={unreadNotifications} />
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="sticky top-0 z-10 flex min-h-14 items-center justify-between gap-3 border-b border-border bg-background/95 px-4 backdrop-blur sm:px-6">
           <div className="flex min-w-0 items-center gap-2">

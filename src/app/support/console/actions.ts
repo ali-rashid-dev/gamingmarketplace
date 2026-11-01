@@ -13,6 +13,7 @@ import {
 import { revalidatePath } from "next/cache";
 import { requirePageRoles } from "@/lib/authorization";
 import type { ActionResult } from "@/lib/action-result";
+import { enqueueUserNotification } from "@/lib/notification-outbox";
 import prisma from "@/lib/prisma";
 import { z } from "zod";
 
@@ -44,7 +45,7 @@ export async function assignSupportTicket(
   const updated = await prisma.$transaction(async (transaction) => {
     const ticket = await transaction.supportTicket.findUnique({
       where: { id: ticketId.data },
-      select: { status: true },
+      select: { subject: true, status: true, assignedToId: true },
     });
     if (!ticket) return 0;
     const isActive =
@@ -60,7 +61,7 @@ export async function assignSupportTicket(
       },
     });
     if (changed.count) {
-      await transaction.auditLog.create({
+      const event = await transaction.auditLog.create({
         data: {
           actorId: user.id,
           action: "support.ticket.assigned",
@@ -68,7 +69,18 @@ export async function assignSupportTicket(
           entityId: ticketId.data,
           metadata: { assigneeId: targetId },
         },
+        select: { id: true },
       });
+      if (targetId && targetId !== ticket.assignedToId) {
+        await enqueueUserNotification(transaction, {
+          userId: targetId,
+          type: "SUPPORT_UPDATE",
+          title: "Support ticket assigned to you",
+          body: ticket.subject,
+          eventKey: `support-ticket-assigned:${event.id}`,
+          data: { ticketId: ticketId.data, recipientWorkspace: "SUPPORT" },
+        });
+      }
     }
     return changed.count;
   });
@@ -182,14 +194,13 @@ export async function requestSupportTicketEvidence(
         resolvedAt: null,
       },
     });
-    await transaction.notification.create({
-      data: {
-        userId: ticket.userId,
-        type: "SYSTEM",
-        title: "Support requested more information",
-        body: ticket.subject,
-        data: { ticketId: ticket.id },
-      },
+    await enqueueUserNotification(transaction, {
+      userId: ticket.userId,
+      type: "SUPPORT_UPDATE",
+      title: "Support requested more information",
+      body: ticket.subject,
+      eventKey: `support-ticket-evidence:${created.id}`,
+      data: { ticketId: ticket.id },
     });
     return created;
   });
@@ -276,23 +287,30 @@ export async function requestDisputeEvidence(
     dispute.order.buyerId,
     ...(dispute.orderItem?.seller.userId ? [dispute.orderItem.seller.userId] : []),
   ]));
-  await prisma.$transaction([
-    ...recipientIds.map((userId) =>
-      prisma.notification.create({
+  await prisma.$transaction(async (transaction) => {
+    const event = await transaction.disputeEvent.create({
+      data: {
+        disputeId: dispute.id,
+        actorId: user.id,
+        type: DisputeEventType.EVIDENCE_REQUESTED,
+        details: { recipientCount: recipientIds.length },
+      },
+    });
+    for (const userId of recipientIds) {
+      await enqueueUserNotification(transaction, {
+        userId,
+        type: "DISPUTE_UPDATE",
+        title: "Evidence requested for a dispute",
+        body: request.data,
+        eventKey: `dispute-evidence-requested:${event.id}`,
         data: {
-          userId,
-          type: "DISPUTE_UPDATE",
-          title: "Evidence requested for a dispute",
-          body: request.data,
-          data: {
-            disputeId: dispute.id,
-            orderId: dispute.orderId,
-            recipientWorkspace: userId === dispute.order.buyerId ? "BUYER" : "SELLER",
-          },
+          disputeId: dispute.id,
+          orderId: dispute.orderId,
+          recipientWorkspace: userId === dispute.order.buyerId ? "BUYER" : "SELLER",
         },
-      })
-    ),
-    prisma.auditLog.create({
+      });
+    }
+    await transaction.auditLog.create({
       data: {
         actorId: user.id,
         action: "support.dispute.evidence_requested",
@@ -300,16 +318,8 @@ export async function requestDisputeEvidence(
         entityId: dispute.id,
         metadata: { recipientCount: recipientIds.length },
       },
-    }),
-    prisma.disputeEvent.create({
-      data: {
-        disputeId: dispute.id,
-        actorId: user.id,
-        type: DisputeEventType.EVIDENCE_REQUESTED,
-        details: { recipientCount: recipientIds.length },
-      },
-    }),
-  ]);
+    });
+  });
   revalidatePath("/support/console/disputes");
   revalidatePath(`/support/console/disputes/${dispute.id}`);
   return { success: true, data: { notified: recipientIds.length } };

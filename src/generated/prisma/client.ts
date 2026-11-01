@@ -222,6 +222,11 @@ export type WithdrawalEvent = Prisma.WithdrawalEventModel
  */
 export type Notification = Prisma.NotificationModel
 /**
+ * Model NotificationOutbox
+ *
+ */
+export type NotificationOutbox = Prisma.NotificationOutboxModel
+/**
  * Model WishlistItem
  *
  */

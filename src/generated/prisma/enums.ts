@@ -203,7 +203,10 @@ export const NotificationType = {
   REVIEW: 'REVIEW',
   DISPUTE_UPDATE: 'DISPUTE_UPDATE',
   SELLER_UPDATE: 'SELLER_UPDATE',
-  SYSTEM: 'SYSTEM'
+  SYSTEM: 'SYSTEM',
+  DELIVERY_UPDATE: 'DELIVERY_UPDATE',
+  WITHDRAWAL_UPDATE: 'WITHDRAWAL_UPDATE',
+  SUPPORT_UPDATE: 'SUPPORT_UPDATE'
 } as const
 
 export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]
@@ -215,6 +218,17 @@ export const NotificationChannel = {
 } as const
 
 export type NotificationChannel = (typeof NotificationChannel)[keyof typeof NotificationChannel]
+
+
+export const NotificationOutboxStatus = {
+  PENDING: 'PENDING',
+  PROCESSING: 'PROCESSING',
+  SENT: 'SENT',
+  SKIPPED: 'SKIPPED',
+  DEAD: 'DEAD'
+} as const
+
+export type NotificationOutboxStatus = (typeof NotificationOutboxStatus)[keyof typeof NotificationOutboxStatus]
 
 
 export const SupportTicketStatus = {

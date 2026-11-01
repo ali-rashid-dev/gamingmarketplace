@@ -18,6 +18,7 @@ import { headers } from "next/headers";
 import type { ActionResult } from "@/lib/action-result";
 import { requirePageRoles, requirePageSession } from "@/lib/authorization";
 import { getAuth } from "@/lib/auth";
+import { enqueueUserNotification } from "@/lib/notification-outbox";
 import prisma from "@/lib/prisma";
 import { publicListingWhere } from "@/lib/storefront";
 import { UTApi } from "uploadthing/server";
@@ -35,19 +36,24 @@ const credentialPattern = messageCredentialPattern;
 
 async function notifyConversationRecipient(
   transaction: Prisma.TransactionClient,
-  input: { userId: string; conversationId: string; orderId: string | null; senderName: string }
+  input: {
+    userId: string;
+    conversationId: string;
+    orderId: string | null;
+    senderName: string;
+    messageId: string;
+  }
 ) {
-  await transaction.notification.create({
+  await enqueueUserNotification(transaction, {
+    userId: input.userId,
+    type: NotificationType.MESSAGE,
+    title: "New message",
+    body: `${input.senderName} sent you a message.`,
+    eventKey: `message:${input.messageId}`,
     data: {
-      userId: input.userId,
-      type: NotificationType.MESSAGE,
-      title: "New message",
-      body: `${input.senderName} sent you a message.`,
-      data: {
         conversationId: input.conversationId,
         orderId: input.orderId,
         recipientWorkspace: "SELLER",
-      },
     },
   });
 }
@@ -149,6 +155,7 @@ export async function sendBuyerMessage(
       conversationId: conversation.id,
       orderId: conversation.orderId,
       senderName: user.name,
+      messageId: created.id,
     });
     return created;
   });
@@ -205,12 +212,13 @@ export async function startBuyerConversation(
     if (!(await enforceMessageRateLimit(transaction, user.id))) {
       throw new Error("MESSAGE_RATE_LIMIT");
     }
-    await transaction.message.create({
+    const created = await transaction.message.create({
       data: {
         conversationId,
         senderId: user.id,
         body: messageBody,
       },
+      select: { id: true },
     });
     await transaction.conversation.update({
       where: { id: conversationId },
@@ -221,6 +229,7 @@ export async function startBuyerConversation(
       conversationId,
       orderId: null,
       senderName: user.name,
+      messageId: created.id,
     });
   };
   let conversationCreationFailed = false;
@@ -615,7 +624,7 @@ export async function submitBuyerReview(
       id: true,
       sellerId: true,
       listingId: true,
-      seller: { select: { slug: true } },
+      seller: { select: { slug: true, userId: true } },
       review: { select: { id: true } },
     },
   });
@@ -636,6 +645,14 @@ export async function submitBuyerReview(
           status: ReviewStatus.PUBLISHED,
         },
         select: { id: true },
+      });
+      await enqueueUserNotification(transaction, {
+        userId: item.seller.userId,
+        type: NotificationType.REVIEW,
+        title: "You received a new review",
+        body: `A buyer left a ${parsed.data.rating}-star review.`,
+        eventKey: `review-published:${created.id}`,
+        data: { reviewId: created.id, recipientWorkspace: "SELLER" },
       });
       await transaction.auditLog.create({
         data: {
@@ -741,6 +758,8 @@ export async function markBuyerNotificationRead(
     data: { readAt: new Date() },
   });
   revalidatePath("/dashboard/notifications");
+  revalidatePath("/seller/notifications");
+  revalidatePath("/support/console/notifications");
   revalidatePath("/dashboard");
   return { success: true, data: { updated: updated.count === 1 } };
 }
@@ -842,16 +861,37 @@ export async function createBuyerSupportTicket(
     });
     if (!order) return { success: false, error: "Order not found" };
   }
-  const ticket = await prisma.supportTicket.create({
-    data: {
-      userId: user.id,
-      orderId: parsed.data.orderId || null,
-      subject: parsed.data.subject,
-      messages: {
-        create: { senderId: user.id, body: parsed.data.message },
+  const ticket = await prisma.$transaction(async (transaction) => {
+    const createdTicket = await transaction.supportTicket.create({
+      data: {
+        userId: user.id,
+        orderId: parsed.data.orderId || null,
+        subject: parsed.data.subject,
+        messages: {
+          create: { senderId: user.id, body: parsed.data.message },
+        },
       },
-    },
-    select: { id: true },
+      select: { id: true },
+    });
+    const supportUsers = await transaction.user.findMany({
+      where: {
+        roleAssignments: {
+          some: { role: { key: { in: [UserRole.SUPPORT, UserRole.ADMIN, UserRole.SUPER_ADMIN] } } },
+        },
+      },
+      select: { id: true },
+    });
+    for (const supportUser of supportUsers) {
+      await enqueueUserNotification(transaction, {
+        userId: supportUser.id,
+        type: NotificationType.SUPPORT_UPDATE,
+        title: "New support ticket",
+        body: parsed.data.subject,
+        eventKey: `support-ticket-opened:${createdTicket.id}`,
+        data: { ticketId: createdTicket.id, recipientWorkspace: "SUPPORT" },
+      });
+    }
+    return createdTicket;
   });
   revalidatePath("/dashboard/support");
   revalidatePath("/support/console");
@@ -892,6 +932,25 @@ export async function replyToBuyerSupportTicket(
       where: { id: ticket.id },
       data: { updatedAt: new Date(), status: SupportTicketStatus.OPEN },
     });
+    const supportUsers = await transaction.user.findMany({
+      where: {
+        roleAssignments: {
+          some: { role: { key: { in: [UserRole.SUPPORT, UserRole.ADMIN, UserRole.SUPER_ADMIN] } } },
+        },
+      },
+      select: { id: true },
+    });
+    for (const supportUser of supportUsers) {
+      if (supportUser.id === user.id) continue;
+      await enqueueUserNotification(transaction, {
+        userId: supportUser.id,
+        type: NotificationType.SUPPORT_UPDATE,
+        title: "New support ticket reply",
+        body: "A customer replied to a support ticket.",
+        eventKey: `support-ticket-message:${created.id}`,
+        data: { ticketId: ticket.id, recipientWorkspace: "SUPPORT" },
+      });
+    }
     return created;
   });
   revalidatePath("/dashboard/support");
@@ -945,14 +1004,13 @@ export async function createSupportAgentReply(
         resolvedAt: null,
       },
     });
-    await transaction.notification.create({
-      data: {
-        userId: ticket.userId,
-        type: "SYSTEM",
-        title: "Support replied to your ticket",
-        body: ticket.subject,
-        data: { ticketId: ticket.id },
-      },
+    await enqueueUserNotification(transaction, {
+      userId: ticket.userId,
+      type: NotificationType.SUPPORT_UPDATE,
+      title: "Support replied to your ticket",
+      body: ticket.subject,
+      eventKey: `support-ticket-message:${created.id}`,
+      data: { ticketId: ticket.id },
     });
     return created;
   });
@@ -965,23 +1023,51 @@ export async function updateSupportTicketStatus(
   ticketIdInput: unknown,
   statusInput: unknown
 ): Promise<ActionResult<{ updated: true }>> {
-  await requirePageRoles([UserRole.SUPPORT, UserRole.ADMIN, UserRole.SUPER_ADMIN]);
+  const { user } = await requirePageRoles([UserRole.SUPPORT, UserRole.ADMIN, UserRole.SUPER_ADMIN]);
   const ticketId = z.string().trim().min(1).max(128).safeParse(ticketIdInput);
   const status = z.nativeEnum(SupportTicketStatus).safeParse(statusInput);
   if (!ticketId.success || !status.success) {
     return { success: false, error: "Invalid ticket status" };
   }
-  const updated = await prisma.supportTicket.updateMany({
-    where: { id: ticketId.data },
-    data: {
-      status: status.data,
-      resolvedAt: status.data === SupportTicketStatus.RESOLVED ||
-        status.data === SupportTicketStatus.CLOSED
-        ? new Date()
-        : null,
-    },
+  const updated = await prisma.$transaction(async (transaction) => {
+    const ticket = await transaction.supportTicket.findUnique({
+      where: { id: ticketId.data },
+      select: { id: true, userId: true, subject: true, status: true },
+    });
+    if (!ticket) return 0;
+    if (ticket.status === status.data) return 1;
+    const changed = await transaction.supportTicket.updateMany({
+      where: { id: ticket.id, status: ticket.status },
+      data: {
+        status: status.data,
+        resolvedAt: status.data === SupportTicketStatus.RESOLVED ||
+          status.data === SupportTicketStatus.CLOSED
+          ? new Date()
+          : null,
+      },
+    });
+    if (!changed.count) return 0;
+    const event = await transaction.auditLog.create({
+      data: {
+        actorId: user.id,
+        action: "support.ticket.status_updated",
+        entityType: "SupportTicket",
+        entityId: ticket.id,
+        metadata: { previousStatus: ticket.status, status: status.data },
+      },
+      select: { id: true },
+    });
+    await enqueueUserNotification(transaction, {
+      userId: ticket.userId,
+      type: NotificationType.SUPPORT_UPDATE,
+      title: "Support ticket updated",
+      body: `Your ticket "${ticket.subject}" is now ${status.data.toLowerCase().replaceAll("_", " ")}.`,
+      eventKey: `support-ticket-status:${event.id}`,
+      data: { ticketId: ticket.id },
+    });
+    return changed.count;
   });
-  if (!updated.count) return { success: false, error: "Support ticket not found" };
+  if (!updated) return { success: false, error: "Support ticket not found or changed" };
   revalidatePath("/support/console");
   revalidatePath("/dashboard/support");
   return { success: true, data: { updated: true } };

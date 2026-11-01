@@ -12,6 +12,7 @@ import {
 import { revalidatePath } from "next/cache";
 import type { ActionResult } from "@/lib/action-result";
 import { requirePageRoles } from "@/lib/authorization";
+import { enqueueUserNotification } from "@/lib/notification-outbox";
 import prisma from "@/lib/prisma";
 import {
   enforceMessageRateLimit,
@@ -201,17 +202,16 @@ export async function replyToSellerConversation(
       where: { id: conversation.id },
       data: { updatedAt: new Date() },
     });
-    await transaction.notification.create({
+    await enqueueUserNotification(transaction, {
+      userId: conversation.buyerId,
+      type: NotificationType.MESSAGE,
+      title: "New message",
+      body: `${sender.name} sent you a message.`,
+      eventKey: `message:${created.id}`,
       data: {
-        userId: conversation.buyerId,
-        type: NotificationType.MESSAGE,
-        title: "New message",
-        body: `${sender.name} sent you a message.`,
-        data: {
           conversationId: conversation.id,
           orderId: conversation.orderId,
           recipientWorkspace: "BUYER",
-        },
       },
     });
     return created;

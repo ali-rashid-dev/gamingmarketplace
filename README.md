@@ -27,6 +27,30 @@ application instances; for example, generate one with `openssl rand -base64 32`.
 Also set `BETTER_AUTH_URL` to the deployed application's canonical origin.
 Do not use the development secret or localhost URL in production.
 
+## Notifications and support
+
+In-app notifications are committed in the same database transaction as supported
+message, support-ticket, dispute, and seller-application events. Email delivery
+uses a PostgreSQL outbox with deduplication, retry backoff, and a dead-letter
+state. The buyer, seller, and support workspaces each show their unread count.
+Support ticket notifications open the authorized support case workspace.
+
+Configure `RESEND_API_KEY` and `RESEND_FROM_EMAIL` to deliver email, and set
+`CRON_SECRET` to a unique secret so the scheduled `/api/cron/notifications`
+worker can be authenticated. Vercel Cron invokes the worker every minute;
+other hosting providers must schedule an authenticated GET request to that
+route. The worker also requires `BETTER_AUTH_URL` for absolute links. Users can
+disable email notifications in their account settings; in-app notifications
+remain available.
+
+Apply the additive outbox migration with `pnpm exec prisma migrate deploy`.
+Order, payment, refund, delivery-deadline, and payout-provider notifications
+will be emitted when those backend lifecycle events are implemented; no
+notifications are fabricated for inactive flows. Better Auth verification and
+password-reset messages continue through their existing auth callbacks; their
+one-time token URLs are intentionally not persisted in the general notification
+outbox.
+
 ## Admin game catalog
 
 Administrators can manage games and their product categories at `/admin/catalog`.

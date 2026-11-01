@@ -87,6 +87,7 @@ export const ModelName = {
   SellerCommission: 'SellerCommission',
   WithdrawalEvent: 'WithdrawalEvent',
   Notification: 'Notification',
+  NotificationOutbox: 'NotificationOutbox',
   WishlistItem: 'WishlistItem',
   SupportTicket: 'SupportTicket',
   SupportTicketMessage: 'SupportTicketMessage',
@@ -633,12 +634,31 @@ export const NotificationScalarFieldEnum = {
   title: 'title',
   body: 'body',
   data: 'data',
+  idempotencyKey: 'idempotencyKey',
   readAt: 'readAt',
   sentAt: 'sentAt',
   createdAt: 'createdAt'
 } as const
 
 export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
+
+
+export const NotificationOutboxScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  notificationId: 'notificationId',
+  dedupeKey: 'dedupeKey',
+  status: 'status',
+  attempts: 'attempts',
+  availableAt: 'availableAt',
+  lockedAt: 'lockedAt',
+  sentAt: 'sentAt',
+  lastError: 'lastError',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type NotificationOutboxScalarFieldEnum = (typeof NotificationOutboxScalarFieldEnum)[keyof typeof NotificationOutboxScalarFieldEnum]
 
 
 export const WishlistItemScalarFieldEnum = {

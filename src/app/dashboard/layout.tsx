@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getActiveRoles, requirePageSession } from "@/lib/authorization";
+import prisma from "@/lib/prisma";
 import { DashboardLogout } from "./dashboard-logout";
 
 const navigation = [
@@ -33,6 +34,9 @@ export default async function BuyerDashboardLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   const { user } = await requirePageSession();
   const roles = await getActiveRoles(user.id);
+  const unreadNotifications = await prisma.notification.count({
+    where: { userId: user.id, channel: "IN_APP", readAt: null },
+  });
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header className="border-b border-border bg-card/80">
@@ -76,7 +80,14 @@ export default async function BuyerDashboardLayout({
                 className="h-auto min-h-9 w-full min-w-0 justify-start gap-2 rounded-lg border border-border px-2.5 py-2 text-left text-xs text-muted-foreground sm:px-3 lg:border-transparent lg:text-sm"
               >
                 <Icon aria-hidden="true" className="size-4 shrink-0 text-primary" />
-                <span className="truncate">{label}</span>
+                <span className="flex min-w-0 flex-1 items-center justify-between gap-2">
+                  <span className="truncate">{label}</span>
+                  {href === "/dashboard/notifications" && unreadNotifications > 0 && (
+                    <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold text-primary">
+                      {unreadNotifications > 99 ? "99+" : unreadNotifications}
+                    </span>
+                  )}
+                </span>
               </Button>
             ))}
           </nav>

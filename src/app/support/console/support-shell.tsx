@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   BookOpenText,
+  Bell,
   ClipboardList,
   Flag,
   Gavel,
@@ -34,6 +35,7 @@ import {
 const navigation = [
   { label: "Dashboard", href: "/support/console", icon: LayoutDashboard },
   { label: "Tickets", href: "/support/console/tickets", icon: ClipboardList },
+  { label: "Notifications", href: "/support/console/notifications", icon: Bell },
   { label: "Disputes", href: "/support/console/disputes", icon: Gavel },
   { label: "Orders", href: "/support/console/orders", icon: Search },
   { label: "Users", href: "/support/console/users", icon: UsersRound },
@@ -43,7 +45,7 @@ const navigation = [
   { label: "My profile", href: "/support/console/profile", icon: UserRound },
 ] as const;
 
-function SupportNavigation() {
+function SupportNavigation({ unreadNotifications }: { unreadNotifications: number }) {
   const pathname = usePathname();
   const { setOpenMobile } = useSidebar();
   return (
@@ -76,7 +78,14 @@ function SupportNavigation() {
                       className="h-10"
                     >
                       <Icon aria-hidden="true" />
-                      <span>{label}</span>
+                      <span className="flex min-w-0 flex-1 items-center justify-between gap-2">
+                        <span className="truncate">{label}</span>
+                        {href === "/support/console/notifications" && unreadNotifications > 0 && (
+                          <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold text-primary">
+                            {unreadNotifications > 99 ? "99+" : unreadNotifications}
+                          </span>
+                        )}
+                      </span>
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 );
@@ -102,10 +111,16 @@ function SupportNavigation() {
   );
 }
 
-export function SupportShell({ children }: { children: React.ReactNode }) {
+export function SupportShell({
+  children,
+  unreadNotifications,
+}: {
+  children: React.ReactNode;
+  unreadNotifications: number;
+}) {
   return (
     <SidebarProvider className="min-h-svh bg-background">
-      <SupportNavigation />
+      <SupportNavigation unreadNotifications={unreadNotifications} />
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="sticky top-0 z-10 flex min-h-14 items-center justify-between gap-3 border-b border-border bg-background/95 px-4 backdrop-blur sm:px-6">
           <div className="flex min-w-0 items-center gap-2">

@@ -30,7 +30,13 @@ function notificationHref(data: unknown) {
     return `${target}#dispute-${encodeURIComponent(record.disputeId)}`;
   }
   if (typeof record.orderId === "string") return `/dashboard/orders/${encodeURIComponent(record.orderId)}`;
-  if (typeof record.ticketId === "string") return "/dashboard/support";
+  if (typeof record.ticketId === "string") {
+    return record.recipientWorkspace === "SUPPORT"
+      ? `/support/console/tickets/${encodeURIComponent(record.ticketId)}`
+      : "/dashboard/support";
+  }
+  if (typeof record.withdrawalId === "string") return "/seller/earnings#withdrawals";
+  if (typeof record.reviewId === "string") return "/seller/reviews";
   return null;
 }
 

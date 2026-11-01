@@ -2,13 +2,13 @@
 
 import { Prisma } from "@/generated/prisma/client";
 import {
-  NotificationChannel,
   NotificationType,
   SellerStatus,
   UserRole,
 } from "@/generated/prisma/enums";
 import { requirePagePermissions } from "@/lib/authorization";
 import type { ActionResult } from "@/lib/action-result";
+import { enqueueUserNotification } from "@/lib/notification-outbox";
 import prisma from "@/lib/prisma";
 import { z } from "zod";
 
@@ -85,17 +85,15 @@ export async function reviewSellerApplication(
         });
       }
 
-      await transaction.notification.create({
-        data: {
-          userId: sellerProfile.userId,
-          type: NotificationType.SELLER_UPDATE,
-          channel: NotificationChannel.IN_APP,
-          title: approved ? "Seller application approved" : "Seller application update",
-          body: approved
-            ? `Your shop "${sellerProfile.shopName}" is approved.`
-            : `Your shop application is ${status.toLowerCase()}.`,
-          data: { sellerProfileId: sellerProfile.id, status },
-        },
+      await enqueueUserNotification(transaction, {
+        userId: sellerProfile.userId,
+        type: NotificationType.SELLER_UPDATE,
+        title: approved ? "Seller application approved" : "Seller application update",
+        body: approved
+          ? `Your shop "${sellerProfile.shopName}" is approved.`
+          : `Your shop application is ${status.toLowerCase()}.`,
+        eventKey: `seller-application-reviewed:${sellerProfile.id}:${status}`,
+        data: { sellerProfileId: sellerProfile.id, status },
       });
 
       await transaction.auditLog.create({

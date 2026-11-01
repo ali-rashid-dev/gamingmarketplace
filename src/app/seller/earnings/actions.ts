@@ -1,9 +1,15 @@
 "use server";
 
-import { LedgerEntryType, LedgerSourceType, WithdrawalStatus } from "@/generated/prisma/enums";
+import {
+  LedgerEntryType,
+  LedgerSourceType,
+  NotificationType,
+  WithdrawalStatus,
+} from "@/generated/prisma/enums";
 import { Prisma } from "@/generated/prisma/client";
 import type { ActionResult } from "@/lib/action-result";
 import { requirePagePermissions } from "@/lib/authorization";
+import { enqueueUserNotification } from "@/lib/notification-outbox";
 import { getAvailableSellerBalance } from "@/lib/finance-ledger";
 import { requireApprovedSeller } from "@/app/seller/listings/listing-data";
 import prisma from "@/lib/prisma";
@@ -63,6 +69,14 @@ export async function requestWithdrawal(
         actorId: userId,
         status: WithdrawalStatus.REQUESTED,
       },
+    });
+    await enqueueUserNotification(transaction, {
+      userId,
+      type: NotificationType.WITHDRAWAL_UPDATE,
+      title: "Withdrawal requested",
+      body: `Your withdrawal request for ${amount.toFixed(2)} ${currencyInput.data} was submitted.`,
+      eventKey: `withdrawal:${withdrawalId}:${WithdrawalStatus.REQUESTED}`,
+      data: { withdrawalId, recipientWorkspace: "SELLER" },
     });
     await transaction.auditLog.create({
       data: {
@@ -166,7 +180,14 @@ export async function updateWithdrawalStatus(
   ];
   const withdrawal = await prisma.withdrawal.findUnique({
     where: { id: withdrawalId.data },
-    select: { id: true, sellerId: true, status: true, amount: true, currency: true },
+    select: {
+      id: true,
+      sellerId: true,
+      status: true,
+      amount: true,
+      currency: true,
+      seller: { select: { userId: true } },
+    },
   });
   if (!withdrawal || withdrawal.status !== expectedStatus.data) {
     return { success: false, error: "This withdrawal has changed. Reload and try again." };
@@ -239,6 +260,14 @@ export async function updateWithdrawalStatus(
         providerReference: providerReference.data || null,
         details: details.data || null,
       },
+    });
+    await enqueueUserNotification(transaction, {
+      userId: withdrawal.seller.userId,
+      type: NotificationType.WITHDRAWAL_UPDATE,
+      title: "Withdrawal status updated",
+      body: `Your withdrawal status is now ${nextStatus.data.toLowerCase().replaceAll("_", " ")}.`,
+      eventKey: `withdrawal:${withdrawal.id}:${nextStatus.data}`,
+      data: { withdrawalId: withdrawal.id, recipientWorkspace: "SELLER" },
     });
     if (releaseStatuses.includes(nextStatus.data)) {
       await transaction.ledgerEntry.create({

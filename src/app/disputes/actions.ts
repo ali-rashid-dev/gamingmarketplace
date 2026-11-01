@@ -13,6 +13,7 @@ import { Prisma } from "@/generated/prisma/client";
 import { revalidatePath } from "next/cache";
 import type { ActionResult } from "@/lib/action-result";
 import { getActiveRoles, requirePageSession } from "@/lib/authorization";
+import { enqueueUserNotification } from "@/lib/notification-outbox";
 import {
   BUYER_PROTECTION_APPEAL_WINDOW_DAYS,
   getBuyerProtectionDeadline,
@@ -132,17 +133,16 @@ export async function openBuyerDispute(
           },
         },
       });
-      await transaction.notification.create({
+      await enqueueUserNotification(transaction, {
+        userId: item.seller.userId,
+        type: "DISPUTE_UPDATE",
+        title: "Buyer opened an order case",
+        body: reasonLabels[parsed.data.reasonCode],
+        eventKey: `dispute-opened:${created.id}`,
         data: {
-          userId: item.seller.userId,
-          type: "DISPUTE_UPDATE",
-          title: "Buyer opened an order case",
-          body: reasonLabels[parsed.data.reasonCode],
-          data: {
             disputeId: created.id,
             orderId: item.orderId,
             recipientWorkspace: "SELLER",
-          },
         },
       });
       await transaction.auditLog.create({
@@ -235,21 +235,20 @@ export async function addDisputeMessage(
         metadata: { messageId: created.id },
       },
     });
-    await transaction.notification.createMany({
-      data: Array.from(new Set(dispute.participantIds))
-        .filter((recipientId) => recipientId !== user.id)
-        .map((userId) => ({
-          userId,
-          type: "DISPUTE_UPDATE" as const,
-          title: "New dispute response",
-          body: "A participant added a response to an order case.",
-          data: {
+    for (const userId of Array.from(new Set(dispute.participantIds)).filter((recipientId) => recipientId !== user.id)) {
+      await enqueueUserNotification(transaction, {
+        userId,
+        type: "DISPUTE_UPDATE",
+        title: "New dispute response",
+        body: "A participant added a response to an order case.",
+        eventKey: `dispute-message:${created.id}`,
+        data: {
             disputeId: dispute.id,
             orderId: dispute.orderId,
             recipientWorkspace: userId === dispute.participantIds[0] ? "BUYER" : "SELLER",
-          },
-        })),
-    });
+        },
+      });
+    }
     return created;
   });
   if (!message) return { success: false, error: "You are sending messages too quickly. Try again in a minute." };
@@ -497,7 +496,7 @@ export async function decideDispute(
       },
     });
     if (updated.count !== 1) return false;
-    await transaction.disputeEvent.create({
+    const decisionEvent = await transaction.disputeEvent.create({
       data: {
         disputeId: dispute.id,
         actorId: user.id,
@@ -524,34 +523,26 @@ export async function decideDispute(
         },
       },
     });
-    await transaction.notification.createMany({
-      data: [
-        {
-          userId: dispute.order.buyerId,
-          type: "DISPUTE_UPDATE",
-          title: "Support recorded a case decision",
-          body: parsed.data.resolution.slice(0, 500),
-          data: {
-            disputeId: dispute.id,
-            orderId: dispute.orderId,
-            recipientWorkspace: "BUYER",
-          },
+    const notificationRecipients = [
+      { userId: dispute.order.buyerId, recipientWorkspace: "BUYER" },
+      ...(dispute.orderItem?.seller.userId
+        ? [{ userId: dispute.orderItem.seller.userId, recipientWorkspace: "SELLER" }]
+        : []),
+    ];
+    for (const recipient of notificationRecipients) {
+      await enqueueUserNotification(transaction, {
+        userId: recipient.userId,
+        type: "DISPUTE_UPDATE",
+        title: "Support recorded a case decision",
+        body: parsed.data.resolution.slice(0, 500),
+        eventKey: `dispute-decision:${decisionEvent.id}`,
+        data: {
+          disputeId: dispute.id,
+          orderId: dispute.orderId,
+          recipientWorkspace: recipient.recipientWorkspace,
         },
-        ...(dispute.orderItem?.seller.userId
-          ? [{
-              userId: dispute.orderItem.seller.userId,
-              type: "DISPUTE_UPDATE" as const,
-              title: "Support recorded a case decision",
-              body: parsed.data.resolution.slice(0, 500),
-              data: {
-                disputeId: dispute.id,
-                orderId: dispute.orderId,
-                recipientWorkspace: "SELLER",
-              },
-            }]
-          : []),
-      ],
-    });
+      });
+    }
     return true;
   });
   if (!changed) return { success: false, error: "Case changed; refresh and try again" };

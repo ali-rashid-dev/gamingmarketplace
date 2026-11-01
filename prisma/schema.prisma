@@ -154,11 +154,22 @@ enum NotificationType {
   DISPUTE_UPDATE
   SELLER_UPDATE
   SYSTEM
+  DELIVERY_UPDATE
+  WITHDRAWAL_UPDATE
+  SUPPORT_UPDATE
 }
 
 enum NotificationChannel {
   IN_APP
   EMAIL
+}
+
+enum NotificationOutboxStatus {
+  PENDING
+  PROCESSING
+  SENT
+  SKIPPED
+  DEAD
 }
 
 enum SupportTicketStatus {
@@ -249,6 +260,7 @@ model User {
   disputeEvents               DisputeEvent[]
   submittedEvidence           DisputeEvidence[]
   notifications               Notification[]
+  notificationOutbox          NotificationOutbox[]
   auditLogs                   AuditLog[]             @relation("AuditActor")
   listingRevisions            ListingRevision[]
   wishlistItems               WishlistItem[]
@@ -876,20 +888,42 @@ model WithdrawalEvent {
 }
 
 model Notification {
-  id        String              @id @default(cuid())
-  userId    String
-  type      NotificationType
-  channel   NotificationChannel @default(IN_APP)
-  title     String
-  body      String
-  data      Json?
-  readAt    DateTime?
-  sentAt    DateTime?
-  createdAt DateTime            @default(now())
-  user      User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id             String              @id @default(cuid())
+  userId         String
+  type           NotificationType
+  channel        NotificationChannel @default(IN_APP)
+  title          String
+  body           String
+  data           Json?
+  idempotencyKey String?             @unique
+  readAt         DateTime?
+  sentAt         DateTime?
+  createdAt      DateTime            @default(now())
+  user           User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  outbox         NotificationOutbox?
 
   @@index([userId, readAt, createdAt])
   @@index([channel, sentAt])
+}
+
+model NotificationOutbox {
+  id             String                   @id @default(cuid())
+  userId         String
+  notificationId String                   @unique
+  dedupeKey      String                   @unique
+  status         NotificationOutboxStatus @default(PENDING)
+  attempts       Int                      @default(0)
+  availableAt    DateTime                 @default(now())
+  lockedAt       DateTime?
+  sentAt         DateTime?
+  lastError      String?
+  createdAt      DateTime                 @default(now())
+  updatedAt      DateTime                 @updatedAt
+  user           User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  notification   Notification             @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+
+  @@index([status, availableAt, lockedAt])
+  @@index([userId, createdAt])
 }
 
 model WishlistItem {
