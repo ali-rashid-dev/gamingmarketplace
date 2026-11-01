@@ -39,6 +39,7 @@ export function calculateSellerCommission(
     !Number.isInteger(basisPoints) ||
     basisPoints < 0 ||
     basisPoints > 10_000 ||
+    !grossAmount.isFinite() ||
     grossAmount.lessThan(0)
   ) {
     throw new FinanceLedgerError("Invalid commission inputs.");

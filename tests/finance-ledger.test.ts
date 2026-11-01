@@ -31,4 +31,12 @@ test("commission allows zero basis points and rejects invalid inputs", () => {
     () => calculateSellerCommission(new Prisma.Decimal("10.00"), 1.5),
     FinanceLedgerError
   );
+  assert.throws(
+    () => calculateSellerCommission(new Prisma.Decimal(NaN), 100),
+    FinanceLedgerError
+  );
+  assert.throws(
+    () => calculateSellerCommission(new Prisma.Decimal(Infinity), 100),
+    FinanceLedgerError
+  );
 });

@@ -15,19 +15,56 @@ const signatures: Record<string, (bytes: Uint8Array) => boolean> = {
     bytes.length >= 12 &&
     String.fromCharCode(...bytes.slice(0, 4)) === "RIFF" &&
     String.fromCharCode(...bytes.slice(8, 12)) === "WEBP",
-  "image/avif": (bytes) =>
-    bytes.length >= 12 &&
-    String.fromCharCode(...bytes.slice(4, 8)) === "ftyp" &&
-    ["avif", "avis"].includes(String.fromCharCode(...bytes.slice(8, 12))),
+  "image/avif": hasAvifFileTypeBrand,
   "application/pdf": (bytes) =>
     bytes.length >= 5 && String.fromCharCode(...bytes.slice(0, 5)) === "%PDF-",
 };
+
+function readUint32(bytes: Uint8Array, offset: number) {
+  return new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength).getUint32(offset);
+}
+
+function readBrand(bytes: Uint8Array, offset: number) {
+  return String.fromCharCode(...bytes.slice(offset, offset + 4));
+}
+
+function hasAvifFileTypeBrand(bytes: Uint8Array) {
+  if (bytes.length < 16 || readBrand(bytes, 4) !== "ftyp") return false;
+
+  const boxLength = readUint32(bytes, 0);
+  if (
+    boxLength < 16 ||
+    boxLength > bytes.length ||
+    (boxLength - 16) % 4 !== 0
+  ) {
+    return false;
+  }
+
+  const supportedBrands = new Set(["avif", "avis"]);
+  if (supportedBrands.has(readBrand(bytes, 8))) return true;
+
+  for (let offset = 16; offset < boxLength; offset += 4) {
+    if (supportedBrands.has(readBrand(bytes, offset))) return true;
+  }
+  return false;
+}
 
 export function matchesUploadSignature(contentType: string, bytes: Uint8Array) {
   return signatures[contentType]?.(bytes) ?? false;
 }
 
 export async function hasValidUploadSignature(file: File) {
+  if (file.type === "image/avif") {
+    const header = new Uint8Array(await file.slice(0, 8).arrayBuffer());
+    if (header.length < 8 || readBrand(header, 4) !== "ftyp") return false;
+
+    const boxLength = readUint32(header, 0);
+    if (boxLength < 16 || boxLength > file.size) return false;
+
+    const fileTypeBox = new Uint8Array(await file.slice(0, boxLength).arrayBuffer());
+    return matchesUploadSignature(file.type, fileTypeBox);
+  }
+
   const header = new Uint8Array(await file.slice(0, 12).arrayBuffer());
   return matchesUploadSignature(file.type, header);
 }
