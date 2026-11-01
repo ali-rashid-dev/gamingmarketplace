@@ -1,10 +1,12 @@
 import { headers } from "next/headers";
+import { connection } from "next/server";
 import Link from "next/link";
 import { Search } from "lucide-react";
-import { auth } from "@/lib/auth";
+import { getAuth } from "@/lib/auth";
 
 export async function StorefrontHeader() {
-  const session = await auth.api.getSession({ headers: await headers() });
+  await connection();
+  const session = await getAuth().api.getSession({ headers: await headers() });
 
   return (
     <header className="sticky top-0 z-40 border-b border-white/10 bg-background/90 backdrop-blur-xl">

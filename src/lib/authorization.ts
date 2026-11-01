@@ -2,13 +2,13 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { NextResponse } from "next/server";
 import { SellerStatus, type UserRole } from "@/generated/prisma/enums";
-import { auth } from "@/lib/auth";
+import { getAuth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 
-type AuthSession = NonNullable<Awaited<ReturnType<typeof auth.api.getSession>>>;
+type AuthSession = NonNullable<Awaited<ReturnType<ReturnType<typeof getAuth>["api"]["getSession"]>>>;
 
 export async function getSession(requestHeaders: Headers) {
-  return auth.api.getSession({ headers: requestHeaders });
+  return getAuth().api.getSession({ headers: requestHeaders });
 }
 
 export async function authorizeRequest(

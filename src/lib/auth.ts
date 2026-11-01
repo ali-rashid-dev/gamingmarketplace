@@ -31,83 +31,93 @@ function requireAuthSecret(): string {
   return secret;
 }
 
-export const auth = betterAuth({
+function createAuth() {
+  return betterAuth({
     secret: requireAuthSecret(),
     database: prismaAdapter(prisma, {
-        provider: "postgresql",
+      provider: "postgresql",
     }),
     session: {
-        expiresIn: 60 * 60 * 24 * 7,
-        updateAge: 60 * 60 * 24,
+      expiresIn: 60 * 60 * 24 * 7,
+      updateAge: 60 * 60 * 24,
     },
     rateLimit: {
-        enabled: true,
-        storage: "database",
-        window: 60,
-        max: 100,
-        customRules: {
-            "/sign-in/email": { window: 60, max: 5 },
-            "/sign-up/email": { window: 60, max: 5 },
-            "/request-password-reset": { window: 60, max: 3 },
-            "/send-verification-email": { window: 60, max: 3 },
-        },
+      enabled: true,
+      storage: "database",
+      window: 60,
+      max: 100,
+      customRules: {
+        "/sign-in/email": { window: 60, max: 5 },
+        "/sign-up/email": { window: 60, max: 5 },
+        "/request-password-reset": { window: 60, max: 3 },
+        "/send-verification-email": { window: 60, max: 3 },
+      },
     },
     emailVerification: {
-        expiresIn: 60 * 60,
-        sendVerificationEmail: async ({ user, url }) => {
-            try {
-                const { error } = await getResend().emails.send({
-                    from: requireEmailSender(),
-                    to: user.email,
-                    subject: "Verify your email address",
-                    react: VerifyEmail({
-                        username: user.name,
-                        verificationUrl: url,
-                        userEmail: user.email,
-                    }),
-                });
-                if (error) {
-                    console.error("Failed to send verification email", error);
-                }
-            } catch (error: unknown) {
-                console.error("Failed to send verification email", error);
-            }
-        },
-        sendOnSignUp: true,
-        autoSignInAfterVerification: true,
+      expiresIn: 60 * 60,
+      sendVerificationEmail: async ({ user, url }) => {
+        try {
+          const { error } = await getResend().emails.send({
+            from: requireEmailSender(),
+            to: user.email,
+            subject: "Verify your email address",
+            react: VerifyEmail({
+              username: user.name,
+              verificationUrl: url,
+              userEmail: user.email,
+            }),
+          });
+          if (error) {
+            console.error("Failed to send verification email", error);
+          }
+        } catch (error: unknown) {
+          console.error("Failed to send verification email", error);
+        }
+      },
+      sendOnSignUp: true,
+      autoSignInAfterVerification: true,
     },
     emailAndPassword: {
-        enabled: true,
-        requireEmailVerification: true,
-        resetPasswordTokenExpiresIn: 60 * 60,
-        sendResetPassword: async ({ user, url }) => {
-            after(async () => {
-                try {
-                    const { error } = await getResend().emails.send({
-                        from: requireEmailSender(),
-                        to: user.email,
-                        subject: "Reset your password",
-                        react: ForgotPasswordEmail({
-                            username: user.name,
-                            resetUrl: url,
-                            userEmail: user.email,
-                        }),
-                    });
-                    if (error) {
-                        console.error("Failed to send password reset email", error);
-                    }
-                } catch (error: unknown) {
-                    console.error("Failed to send password reset email", error);
-                }
+      enabled: true,
+      requireEmailVerification: true,
+      resetPasswordTokenExpiresIn: 60 * 60,
+      sendResetPassword: async ({ user, url }) => {
+        after(async () => {
+          try {
+            const { error } = await getResend().emails.send({
+              from: requireEmailSender(),
+              to: user.email,
+              subject: "Reset your password",
+              react: ForgotPasswordEmail({
+                username: user.name,
+                resetUrl: url,
+                userEmail: user.email,
+              }),
             });
-        }
-
+            if (error) {
+              console.error("Failed to send password reset email", error);
+            }
+          } catch (error: unknown) {
+            console.error("Failed to send password reset email", error);
+          }
+        });
+      },
     },
     baseURL: process.env.BETTER_AUTH_URL,
     socialProviders: {
-        google: {
-            clientId: process.env.GOOGLE_CLIENT_ID as string,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-        },
+      google: {
+        clientId: process.env.GOOGLE_CLIENT_ID as string,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      },
     },
-});
+  });
+}
+
+let authInstance: ReturnType<typeof createAuth> | undefined;
+
+export function getAuth() {
+  if (!authInstance) {
+    authInstance = createAuth();
+  }
+  return authInstance;
+}

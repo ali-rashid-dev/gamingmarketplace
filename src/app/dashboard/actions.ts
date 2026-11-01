@@ -17,7 +17,7 @@ import { revalidatePath } from "next/cache";
 import { headers } from "next/headers";
 import type { ActionResult } from "@/lib/action-result";
 import { requirePageRoles, requirePageSession } from "@/lib/authorization";
-import { auth } from "@/lib/auth";
+import { getAuth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { publicListingWhere } from "@/lib/storefront";
 import { UTApi } from "uploadthing/server";
@@ -901,7 +901,7 @@ export async function replyToBuyerSupportTicket(
 
 export async function revokeBuyerOtherSessions(): Promise<ActionResult<{ revoked: true }>> {
   await requirePageSession();
-  const result = await auth.api.revokeOtherSessions({ headers: await headers() });
+  const result = await getAuth().api.revokeOtherSessions({ headers: await headers() });
   if (!result?.status) return { success: false, error: "Unable to revoke other sessions" };
   revalidatePath("/dashboard/security");
   return { success: true, data: { revoked: true } };

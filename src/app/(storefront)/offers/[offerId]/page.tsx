@@ -3,7 +3,7 @@ import Link from "next/link";
 import { headers } from "next/headers";
 import { BadgeCheck, Check, ChevronRight, ShieldCheck } from "lucide-react";
 import { getOfferById, getOfferImage, formatPrice } from "@/lib/storefront";
-import { auth } from "@/lib/auth";
+import { getAuth } from "@/lib/auth";
 import { WishlistButton } from "@/app/dashboard/wishlist/wishlist-button";
 import { ContactSellerButton } from "@/components/storefront/contact-seller-button";
 
@@ -27,7 +27,7 @@ export default async function OfferDetailPage({ params }: Props) {
   const { offerId } = await params;
   const [offer, session] = await Promise.all([
     getOfferById(offerId),
-    auth.api.getSession({ headers: await headers() }),
+    getAuth().api.getSession({ headers: await headers() }),
   ]);
   const image = getOfferImage(offer.images);
 

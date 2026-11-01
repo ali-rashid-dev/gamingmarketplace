@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { headers } from "next/headers";
 import { SellerStatus, UserRole } from "@/generated/prisma/enums";
-import { auth } from "@/lib/auth";
+import { getAuth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import SellerApplicationForm from "@/components/storefront/seller-application-form";
 import { hasAnyRole } from "@/lib/authorization";
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 export default async function SellerApplicationPage() {
-  const session = await auth.api.getSession({ headers: await headers() });
+  const session = await getAuth().api.getSession({ headers: await headers() });
   if (!session) {
     redirect("/sign-in?next=%2Fsell%2Fapply");
   }
