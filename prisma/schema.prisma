@@ -427,7 +427,7 @@ model Listing {
   reviewNote       String?
   status           ListingStatus            @default(DRAFT)
   images           Json                     @default("[]")
-  searchVector     Unsupported("tsvector")?
+  searchVector     Unsupported("tsvector")? @default(dbgenerated("to_tsvector('simple'::regconfig, ((COALESCE(title, ''::text) || ' '::text) || COALESCE(description, ''::text)))"))
   publishedAt      DateTime?
   createdAt        DateTime                 @default(now())
   updatedAt        DateTime                 @updatedAt
@@ -444,6 +444,7 @@ model Listing {
   @@index([sellerId, status, createdAt])
   @@index([status, price])
   @@index([status, expiresAt])
+  @@index([searchVector], type: Gin)
 }
 
 model ListingAttribute {

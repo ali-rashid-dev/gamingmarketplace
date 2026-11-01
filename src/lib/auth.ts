@@ -23,7 +23,16 @@ function requireEmailSender(): string {
   return emailSender;
 }
 
+function requireAuthSecret(): string {
+  const secret = process.env.BETTER_AUTH_SECRET;
+  if (!secret) {
+    throw new Error("BETTER_AUTH_SECRET must be set to a unique, secure value.");
+  }
+  return secret;
+}
+
 export const auth = betterAuth({
+    secret: requireAuthSecret(),
     database: prismaAdapter(prisma, {
         provider: "postgresql",
     }),

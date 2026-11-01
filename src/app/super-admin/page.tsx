@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { connection } from "next/server";
 import {
   Activity,
   ClipboardList,
@@ -39,6 +40,7 @@ function Metric({
 }
 
 export default async function SuperAdminDashboardPage() {
+  await connection();
   const { metrics, recentAuditLogs } = await getSuperAdminOverview();
 
   return (

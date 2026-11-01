@@ -18,6 +18,15 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
+## Deployment environment
+
+Set `DATABASE_URL` to a PostgreSQL database reachable from the application at
+runtime, and apply committed migrations with `pnpm exec prisma migrate deploy`.
+Set `BETTER_AUTH_SECRET` to the same unique, high-entropy secret across all
+application instances; for example, generate one with `openssl rand -base64 32`.
+Also set `BETTER_AUTH_URL` to the deployed application's canonical origin.
+Do not use the development secret or localhost URL in production.
+
 ## Admin game catalog
 
 Administrators can manage games and their product categories at `/admin/catalog`.
