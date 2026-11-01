@@ -11,6 +11,7 @@ import {
   gameSchema,
 } from "@/lib/catalog-validation";
 import { getCatalogGames } from "./catalog-data";
+import { hasValidUploadSignature } from "@/lib/upload-validation";
 import type {
   CatalogActionResult,
   CatalogGame,
@@ -318,6 +319,9 @@ export async function uploadCatalogImage(
   }
   if (fileInput.size < 1 || fileInput.size > MAX_IMAGE_SIZE) {
     return { success: false, error: "Images must be smaller than 8 MB" };
+  }
+  if (!(await hasValidUploadSignature(fileInput))) {
+    return { success: false, error: "The file content does not match the selected image type" };
   }
 
   const result = await new UTApi().uploadFiles(fileInput);

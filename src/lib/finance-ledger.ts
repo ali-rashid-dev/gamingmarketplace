@@ -31,6 +31,28 @@ const refundedPaymentStatuses: PaymentStatus[] = [
 
 export class FinanceLedgerError extends Error {}
 
+export function calculateSellerCommission(
+  grossAmount: Prisma.Decimal,
+  basisPoints: number
+) {
+  if (
+    !Number.isInteger(basisPoints) ||
+    basisPoints < 0 ||
+    basisPoints > 10_000 ||
+    grossAmount.lessThan(0)
+  ) {
+    throw new FinanceLedgerError("Invalid commission inputs.");
+  }
+  const commissionAmount = grossAmount
+    .mul(basisPoints)
+    .div(10_000)
+    .toDecimalPlaces(2, Prisma.Decimal.ROUND_HALF_UP);
+  return {
+    commissionAmount,
+    sellerNet: grossAmount.sub(commissionAmount),
+  };
+}
+
 export async function postSettledSellerEarning(
   transaction: FinanceTransaction,
   orderItemId: string
@@ -94,11 +116,10 @@ export async function postSettledSellerEarning(
   }
 
   const grossAmount = item.totalPrice;
-  const commissionAmount = grossAmount
-    .mul(rule.basisPoints)
-    .div(10_000)
-    .toDecimalPlaces(2, Prisma.Decimal.ROUND_HALF_UP);
-  const sellerNet = grossAmount.sub(commissionAmount);
+  const { commissionAmount, sellerNet } = calculateSellerCommission(
+    grossAmount,
+    rule.basisPoints
+  );
   const commission = await transaction.sellerCommission.create({
     data: {
       orderItemId: item.id,

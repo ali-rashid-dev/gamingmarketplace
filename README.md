@@ -27,6 +27,32 @@ application instances; for example, generate one with `openssl rand -base64 32`.
 Also set `BETTER_AUTH_URL` to the deployed application's canonical origin.
 Do not use the development secret or localhost URL in production.
 
+## Security, testing, and production readiness
+
+Run `pnpm test`, `pnpm exec tsc --noEmit`, and `pnpm lint` before submitting
+changes. The CI workflow also applies migrations to a disposable PostgreSQL
+service, runs a production build, and checks dependency advisories. Its
+authentication, email, upload, and cron environment values are placeholders
+for CI only and must never be copied into a deployed environment.
+
+Uploads verify their declared MIME type against a small file-signature header
+before sending the file to UploadThing. This rejects common type mismatches but
+is not malware scanning or comprehensive content sanitization. Configure an
+appropriate scanning service before accepting untrusted files at production
+scale. The app also sets baseline browser security headers; review them against
+the production proxy, OAuth, and embedded-content requirements before changing
+those integrations.
+
+Payment creation, signed payment webhooks, concurrent inventory purchases,
+refunds, and payout transfers remain disabled. Their integration and
+end-to-end tests are launch requirements once the provider-backed workflows
+exist; current unit tests do not establish that those flows are safe. Before
+launch, configure and verify database backups and recovery drills, production
+error monitoring and operational alerts, secret rotation, and provider
+reconciliation. Document and complete the applicable game-publisher terms and
+legal review before enabling restricted digital-goods categories; this
+repository does not claim that any category has received that review.
+
 ## Notifications and support
 
 In-app notifications are committed in the same database transaction as supported
@@ -190,7 +216,7 @@ item. Buyers may open non-delivery cases within 30 days of order placement and
 delivery-quality cases within 7 days of the recorded delivery timestamp.
 Structured reasons cover non-delivery, invalid goods, goods not as described,
 and other issues. Buyers, the relevant seller, and authorized support staff can
-respond and submit JPEG, PNG, WebP, or PDF evidence up to 8 MB when
+respond and submit JPEG, PNG, WebP, or PDF evidence up to 10 MB when
 `UPLOADTHING_TOKEN` is configured. A buyer may appeal a recorded decision once
 within 7 days.
 

@@ -21,6 +21,7 @@ import {
   isBuyerProtectionOpen,
 } from "@/lib/buyer-protection";
 import { enforceMessageRateLimit, messageCredentialPattern } from "@/lib/messaging";
+import { hasValidUploadSignature } from "@/lib/upload-validation";
 import prisma from "@/lib/prisma";
 import { UTApi } from "uploadthing/server";
 import { z } from "zod";
@@ -277,6 +278,9 @@ export async function uploadDisputeEvidence(
   if (!contentType.success) return { success: false, error: "Use a JPEG, PNG, WebP image, or PDF" };
   if (fileInput.size < 1 || fileInput.size > maxEvidenceSize) {
     return { success: false, error: "Evidence files must be 10 MB or smaller" };
+  }
+  if (!(await hasValidUploadSignature(fileInput))) {
+    return { success: false, error: "The file content does not match the selected evidence type" };
   }
   if (!process.env.UPLOADTHING_TOKEN) {
     return { success: false, error: "Evidence uploads are not configured" };

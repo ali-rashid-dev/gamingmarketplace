@@ -21,6 +21,8 @@ import { getAuth } from "@/lib/auth";
 import { enqueueUserNotification } from "@/lib/notification-outbox";
 import prisma from "@/lib/prisma";
 import { publicListingWhere } from "@/lib/storefront";
+import { canConfirmBuyerReceipt } from "@/lib/order-transitions";
+import { hasValidUploadSignature } from "@/lib/upload-validation";
 import { UTApi } from "uploadthing/server";
 import {
   enforceMessageRateLimit,
@@ -459,6 +461,9 @@ export async function uploadConversationAttachment(
   if (fileInput.size < 1 || fileInput.size > MAX_MESSAGE_ATTACHMENT_SIZE) {
     return { success: false, error: "Attachments must be 5 MB or smaller" };
   }
+  if (!(await hasValidUploadSignature(fileInput))) {
+    return { success: false, error: "The file content does not match the selected attachment type" };
+  }
   const result = await new UTApi().uploadFiles(fileInput);
   if (result.error) {
     return { success: false, error: "Attachment upload failed. Please try again." };
@@ -483,16 +488,18 @@ export async function confirmBuyerReceipt(
   const item = await prisma.orderItem.findFirst({
     where: {
       id: orderItemId.data,
-      status: OrderItemStatus.DELIVERED,
-      order: { buyerId: user.id, status: { in: [OrderStatus.PAID, OrderStatus.PROCESSING] } },
-      disputes: {
-        none: { status: { in: [DisputeStatus.OPEN, DisputeStatus.UNDER_REVIEW] } },
-      },
+      order: { buyerId: user.id },
     },
     select: {
       id: true,
       orderId: true,
+      status: true,
       order: { select: { status: true } },
+      disputes: {
+        where: { status: { in: [DisputeStatus.OPEN, DisputeStatus.UNDER_REVIEW] } },
+        select: { id: true },
+        take: 1,
+      },
       deliveries: {
         where: { status: DeliveryStatus.DELIVERED },
         orderBy: [{ createdAt: "desc" }, { id: "desc" }],
@@ -501,7 +508,15 @@ export async function confirmBuyerReceipt(
       },
     },
   });
-  if (!item || !item.deliveries[0]) {
+  if (
+    !item ||
+    !item.deliveries[0] ||
+    !canConfirmBuyerReceipt({
+      itemStatus: item.status,
+      orderStatus: item.order.status,
+      hasActiveDispute: item.disputes.length > 0,
+    })
+  ) {
     return { success: false, error: "This delivery cannot be confirmed" };
   }
   let completed: boolean;

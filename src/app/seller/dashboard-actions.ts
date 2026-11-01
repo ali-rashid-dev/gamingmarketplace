@@ -12,6 +12,7 @@ import {
 import { revalidatePath } from "next/cache";
 import type { ActionResult } from "@/lib/action-result";
 import { requirePageRoles } from "@/lib/authorization";
+import { canMarkFulfillmentDelivered, canStartFulfillment } from "@/lib/order-transitions";
 import { enqueueUserNotification } from "@/lib/notification-outbox";
 import prisma from "@/lib/prisma";
 import {
@@ -264,20 +265,34 @@ export async function updateSellerOrderItem(
     },
   });
   if (!item) return { success: false, error: "Order item not found" };
-  if (item.disputes.length > 0) {
-    return { success: false, error: "Fulfillment is paused while this order item is disputed" };
-  }
-  if (
-    item.order.status !== OrderStatus.PAID &&
-    item.order.status !== OrderStatus.PROCESSING
-  ) {
-    return { success: false, error: "This order is not ready for fulfillment" };
-  }
-
-  if (action.data === "process") {
-    if (item.status !== OrderItemStatus.PENDING) {
-      return { success: false, error: "Only pending items can be started" };
+  const hasActiveDispute = item.disputes.length > 0;
+  if (action.data === "process" && !canStartFulfillment({
+    itemStatus: item.status,
+    orderStatus: item.order.status,
+    hasActiveDispute,
+  })) {
+    if (hasActiveDispute) {
+      return { success: false, error: "Fulfillment is paused while this order item is disputed" };
     }
+    if (item.order.status !== OrderStatus.PAID && item.order.status !== OrderStatus.PROCESSING) {
+      return { success: false, error: "This order is not ready for fulfillment" };
+    }
+    return { success: false, error: "Only pending items can be started" };
+  }
+  if (action.data === "mark-delivered" && !canMarkFulfillmentDelivered({
+    itemStatus: item.status,
+    orderStatus: item.order.status,
+    hasActiveDispute,
+  })) {
+    if (hasActiveDispute) {
+      return { success: false, error: "Fulfillment is paused while this order item is disputed" };
+    }
+    if (item.order.status !== OrderStatus.PAID && item.order.status !== OrderStatus.PROCESSING) {
+      return { success: false, error: "This order is not ready for fulfillment" };
+    }
+    return { success: false, error: "Only items in progress can be marked delivered" };
+  }
+  if (action.data === "process") {
     let updated: OrderItemStatus | null;
     try {
       updated = await prisma.$transaction(async (transaction) => {
@@ -378,9 +393,6 @@ export async function updateSellerOrderItem(
     return { success: true, data: { status: updated } };
   }
 
-  if (item.status !== OrderItemStatus.PROCESSING) {
-    return { success: false, error: "Only items in progress can be marked delivered" };
-  }
   let delivered: boolean;
   try {
     delivered = await prisma.$transaction(async (transaction) => {

@@ -13,6 +13,7 @@ import { UTApi } from "uploadthing/server";
 import { revalidatePath } from "next/cache";
 import type { ActionResult } from "@/lib/action-result";
 import { requirePageRoles } from "@/lib/authorization";
+import { hasValidUploadSignature } from "@/lib/upload-validation";
 import prisma from "@/lib/prisma";
 import { z } from "zod";
 
@@ -264,6 +265,9 @@ export async function uploadSellerListingImage(
   }
   if (fileInput.size < 1 || fileInput.size > maxImageSize) {
     return { success: false, error: "Images must be smaller than 8 MB" };
+  }
+  if (!(await hasValidUploadSignature(fileInput))) {
+    return { success: false, error: "The file content does not match the selected image type" };
   }
 
   const result = await new UTApi().uploadFiles(fileInput);
