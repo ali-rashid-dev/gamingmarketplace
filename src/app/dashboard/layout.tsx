@@ -45,16 +45,16 @@ export default async function BuyerDashboardLayout({
           </div>
           <div className="ml-auto flex max-w-full flex-wrap items-center justify-end gap-2">
             {roles.includes("SELLER") && (
-              <Button render={<Link href="/seller" />} variant="outline" className="hidden sm:inline-flex">
+              <Button render={<Link href="/seller" />} nativeButton={false} variant="outline" className="hidden sm:inline-flex">
                 Seller studio
               </Button>
             )}
             {roles.some((role) => ["SUPPORT", "ADMIN", "SUPER_ADMIN"].includes(role)) && (
-              <Button render={<Link href="/support/console" />} variant="outline" className="hidden sm:inline-flex">
+              <Button render={<Link href="/support/console" />} nativeButton={false} variant="outline" className="hidden sm:inline-flex">
                 Support console
               </Button>
             )}
-            <Button render={<Link href="/" />} variant="ghost" className="hidden sm:inline-flex">
+            <Button render={<Link href="/" />} nativeButton={false} variant="ghost" className="hidden sm:inline-flex">
               Browse marketplace
             </Button>
             <DashboardLogout />
@@ -71,6 +71,7 @@ export default async function BuyerDashboardLayout({
               <Button
                 key={href}
                 render={<Link href={href} />}
+                nativeButton={false}
                 variant="ghost"
                 className="h-auto min-h-9 w-full min-w-0 justify-start gap-2 rounded-lg border border-border px-2.5 py-2 text-left text-xs text-muted-foreground sm:px-3 lg:border-transparent lg:text-sm"
               >

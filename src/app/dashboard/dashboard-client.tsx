@@ -67,7 +67,7 @@ export default function DashboardClient({
             Your purchases, conversations, and account settings in one place.
           </p>
         </div>
-        <Button render={<Link href="/offers" />}>
+        <Button render={<Link href="/offers" />} nativeButton={false}>
           Explore marketplace
           <ArrowUpRight data-icon="inline-end" />
         </Button>
@@ -102,7 +102,7 @@ export default function DashboardClient({
               <CardTitle>Recent purchases</CardTitle>
               <CardDescription className="mt-1">Track your latest order activity.</CardDescription>
             </div>
-            <Button render={<Link href="/dashboard/orders" />} variant="ghost" size="sm">
+            <Button render={<Link href="/dashboard/orders" />} nativeButton={false} variant="ghost" size="sm">
               All orders
               <ArrowRight data-icon="inline-end" />
             </Button>
@@ -140,7 +140,7 @@ export default function DashboardClient({
                 <Package aria-hidden="true" className="mx-auto size-8 text-muted-foreground" />
                 <p className="mt-3 text-sm font-medium">No purchases yet</p>
                 <p className="mt-1 text-sm text-muted-foreground">Your orders will show up here.</p>
-                <Button render={<Link href="/offers" />} variant="outline" className="mt-4">
+                <Button render={<Link href="/offers" />} nativeButton={false} variant="outline" className="mt-4">
                   Explore offers
                 </Button>
               </div>
@@ -167,7 +167,7 @@ export default function DashboardClient({
               ) : (
                 <p className="text-sm text-muted-foreground">No successful payments yet.</p>
               )}
-              <Button render={<Link href="/dashboard/wallet" />} variant="link" className="mt-3 h-auto p-0">
+              <Button render={<Link href="/dashboard/wallet" />} nativeButton={false} variant="link" className="mt-3 h-auto p-0">
                 View payment history
                 <ArrowRight data-icon="inline-end" />
               </Button>
@@ -202,7 +202,7 @@ export default function DashboardClient({
             <CardTitle>Recent messages</CardTitle>
             <CardDescription className="mt-1">Conversations with your sellers.</CardDescription>
           </div>
-          <Button render={<Link href="/dashboard/messages" />} variant="ghost" size="sm">
+          <Button render={<Link href="/dashboard/messages" />} nativeButton={false} variant="ghost" size="sm">
             Open inbox
             <ArrowRight data-icon="inline-end" />
           </Button>

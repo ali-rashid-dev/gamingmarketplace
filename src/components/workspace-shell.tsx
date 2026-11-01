@@ -173,6 +173,7 @@ export function WorkspaceShell({
           <div className="flex shrink-0 items-center gap-2">
             <Button
               render={<Link href="/" />}
+              nativeButton={false}
               variant="ghost"
               size="sm"
               className="hidden sm:inline-flex"
